@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm api:build:*)",
+      "Bash(pnpm blog:build:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm run:*)",
+      "Bash(pnpm -w run build)",
+      "Bash(pnpm -w run blog:build)",
+      "Bash(pnpm api:*)",
+      "Bash(pnpm blog:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

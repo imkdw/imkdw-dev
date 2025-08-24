@@ -1,0 +1,12 @@
+{
+  "name": "@imkdw-dev/typescript-config",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "echo 'No build needed for typescript-config'"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
