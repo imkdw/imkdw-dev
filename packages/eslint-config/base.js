@@ -28,7 +28,18 @@ export const config = [
       "@typescript-eslint/no-unused-vars": "error",
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-nullish-coalescing": "error",
-      "@typescript-eslint/strict-boolean-expressions": "error",
+      "@typescript-eslint/strict-boolean-expressions": [
+        "error",
+        {
+          "allowString": true,
+          "allowNumber": true,
+          "allowNullableObject": true,
+          "allowNullableBoolean": true,
+          "allowNullableString": true,
+          "allowNullableNumber": true,
+          "allowAny": false
+        }
+      ],
       "@typescript-eslint/no-unnecessary-condition": "error",
       
       // Import sorting and organization
