@@ -9,7 +9,8 @@
       "Bash(pnpm -w run build)",
       "Bash(pnpm -w run blog:build)",
       "Bash(pnpm api:*)",
-      "Bash(pnpm blog:*)"
+      "Bash(pnpm blog:*)",
+      "Bash(pnpm lint:*)"
     ],
     "deny": [],
     "ask": []

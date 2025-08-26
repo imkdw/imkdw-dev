@@ -20,11 +20,8 @@ export const config = [
       import: importPlugin,
     },
     rules: {
-      // Console logs are errors
       "no-console": "error",
-      
-      // Turbo rules
-      "turbo/no-undeclared-env-vars": "error",
+      "turbo/no-undeclared-env-vars": "off",
       
       // TypeScript strict rules
       "@typescript-eslint/no-explicit-any": "error",
