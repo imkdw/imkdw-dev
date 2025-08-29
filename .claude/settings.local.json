@@ -10,9 +10,12 @@
       "Bash(pnpm -w run blog:build)",
       "Bash(pnpm api:*)",
       "Bash(pnpm blog:*)",
-      "Bash(pnpm lint:*)"
+      "Bash(pnpm lint:*)",
+      "Read(/Users/imkdw/.claude/**)",
+      "Read(/Users/imkdw/.claude/**)"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "outputStyle": "junior-dev-friendly"
 }
