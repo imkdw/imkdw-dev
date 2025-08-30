@@ -12,7 +12,8 @@
       "Bash(pnpm blog:*)",
       "Bash(pnpm lint:*)",
       "Read(/Users/imkdw/.claude/**)",
-      "Read(/Users/imkdw/.claude/**)"
+      "Read(/Users/imkdw/.claude/**)",
+      "mcp__sequential-thinking__sequentialthinking"
     ],
     "deny": [],
     "ask": []

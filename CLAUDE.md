@@ -101,3 +101,51 @@ This is a Turborepo monorepo using pnpm as the package manager. The project cont
 
 - Node.js >= 22
 - pnpm 10.0.0 (specified as package manager)
+
+## API (NestJS)
+- Prevent circular dependencies
+- Clear layer separation
+- Scalable modular structure
+- Maximize code reusability
+
+### 1.2 Core Principles
+- **Unidirectional Dependencies**: Upper layers depend on lower layers
+- **Domain-Centric Design**: Business logic separated from infrastructure
+- **Module-Based Organization**: Leverage NestJS module system
+
+## 2. Folder Structure
+
+```
+src/
+├── shared/    
+│   ├── domain/
+│   │   ├── member/
+│   │   │   ├── member.ts
+│   ├── repository/
+│   │   ├── member/
+│   │   │   ├── member.repository.ts
+│   ├── mapper/                 # Prisma ↔ Domain transformation
+│   │   ├── member/
+│   │   │   ├── member.mapper.ts
+│   ├── prisma/
+│   │   ├── prisma.service.ts
+│   └── repository.module.ts 
+├── features/                
+│   ├── member/
+│   │   ├── controller/
+│   │   │   └── member.controller.ts
+│   │   ├── dto/
+│   │   │   ├── create-member.dto.ts
+│   │   │   ├── update-member.dto.ts
+│   │   │   use-case/
+│   │   │   ├── create-member.use-case.ts
+│   │   │   ├── update-member.use-case.ts
+│   │   └── member.module.ts
+├── common/
+│   ├── decorator/
+│   ├── guard/
+│   ├── interceptor/
+│   ├── pipe/
+│   └── exception/
+└── app.module.ts
+```
