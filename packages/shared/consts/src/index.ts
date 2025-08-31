@@ -1,2 +1,2 @@
-export * from './common/app-env.const';
-export * from './member/member.const';
+export * from './common';
+export * from './member';
