@@ -50,6 +50,7 @@ export const myConfig = z.object({
    */
   APP_ENV: z.string(),
   AUTH_COOKIE_DOMAIN: z.string(),
+  API_PORT: z.coerce.number(),
 });
 
 export type MyConfig = z.infer<typeof myConfig>;
