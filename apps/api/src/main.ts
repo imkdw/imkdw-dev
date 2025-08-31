@@ -2,9 +2,10 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
 import { MyConfigService } from '@/config/my-config.service';
-import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { INestApplication, ValidationPipe, VersioningType } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-export const getCorsConfig = (env: string) => {
+function getCorsConfig(env: string) {
   const corsOrigins = [/^https?:\/\/imkdw\.dev$/, /^https?:\/\/.*\.imkdw\.dev$/];
 
   if (env !== 'production') {
@@ -13,7 +14,20 @@ export const getCorsConfig = (env: string) => {
   }
 
   return { origin: corsOrigins, credentials: true };
-};
+}
+
+function setSwagger(app: INestApplication, configService: MyConfigService) {
+  if (configService.get('APP_ENV') !== 'production') {
+    const SWAGGER_PATH = '/api';
+
+    const config = new DocumentBuilder().setTitle('API').build();
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup(SWAGGER_PATH, app, document, {
+      swaggerOptions: { docExpansion: 'none', filter: true },
+      jsonDocumentUrl: 'api/json',
+    });
+  }
+}
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -24,6 +38,8 @@ async function bootstrap() {
   app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   app.enableCors(getCorsConfig(env));
+
+  setSwagger(app, myConfigService);
 
   await app.listen(port);
 }
