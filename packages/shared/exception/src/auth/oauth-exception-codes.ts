@@ -1,0 +1,3 @@
+export const OAUTH_EXCEPTION_CODES = {
+  NOT_SUPPORTED_OAUTH_PROVIDER: 'OAUTH-0001',
+} as const;

@@ -2,7 +2,14 @@
   "extends": "../../packages/typescript-config/nestjs.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@shared/*": ["src/shared/*"],
+      "@features/*": ["src/features/*"],
+      "@common/*": ["src/common/*"]
+    },
+    "strictPropertyInitialization": false
   },
   "include": ["src/**/*", "test/**/*"],
   "exclude": ["node_modules", "dist"]

@@ -1,0 +1,14 @@
+model Member {
+  id           String    @id
+  email        String
+  nickname     String
+  profileImage String    @map("profile_image")
+  providerId   String    @map("provider_id")
+  provider     String
+  role         String    @default("USER")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+
+  @@map("member")
+}

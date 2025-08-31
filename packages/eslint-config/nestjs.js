@@ -1,6 +1,6 @@
-import globals from "globals";
+import globals from 'globals';
 
-import { config as baseConfig } from "./base.js";
+import { config as baseConfig } from './base.js';
 
 /**
  * A custom ESLint configuration for NestJS applications.
@@ -18,26 +18,18 @@ export const nestjsConfig = [
     },
     rules: {
       // NestJS specific rules - allow decorators
-      "@typescript-eslint/no-unused-vars": [
-        "error",
+      '@typescript-eslint/no-unused-vars': [
+        'error',
         {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_",
-          "ignoreRestSiblings": true
-        }
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
       ],
-      
-      // Allow console in development/debugging
-      "no-console": "warn",
-      
-      // NestJS commonly uses classes with decorators
-      "@typescript-eslint/no-extraneous-class": "off",
-      
-      // Allow empty constructors for dependency injection
-      "@typescript-eslint/no-useless-constructor": "off",
-      
-      // NestJS often requires parameter properties
-      "@typescript-eslint/parameter-properties": "off",
+      'no-console': 'warn',
+      '@typescript-eslint/no-extraneous-class': 'off',
+      '@typescript-eslint/no-useless-constructor': 'off',
+      '@typescript-eslint/parameter-properties': 'off',
     },
   },
 ];

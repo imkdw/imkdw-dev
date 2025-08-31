@@ -4,9 +4,10 @@
       "mode": "auto"
     }
   ],
-  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.preferences.importModuleSpecifierEnding": "auto",
   "cSpell.words": [
+    "DEEPL",
     "imkdw",
     "Milkdown",
     "Turbopack",
