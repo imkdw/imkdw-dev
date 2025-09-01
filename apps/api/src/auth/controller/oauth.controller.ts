@@ -1,6 +1,6 @@
 import { OAuthStrategyFactory } from '@/auth/factory/oauth-strategy.factory';
 import { Public } from '@/common/decorator/public.decorator';
-import { Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
+import { Controller, Get, Param, Query, Res } from '@nestjs/common';
 import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 import * as Swagger from '@/auth/swagger/oauth.swagger';
 import { OAuthProvider } from '@/auth/types/oauth.type';
@@ -10,8 +10,8 @@ import { Response } from 'express';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/auth/consts/auth.const';
 import { ResponseGetOAuthUrlDto } from '@/auth/dto/get-oauth-url.dto';
 
-@ApiTags('[인증]')
-@Controller('auth')
+@ApiTags('[인증] 소셜로그인')
+@Controller('oauth')
 @Public()
 export class OAuthController {
   constructor(
@@ -42,11 +42,6 @@ export class OAuthController {
     const { accessToken, refreshToken, redirectUrl } = await strategy.signIn(code, state);
     this.setToken(accessToken, refreshToken, res);
     return res.redirect(redirectUrl);
-  }
-
-  @Post('logout')
-  async logout(@Res({ passthrough: true }) res: Response) {
-    this.cookieService.clearCookie(['accessToken', 'refreshToken'], res);
   }
 
   private setToken(accessToken: string, refreshToken: string, res: Response) {
