@@ -4,11 +4,12 @@ import { AppModule } from './app.module';
 import { MyConfigService } from '@/config/my-config.service';
 import { INestApplication, ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { APP_ENV } from '@imkdw-dev/consts';
 
 function getCorsConfig(env: string) {
   const corsOrigins = [/^https?:\/\/imkdw\.dev$/, /^https?:\/\/.*\.imkdw\.dev$/];
 
-  if (env !== 'production') {
+  if (env !== APP_ENV.PRODUCTION) {
     corsOrigins.push(/^https?:\/\/localhost:([0-9]{1,5})$/);
     corsOrigins.push(/^https?:\/\/localhost$/);
   }

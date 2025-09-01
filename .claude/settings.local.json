@@ -20,7 +20,10 @@
       "Bash(npx tsc:*)",
       "Bash(cat:*)",
       "Bash(pnpm dev:*)",
-      "Bash(pnpm prisma migrate dev:*)"
+      "Bash(pnpm prisma migrate dev:*)",
+      "Bash(pnpm -F @imkdw-dev/consts build)",
+      "Bash(pnpm -F @imkdw-dev/exception build)",
+      "Bash(pnpm -F @imkdw-dev/types build)"
     ],
     "deny": [],
     "ask": []
