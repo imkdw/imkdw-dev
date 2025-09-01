@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Member } from '@/shared/domain/member';
+import { Member } from '@/shared/domain/member/member';
 import { MemberMapper } from '@/shared/mapper/member/member.mapper';
 import { PrismaService } from '@/infra/database/prisma.service';
 

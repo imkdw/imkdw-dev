@@ -1,5 +1,5 @@
 import { generateUUID } from '@/common/utils/string.util';
-import { Member } from '@/shared/domain/member';
+import { Member } from '@/shared/domain/member/member';
 import { OAuthProvider } from '@/auth/types/oauth.type';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
 

@@ -1,4 +1,4 @@
-import { Member } from '@/shared/domain/member';
+import { Member } from '@/shared/domain/member/member';
 import { MemberEntity } from '@/shared/entity/member/member.entity';
 
 export class MemberMapper {
