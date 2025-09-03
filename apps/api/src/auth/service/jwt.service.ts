@@ -1,6 +1,12 @@
 import { InvalidJwtException } from '@/auth/exception/jwt/invalid-jwt.exception';
 import { JwtExpiredException } from '@/auth/exception/jwt/jwt-expired-exception';
-import { CreateJwtPayload, CreateJwtResult, DecodedJwtPayload, JwtTokenType, VerifiedJwtPayload } from '@/auth/types/jwt.type';
+import {
+  CreateJwtPayload,
+  CreateJwtResult,
+  DecodedJwtPayload,
+  JwtTokenType,
+  VerifiedJwtPayload,
+} from '@/auth/types/jwt.type';
 import { MyConfigService } from '@/config/my-config.service';
 import { Injectable } from '@nestjs/common';
 import { JwtPayload, TokenExpiredError, decode, sign, verify } from 'jsonwebtoken';
@@ -44,13 +50,13 @@ export class JwtService {
       const verifiedJwt = verify(token, this.jwtSecret);
 
       if (!this.isValidJwtPayload(verifiedJwt)) {
-        throw new InvalidJwtException(`유효하지 않은 토큰`);
+        throw new InvalidJwtException('유효하지 않은 토큰');
       }
 
       return verifiedJwt;
     } catch (error) {
       if (error instanceof TokenExpiredError) {
-        throw new JwtExpiredException(`만료된 토큰`);
+        throw new JwtExpiredException('만료된 토큰');
       }
 
       throw error;

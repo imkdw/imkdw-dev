@@ -4,11 +4,11 @@ import { Controller, Get, Param, Query, Res } from '@nestjs/common';
 import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 import * as Swagger from '@/auth/swagger/oauth.swagger';
 import { OAuthProvider } from '@/auth/types/oauth.type';
-import { CookieService } from '@/infra/cookie/service/cookie.service';
-import { COOKIE_MAX_AGE } from '@/infra/cookie/const/cookie.const';
 import { Response } from 'express';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/auth/consts/auth.const';
 import { ResponseGetOAuthUrlDto } from '@/auth/dto/get-oauth-url.dto';
+import { CookieService } from '@/infra/cookie/cookie.service';
+import { COOKIE_MAX_AGE } from '@/infra/cookie/cookie.const';
 
 @ApiTags('[인증] 소셜로그인')
 @Controller('oauth')

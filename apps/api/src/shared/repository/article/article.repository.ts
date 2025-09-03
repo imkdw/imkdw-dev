@@ -43,4 +43,15 @@ export class ArticleRepository {
 
     return entities.map(entity => ArticleMapper.toDomain(entity));
   }
+
+  async findByTitle(title: string): Promise<Article | null> {
+    const entity = await this.prisma.article.findFirst({
+      where: {
+        title,
+        deletedAt: null,
+      },
+    });
+
+    return entity ? ArticleMapper.toDomain(entity) : null;
+  }
 }

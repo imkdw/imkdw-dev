@@ -1,14 +1,3 @@
-interface Props {
-  id: string;
-  email: string;
-  nickname: string;
-  profileImage: string;
-  providerId: string;
-  provider: string;
-  role: string;
-  deletedAt: Date | null;
-}
-
 export class Member {
   id: string;
   email: string;
@@ -19,7 +8,7 @@ export class Member {
   role: string;
   deletedAt: Date | null;
 
-  private constructor(props: Props) {
+  private constructor(props: Member) {
     this.id = props.id;
     this.email = props.email;
     this.nickname = props.nickname;
@@ -30,7 +19,7 @@ export class Member {
     this.deletedAt = props.deletedAt;
   }
 
-  static create(props: Props): Member {
+  static create(props: Member): Member {
     return new Member(props);
   }
 }
