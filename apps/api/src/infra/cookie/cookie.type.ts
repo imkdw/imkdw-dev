@@ -1,4 +1,4 @@
-import { COOKIE_MAX_AGE, COOKIE_SAME_SITE } from '@/infra/cookie/const/cookie.const';
+import { COOKIE_MAX_AGE, COOKIE_SAME_SITE } from '@/infra/cookie/cookie.const';
 import { Response } from 'express';
 
 export type CookieMaxAge = (typeof COOKIE_MAX_AGE)[keyof typeof COOKIE_MAX_AGE];

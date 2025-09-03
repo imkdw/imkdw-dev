@@ -12,8 +12,8 @@ import {
   GoogleUserInfoResponse,
 } from '@/auth/types/google-oauth.type';
 import { OAuthSignInResult } from '@/auth/types/oauth.type';
-import { HttpService } from '@/infra/http/service/http.service';
-import { HTTP_SERVICE } from '@/infra/http/const/http.const';
+import { HttpService } from '@/infra/http/http.service';
+import { HTTP_SERVICE } from '@/infra/http/http.const';
 import { MemberAuthService } from '@/auth/service/member-auth.service';
 
 @Injectable()

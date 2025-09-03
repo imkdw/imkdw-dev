@@ -1,5 +1,5 @@
-import { HttpService } from '@/infra/http/service/http.service';
-import { HttpRequestConfig, HttpResponse, RequestParams } from '@/infra/http/types/http.type';
+import { HttpService } from '@/infra/http/http.service';
+import { HttpRequestConfig, HttpResponse, RequestParams } from '@/infra/http/http.type';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

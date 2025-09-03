@@ -1,5 +1,5 @@
-import { HTTP_SERVICE } from '@/infra/http/const/http.const';
-import { FetchHttpService } from '@/infra/http/service/fetch-http.service';
+import { HTTP_SERVICE } from '@/infra/http/http.const';
+import { FetchHttpService } from '@/infra/http/fetch-http.service';
 import { Module } from '@nestjs/common';
 
 @Module({

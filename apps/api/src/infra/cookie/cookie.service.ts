@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Response } from 'express';
 
 import { MyConfigService } from '@/config/my-config.service';
-import { SetCookieParams } from '@/infra/cookie/types/cookie.type';
-import { COOKIE_SAME_SITE } from '@/infra/cookie/const/cookie.const';
 import { APP_ENV } from '@imkdw-dev/consts';
+import { SetCookieParams } from '@/infra/cookie/cookie.type';
+import { COOKIE_SAME_SITE } from '@/infra/cookie/cookie.const';
 
 @Injectable()
 export class CookieService {
