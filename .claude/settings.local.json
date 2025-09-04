@@ -24,7 +24,10 @@
       "Bash(pnpm -F @imkdw-dev/consts build)",
       "Bash(pnpm -F @imkdw-dev/exception build)",
       "Bash(pnpm -F @imkdw-dev/types build)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "Bash(pnpm test:*)"
     ],
     "deny": [],
     "ask": []

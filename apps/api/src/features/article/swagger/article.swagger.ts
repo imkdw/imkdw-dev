@@ -1,4 +1,4 @@
-import { CreateArticleDto } from '@/features/blog/article/dto/create-article.dto';
+import { CreateArticleDto } from '@/features/article/dto/create-article.dto';
 import { applyDecorators } from '@nestjs/common';
 import { ApiBody, ApiOperation } from '@nestjs/swagger';
 

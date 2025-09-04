@@ -1,4 +1,4 @@
-import { ExistArticleException } from '@/features/blog/article/exception/exist-article.exception';
+import { ExistArticleException } from '@/features/article/exception/exist-article.exception';
 import { ArticleRepository } from '@/shared/repository/article/article.repository';
 import { Injectable } from '@nestjs/common';
 

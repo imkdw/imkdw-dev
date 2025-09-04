@@ -8,7 +8,6 @@ export class ArticleMapper {
       title: entity.title,
       content: entity.content,
       createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
       deletedAt: entity.deletedAt,
     });
   }

@@ -3,7 +3,6 @@ export class Article {
   title: string;
   content: string;
   createdAt: Date;
-  updatedAt: Date;
   deletedAt: Date | null;
 
   private constructor(props: Article) {
@@ -11,7 +10,6 @@ export class Article {
     this.title = props.title;
     this.content = props.content;
     this.createdAt = props.createdAt;
-    this.updatedAt = props.updatedAt;
     this.deletedAt = props.deletedAt;
   }
 

@@ -12,11 +12,13 @@ export class ArticleRepository {
       where: { id: article.id },
       data: article,
     });
+
     return ArticleMapper.toDomain(updatedEntity);
   }
 
   async create(article: Article): Promise<Article> {
     const createdEntity = await this.prisma.article.create({ data: article });
+
     return ArticleMapper.toDomain(createdEntity);
   }
 
