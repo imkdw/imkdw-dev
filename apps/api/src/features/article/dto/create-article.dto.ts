@@ -17,7 +17,7 @@ export class CreateArticleDto {
 }
 
 export class ResponseCreateArticleDto {
-  constructor(id: string) {
+  private constructor(id: string) {
     this.id = id;
   }
 

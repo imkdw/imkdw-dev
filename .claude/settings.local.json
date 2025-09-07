@@ -27,7 +27,8 @@
       "Bash(tree:*)",
       "mcp__context7__resolve-library-id",
       "mcp__context7__get-library-docs",
-      "Bash(pnpm test:*)"
+      "Bash(pnpm test:*)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": [],
     "ask": []

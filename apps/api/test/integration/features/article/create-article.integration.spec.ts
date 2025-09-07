@@ -1,0 +1,75 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { CreateArticleUseCase } from '@/features/article/use-case/create-article.use-case';
+import { ArticleValidator } from '@/features/article/validator/article.validator';
+import { ArticleRepository } from '@/shared/repository/article/article.repository';
+import { PrismaService } from '@/infra/database/prisma.service';
+import { CreateArticleDto } from '@/features/article/dto/create-article.dto';
+import { ExistArticleException } from '@/features/article/exception/exist-article.exception';
+import { createTestArticle } from '@test/integration/helpers/article.helper';
+import { PrismaTestingHelper } from '@chax-at/transactional-prisma-testing';
+
+describe('게시글 생성 유스케이스', () => {
+  let sut: CreateArticleUseCase;
+  let prismaTestingHelper: PrismaTestingHelper<PrismaService> | undefined;
+  let prisma: PrismaService;
+  let module: TestingModule;
+
+  beforeAll(async () => {
+    if (!prismaTestingHelper) {
+      const originalPrismaService = new PrismaService();
+      prismaTestingHelper = new PrismaTestingHelper(originalPrismaService);
+      prisma = prismaTestingHelper.getProxyClient();
+    }
+
+    module = await Test.createTestingModule({
+      providers: [
+        CreateArticleUseCase,
+        ArticleValidator,
+        ArticleRepository,
+        {
+          provide: PrismaService,
+          useValue: prisma,
+        },
+      ],
+    }).compile();
+  });
+
+  beforeEach(async () => {
+    sut = module.get<CreateArticleUseCase>(CreateArticleUseCase);
+    await prismaTestingHelper?.startNewTransaction();
+  });
+
+  afterEach(() => {
+    prismaTestingHelper?.rollbackCurrentTransaction();
+  });
+
+  describe('동일한 제목의 게시글이 이미 존재하면', () => {
+    const existingTitle = '이미 존재하는 게시글 제목';
+
+    it('에러가 발생한다', async () => {
+      await createTestArticle(prisma, { title: existingTitle });
+      const createArticleDto: CreateArticleDto = {
+        title: existingTitle,
+        content: '새로운 게시글 내용입니다.',
+      };
+
+      await expect(sut.execute(createArticleDto)).rejects.toThrow(ExistArticleException);
+    });
+  });
+
+  describe('새로운 게시글을 생성하면', () => {
+    it('게시글이 생성된다', async () => {
+      const createArticleDto: CreateArticleDto = {
+        title: '새로운 게시글 제목',
+        content: '테스트 게시글 내용입니다.',
+      };
+
+      const result = await sut.execute(createArticleDto);
+
+      const savedArticle = await prisma.article.findUnique({ where: { id: result.id } });
+      expect(savedArticle).not.toBeNull();
+      expect(savedArticle?.title).toBe(createArticleDto.title);
+      expect(savedArticle?.content).toBe(createArticleDto.content);
+    });
+  });
+});
