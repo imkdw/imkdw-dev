@@ -5,7 +5,6 @@ import { SeriesRepository } from '@/shared/repository/series/series.repository';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { UpdateSeriesDto } from '@/features/series/dto/update-series.dto';
 import { SeriesNotFoundException } from '@/features/series/exception/series-not-found.exception';
-import { ExistSeriesSlugException } from '@/features/series/exception/exist-series-slug.exception';
 import { ExistSeriesTitleException } from '@/features/series/exception/exist-series-title.exception';
 import { createTestSeries } from '@test/integration/helpers/series.helper';
 import { PrismaTestingHelper } from '@chax-at/transactional-prisma-testing';
@@ -50,7 +49,6 @@ describe('시리즈 수정 유스케이스', () => {
       const nonExistentId = 'non-existent-id';
       const updateSeriesDto: UpdateSeriesDto = {
         title: '수정된 시리즈 제목',
-        slug: 'updated-series-slug',
       };
 
       await expect(sut.execute(nonExistentId, updateSeriesDto)).rejects.toThrow(SeriesNotFoundException);
@@ -66,28 +64,12 @@ describe('시리즈 수정 유스케이스', () => {
 
       const updateSeriesDto: UpdateSeriesDto = {
         title: duplicateTitle,
-        slug: 'updated-series-slug',
       };
 
       await expect(sut.execute(existingSeries.id, updateSeriesDto)).rejects.toThrow(ExistSeriesTitleException);
     });
   });
 
-  describe('다른 시리즈와 슬러그가 중복되면', () => {
-    const duplicateSlug = 'duplicate-series-slug';
-
-    it('에러가 발생한다', async () => {
-      const existingSeries = await createTestSeries(prisma, { slug: 'existing-series-slug' });
-      await createTestSeries(prisma, { slug: duplicateSlug });
-
-      const updateSeriesDto: UpdateSeriesDto = {
-        title: '수정된 시리즈 제목',
-        slug: duplicateSlug,
-      };
-
-      await expect(sut.execute(existingSeries.id, updateSeriesDto)).rejects.toThrow(ExistSeriesSlugException);
-    });
-  });
 
   describe('정상적인 시리즈 수정하면', () => {
     it('같은 제목으로 수정하는 것은 허용된다', async () => {
@@ -98,31 +80,14 @@ describe('시리즈 수정 유스케이스', () => {
 
       const updateSeriesDto: UpdateSeriesDto = {
         title: existingSeries.title,
-        slug: 'updated-series-slug',
       };
 
       await expect(sut.execute(existingSeries.id, updateSeriesDto)).resolves.not.toThrow();
 
       const updatedSeries = await prisma.series.findUnique({ where: { id: existingSeries.id } });
-      expect(updatedSeries?.slug).toBe(updateSeriesDto.slug);
+      expect(updatedSeries?.slug).toBe(existingSeries.slug);
     });
 
-    it('같은 슬러그로 수정하는 것은 허용된다', async () => {
-      const existingSeries = await createTestSeries(prisma, {
-        title: '기존 시리즈 제목',
-        slug: 'existing-series-slug',
-      });
-
-      const updateSeriesDto: UpdateSeriesDto = {
-        title: '수정된 시리즈 제목',
-        slug: existingSeries.slug,
-      };
-
-      await expect(sut.execute(existingSeries.id, updateSeriesDto)).resolves.not.toThrow();
-
-      const updatedSeries = await prisma.series.findUnique({ where: { id: existingSeries.id } });
-      expect(updatedSeries?.title).toBe(updateSeriesDto.title);
-    });
 
     it('시리즈가 수정된다', async () => {
       const existingSeries = await createTestSeries(prisma, {
@@ -132,14 +97,13 @@ describe('시리즈 수정 유스케이스', () => {
 
       const updateSeriesDto: UpdateSeriesDto = {
         title: '수정된 시리즈 제목',
-        slug: 'updated-series-slug',
       };
 
       await sut.execute(existingSeries.id, updateSeriesDto);
 
       const updatedSeries = await prisma.series.findUnique({ where: { id: existingSeries.id } });
       expect(updatedSeries?.title).toBe(updateSeriesDto.title);
-      expect(updatedSeries?.slug).toBe(updateSeriesDto.slug);
+      expect(updatedSeries?.slug).toBe(existingSeries.slug);
     });
   });
 });

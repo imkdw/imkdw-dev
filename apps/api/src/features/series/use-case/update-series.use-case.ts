@@ -18,14 +18,10 @@ export class UpdateSeriesUseCase {
       await this.seriesValidator.checkExistTitle(dto.title, id);
     }
 
-    if (dto.slug) {
-      await this.seriesValidator.checkExistSlug(dto.slug, id);
-    }
-
     const updatedSeries = Series.create({
       id: existingSeries.id,
-      title: dto.title ?? existingSeries.title,
-      slug: dto.slug ?? existingSeries.slug,
+      title: dto.title,
+      slug: existingSeries.slug,
       createdAt: existingSeries.createdAt,
       deletedAt: existingSeries.deletedAt,
     });
