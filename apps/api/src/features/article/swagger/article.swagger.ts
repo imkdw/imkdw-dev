@@ -1,7 +1,16 @@
 import { CreateArticleDto } from '@/features/article/dto/create-article.dto';
-import { applyDecorators } from '@nestjs/common';
-import { ApiBody, ApiOperation } from '@nestjs/swagger';
+import { UpdateArticleDto } from '@/features/article/dto/update-article.dto';
+import { applyDecorators, HttpStatus } from '@nestjs/common';
+import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 export function createArticle(summary: string) {
   return applyDecorators(ApiOperation({ summary }), ApiBody({ type: CreateArticleDto }));
+}
+
+export function updateArticle(summary: string) {
+  return applyDecorators(
+    ApiOperation({ summary }),
+    ApiBody({ type: UpdateArticleDto }),
+    ApiResponse({ status: HttpStatus.NO_CONTENT, description: '게시글이 성공적으로 수정되었습니다' })
+  );
 }

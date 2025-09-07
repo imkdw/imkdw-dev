@@ -8,10 +8,14 @@ If anything changes or if you have any new advice and requests, please update th
 
 This is a Turborepo monorepo using pnpm as the package manager. The project contains:
 
-- `apps/api/` - NestJS API server
+- `apps/api/` - NestJS API server with PostgreSQL via Prisma
 - `apps/blog/` - Next.js blog application with Tailwind CSS v3 and Turbopack
 - `packages/eslint-config/` - Shared ESLint configurations
-- `packages/typescript-config/` - Shared TypeScript configurations
+- `packages/typescript-config/` - Shared TypeScript configurations  
+- `packages/shared/` - Shared utility packages:
+  - `consts/` - Application constants
+  - `exception/` - Error handling utilities
+  - `types/` - Shared TypeScript types
 
 ## Common Commands
 
@@ -39,10 +43,15 @@ This is a Turborepo monorepo using pnpm as the package manager. The project cont
 - `pnpm format` - Format code using Prettier (printWidth: 120)
 
 ### Testing (API only)
-- `pnpm api test` - Run unit tests
-- `pnpm api test:watch` - Run tests in watch mode
-- `pnpm api test:e2e` - Run end-to-end tests
+- `pnpm api test` - Run all tests (unit + integration)  
+- `pnpm api test:unit` - Run unit tests only
+- `pnpm api test:integration` - Run integration tests only (requires `.env.test`)
 - `pnpm api test:cov` - Run tests with coverage
+
+### Database Management (API)
+- `pnpm api prisma generate` - Generate Prisma client
+- `pnpm api prisma migrate dev` - Run migrations in development
+- `pnpm api prisma studio` - Open Prisma Studio GUI
 
 ## Port Configuration
 
@@ -76,10 +85,14 @@ This is a Turborepo monorepo using pnpm as the package manager. The project cont
 ## Architecture Notes
 
 ### API Application (NestJS)
-- Port 8000, standard NestJS architecture
-- Uses shared TypeScript and ESLint configs
-- Jest configured for testing with TypeScript
-- Console warnings allowed for development debugging
+- Port 8000, feature-based modular architecture (`/features`, `/shared`, `/infra`)
+- PostgreSQL database with Prisma ORM (split schema files in `prisma/schema/`)
+- Swagger documentation available at `/api` in non-production environments
+- API versioning enabled (default v1 via URI)
+- Layered architecture: Controllers → Services → Repositories
+- Shared workspace packages for types, constants, and exceptions
+- Separate test configurations: unit tests (`test/unit/`) and integration tests (`test/integration/`)
+- Uses dotenv for environment configuration with `.env.test` for testing
 
 ### Blog Application (Next.js)
 - Port 3000, Next.js 15 with App Router and Turbopack
@@ -91,24 +104,29 @@ This is a Turborepo monorepo using pnpm as the package manager. The project cont
 - Strict React Hooks dependency array checking
 - Next.js image optimization enforced
 
-### Monorepo Structure
+### Monorepo Structure  
 - Turborepo manages task orchestration and caching
 - Output directories: `.next/**`, `dist/**` for proper caching
 - Development tasks are not cached and run persistently
 - Uses pnpm workspaces with convenient shortcuts (`pnpm api`, `pnpm blog`)
+- Workspace packages prefixed with `@imkdw-dev/` scope
+- Shared packages must be built before dependent applications
 
 ## Requirements
 
 - Node.js >= 22
 - pnpm 10.0.0 (specified as package manager)
 
-## API (NestJS)
-- Prevent circular dependencies
-- Clear layer separation
-- Scalable modular structure
-- Maximize code reusability
+## Development Guidelines
 
-### 1.2 Core Principles
-- **Unidirectional Dependencies**: Upper layers depend on lower layers
-- **Domain-Centric Design**: Business logic separated from infrastructure
-- **Module-Based Organization**: Leverage NestJS module system
+### API Architecture (NestJS)  
+- **Feature-based modules**: Organize by domain (`/features/article`, `/features/auth`)
+- **Layered structure**: `infra/` (database, http), `shared/` (repositories, utilities), `features/` (business logic)
+- **Unidirectional dependencies**: Features → Shared → Infra
+- **Domain-centric design**: Business logic separated from infrastructure concerns
+- **Modular organization**: Each feature as self-contained NestJS module
+
+### Database Schema Organization
+- Split Prisma schema files by domain in `prisma/schema/`
+- Main schema file imports domain-specific schemas
+- Use workspace constants package for shared values across schema files

@@ -1,4 +1,5 @@
 import { ExistArticleException } from '@/features/article/exception/exist-article.exception';
+import { ArticleNotFoundException } from '@/features/article/exception/article-not-found.exception';
 import { ArticleRepository } from '@/shared/repository/article/article.repository';
 import { Injectable } from '@nestjs/common';
 
@@ -12,5 +13,15 @@ export class ArticleValidator {
     if (article) {
       throw new ExistArticleException(`${title}은 이미 존재하는 게시글 제목입니다`);
     }
+  }
+
+  async checkExist(id: string) {
+    const article = await this.articleRepository.findById(id);
+
+    if (!article) {
+      throw new ArticleNotFoundException(`게시글을 찾을 수 없습니다`);
+    }
+
+    return article;
   }
 }

@@ -7,4 +7,7 @@ export const ARTICLE_EXCEPTION_CODES = {
 
   // 게시글 내용 유효성 검사 실패
   INVALID_ARTICLE_CONTENT: 'ARTICLE-0003',
+
+  // 게시글을 찾을 수 없음
+  ARTICLE_NOT_FOUND: 'ARTICLE-0004',
 } as const;

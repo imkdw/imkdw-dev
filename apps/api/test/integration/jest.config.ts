@@ -6,7 +6,6 @@ const integrationConfig: Config = {
   rootDir: '../..',
   testMatch: ['<rootDir>/test/integration/**/*.spec.ts'],
   setupFilesAfterEnv: ['<rootDir>/test/integration/setup.ts'],
-  maxWorkers: 1,
   testTimeout: 30000,
 };
 
