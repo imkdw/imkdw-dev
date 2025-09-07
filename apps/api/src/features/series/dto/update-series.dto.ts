@@ -2,7 +2,7 @@ import { IsNotEmptyString } from '@/common/decorator/is-not-empty-string.decorat
 import { SERIES_MAX_TITLE_LENGTH, SERIES_MAX_SLUG_LENGTH } from '@imkdw-dev/consts';
 import { IUpdateSeriesDto } from '@imkdw-dev/types';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, MaxLength } from 'class-validator';
+import { MaxLength } from 'class-validator';
 
 export class UpdateSeriesDto implements IUpdateSeriesDto {
   @ApiProperty({
@@ -12,9 +12,8 @@ export class UpdateSeriesDto implements IUpdateSeriesDto {
     required: false,
   })
   @MaxLength(SERIES_MAX_TITLE_LENGTH)
-  @IsOptional()
   @IsNotEmptyString()
-  readonly title?: string;
+  readonly title: string;
 
   @ApiProperty({
     description: '시리즈 슬러그 (URL 경로)',
@@ -23,7 +22,6 @@ export class UpdateSeriesDto implements IUpdateSeriesDto {
     required: false,
   })
   @MaxLength(SERIES_MAX_SLUG_LENGTH)
-  @IsOptional()
   @IsNotEmptyString()
-  readonly slug?: string;
+  readonly slug: string;
 }
