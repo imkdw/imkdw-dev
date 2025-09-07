@@ -1,10 +1,11 @@
 import { IsNotEmptyString } from '@/common/decorator/is-not-empty-string.decorator';
 import { ARTICLE_MAX_CONTENT_LENGTH, ARTICLE_MAX_TITLE_LENGTH } from '@imkdw-dev/consts';
+import { ICreateArticleDto, IResponseCreateArticleDto } from '@imkdw-dev/types';
 import { ApiProperty } from '@nestjs/swagger';
 import { MaxLength } from 'class-validator';
 import { Article } from '@/shared/domain/article/article';
 
-export class CreateArticleDto {
+export class CreateArticleDto implements ICreateArticleDto {
   @ApiProperty({ description: '제목', example: '게시글 제목입니다', maxLength: ARTICLE_MAX_TITLE_LENGTH })
   @MaxLength(ARTICLE_MAX_TITLE_LENGTH)
   @IsNotEmptyString()
@@ -16,7 +17,7 @@ export class CreateArticleDto {
   readonly content: string;
 }
 
-export class ResponseCreateArticleDto {
+export class ResponseCreateArticleDto implements IResponseCreateArticleDto {
   private constructor(id: string) {
     this.id = id;
   }
