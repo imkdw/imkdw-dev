@@ -14,9 +14,7 @@ export class UpdateArticleUseCase {
   async execute(id: string, dto: UpdateArticleDto): Promise<void> {
     const existingArticle = await this.articleValidator.checkExist(id);
 
-    if (existingArticle.title !== dto.title) {
-      await this.articleValidator.checkExistTitle(dto.title);
-    }
+    await this.articleValidator.checkExistTitle(dto.title, id);
 
     const updatedArticle = Article.create({
       id: existingArticle.id,

@@ -7,10 +7,10 @@ import { Injectable } from '@nestjs/common';
 export class ArticleValidator {
   constructor(private readonly articleRepository: ArticleRepository) {}
 
-  async checkExistTitle(title: string) {
+  async checkExistTitle(title: string, excludeId?: string) {
     const article = await this.articleRepository.findByTitle(title);
 
-    if (article) {
+    if (article && article.id !== excludeId) {
       throw new ExistArticleException(`${title}은 이미 존재하는 게시글 제목입니다`);
     }
   }
