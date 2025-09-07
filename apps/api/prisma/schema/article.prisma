@@ -1,6 +1,14 @@
+/// 블로그 게시글 정보를 저장하는 테이블
 model Article {
-  id        String    @id @default(uuid())
-  title     String
+  id String @id @default(uuid())
+
+  /// 게시글 제목
+  title String
+
+  /// 게시글 URL 경로
+  slug String
+
+  /// 게시글 본문 내용
   content   String
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
@@ -9,10 +17,17 @@ model Article {
   @@map("article")
 }
 
+/// 게시글 수정 이력을 저장하는 테이블
 model ArticleHistory {
-  id        String    @id @default(uuid())
+  id String @id @default(uuid())
+
+  /// 원본 게시글 ID
   articleId String
-  title     String
+
+  /// 수정 시점의 게시글 제목
+  title String
+
+  /// 수정 시점의 게시글 본문 내용
   content   String
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")

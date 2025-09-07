@@ -29,7 +29,10 @@
       "mcp__context7__get-library-docs",
       "Bash(pnpm test:*)",
       "WebFetch(domain:github.com)",
-      "Bash(pnpm prisma generate:*)"
+      "Bash(pnpm prisma generate:*)",
+      "Bash(git add:*)",
+      "Bash(dotenv:*)",
+      "Bash(npx dotenv:*)"
     ],
     "deny": [],
     "ask": []

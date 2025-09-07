@@ -1,6 +1,11 @@
+/// 게시글 시리즈 정보를 저장하는 테이블
 model Series {
-  id        String    @id @default(uuid())
-  title     String
+  id String @id @default(uuid())
+
+  /// 시리즈 제목
+  title String
+
+  /// 시리즈 URL 경로
   slug      String
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")

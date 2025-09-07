@@ -1,10 +1,23 @@
+/// 회원 정보를 저장하는 테이블
 model Member {
-  id           String    @id
-  email        String
-  nickname     String
-  profileImage String    @map("profile_image")
-  providerId   String    @map("provider_id")
-  provider     String
+  id String @id
+
+  /// 회원 이메일 주소
+  email String
+
+  /// 회원 닉네임
+  nickname String
+
+  /// 프로필 이미지 URL
+  profileImage String @map("profile_image")
+
+  /// OAuth 제공자별 고유 ID
+  providerId String @map("provider_id")
+
+  /// OAuth 제공자 (Google, GitHub 등)
+  provider String
+
+  /// 회원 권한 (USER, ADMIN 등)
   role         String    @default("USER")
   createdAt    DateTime  @default(now()) @map("created_at")
   updatedAt    DateTime  @updatedAt @map("updated_at")
