@@ -10,6 +10,7 @@ export const createTestArticle = async (
     data: {
       id: generateUUID(),
       title: data?.title ?? `Test Article ${Date.now()}`,
+      slug: data?.slug ?? `test-article-${Date.now()}`,
       content: data?.content ?? 'Test article content for integration testing',
       ...data,
     },

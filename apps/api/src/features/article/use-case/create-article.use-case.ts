@@ -14,10 +14,12 @@ export class CreateArticleUseCase {
 
   async execute(dto: CreateArticleDto): Promise<Article> {
     await this.articleValidator.checkExistTitle(dto.title);
+    await this.articleValidator.checkExistSlug(dto.slug);
 
     const article = Article.create({
       id: generateUUID(),
       title: dto.title,
+      slug: dto.slug,
       content: dto.content,
       createdAt: new Date(),
       deletedAt: null,

@@ -6,6 +6,7 @@ export class ArticleMapper {
     return Article.create({
       id: entity.id,
       title: entity.title,
+      slug: entity.slug,
       content: entity.content,
       createdAt: entity.createdAt,
       deletedAt: entity.deletedAt,

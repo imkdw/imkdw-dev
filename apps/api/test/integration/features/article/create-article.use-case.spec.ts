@@ -50,6 +50,7 @@ describe('게시글 생성 유스케이스', () => {
       await createTestArticle(prisma, { title: existingTitle });
       const createArticleDto: CreateArticleDto = {
         title: existingTitle,
+        slug: 'existing-article-slug',
         content: '새로운 게시글 내용입니다.',
       };
 
@@ -61,6 +62,7 @@ describe('게시글 생성 유스케이스', () => {
     it('게시글이 생성된다', async () => {
       const createArticleDto: CreateArticleDto = {
         title: '새로운 게시글 제목',
+        slug: 'new-article-slug',
         content: '테스트 게시글 내용입니다.',
       };
 

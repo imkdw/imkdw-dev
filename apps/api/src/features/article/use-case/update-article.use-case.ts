@@ -19,6 +19,7 @@ export class UpdateArticleUseCase {
     const updatedArticle = Article.create({
       id: existingArticle.id,
       title: dto.title,
+      slug: existingArticle.slug,
       content: dto.content,
       createdAt: existingArticle.createdAt,
       deletedAt: null,

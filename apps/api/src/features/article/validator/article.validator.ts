@@ -1,4 +1,5 @@
 import { ExistArticleException } from '@/features/article/exception/exist-article.exception';
+import { ExistArticleSlugException } from '@/features/article/exception/exist-article-slug.exception';
 import { ArticleNotFoundException } from '@/features/article/exception/article-not-found.exception';
 import { ArticleRepository } from '@/shared/repository/article/article.repository';
 import { Injectable } from '@nestjs/common';
@@ -12,6 +13,14 @@ export class ArticleValidator {
 
     if (article && article.id !== excludeId) {
       throw new ExistArticleException(`${title}은 이미 존재하는 게시글 제목입니다`);
+    }
+  }
+
+  async checkExistSlug(slug: string) {
+    const article = await this.articleRepository.findBySlug(slug);
+
+    if (article) {
+      throw new ExistArticleSlugException(`${slug}은 이미 존재하는 게시글 슬러그입니다`);
     }
   }
 

@@ -56,4 +56,15 @@ export class ArticleRepository {
 
     return entity ? ArticleMapper.toDomain(entity) : null;
   }
+
+  async findBySlug(slug: string): Promise<Article | null> {
+    const entity = await this.prisma.article.findFirst({
+      where: {
+        slug,
+        deletedAt: null,
+      },
+    });
+
+    return entity ? ArticleMapper.toDomain(entity) : null;
+  }
 }
