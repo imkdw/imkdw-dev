@@ -32,7 +32,8 @@
       "Bash(pnpm prisma generate:*)",
       "Bash(git add:*)",
       "Bash(dotenv:*)",
-      "Bash(npx dotenv:*)"
+      "Bash(npx dotenv:*)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"예\" pnpm api prisma migrate reset --force)"
     ],
     "deny": [],
     "ask": []

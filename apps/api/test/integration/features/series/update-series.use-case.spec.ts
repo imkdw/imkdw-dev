@@ -1,47 +1,28 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { UpdateSeriesUseCase } from '@/features/series/use-case/update-series.use-case';
 import { SeriesValidator } from '@/features/series/validator/series.validator';
 import { SeriesRepository } from '@/shared/repository/series/series.repository';
-import { PrismaService } from '@/infra/database/prisma.service';
 import { UpdateSeriesDto } from '@/features/series/dto/update-series.dto';
 import { SeriesNotFoundException } from '@/features/series/exception/series-not-found.exception';
 import { ExistSeriesTitleException } from '@/features/series/exception/exist-series-title.exception';
 import { createTestSeries } from '@test/integration/helpers/series.helper';
-import { PrismaTestingHelper } from '@chax-at/transactional-prisma-testing';
+import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
 
 describe('시리즈 수정 유스케이스', () => {
+  let testHelper: IntegrationTestHelper;
   let sut: UpdateSeriesUseCase;
-  let prismaTestingHelper: PrismaTestingHelper<PrismaService> | undefined;
-  let prisma: PrismaService;
-  let module: TestingModule;
 
   beforeAll(async () => {
-    if (!prismaTestingHelper) {
-      const originalPrismaService = new PrismaService();
-      prismaTestingHelper = new PrismaTestingHelper(originalPrismaService);
-      prisma = prismaTestingHelper.getProxyClient();
-    }
-
-    module = await Test.createTestingModule({
-      providers: [
-        UpdateSeriesUseCase,
-        SeriesValidator,
-        SeriesRepository,
-        {
-          provide: PrismaService,
-          useValue: prisma,
-        },
-      ],
-    }).compile();
+    testHelper = new IntegrationTestHelper([UpdateSeriesUseCase, SeriesValidator, SeriesRepository]);
+    await testHelper.setup();
   });
 
   beforeEach(async () => {
-    sut = module.get<UpdateSeriesUseCase>(UpdateSeriesUseCase);
-    await prismaTestingHelper?.startNewTransaction();
+    sut = testHelper.getService(UpdateSeriesUseCase);
+    await testHelper.startTransaction();
   });
 
   afterEach(() => {
-    prismaTestingHelper?.rollbackCurrentTransaction();
+    testHelper.rollbackTransaction();
   });
 
   describe('존재하지 않는 시리즈를 수정하면', () => {
@@ -59,8 +40,8 @@ describe('시리즈 수정 유스케이스', () => {
     const duplicateTitle = '중복된 시리즈 제목';
 
     it('에러가 발생한다', async () => {
-      const existingSeries = await createTestSeries(prisma, { title: '기존 시리즈 제목' });
-      await createTestSeries(prisma, { title: duplicateTitle });
+      const existingSeries = await createTestSeries(testHelper.getPrisma(), { title: '기존 시리즈 제목' });
+      await createTestSeries(testHelper.getPrisma(), { title: duplicateTitle });
 
       const updateSeriesDto: UpdateSeriesDto = {
         title: duplicateTitle,
@@ -73,7 +54,7 @@ describe('시리즈 수정 유스케이스', () => {
 
   describe('정상적인 시리즈 수정하면', () => {
     it('같은 제목으로 수정하는 것은 허용된다', async () => {
-      const existingSeries = await createTestSeries(prisma, {
+      const existingSeries = await createTestSeries(testHelper.getPrisma(), {
         title: '기존 시리즈 제목',
         slug: 'existing-series-slug',
       });
@@ -84,13 +65,13 @@ describe('시리즈 수정 유스케이스', () => {
 
       await expect(sut.execute(existingSeries.id, updateSeriesDto)).resolves.not.toThrow();
 
-      const updatedSeries = await prisma.series.findUnique({ where: { id: existingSeries.id } });
+      const updatedSeries = await testHelper.getPrisma().series.findUnique({ where: { id: existingSeries.id } });
       expect(updatedSeries?.slug).toBe(existingSeries.slug);
     });
 
 
     it('시리즈가 수정된다', async () => {
-      const existingSeries = await createTestSeries(prisma, {
+      const existingSeries = await createTestSeries(testHelper.getPrisma(), {
         title: '기존 시리즈 제목',
         slug: 'existing-series-slug',
       });
@@ -101,7 +82,7 @@ describe('시리즈 수정 유스케이스', () => {
 
       await sut.execute(existingSeries.id, updateSeriesDto);
 
-      const updatedSeries = await prisma.series.findUnique({ where: { id: existingSeries.id } });
+      const updatedSeries = await testHelper.getPrisma().series.findUnique({ where: { id: existingSeries.id } });
       expect(updatedSeries?.title).toBe(updateSeriesDto.title);
       expect(updatedSeries?.slug).toBe(existingSeries.slug);
     });

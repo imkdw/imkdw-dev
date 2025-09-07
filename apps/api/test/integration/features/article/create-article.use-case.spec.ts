@@ -1,53 +1,34 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { CreateArticleUseCase } from '@/features/article/use-case/create-article.use-case';
 import { ArticleValidator } from '@/features/article/validator/article.validator';
 import { ArticleRepository } from '@/shared/repository/article/article.repository';
-import { PrismaService } from '@/infra/database/prisma.service';
 import { CreateArticleDto } from '@/features/article/dto/create-article.dto';
 import { ExistArticleException } from '@/features/article/exception/exist-article.exception';
 import { createTestArticle } from '@test/integration/helpers/article.helper';
-import { PrismaTestingHelper } from '@chax-at/transactional-prisma-testing';
+import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
 
 describe('게시글 생성 유스케이스', () => {
+  let testHelper: IntegrationTestHelper;
   let sut: CreateArticleUseCase;
-  let prismaTestingHelper: PrismaTestingHelper<PrismaService> | undefined;
-  let prisma: PrismaService;
-  let module: TestingModule;
 
   beforeAll(async () => {
-    if (!prismaTestingHelper) {
-      const originalPrismaService = new PrismaService();
-      prismaTestingHelper = new PrismaTestingHelper(originalPrismaService);
-      prisma = prismaTestingHelper.getProxyClient();
-    }
-
-    module = await Test.createTestingModule({
-      providers: [
-        CreateArticleUseCase,
-        ArticleValidator,
-        ArticleRepository,
-        {
-          provide: PrismaService,
-          useValue: prisma,
-        },
-      ],
-    }).compile();
+    testHelper = new IntegrationTestHelper([CreateArticleUseCase, ArticleValidator, ArticleRepository]);
+    await testHelper.setup();
   });
 
   beforeEach(async () => {
-    sut = module.get<CreateArticleUseCase>(CreateArticleUseCase);
-    await prismaTestingHelper?.startNewTransaction();
+    sut = testHelper.getService(CreateArticleUseCase);
+    await testHelper.startTransaction();
   });
 
   afterEach(() => {
-    prismaTestingHelper?.rollbackCurrentTransaction();
+    testHelper.rollbackTransaction();
   });
 
   describe('동일한 제목의 게시글이 이미 존재하면', () => {
     const existingTitle = '이미 존재하는 게시글 제목';
 
     it('에러가 발생한다', async () => {
-      await createTestArticle(prisma, { title: existingTitle });
+      await createTestArticle(testHelper.getPrisma(), { title: existingTitle });
       const createArticleDto: CreateArticleDto = {
         title: existingTitle,
         slug: 'existing-article-slug',
@@ -68,7 +49,7 @@ describe('게시글 생성 유스케이스', () => {
 
       const result = await sut.execute(createArticleDto);
 
-      const savedArticle = await prisma.article.findUnique({ where: { id: result.id } });
+      const savedArticle = await testHelper.getPrisma().article.findUnique({ where: { id: result.id } });
       expect(savedArticle).not.toBeNull();
       expect(savedArticle?.title).toBe(createArticleDto.title);
       expect(savedArticle?.content).toBe(createArticleDto.content);

@@ -1,54 +1,35 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { CreateSeriesUseCase } from '@/features/series/use-case/create-series.use-case';
 import { SeriesValidator } from '@/features/series/validator/series.validator';
 import { SeriesRepository } from '@/shared/repository/series/series.repository';
-import { PrismaService } from '@/infra/database/prisma.service';
 import { CreateSeriesDto } from '@/features/series/dto/create-series.dto';
 import { ExistSeriesSlugException } from '@/features/series/exception/exist-series-slug.exception';
 import { ExistSeriesTitleException } from '@/features/series/exception/exist-series-title.exception';
 import { createTestSeries } from '@test/integration/helpers/series.helper';
-import { PrismaTestingHelper } from '@chax-at/transactional-prisma-testing';
+import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
 
 describe('시리즈 생성 유스케이스', () => {
+  let testHelper: IntegrationTestHelper;
   let sut: CreateSeriesUseCase;
-  let prismaTestingHelper: PrismaTestingHelper<PrismaService> | undefined;
-  let prisma: PrismaService;
-  let module: TestingModule;
 
   beforeAll(async () => {
-    if (!prismaTestingHelper) {
-      const originalPrismaService = new PrismaService();
-      prismaTestingHelper = new PrismaTestingHelper(originalPrismaService);
-      prisma = prismaTestingHelper.getProxyClient();
-    }
-
-    module = await Test.createTestingModule({
-      providers: [
-        CreateSeriesUseCase,
-        SeriesValidator,
-        SeriesRepository,
-        {
-          provide: PrismaService,
-          useValue: prisma,
-        },
-      ],
-    }).compile();
+    testHelper = new IntegrationTestHelper([CreateSeriesUseCase, SeriesValidator, SeriesRepository]);
+    await testHelper.setup();
   });
 
   beforeEach(async () => {
-    sut = module.get<CreateSeriesUseCase>(CreateSeriesUseCase);
-    await prismaTestingHelper?.startNewTransaction();
+    sut = testHelper.getService(CreateSeriesUseCase);
+    await testHelper.startTransaction();
   });
 
   afterEach(() => {
-    prismaTestingHelper?.rollbackCurrentTransaction();
+    testHelper.rollbackTransaction();
   });
 
   describe('동일한 제목의 시리즈가 이미 존재하면', () => {
     const existingTitle = '이미 존재하는 시리즈 제목';
 
     it('에러가 발생한다', async () => {
-      await createTestSeries(prisma, { title: existingTitle });
+      await createTestSeries(testHelper.getPrisma(), { title: existingTitle });
       const createSeriesDto: CreateSeriesDto = {
         title: existingTitle,
         slug: 'new-series-slug',
@@ -62,7 +43,7 @@ describe('시리즈 생성 유스케이스', () => {
     const existingSlug = 'existing-series-slug';
 
     it('에러가 발생한다', async () => {
-      await createTestSeries(prisma, { slug: existingSlug });
+      await createTestSeries(testHelper.getPrisma(), { slug: existingSlug });
       const createSeriesDto: CreateSeriesDto = {
         title: '새로운 시리즈 제목',
         slug: existingSlug,
@@ -81,7 +62,7 @@ describe('시리즈 생성 유스케이스', () => {
 
       const result = await sut.execute(createSeriesDto);
 
-      const savedSeries = await prisma.series.findUnique({ where: { id: result.id } });
+      const savedSeries = await testHelper.getPrisma().series.findUnique({ where: { id: result.id } });
       expect(savedSeries).not.toBeNull();
       expect(savedSeries?.title).toBe(createSeriesDto.title);
       expect(savedSeries?.slug).toBe(createSeriesDto.slug);

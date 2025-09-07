@@ -1,42 +1,24 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { GetSeriesUseCase } from '@/features/series/use-case/get-series.use-case';
 import { SeriesRepository } from '@/shared/repository/series/series.repository';
-import { PrismaService } from '@/infra/database/prisma.service';
 import { createTestSeries } from '@test/integration/helpers/series.helper';
-import { PrismaTestingHelper } from '@chax-at/transactional-prisma-testing';
+import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
 
 describe('시리즈 목록 조회 유스케이스', () => {
+  let testHelper: IntegrationTestHelper;
   let sut: GetSeriesUseCase;
-  let prismaTestingHelper: PrismaTestingHelper<PrismaService> | undefined;
-  let prisma: PrismaService;
-  let module: TestingModule;
 
   beforeAll(async () => {
-    if (!prismaTestingHelper) {
-      const originalPrismaService = new PrismaService();
-      prismaTestingHelper = new PrismaTestingHelper(originalPrismaService);
-      prisma = prismaTestingHelper.getProxyClient();
-    }
-
-    module = await Test.createTestingModule({
-      providers: [
-        GetSeriesUseCase,
-        SeriesRepository,
-        {
-          provide: PrismaService,
-          useValue: prisma,
-        },
-      ],
-    }).compile();
+    testHelper = new IntegrationTestHelper([GetSeriesUseCase, SeriesRepository]);
+    await testHelper.setup();
   });
 
   beforeEach(async () => {
-    sut = module.get<GetSeriesUseCase>(GetSeriesUseCase);
-    await prismaTestingHelper?.startNewTransaction();
+    sut = testHelper.getService(GetSeriesUseCase);
+    await testHelper.startTransaction();
   });
 
   afterEach(() => {
-    prismaTestingHelper?.rollbackCurrentTransaction();
+    testHelper.rollbackTransaction();
   });
 
   describe('시리즈가 없을 때', () => {
@@ -53,17 +35,17 @@ describe('시리즈 목록 조회 유스케이스', () => {
       const secondTime = new Date('2024-01-02T00:00:00Z');
       const thirdTime = new Date('2024-01-03T00:00:00Z');
 
-      const series1 = await createTestSeries(prisma, {
+      const series1 = await createTestSeries(testHelper.getPrisma(), {
         title: '첫 번째 시리즈',
         slug: 'first-series',
         createdAt: firstTime,
       });
-      const series3 = await createTestSeries(prisma, {
+      const series3 = await createTestSeries(testHelper.getPrisma(), {
         title: '세 번째 시리즈',
         slug: 'third-series',
         createdAt: thirdTime,
       });
-      const series2 = await createTestSeries(prisma, {
+      const series2 = await createTestSeries(testHelper.getPrisma(), {
         title: '두 번째 시리즈',
         slug: 'second-series',
         createdAt: secondTime,
@@ -80,11 +62,11 @@ describe('시리즈 목록 조회 유스케이스', () => {
 
   describe('삭제된 시리즈가 있을 때', () => {
     it('삭제된 시리즈는 조회되지 않는다', async () => {
-      const normalSeries = await createTestSeries(prisma, {
+      const normalSeries = await createTestSeries(testHelper.getPrisma(), {
         title: '정상 시리즈',
         slug: 'normal-series',
       });
-      await createTestSeries(prisma, {
+      await createTestSeries(testHelper.getPrisma(), {
         title: '삭제된 시리즈',
         slug: 'deleted-series',
         deletedAt: new Date(),
