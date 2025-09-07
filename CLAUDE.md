@@ -85,14 +85,11 @@ This is a Turborepo monorepo using pnpm as the package manager. The project cont
 ## Architecture Notes
 
 ### API Application (NestJS)
-- Port 8000, feature-based modular architecture (`/features`, `/shared`, `/infra`)
-- PostgreSQL database with Prisma ORM (split schema files in `prisma/schema/`)
+- Port 8000, NestJS server with PostgreSQL via Prisma
+- Feature-based modular architecture
 - Swagger documentation available at `/api` in non-production environments
-- API versioning enabled (default v1 via URI)
-- Layered architecture: Controllers → Services → Repositories
 - Shared workspace packages for types, constants, and exceptions
-- Separate test configurations: unit tests (`test/unit/`) and integration tests (`test/integration/`)
-- Uses dotenv for environment configuration with `.env.test` for testing
+- **세부사항은 `/apps/api/CLAUDE.md` 참고**
 
 ### Blog Application (Next.js)
 - Port 3000, Next.js 15 with App Router and Turbopack
@@ -119,14 +116,13 @@ This is a Turborepo monorepo using pnpm as the package manager. The project cont
 
 ## Development Guidelines
 
-### API Architecture (NestJS)  
-- **Feature-based modules**: Organize by domain (`/features/article`, `/features/auth`)
-- **Layered structure**: `infra/` (database, http), `shared/` (repositories, utilities), `features/` (business logic)
-- **Unidirectional dependencies**: Features → Shared → Infra
-- **Domain-centric design**: Business logic separated from infrastructure concerns
-- **Modular organization**: Each feature as self-contained NestJS module
+## CLAUDE.md 구조
 
-### Database Schema Organization
-- Split Prisma schema files by domain in `prisma/schema/`
-- Main schema file imports domain-specific schemas
-- Use workspace constants package for shared values across schema files
+이 프로젝트는 LLM 컨텍스트 최적화를 위해 폴더별로 CLAUDE.md 파일을 관리합니다:
+
+- `/CLAUDE.md` - 프로젝트 전체 개요 및 monorepo 구조
+- `/apps/api/CLAUDE.md` - API 서버 개발 가이드라인
+- `/apps/blog/CLAUDE.md` - Blog 애플리케이션 가이드라인  
+- `/packages/*/CLAUDE.md` - 각 패키지별 상세 가이드
+
+각 폴더에서 작업할 때는 해당 폴더의 CLAUDE.md를 참고하세요.
