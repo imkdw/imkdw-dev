@@ -1,5 +1,5 @@
 import { UpdateArticleUseCase } from '@/features/article/use-case/update-article.use-case';
-import { ArticleValidator } from '@/features/article/validator/article.validator';
+import { ArticleValidator } from '@/shared/validator/article.validator';
 import { ArticleRepository } from '@/shared/repository/article/article.repository';
 import { UpdateArticleDto } from '@/features/article/dto/update-article.dto';
 import { ArticleNotFoundException } from '@/features/article/exception/article-not-found.exception';

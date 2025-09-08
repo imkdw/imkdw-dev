@@ -1,5 +1,5 @@
 import { CreateSeriesUseCase } from '@/features/series/use-case/create-series.use-case';
-import { SeriesValidator } from '@/features/series/validator/series.validator';
+import { SeriesValidator } from '@/shared/validator/series.validator';
 import { SeriesRepository } from '@/shared/repository/series/series.repository';
 import { CreateSeriesDto } from '@/features/series/dto/create-series.dto';
 import { ExistSeriesSlugException } from '@/features/series/exception/exist-series-slug.exception';

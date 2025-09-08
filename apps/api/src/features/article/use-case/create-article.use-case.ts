@@ -1,5 +1,5 @@
 import { generateUUID } from '@/common/utils/string.util';
-import { ArticleValidator } from '@/features/article/validator/article.validator';
+import { ArticleValidator } from '@/shared/validator/article.validator';
 import { CreateArticleDto } from '@/features/article/dto/create-article.dto';
 import { Article } from '@/shared/domain/article/article';
 import { ArticleRepository } from '@/shared/repository/article/article.repository';

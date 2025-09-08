@@ -1,5 +1,5 @@
 import { CreateArticleUseCase } from '@/features/article/use-case/create-article.use-case';
-import { ArticleValidator } from '@/features/article/validator/article.validator';
+import { ArticleValidator } from '@/shared/validator/article.validator';
 import { ArticleRepository } from '@/shared/repository/article/article.repository';
 import { CreateArticleDto } from '@/features/article/dto/create-article.dto';
 import { ExistArticleException } from '@/features/article/exception/exist-article.exception';

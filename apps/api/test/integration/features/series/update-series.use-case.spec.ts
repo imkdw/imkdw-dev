@@ -1,5 +1,5 @@
 import { UpdateSeriesUseCase } from '@/features/series/use-case/update-series.use-case';
-import { SeriesValidator } from '@/features/series/validator/series.validator';
+import { SeriesValidator } from '@/shared/validator/series.validator';
 import { SeriesRepository } from '@/shared/repository/series/series.repository';
 import { UpdateSeriesDto } from '@/features/series/dto/update-series.dto';
 import { SeriesNotFoundException } from '@/features/series/exception/series-not-found.exception';

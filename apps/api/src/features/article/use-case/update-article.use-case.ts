@@ -1,4 +1,4 @@
-import { ArticleValidator } from '@/features/article/validator/article.validator';
+import { ArticleValidator } from '@/shared/validator/article.validator';
 import { UpdateArticleDto } from '@/features/article/dto/update-article.dto';
 import { Article } from '@/shared/domain/article/article';
 import { ArticleRepository } from '@/shared/repository/article/article.repository';

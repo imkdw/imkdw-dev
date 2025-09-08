@@ -1,4 +1,4 @@
-import { SeriesValidator } from '@/features/series/validator/series.validator';
+import { SeriesValidator } from '@/shared/validator/series.validator';
 import { CreateSeriesDto } from '@/features/series/dto/create-series.dto';
 import { Series } from '@/shared/domain/series/series';
 import { SeriesRepository } from '@/shared/repository/series/series.repository';
