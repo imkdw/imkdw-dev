@@ -3,7 +3,7 @@ import { CreateSeriesDto } from '@/features/series/dto/create-series.dto';
 import { Series } from '@/shared/domain/series/series';
 import { SeriesRepository } from '@/shared/repository/series/series.repository';
 import { Injectable } from '@nestjs/common';
-import { randomUUID } from 'crypto';
+import { generateUUID } from '@/common/utils/string.util';
 
 @Injectable()
 export class CreateSeriesUseCase {
@@ -17,7 +17,7 @@ export class CreateSeriesUseCase {
     await this.seriesValidator.checkExistSlug(dto.slug);
 
     const series = Series.create({
-      id: randomUUID(),
+      id: generateUUID(),
       title: dto.title,
       slug: dto.slug,
       createdAt: new Date(),

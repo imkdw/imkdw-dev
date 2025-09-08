@@ -25,8 +25,4 @@ export class SeriesDto implements ISeriesDto {
   static from(series: Series): SeriesDto {
     return new SeriesDto(series.id, series.title, series.slug, series.createdAt);
   }
-
-  static fromArray(seriesList: Series[]): SeriesDto[] {
-    return seriesList.map(series => SeriesDto.from(series));
-  }
 }

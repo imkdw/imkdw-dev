@@ -13,10 +13,7 @@ export class UpdateSeriesUseCase {
 
   async execute(id: string, dto: UpdateSeriesDto): Promise<void> {
     const existingSeries = await this.seriesValidator.checkExist(id);
-
-    if (dto.title) {
-      await this.seriesValidator.checkExistTitle(dto.title, id);
-    }
+    await this.seriesValidator.checkExistTitle(dto.title, id);
 
     const updatedSeries = Series.create({
       id: existingSeries.id,

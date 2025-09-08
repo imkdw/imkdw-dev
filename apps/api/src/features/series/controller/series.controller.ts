@@ -20,8 +20,8 @@ export class SeriesController {
   @Swagger.getSeries('시리즈 목록 조회')
   @Get()
   async getAll(): Promise<SeriesDto[]> {
-    const seriesList = await this.getSeriesUseCase.execute();
-    return SeriesDto.fromArray(seriesList);
+    const series = await this.getSeriesUseCase.execute();
+    return series.map(series => SeriesDto.from(series));
   }
 
   @Swagger.createSeries('시리즈 생성')
