@@ -10,7 +10,8 @@
     "test": "turbo run test",
     "clean-repo": "find . -name \"node_modules\" -type d -prune -exec rm -rf {} + && find . -name \"dist\" -type d -prune -exec rm -rf {} + && find . -name \"tsconfig.tsbuildinfo\" -type f -exec rm -f {} +",
     "api": "pnpm -F api",
-    "blog": "pnpm -F blog"
+    "blog": "pnpm -F blog",
+    "ui": "pnpm -F ui"
   },
   "devDependencies": {
     "prettier": "^3.6.2",
