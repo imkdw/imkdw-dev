@@ -9,7 +9,7 @@ import { GetSeriesUseCase } from '@/features/series/use-case/get-series.use-case
 import * as Swagger from '@/features/series/swagger/series.swagger';
 
 @ApiTags('Series')
-@Controller('v1/series')
+@Controller('series')
 export class SeriesController {
   constructor(
     private readonly createSeriesUseCase: CreateSeriesUseCase,
