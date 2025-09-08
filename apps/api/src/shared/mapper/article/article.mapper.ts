@@ -9,6 +9,7 @@ export class ArticleMapper {
       slug: entity.slug,
       content: entity.content,
       seriesId: entity.seriesId,
+      viewCount: entity.viewCount,
       createdAt: entity.createdAt,
       deletedAt: entity.deletedAt,
     });

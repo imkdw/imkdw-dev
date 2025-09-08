@@ -4,6 +4,7 @@ export class Article {
   slug: string;
   content: string;
   seriesId: string;
+  viewCount: number;
   createdAt: Date;
   deletedAt: Date | null;
 
@@ -13,6 +14,7 @@ export class Article {
     this.slug = props.slug;
     this.content = props.content;
     this.seriesId = props.seriesId;
+    this.viewCount = props.viewCount;
     this.createdAt = props.createdAt;
     this.deletedAt = props.deletedAt;
   }

@@ -12,6 +12,7 @@ export const createTestArticle = async (
       title: data.title ?? `Test Article ${Date.now()}`,
       slug: data.slug ?? `test-article-${Date.now()}`,
       content: data.content ?? 'Test article content for integration testing',
+      viewCount: data.viewCount ?? 0,
       ...data,
       seriesId: data.seriesId,
     },

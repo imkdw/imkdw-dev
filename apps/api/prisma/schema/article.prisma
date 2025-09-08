@@ -14,6 +14,9 @@ model Article {
   /// 시리즈 ID
   seriesId String @map("series_id")
 
+  /// 조회수
+  viewCount Int @map("view_count")
+
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")

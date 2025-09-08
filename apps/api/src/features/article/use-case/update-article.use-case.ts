@@ -25,6 +25,7 @@ export class UpdateArticleUseCase {
       slug: existingArticle.slug,
       content: dto.content,
       seriesId: dto.seriesId,
+      viewCount: existingArticle.viewCount,
       createdAt: existingArticle.createdAt,
       deletedAt: null,
     });

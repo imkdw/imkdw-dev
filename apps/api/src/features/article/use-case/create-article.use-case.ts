@@ -25,6 +25,7 @@ export class CreateArticleUseCase {
       slug: dto.slug,
       content: dto.content,
       seriesId: dto.seriesId,
+      viewCount: 0,
       createdAt: new Date(),
       deletedAt: null,
     });
