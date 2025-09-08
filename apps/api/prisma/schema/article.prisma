@@ -9,10 +9,16 @@ model Article {
   slug String
 
   /// 게시글 본문 내용
-  content   String
+  content String
+
+  /// 시리즈 ID
+  seriesId String @map("series_id")
+
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
+
+  series Series @relation(fields: [seriesId], references: [id])
 
   @@map("article")
 }

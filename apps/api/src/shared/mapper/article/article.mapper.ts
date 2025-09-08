@@ -8,6 +8,7 @@ export class ArticleMapper {
       title: entity.title,
       slug: entity.slug,
       content: entity.content,
+      seriesId: entity.seriesId,
       createdAt: entity.createdAt,
       deletedAt: entity.deletedAt,
     });

@@ -6,7 +6,11 @@ model Series {
   title String
 
   /// 시리즈 URL 경로
-  slug      String
+  slug String
+
+  /// 시리즈에 속한 게시글들
+  articles Article[]
+
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")

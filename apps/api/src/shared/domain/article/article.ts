@@ -3,6 +3,7 @@ export class Article {
   title: string;
   slug: string;
   content: string;
+  seriesId: string;
   createdAt: Date;
   deletedAt: Date | null;
 
@@ -11,6 +12,7 @@ export class Article {
     this.title = props.title;
     this.slug = props.slug;
     this.content = props.content;
+    this.seriesId = props.seriesId;
     this.createdAt = props.createdAt;
     this.deletedAt = props.deletedAt;
   }

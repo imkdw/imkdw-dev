@@ -24,6 +24,10 @@ export class CreateArticleDto implements ICreateArticleDto {
   @MaxLength(ARTICLE_MAX_CONTENT_LENGTH)
   @IsNotEmptyString()
   readonly content: string;
+
+  @ApiProperty({ description: '시리즈 ID', example: '123e4567-e89b-12d3-a456-426614174000' })
+  @IsNotEmptyString()
+  readonly seriesId: string;
 }
 
 export class ResponseCreateArticleDto implements IResponseCreateArticleDto {

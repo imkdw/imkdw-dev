@@ -9,6 +9,7 @@ describe('게시글 수정 DTO', () => {
       const dto = plainToClass(UpdateArticleDto, {
         title: '',
         content: '내용',
+        seriesId: '123e4567-e89b-12d3-a456-426614174000',
       });
       const errors = await validate(dto);
 
@@ -20,6 +21,7 @@ describe('게시글 수정 DTO', () => {
       const dto = plainToClass(UpdateArticleDto, {
         title: 'a'.repeat(ARTICLE_MAX_TITLE_LENGTH + 1),
         content: '내용',
+        seriesId: '123e4567-e89b-12d3-a456-426614174000',
       });
       const errors = await validate(dto);
 
@@ -33,6 +35,7 @@ describe('게시글 수정 DTO', () => {
       const dto = plainToClass(UpdateArticleDto, {
         title: '제목',
         content: '',
+        seriesId: '123e4567-e89b-12d3-a456-426614174000',
       });
       const errors = await validate(dto);
 
@@ -44,11 +47,38 @@ describe('게시글 수정 DTO', () => {
       const dto = plainToClass(UpdateArticleDto, {
         title: '제목',
         content: 'a'.repeat(ARTICLE_MAX_CONTENT_LENGTH + 1),
+        seriesId: '123e4567-e89b-12d3-a456-426614174000',
       });
       const errors = await validate(dto);
 
       expect(errors.length).toBeGreaterThan(0);
       expect(errors[0]?.property).toBe('content');
+    });
+  });
+
+  describe('시리즈 ID', () => {
+    it('비어있다면 예외가 발생한다', async () => {
+      const dto = plainToClass(UpdateArticleDto, {
+        title: '제목',
+        content: '내용',
+        seriesId: '',
+      });
+      const errors = await validate(dto);
+
+      expect(errors.length).toBeGreaterThan(0);
+      expect(errors.some(error => error.property === 'seriesId')).toBe(true);
+    });
+
+    it('null이면 예외가 발생한다', async () => {
+      const dto = plainToClass(UpdateArticleDto, {
+        title: '제목',
+        content: '내용',
+        seriesId: null,
+      });
+      const errors = await validate(dto);
+
+      expect(errors.length).toBeGreaterThan(0);
+      expect(errors.some(error => error.property === 'seriesId')).toBe(true);
     });
   });
 });
