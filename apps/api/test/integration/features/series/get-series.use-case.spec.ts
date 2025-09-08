@@ -2,10 +2,12 @@ import { GetSeriesUseCase } from '@/features/series/use-case/get-series.use-case
 import { SeriesRepository } from '@/shared/repository/series/series.repository';
 import { createTestSeries } from '@test/integration/helpers/series.helper';
 import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
+import { PrismaService } from '@/infra/database/prisma.service';
 
 describe('시리즈 목록 조회 유스케이스', () => {
   let testHelper: IntegrationTestHelper;
   let sut: GetSeriesUseCase;
+  let prisma: PrismaService;
 
   beforeAll(async () => {
     testHelper = new IntegrationTestHelper([GetSeriesUseCase, SeriesRepository]);
@@ -15,6 +17,7 @@ describe('시리즈 목록 조회 유스케이스', () => {
   beforeEach(async () => {
     sut = testHelper.getService(GetSeriesUseCase);
     await testHelper.startTransaction();
+    prisma = testHelper.getPrisma();
   });
 
   afterEach(() => {
@@ -35,17 +38,17 @@ describe('시리즈 목록 조회 유스케이스', () => {
       const secondTime = new Date('2024-01-02T00:00:00Z');
       const thirdTime = new Date('2024-01-03T00:00:00Z');
 
-      const series1 = await createTestSeries(testHelper.getPrisma(), {
+      const series1 = await createTestSeries(prisma, {
         title: '첫 번째 시리즈',
         slug: 'first-series',
         createdAt: firstTime,
       });
-      const series3 = await createTestSeries(testHelper.getPrisma(), {
+      const series3 = await createTestSeries(prisma, {
         title: '세 번째 시리즈',
         slug: 'third-series',
         createdAt: thirdTime,
       });
-      const series2 = await createTestSeries(testHelper.getPrisma(), {
+      const series2 = await createTestSeries(prisma, {
         title: '두 번째 시리즈',
         slug: 'second-series',
         createdAt: secondTime,
@@ -62,11 +65,11 @@ describe('시리즈 목록 조회 유스케이스', () => {
 
   describe('삭제된 시리즈가 있을 때', () => {
     it('삭제된 시리즈는 조회되지 않는다', async () => {
-      const normalSeries = await createTestSeries(testHelper.getPrisma(), {
+      const normalSeries = await createTestSeries(prisma, {
         title: '정상 시리즈',
         slug: 'normal-series',
       });
-      await createTestSeries(testHelper.getPrisma(), {
+      await createTestSeries(prisma, {
         title: '삭제된 시리즈',
         slug: 'deleted-series',
         deletedAt: new Date(),

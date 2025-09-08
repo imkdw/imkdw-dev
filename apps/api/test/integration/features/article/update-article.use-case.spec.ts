@@ -6,10 +6,12 @@ import { ArticleNotFoundException } from '@/features/article/exception/article-n
 import { ExistArticleException } from '@/features/article/exception/exist-article.exception';
 import { createTestArticle } from '@test/integration/helpers/article.helper';
 import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
+import { PrismaService } from '@/infra/database/prisma.service';
 
 describe('게시글 수정 유스케이스', () => {
   let testHelper: IntegrationTestHelper;
   let sut: UpdateArticleUseCase;
+  let prisma: PrismaService;
 
   beforeAll(async () => {
     testHelper = new IntegrationTestHelper([UpdateArticleUseCase, ArticleValidator, ArticleRepository]);
@@ -19,6 +21,7 @@ describe('게시글 수정 유스케이스', () => {
   beforeEach(async () => {
     sut = testHelper.getService(UpdateArticleUseCase);
     await testHelper.startTransaction();
+    prisma = testHelper.getPrisma();
   });
 
   afterEach(() => {
@@ -41,8 +44,8 @@ describe('게시글 수정 유스케이스', () => {
     const duplicateTitle = '중복된 게시글 제목';
 
     it('에러가 발생한다', async () => {
-      const existingArticle = await createTestArticle(testHelper.getPrisma(), { title: '기존 게시글 제목' });
-      await createTestArticle(testHelper.getPrisma(), { title: duplicateTitle });
+      const existingArticle = await createTestArticle(prisma, { title: '기존 게시글 제목' });
+      await createTestArticle(prisma, { title: duplicateTitle });
 
       const updateArticleDto: UpdateArticleDto = {
         title: duplicateTitle,
@@ -55,7 +58,7 @@ describe('게시글 수정 유스케이스', () => {
 
   describe('정상적인 게시글 수정하면', () => {
     it('같은 제목으로 수정하는 것은 허용된다', async () => {
-      const existingArticle = await createTestArticle(testHelper.getPrisma(), {
+      const existingArticle = await createTestArticle(prisma, {
         title: '기존 게시글 제목',
         content: '기존 게시글 내용',
       });
@@ -67,12 +70,12 @@ describe('게시글 수정 유스케이스', () => {
 
       await expect(sut.execute(existingArticle.id, updateArticleDto)).resolves.not.toThrow();
 
-      const updatedArticle = await testHelper.getPrisma().article.findUnique({ where: { id: existingArticle.id } });
+      const updatedArticle = await prisma.article.findUnique({ where: { id: existingArticle.id } });
       expect(updatedArticle?.content).toBe(updateArticleDto.content);
     });
 
     it('게시글이 수정된다', async () => {
-      const existingArticle = await createTestArticle(testHelper.getPrisma(), {
+      const existingArticle = await createTestArticle(prisma, {
         title: '기존 게시글 제목',
         content: '기존 게시글 내용',
       });
@@ -84,7 +87,7 @@ describe('게시글 수정 유스케이스', () => {
 
       await sut.execute(existingArticle.id, updateArticleDto);
 
-      const updatedArticle = await testHelper.getPrisma().article.findUnique({ where: { id: existingArticle.id } });
+      const updatedArticle = await prisma.article.findUnique({ where: { id: existingArticle.id } });
       expect(updatedArticle?.title).toBe(updateArticleDto.title);
       expect(updatedArticle?.content).toBe(updateArticleDto.content);
     });

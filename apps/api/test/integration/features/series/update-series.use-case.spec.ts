@@ -6,10 +6,12 @@ import { SeriesNotFoundException } from '@/features/series/exception/series-not-
 import { ExistSeriesTitleException } from '@/features/series/exception/exist-series-title.exception';
 import { createTestSeries } from '@test/integration/helpers/series.helper';
 import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
+import { PrismaService } from '@/infra/database/prisma.service';
 
 describe('시리즈 수정 유스케이스', () => {
   let testHelper: IntegrationTestHelper;
   let sut: UpdateSeriesUseCase;
+  let prisma: PrismaService;
 
   beforeAll(async () => {
     testHelper = new IntegrationTestHelper([UpdateSeriesUseCase, SeriesValidator, SeriesRepository]);
@@ -19,6 +21,7 @@ describe('시리즈 수정 유스케이스', () => {
   beforeEach(async () => {
     sut = testHelper.getService(UpdateSeriesUseCase);
     await testHelper.startTransaction();
+    prisma = testHelper.getPrisma();
   });
 
   afterEach(() => {
@@ -40,8 +43,8 @@ describe('시리즈 수정 유스케이스', () => {
     const duplicateTitle = '중복된 시리즈 제목';
 
     it('에러가 발생한다', async () => {
-      const existingSeries = await createTestSeries(testHelper.getPrisma(), { title: '기존 시리즈 제목' });
-      await createTestSeries(testHelper.getPrisma(), { title: duplicateTitle });
+      const existingSeries = await createTestSeries(prisma, { title: '기존 시리즈 제목' });
+      await createTestSeries(prisma, { title: duplicateTitle });
 
       const updateSeriesDto: UpdateSeriesDto = {
         title: duplicateTitle,
@@ -51,10 +54,9 @@ describe('시리즈 수정 유스케이스', () => {
     });
   });
 
-
   describe('정상적인 시리즈 수정하면', () => {
     it('같은 제목으로 수정하는 것은 허용된다', async () => {
-      const existingSeries = await createTestSeries(testHelper.getPrisma(), {
+      const existingSeries = await createTestSeries(prisma, {
         title: '기존 시리즈 제목',
         slug: 'existing-series-slug',
       });
@@ -65,13 +67,12 @@ describe('시리즈 수정 유스케이스', () => {
 
       await expect(sut.execute(existingSeries.id, updateSeriesDto)).resolves.not.toThrow();
 
-      const updatedSeries = await testHelper.getPrisma().series.findUnique({ where: { id: existingSeries.id } });
+      const updatedSeries = await prisma.series.findUnique({ where: { id: existingSeries.id } });
       expect(updatedSeries?.slug).toBe(existingSeries.slug);
     });
 
-
     it('시리즈가 수정된다', async () => {
-      const existingSeries = await createTestSeries(testHelper.getPrisma(), {
+      const existingSeries = await createTestSeries(prisma, {
         title: '기존 시리즈 제목',
         slug: 'existing-series-slug',
       });
@@ -82,7 +83,7 @@ describe('시리즈 수정 유스케이스', () => {
 
       await sut.execute(existingSeries.id, updateSeriesDto);
 
-      const updatedSeries = await testHelper.getPrisma().series.findUnique({ where: { id: existingSeries.id } });
+      const updatedSeries = await prisma.series.findUnique({ where: { id: existingSeries.id } });
       expect(updatedSeries?.title).toBe(updateSeriesDto.title);
       expect(updatedSeries?.slug).toBe(existingSeries.slug);
     });

@@ -6,10 +6,12 @@ import { ExistSeriesSlugException } from '@/features/series/exception/exist-seri
 import { ExistSeriesTitleException } from '@/features/series/exception/exist-series-title.exception';
 import { createTestSeries } from '@test/integration/helpers/series.helper';
 import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
+import { PrismaService } from '@/infra/database/prisma.service';
 
 describe('시리즈 생성 유스케이스', () => {
   let testHelper: IntegrationTestHelper;
   let sut: CreateSeriesUseCase;
+  let prisma: PrismaService;
 
   beforeAll(async () => {
     testHelper = new IntegrationTestHelper([CreateSeriesUseCase, SeriesValidator, SeriesRepository]);
@@ -19,6 +21,7 @@ describe('시리즈 생성 유스케이스', () => {
   beforeEach(async () => {
     sut = testHelper.getService(CreateSeriesUseCase);
     await testHelper.startTransaction();
+    prisma = testHelper.getPrisma();
   });
 
   afterEach(() => {
@@ -29,7 +32,7 @@ describe('시리즈 생성 유스케이스', () => {
     const existingTitle = '이미 존재하는 시리즈 제목';
 
     it('에러가 발생한다', async () => {
-      await createTestSeries(testHelper.getPrisma(), { title: existingTitle });
+      await createTestSeries(prisma, { title: existingTitle });
       const createSeriesDto: CreateSeriesDto = {
         title: existingTitle,
         slug: 'new-series-slug',
@@ -43,7 +46,7 @@ describe('시리즈 생성 유스케이스', () => {
     const existingSlug = 'existing-series-slug';
 
     it('에러가 발생한다', async () => {
-      await createTestSeries(testHelper.getPrisma(), { slug: existingSlug });
+      await createTestSeries(prisma, { slug: existingSlug });
       const createSeriesDto: CreateSeriesDto = {
         title: '새로운 시리즈 제목',
         slug: existingSlug,
@@ -62,7 +65,7 @@ describe('시리즈 생성 유스케이스', () => {
 
       const result = await sut.execute(createSeriesDto);
 
-      const savedSeries = await testHelper.getPrisma().series.findUnique({ where: { id: result.id } });
+      const savedSeries = await prisma.series.findUnique({ where: { id: result.id } });
       expect(savedSeries).not.toBeNull();
       expect(savedSeries?.title).toBe(createSeriesDto.title);
       expect(savedSeries?.slug).toBe(createSeriesDto.slug);
