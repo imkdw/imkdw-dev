@@ -17,7 +17,6 @@ export class MemberFactory {
       providerId,
       provider,
       role: MEMBER_ROLE.USER,
-      deletedAt: null,
     });
   }
 }

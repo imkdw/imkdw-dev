@@ -6,7 +6,6 @@ export class Member {
   providerId: string;
   provider: string;
   role: string;
-  deletedAt: Date | null;
 
   private constructor(props: Member) {
     this.id = props.id;
@@ -16,7 +15,6 @@ export class Member {
     this.providerId = props.providerId;
     this.provider = props.provider;
     this.role = props.role;
-    this.deletedAt = props.deletedAt;
   }
 
   static create(props: Member): Member {

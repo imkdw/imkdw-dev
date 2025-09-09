@@ -2,28 +2,49 @@ import { Injectable } from '@nestjs/common';
 import { Article } from '@/shared/domain/article/article';
 import { ArticleMapper } from '@/shared/mapper/article/article.mapper';
 import { PrismaService } from '@/infra/database/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class ArticleRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async save(article: Article): Promise<Article> {
-    const updatedEntity = await this.prisma.article.update({
+  async save(article: Article, tx: Prisma.TransactionClient = this.prisma): Promise<Article> {
+    const updatedEntity = await tx.article.update({
       where: { id: article.id },
-      data: article,
+      data: {
+        id: article.id,
+        title: article.title,
+        slug: article.slug,
+        content: article.content,
+        seriesId: article.seriesId,
+        viewCount: article.viewCount,
+      },
     });
+
+    await this.createArticleTags(article.id, article.tagIds, tx);
 
     return ArticleMapper.toDomain(updatedEntity);
   }
 
-  async create(article: Article): Promise<Article> {
-    const createdEntity = await this.prisma.article.create({ data: article });
+  async create(article: Article, tx: Prisma.TransactionClient = this.prisma): Promise<Article> {
+    const createdEntity = await tx.article.create({
+      data: {
+        id: article.id,
+        title: article.title,
+        slug: article.slug,
+        content: article.content,
+        seriesId: article.seriesId,
+        viewCount: article.viewCount,
+      },
+    });
+
+    await this.createArticleTags(article.id, article.tagIds, tx);
 
     return ArticleMapper.toDomain(createdEntity);
   }
 
-  async findById(id: string): Promise<Article | null> {
-    const entity = await this.prisma.article.findFirst({
+  async findById(id: string, tx: Prisma.TransactionClient = this.prisma): Promise<Article | null> {
+    const entity = await tx.article.findFirst({
       where: {
         id,
         deletedAt: null,
@@ -33,8 +54,8 @@ export class ArticleRepository {
     return entity ? ArticleMapper.toDomain(entity) : null;
   }
 
-  async findAll(): Promise<Article[]> {
-    const entities = await this.prisma.article.findMany({
+  async findAll(tx: Prisma.TransactionClient = this.prisma): Promise<Article[]> {
+    const entities = await tx.article.findMany({
       where: {
         deletedAt: null,
       },
@@ -46,8 +67,8 @@ export class ArticleRepository {
     return entities.map(entity => ArticleMapper.toDomain(entity));
   }
 
-  async findByTitle(title: string): Promise<Article | null> {
-    const entity = await this.prisma.article.findFirst({
+  async findByTitle(title: string, tx: Prisma.TransactionClient = this.prisma): Promise<Article | null> {
+    const entity = await tx.article.findFirst({
       where: {
         title,
         deletedAt: null,
@@ -57,8 +78,8 @@ export class ArticleRepository {
     return entity ? ArticleMapper.toDomain(entity) : null;
   }
 
-  async findBySlug(slug: string): Promise<Article | null> {
-    const entity = await this.prisma.article.findFirst({
+  async findBySlug(slug: string, tx: Prisma.TransactionClient = this.prisma): Promise<Article | null> {
+    const entity = await tx.article.findFirst({
       where: {
         slug,
         deletedAt: null,
@@ -74,6 +95,21 @@ export class ArticleRepository {
       data: {
         viewCount: { increment: 1 },
       },
+    });
+  }
+
+  private async createArticleTags(articleId: string, tagIds: string[], tx: Prisma.TransactionClient): Promise<void> {
+    await tx.articleTag.deleteMany({
+      where: { articleId },
+    });
+
+    await tx.articleTag.createMany({
+      data: tagIds.map(
+        (tagId): Prisma.ArticleTagCreateManyInput => ({
+          articleId,
+          tagId,
+        })
+      ),
     });
   }
 }

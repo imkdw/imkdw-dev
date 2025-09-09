@@ -13,4 +13,9 @@ export interface IUpdateArticleDto {
    * 시리즈 ID
    */
   seriesId: string;
+
+  /**
+   * 태그 목록
+   */
+  tags: string[];
 }

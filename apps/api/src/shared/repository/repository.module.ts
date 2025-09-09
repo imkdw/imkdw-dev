@@ -3,8 +3,9 @@ import { DatabaseModule } from '@/infra/database/database.module';
 import { MemberRepository } from './member/member.repository';
 import { ArticleRepository } from './article/article.repository';
 import { SeriesRepository } from '@/shared/repository/series/series.repository';
+import { TagRepository } from './tag/tag.repository';
 
-const providers = [MemberRepository, ArticleRepository, SeriesRepository];
+const providers = [MemberRepository, ArticleRepository, SeriesRepository, TagRepository];
 
 @Global()
 @Module({

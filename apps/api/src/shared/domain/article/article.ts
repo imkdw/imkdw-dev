@@ -6,7 +6,7 @@ export class Article {
   seriesId: string;
   viewCount: number;
   createdAt: Date;
-  deletedAt: Date | null;
+  tagIds: string[];
 
   private constructor(props: Article) {
     this.id = props.id;
@@ -16,7 +16,7 @@ export class Article {
     this.seriesId = props.seriesId;
     this.viewCount = props.viewCount;
     this.createdAt = props.createdAt;
-    this.deletedAt = props.deletedAt;
+    this.tagIds = props.tagIds;
   }
 
   static create(props: Article): Article {

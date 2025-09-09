@@ -11,6 +11,8 @@ export class MemberMapper {
       providerId: entity.providerId,
       provider: entity.provider,
       role: entity.role,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
       deletedAt: entity.deletedAt,
     });
   }

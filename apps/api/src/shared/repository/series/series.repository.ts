@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Series } from '@/shared/domain/series/series';
 import { SeriesMapper } from '@/shared/mapper/series/series.mapper';
 import { PrismaService } from '@/infra/database/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class SeriesRepository {
@@ -27,8 +28,8 @@ export class SeriesRepository {
     });
   }
 
-  async findById(id: string): Promise<Series | null> {
-    const entity = await this.prisma.series.findFirst({
+  async findById(id: string, tx: Prisma.TransactionClient = this.prisma): Promise<Series | null> {
+    const entity = await tx.series.findFirst({
       where: {
         id,
         deletedAt: null,
@@ -38,8 +39,8 @@ export class SeriesRepository {
     return entity ? SeriesMapper.toDomain(entity) : null;
   }
 
-  async findByTitle(title: string): Promise<Series | null> {
-    const entity = await this.prisma.series.findFirst({
+  async findByTitle(title: string, tx: Prisma.TransactionClient = this.prisma): Promise<Series | null> {
+    const entity = await tx.series.findFirst({
       where: {
         title,
         deletedAt: null,
@@ -49,8 +50,8 @@ export class SeriesRepository {
     return entity ? SeriesMapper.toDomain(entity) : null;
   }
 
-  async findBySlug(slug: string): Promise<Series | null> {
-    const entity = await this.prisma.series.findFirst({
+  async findBySlug(slug: string, tx: Prisma.TransactionClient = this.prisma): Promise<Series | null> {
+    const entity = await tx.series.findFirst({
       where: {
         slug,
         deletedAt: null,
@@ -60,8 +61,8 @@ export class SeriesRepository {
     return entity ? SeriesMapper.toDomain(entity) : null;
   }
 
-  async findAll(): Promise<Series[]> {
-    const entities = await this.prisma.series.findMany({
+  async findAll(tx: Prisma.TransactionClient = this.prisma): Promise<Series[]> {
+    const entities = await tx.series.findMany({
       where: { deletedAt: null },
       orderBy: { createdAt: 'desc' },
     });

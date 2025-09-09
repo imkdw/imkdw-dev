@@ -21,7 +21,6 @@ export class CreateSeriesUseCase {
       title: dto.title,
       slug: dto.slug,
       createdAt: new Date(),
-      deletedAt: null,
     });
 
     return await this.seriesRepository.create(series);

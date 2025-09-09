@@ -1,0 +1,29 @@
+/// 태그 정보를 저장하는 테이블
+model Tag {
+  id   String @id
+  name String @unique
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  articles ArticleTag[]
+
+  @@map("tag")
+}
+
+/// 게시글과 태그의 N:M 관계를 저장하는 중간 테이블
+model ArticleTag {
+  articleId String @map("article_id")
+  tagId     String @map("tag_id")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  article Article @relation(fields: [articleId], references: [id])
+  tag     Tag     @relation(fields: [tagId], references: [id])
+
+  @@id([articleId, tagId])
+  @@map("article_tag")
+}

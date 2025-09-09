@@ -1,8 +1,13 @@
 import { IsNotEmptyString } from '@/common/decorator/is-not-empty-string.decorator';
-import { ARTICLE_MAX_CONTENT_LENGTH, ARTICLE_MAX_SLUG_LENGTH, ARTICLE_MAX_TITLE_LENGTH } from '@imkdw-dev/consts';
+import {
+  ARTICLE_MAX_CONTENT_LENGTH,
+  ARTICLE_MAX_SLUG_LENGTH,
+  ARTICLE_MAX_TITLE_LENGTH,
+  ARTICLE_MAX_TAGS,
+} from '@imkdw-dev/consts';
 import { ICreateArticleDto, IResponseCreateArticleDto } from '@imkdw-dev/types';
 import { ApiProperty } from '@nestjs/swagger';
-import { MaxLength } from 'class-validator';
+import { ArrayMaxSize, IsArray, IsString, MaxLength } from 'class-validator';
 import { Article } from '@/shared/domain/article/article';
 
 export class CreateArticleDto implements ICreateArticleDto {
@@ -28,6 +33,16 @@ export class CreateArticleDto implements ICreateArticleDto {
   @ApiProperty({ description: '시리즈 ID', example: '123e4567-e89b-12d3-a456-426614174000' })
   @IsNotEmptyString()
   readonly seriesId: string;
+
+  @ApiProperty({
+    description: '태그 목록',
+    example: ['JavaScript', 'React', 'TypeScript', 'NestJS'],
+    maxItems: ARTICLE_MAX_TAGS,
+  })
+  @ArrayMaxSize(ARTICLE_MAX_TAGS)
+  @IsArray()
+  @IsString({ each: true })
+  readonly tags: string[];
 }
 
 export class ResponseCreateArticleDto implements IResponseCreateArticleDto {

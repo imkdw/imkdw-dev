@@ -11,7 +11,7 @@ export class ArticleMapper {
       seriesId: entity.seriesId,
       viewCount: entity.viewCount,
       createdAt: entity.createdAt,
-      deletedAt: entity.deletedAt,
+      tagIds: [], // Repository에서는 tagIds를 채우지 않음 (별도 조회 필요)
     });
   }
 }

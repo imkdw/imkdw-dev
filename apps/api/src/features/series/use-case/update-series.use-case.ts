@@ -20,7 +20,6 @@ export class UpdateSeriesUseCase {
       title: dto.title,
       slug: existingSeries.slug,
       createdAt: existingSeries.createdAt,
-      deletedAt: existingSeries.deletedAt,
     });
 
     await this.seriesRepository.update(id, updatedSeries);
