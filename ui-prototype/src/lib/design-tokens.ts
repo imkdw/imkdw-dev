@@ -1,74 +1,59 @@
 /**
- * Design Token System - Terminal-inspired Developer Blog Theme
- * Unified HSL color system migrated from UI prototype
- * All colors use HSL format for consistency with CSS custom properties
+ * Design Token System
+ * Extracted from the terminal-inspired theme used throughout the application
+ * All colors are in HSL format to match Tailwind CSS custom properties
  */
 
 export const colors = {
   light: {
-    // Base Background Colors
     background: {
       primary: '210 11% 96%',        // --background
-      secondary: '210 11% 90%',      // --secondary 
+      secondary: '210 11% 90%',      // --secondary
       tertiary: '210 11% 93%',       // --muted
       card: '0 0% 100%',             // --card
       popover: '0 0% 100%',          // --popover
     },
-    // Text Colors
     foreground: {
       primary: '220 13% 18%',        // --foreground
       secondary: '220 13% 18%',      // --card-foreground
       muted: '220 9% 46%',           // --muted-foreground
     },
-    // Border Colors
     border: {
       default: '220 13% 91%',        // --border
       input: '220 13% 91%',          // --input
     },
-    // Accent Colors (Terminal Blue)
     accent: {
       primary: '197 71% 52%',        // --accent
       foreground: '0 0% 100%',       // --accent-foreground
-      hover: '197 71% 42%',          // Darker blue for hover
     },
-    // Primary Colors (Terminal Green)
     primary: {
       default: '142 76% 36%',        // --primary (terminal green)
       foreground: '0 0% 100%',       // --primary-foreground
-      hover: '142 76% 26%',          // Darker green for hover
     },
-    // Destructive Colors
     destructive: {
       primary: '0 84% 60%',          // --destructive
       foreground: '0 0% 100%',       // --destructive-foreground
-      hover: '0 84% 50%',            // Darker red for hover
     },
-    // Terminal Specific Colors
     terminal: {
       background: '220 13% 18%',     // --terminal-bg
       foreground: '142 76% 36%',     // --terminal-foreground
       accent: '197 71% 52%',         // --terminal-accent
-      warning: '48 96% 53%',         // --terminal-warning (yellow)
+      warning: '48 96% 53%',         // --terminal-warning
       error: '0 84% 60%',            // --terminal-error
       code: {
         background: '220 13% 18%',   // --code-bg
         foreground: '220 14% 96%',   // --code-foreground
       },
     },
-    // Sidebar Colors
     sidebar: {
       background: '0 0% 98%',        // --sidebar-background
       foreground: '240 5.3% 26.1%', // --sidebar-foreground
       primary: '240 5.9% 10%',       // --sidebar-primary
-      'primary-foreground': '0 0% 98%', // --sidebar-primary-foreground
       accent: '240 4.8% 95.9%',      // --sidebar-accent
-      'accent-foreground': '240 5.9% 10%', // --sidebar-accent-foreground
       border: '220 13% 91%',         // --sidebar-border
-      ring: '217.2 91.2% 59.8%',     // --sidebar-ring
     },
   },
   dark: {
-    // Base Background Colors (Dark)
     background: {
       primary: '220 13% 18%',        // --background (dark)
       secondary: '215 25% 27%',      // --secondary (dark)
@@ -76,36 +61,27 @@ export const colors = {
       card: '215 25% 27%',           // --card (dark)
       popover: '220 13% 18%',        // --popover (dark)
     },
-    // Text Colors (Dark)
     foreground: {
       primary: '142 76% 36%',        // --foreground (dark)
       secondary: '142 76% 36%',      // --card-foreground (dark)
       muted: '220 9% 61%',           // --muted-foreground (dark)
     },
-    // Border Colors (Dark)
     border: {
       default: '215 25% 27%',        // --border (dark)
       input: '215 25% 27%',          // --input (dark)
     },
-    // Accent Colors (Dark)
     accent: {
       primary: '197 71% 52%',        // --accent (dark)
       foreground: '220 13% 18%',     // --accent-foreground (dark)
-      hover: '197 71% 62%',          // Lighter blue for dark mode hover
     },
-    // Primary Colors (Dark)
     primary: {
       default: '142 76% 36%',        // --primary (dark)
       foreground: '220 13% 18%',     // --primary-foreground (dark)
-      hover: '142 76% 46%',          // Lighter green for dark mode hover
     },
-    // Destructive Colors (Dark)
     destructive: {
       primary: '0 84% 60%',          // --destructive (dark)
       foreground: '0 0% 100%',       // --destructive-foreground (dark)
-      hover: '0 84% 70%',            // Lighter red for dark mode hover
     },
-    // Terminal Specific Colors (Dark)
     terminal: {
       background: '220 13% 18%',     // --terminal-bg (dark)
       foreground: '142 76% 36%',     // --terminal-foreground (dark)
@@ -117,21 +93,16 @@ export const colors = {
         foreground: '142 76% 36%',   // --code-foreground (dark)
       },
     },
-    // Sidebar Colors (Dark)
     sidebar: {
       background: '215 25% 27%',     // --sidebar-background (dark)
       foreground: '142 76% 36%',     // --sidebar-foreground (dark)
       primary: '142 76% 36%',        // --sidebar-primary (dark)
-      'primary-foreground': '220 13% 18%', // --sidebar-primary-foreground (dark)
       accent: '215 25% 27%',         // --sidebar-accent (dark)
-      'accent-foreground': '142 76% 36%',  // --sidebar-accent-foreground (dark)
       border: '215 25% 27%',         // --sidebar-border (dark)
-      ring: '142 76% 36%',           // --sidebar-ring (dark)
     },
   },
 } as const;
 
-// Gradient Definitions
 export const gradients = {
   light: {
     hero: 'linear-gradient(135deg, hsl(142 76% 36%) 0%, hsl(197 71% 52%) 100%)',
@@ -145,7 +116,6 @@ export const gradients = {
   },
 } as const;
 
-// Shadow System
 export const shadows = {
   light: {
     sm: '0 1px 3px 0 hsl(220 13% 18% / 0.1)',
@@ -163,7 +133,6 @@ export const shadows = {
   },
 } as const;
 
-// Typography & Spacing
 export const spacing = {
   radius: '0.5rem',
 } as const;
@@ -172,14 +141,14 @@ export const typography = {
   fontMono: "'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
 } as const;
 
-// Window Control Colors
+// Window control colors
 export const windowControls = {
   close: '0 84% 60%',      // Red
   minimize: '48 96% 53%',  // Yellow  
   maximize: '142 76% 36%', // Green (primary)
 } as const;
 
-// Utility function to get HSL color value with wrapper
+// Utility function to get color value with HSL wrapper
 export const hsl = (color: string) => `hsl(${color})`;
 
 // Type definitions for better TypeScript support

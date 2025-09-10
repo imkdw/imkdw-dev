@@ -1,0 +1,349 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Developer Terminal-inspired Tech Blog Design System */
+
+@layer base {
+  :root {
+    /* Terminal Light Theme Colors */
+    --background: 210 11% 96%;
+    --foreground: 220 13% 18%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 18%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 18%;
+    
+    --primary: 142 76% 36%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 210 11% 90%;
+    --secondary-foreground: 220 13% 18%;
+    
+    --muted: 210 11% 93%;
+    --muted-foreground: 220 9% 46%;
+    
+    --accent: 197 71% 52%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 142 76% 36%;
+    
+    --radius: 0.5rem;
+    
+    /* Terminal Specific Colors */
+    --terminal-bg: 220 13% 18%;
+    --terminal-foreground: 142 76% 36%;
+    --terminal-accent: 197 71% 52%;
+    --terminal-warning: 48 96% 53%;
+    --terminal-error: 0 84% 60%;
+    --code-bg: 220 13% 18%;
+    --code-foreground: 220 14% 96%;
+    
+    /* Gradients */
+    --hero-gradient: linear-gradient(135deg, hsl(142 76% 36%) 0%, hsl(197 71% 52%) 100%);
+    --card-gradient: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(210 11% 98%) 100%);
+    --terminal-gradient: linear-gradient(135deg, hsl(220 13% 18%) 0%, hsl(215 25% 27%) 100%);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 3px 0 hsl(220 13% 18% / 0.1);
+    --shadow-md: 0 4px 12px -2px hsl(220 13% 18% / 0.15);
+    --shadow-lg: 0 20px 25px -5px hsl(220 13% 18% / 0.1), 0 10px 10px -5px hsl(220 13% 18% / 0.04);
+    --shadow-glow: 0 0 30px hsl(142 76% 36% / 0.4);
+    --shadow-terminal: inset 0 1px 0 hsl(220 43% 11% / 0.1), 0 1px 3px hsl(220 13% 18% / 0.1);
+    
+    /* Typography */
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Terminal Dark Theme Colors */
+    --background: 220 13% 18%;
+    --foreground: 142 76% 36%;
+    
+    --card: 215 25% 27%;
+    --card-foreground: 142 76% 36%;
+    
+    --popover: 220 13% 18%;
+    --popover-foreground: 142 76% 36%;
+    
+    --primary: 142 76% 36%;
+    --primary-foreground: 220 13% 18%;
+    
+    --secondary: 215 25% 27%;
+    --secondary-foreground: 142 76% 36%;
+    
+    --muted: 215 25% 27%;
+    --muted-foreground: 220 9% 61%;
+    
+    --accent: 197 71% 52%;
+    --accent-foreground: 220 13% 18%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 215 25% 27%;
+    --input: 215 25% 27%;
+    --ring: 142 76% 36%;
+    
+    /* Terminal Specific Colors */
+    --terminal-bg: 220 13% 18%;
+    --terminal-foreground: 142 76% 36%;
+    --terminal-accent: 197 71% 52%;
+    --terminal-warning: 48 96% 53%;
+    --terminal-error: 0 84% 60%;
+    --code-bg: 215 25% 27%;
+    --code-foreground: 142 76% 36%;
+    
+    /* Dark Gradients */
+    --hero-gradient: linear-gradient(135deg, hsl(142 76% 36%) 0%, hsl(197 71% 52%) 100%);
+    --card-gradient: linear-gradient(145deg, hsl(215 25% 27%) 0%, hsl(220 13% 18%) 100%);
+    --terminal-gradient: linear-gradient(135deg, hsl(220 13% 18%) 0%, hsl(215 25% 27%) 100%);
+    
+    /* Dark Shadows */
+    --shadow-sm: 0 1px 3px 0 hsl(0 0% 0% / 0.3);
+    --shadow-md: 0 4px 12px -2px hsl(0 0% 0% / 0.4);
+    --shadow-lg: 0 20px 25px -5px hsl(0 0% 0% / 0.5), 0 10px 10px -5px hsl(0 0% 0% / 0.1);
+    --shadow-glow: 0 0 30px hsl(142 76% 36% / 0.5);
+    --shadow-terminal: inset 0 1px 0 hsl(220 43% 11% / 0.3), 0 1px 3px hsl(0 0% 0% / 0.3);
+
+    --sidebar-background: 215 25% 27%;
+    --sidebar-foreground: 142 76% 36%;
+    --sidebar-primary: 142 76% 36%;
+    --sidebar-primary-foreground: 220 13% 18%;
+    --sidebar-accent: 215 25% 27%;
+    --sidebar-accent-foreground: 142 76% 36%;
+    --sidebar-border: 215 25% 27%;
+    --sidebar-ring: 142 76% 36%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  
+  code, pre {
+    font-family: var(--font-mono);
+  }
+}
+
+@layer components {
+  /* Terminal-inspired components */
+  .terminal-window {
+    @apply rounded-lg border border-border overflow-hidden;
+    background: var(--terminal-gradient);
+    box-shadow: var(--shadow-terminal);
+  }
+  
+  .terminal-header {
+    @apply flex items-center justify-between p-3 border-b border-border/50;
+    background: linear-gradient(to bottom, hsl(var(--muted)), hsl(var(--muted) / 0.8));
+  }
+  
+  .terminal-content {
+    @apply p-4;
+    background: hsl(var(--terminal-bg));
+    color: hsl(var(--terminal-foreground));
+    font-family: var(--font-mono);
+  }
+  
+  /* Code Editor Style Cards */
+  .code-card {
+    @apply rounded-lg border border-border overflow-hidden transition-all duration-300 hover:shadow-lg;
+    background: var(--card-gradient);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .code-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+  
+  .code-card-header {
+    @apply flex items-center justify-between px-3 md:px-4 py-2 border-b border-border/50 min-h-[44px];
+    background: linear-gradient(to right, hsl(var(--muted)), hsl(var(--muted) / 0.8));
+  }
+  
+  .code-card-tabs {
+    @apply flex items-center space-x-1 flex-1 min-w-0;
+  }
+  
+  .code-tab {
+    @apply px-2 md:px-3 py-1 text-xs rounded-t-md border-l border-r border-t border-border/50 min-w-0 max-w-[120px] md:max-w-none;
+    background: hsl(var(--card));
+    color: hsl(var(--foreground));
+  }
+  
+  .code-tab.active {
+    background: hsl(var(--background));
+    color: hsl(var(--primary));
+    border-color: hsl(var(--border));
+  }
+
+  /* File tree improvements */
+  .file-tree-item {
+    @apply flex items-center space-x-2 px-2 py-1.5 text-sm font-mono rounded hover:bg-muted/50 transition-colors cursor-pointer min-h-[32px];
+  }
+
+  /* Window controls */
+  .window-controls {
+    @apply flex items-center space-x-1.5 flex-shrink-0;
+  }
+
+  .control-dot {
+    @apply w-3 h-3 rounded-full border border-border/30 cursor-pointer transition-colors;
+  }
+
+  .control-dot.close {
+    @apply bg-red-500/80 hover:bg-red-500;
+  }
+
+  .control-dot.minimize {
+    @apply bg-yellow-500/80 hover:bg-yellow-500;
+  }
+
+  .control-dot.maximize {
+    @apply bg-green-500/80 hover:bg-green-500;
+  }
+
+  /* Responsive utilities */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .code-card-content {
+    @apply p-6;
+  }
+  
+  /* VS Code style dots */
+  .window-controls {
+    @apply flex items-center space-x-2;
+  }
+  
+  .control-dot {
+    @apply w-3 h-3 rounded-full;
+  }
+  
+  .control-dot.close {
+    background: hsl(var(--destructive));
+  }
+  
+  .control-dot.minimize {
+    background: hsl(var(--terminal-warning));
+  }
+  
+  .control-dot.maximize {
+    background: hsl(var(--primary));
+  }
+  
+  /* File tree style navigation */
+  .file-tree {
+    @apply space-y-1;
+  }
+  
+  .file-tree-item {
+    @apply flex items-center space-x-2 px-2 py-1 rounded text-sm hover:bg-muted/50 cursor-pointer;
+    font-family: var(--font-mono);
+  }
+  
+  .file-tree-item.active {
+    @apply bg-primary/10 text-primary border-l-2 border-primary;
+  }
+  
+  /* Terminal prompt style elements */
+  .terminal-prompt {
+    @apply flex items-center space-x-2 text-sm;
+    font-family: var(--font-mono);
+  }
+  
+  .prompt-symbol {
+    color: hsl(var(--primary));
+  }
+  
+  .prompt-path {
+    color: hsl(var(--accent));
+  }
+  
+  /* Code syntax highlighting */
+  .syntax-keyword {
+    color: hsl(var(--primary));
+  }
+  
+  .syntax-string {
+    color: hsl(var(--terminal-warning));
+  }
+  
+  .syntax-comment {
+    color: hsl(var(--muted-foreground));
+    font-style: italic;
+  }
+  
+  /* Enhanced transitions */
+  .smooth-transition {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .bounce-in {
+    animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  /* Glow effects */
+  .terminal-glow {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+  
+  .accent-glow {
+    box-shadow: 0 0 20px hsl(var(--accent) / 0.3);
+  }
+}
+
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
