@@ -19,9 +19,7 @@ const Layout = ({ children }: LayoutProps) => {
             <AppSidebar />
           </div>
           <main className="flex-1 overflow-auto min-w-0">
-            <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 md:py-6">
-              {children}
-            </div>
+            <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 md:py-6">{children}</div>
           </main>
         </div>
         <Footer />

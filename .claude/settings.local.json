@@ -41,7 +41,10 @@
       "mcp__playwright__browser_close",
       "Bash(pnpm -F @imkdw-dev/ui build)",
       "Bash(pnpm -F @imkdw-dev/ui check-types)",
-      "mcp__playwright__browser_snapshot"
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_hover",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_press_key"
     ],
     "deny": [],
     "ask": []
