@@ -1,137 +1,128 @@
-/**
- * Design Token System - Terminal-inspired Developer Blog Theme
- * Unified HSL color system migrated from UI prototype
- * All colors use HSL format for consistency with CSS custom properties
- */
-
 export const colors = {
   light: {
-    // Base Background Colors
     background: {
-      primary: '210 11% 96%',        // --background
-      secondary: '210 11% 90%',      // --secondary 
-      tertiary: '210 11% 93%',       // --muted
-      card: '0 0% 100%',             // --card
-      popover: '0 0% 100%',          // --popover
+      primary: '210 11% 96%',
+      secondary: '210 11% 90%',
+      tertiary: '210 11% 93%',
+      card: '0 0% 100%',
+      popover: '0 0% 100%',
     },
-    // Text Colors
     foreground: {
-      primary: '220 13% 18%',        // --foreground
-      secondary: '220 13% 18%',      // --card-foreground
-      muted: '220 9% 46%',           // --muted-foreground
+      primary: '220 13% 18%',
+      secondary: '220 13% 18%',
+      muted: '220 9% 46%',
     },
-    // Border Colors
     border: {
-      default: '220 13% 91%',        // --border
-      input: '220 13% 91%',          // --input
+      default: '220 13% 91%',
+      input: '220 13% 91%',
     },
-    // Accent Colors (Terminal Blue)
     accent: {
-      primary: '197 71% 52%',        // --accent
-      foreground: '0 0% 100%',       // --accent-foreground
-      hover: '197 71% 42%',          // Darker blue for hover
+      primary: '197 71% 52%',
+      foreground: '0 0% 100%',
+      hover: '197 71% 42%',
     },
-    // Primary Colors (Terminal Green)
     primary: {
-      default: '142 76% 36%',        // --primary (terminal green)
-      foreground: '0 0% 100%',       // --primary-foreground
-      hover: '142 76% 26%',          // Darker green for hover
+      default: '142 76% 36%',
+      foreground: '0 0% 100%',
+      hover: '142 76% 26%',
     },
-    // Destructive Colors
     destructive: {
-      primary: '0 84% 60%',          // --destructive
-      foreground: '0 0% 100%',       // --destructive-foreground
-      hover: '0 84% 50%',            // Darker red for hover
+      primary: '0 84% 60%',
+      foreground: '0 0% 100%',
+      hover: '0 84% 50%',
     },
-    // Terminal Specific Colors
     terminal: {
-      background: '220 13% 18%',     // --terminal-bg
-      foreground: '142 76% 36%',     // --terminal-foreground
-      accent: '197 71% 52%',         // --terminal-accent
-      warning: '48 96% 53%',         // --terminal-warning (yellow)
-      error: '0 84% 60%',            // --terminal-error
+      background: '220 13% 18%',
+      foreground: '142 76% 36%',
+      accent: '197 71% 52%',
+      warning: '48 96% 53%',
+      error: '0 84% 60%',
+      success: '142 76% 36%',
+      info: '197 71% 52%',
       code: {
-        background: '220 13% 18%',   // --code-bg
-        foreground: '220 14% 96%',   // --code-foreground
+        background: '220 13% 18%',
+        foreground: '220 14% 96%',
+        keyword: '197 71% 52%',
+        string: '142 76% 36%',
+        comment: '220 9% 46%',
+        number: '48 96% 53%',
+        operator: '0 84% 60%',
       },
     },
-    // Sidebar Colors
     sidebar: {
-      background: '0 0% 98%',        // --sidebar-background
-      foreground: '240 5.3% 26.1%', // --sidebar-foreground
-      primary: '240 5.9% 10%',       // --sidebar-primary
-      'primary-foreground': '0 0% 98%', // --sidebar-primary-foreground
-      accent: '240 4.8% 95.9%',      // --sidebar-accent
-      'accent-foreground': '240 5.9% 10%', // --sidebar-accent-foreground
-      border: '220 13% 91%',         // --sidebar-border
-      ring: '217.2 91.2% 59.8%',     // --sidebar-ring
+      background: '0 0% 98%',
+      foreground: '240 5.3% 26.1%',
+      primary: '240 5.9% 10%',
+      'primary-foreground': '0 0% 98%',
+      accent: '240 4.8% 95.9%',
+      'accent-foreground': '240 5.9% 10%',
+      border: '220 13% 91%',
+      ring: '217.2 91.2% 59.8%',
     },
   },
   dark: {
-    // Base Background Colors (Dark)
     background: {
-      primary: '220 13% 18%',        // --background (dark)
-      secondary: '215 25% 27%',      // --secondary (dark)
-      tertiary: '215 25% 27%',       // --muted (dark)
-      card: '215 25% 27%',           // --card (dark)
-      popover: '220 13% 18%',        // --popover (dark)
+      primary: '220 13% 18%',
+      secondary: '215 25% 27%',
+      tertiary: '215 25% 27%',
+      card: '215 25% 27%',
+      popover: '220 13% 18%',
     },
-    // Text Colors (Dark)
     foreground: {
-      primary: '142 76% 36%',        // --foreground (dark)
-      secondary: '142 76% 36%',      // --card-foreground (dark)
-      muted: '220 9% 61%',           // --muted-foreground (dark)
+      primary: '142 76% 36%',
+      secondary: '142 76% 36%',
+      muted: '220 9% 61%',
     },
-    // Border Colors (Dark)
     border: {
-      default: '215 25% 27%',        // --border (dark)
-      input: '215 25% 27%',          // --input (dark)
+      default: '215 25% 27%',
+      input: '215 25% 27%',
     },
-    // Accent Colors (Dark)
     accent: {
-      primary: '197 71% 52%',        // --accent (dark)
-      foreground: '220 13% 18%',     // --accent-foreground (dark)
-      hover: '197 71% 62%',          // Lighter blue for dark mode hover
+      primary: '197 71% 52%',
+      foreground: '220 13% 18%',
+      hover: '197 71% 62%',
     },
-    // Primary Colors (Dark)
     primary: {
-      default: '142 76% 36%',        // --primary (dark)
-      foreground: '220 13% 18%',     // --primary-foreground (dark)
-      hover: '142 76% 46%',          // Lighter green for dark mode hover
+      default: '142 76% 36%',
+      foreground: '220 13% 18%',
+      hover: '142 76% 46%',
     },
-    // Destructive Colors (Dark)
     destructive: {
-      primary: '0 84% 60%',          // --destructive (dark)
-      foreground: '0 0% 100%',       // --destructive-foreground (dark)
-      hover: '0 84% 70%',            // Lighter red for dark mode hover
+      primary: '0 84% 60%',
+      foreground: '0 0% 100%',
+      hover: '0 84% 70%',
     },
-    // Terminal Specific Colors (Dark)
     terminal: {
-      background: '220 13% 18%',     // --terminal-bg (dark)
-      foreground: '142 76% 36%',     // --terminal-foreground (dark)
-      accent: '197 71% 52%',         // --terminal-accent (dark)
-      warning: '48 96% 53%',         // --terminal-warning (dark)
-      error: '0 84% 60%',            // --terminal-error (dark)
+      background: '220 13% 18%',
+      foreground: '142 76% 36%',
+      accent: '197 71% 52%',
+      warning: '48 96% 53%',
+      error: '0 84% 60%',
+      success: '142 76% 36%',
+      info: '197 71% 52%',
       code: {
-        background: '215 25% 27%',   // --code-bg (dark)
-        foreground: '142 76% 36%',   // --code-foreground (dark)
+        background: '215 25% 27%',
+        foreground: '142 76% 36%',
+        keyword: '197 71% 52%',
+        string: '142 76% 36%',
+        comment: '220 9% 61%',
+        number: '48 96% 53%',
+        operator: '0 84% 60%',
       },
     },
-    // Sidebar Colors (Dark)
     sidebar: {
-      background: '215 25% 27%',     // --sidebar-background (dark)
-      foreground: '142 76% 36%',     // --sidebar-foreground (dark)
-      primary: '142 76% 36%',        // --sidebar-primary (dark)
-      'primary-foreground': '220 13% 18%', // --sidebar-primary-foreground (dark)
-      accent: '215 25% 27%',         // --sidebar-accent (dark)
-      'accent-foreground': '142 76% 36%',  // --sidebar-accent-foreground (dark)
-      border: '215 25% 27%',         // --sidebar-border (dark)
-      ring: '142 76% 36%',           // --sidebar-ring (dark)
+      background: '215 25% 27%',
+      foreground: '142 76% 36%',
+      primary: '142 76% 36%',
+      'primary-foreground': '220 13% 18%',
+      accent: '215 25% 27%',
+      'accent-foreground': '142 76% 36%',
+      border: '215 25% 27%',
+      ring: '142 76% 36%',
     },
   },
 } as const;
 
-// Gradient Definitions
 export const gradients = {
   light: {
     hero: 'linear-gradient(135deg, hsl(142 76% 36%) 0%, hsl(197 71% 52%) 100%)',
@@ -145,7 +136,6 @@ export const gradients = {
   },
 } as const;
 
-// Shadow System
 export const shadows = {
   light: {
     sm: '0 1px 3px 0 hsl(220 13% 18% / 0.1)',
@@ -163,7 +153,6 @@ export const shadows = {
   },
 } as const;
 
-// Typography & Spacing
 export const spacing = {
   radius: '0.5rem',
 } as const;
@@ -172,17 +161,14 @@ export const typography = {
   fontMono: "'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
 } as const;
 
-// Window Control Colors
 export const windowControls = {
-  close: '0 84% 60%',      // Red
-  minimize: '48 96% 53%',  // Yellow  
-  maximize: '142 76% 36%', // Green (primary)
+  close: '0 84% 60%',
+  minimize: '48 96% 53%',
+  maximize: '142 76% 36%',
 } as const;
 
-// Utility function to get HSL color value with wrapper
 export const hsl = (color: string) => `hsl(${color})`;
 
-// Type definitions for better TypeScript support
 export type ColorTheme = 'light' | 'dark';
 export type ColorCategory = keyof typeof colors.light;
-export type ColorVariant<T extends ColorCategory> = keyof typeof colors.light[T];
+export type ColorVariant<T extends ColorCategory> = keyof (typeof colors.light)[T];

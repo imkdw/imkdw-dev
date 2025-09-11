@@ -1,11 +1,6 @@
 import type { Config } from 'tailwindcss';
 import { colors, gradients, shadows, spacing, typography } from './colors';
 
-/**
- * Terminal-inspired Tailwind CSS Preset
- * Unified design system with HSL-based color tokens
- * Supports both light and dark themes with CSS custom properties
- */
 const tailwindPreset: Partial<Config> = {
   darkMode: ['class'],
   theme: {
@@ -17,7 +12,6 @@ const tailwindPreset: Partial<Config> = {
       },
     },
     extend: {
-      // HSL-based color system using CSS custom properties
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -62,26 +56,33 @@ const tailwindPreset: Partial<Config> = {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
-        // Terminal-specific colors
         terminal: {
           bg: 'hsl(var(--terminal-bg))',
           foreground: 'hsl(var(--terminal-foreground))',
           accent: 'hsl(var(--terminal-accent))',
           warning: 'hsl(var(--terminal-warning))',
           error: 'hsl(var(--terminal-error))',
+          success: 'hsl(var(--terminal-success))',
+          info: 'hsl(var(--terminal-info))',
+        },
+        code: {
+          bg: 'hsl(var(--code-bg))',
+          foreground: 'hsl(var(--code-foreground))',
+          keyword: 'hsl(var(--code-keyword))',
+          string: 'hsl(var(--code-string))',
+          comment: 'hsl(var(--code-comment))',
+          number: 'hsl(var(--code-number))',
+          operator: 'hsl(var(--code-operator))',
         },
       },
-      // Border radius system
       borderRadius: {
         lg: `var(--radius)`,
         md: `calc(var(--radius) - 2px)`,
         sm: `calc(var(--radius) - 4px)`,
       },
-      // Typography
       fontFamily: {
         mono: typography.fontMono.split(', '),
       },
-      // Enhanced animations for developer theme
       keyframes: {
         'fade-in': {
           '0%': { opacity: '0', transform: 'translateY(10px)' },
@@ -116,7 +117,6 @@ const tailwindPreset: Partial<Config> = {
         float: 'float 3s ease-in-out infinite',
         'terminal-blink': 'terminal-blink 1s infinite',
       },
-      // Enhanced box shadows
       boxShadow: {
         'terminal-sm': shadows.light.sm,
         'terminal-md': shadows.light.md,
@@ -127,9 +127,7 @@ const tailwindPreset: Partial<Config> = {
     },
   },
   plugins: [
-    // CSS custom properties plugin for theme switching
     function ({ addBase, addUtilities }: any) {
-      // Base CSS custom properties for light theme
       addBase({
         ':root': {
           '--background': colors.light.background.primary,
@@ -152,15 +150,20 @@ const tailwindPreset: Partial<Config> = {
           '--input': colors.light.border.input,
           '--ring': colors.light.primary.default,
           '--radius': spacing.radius,
-          // Terminal-specific variables
           '--terminal-bg': colors.light.terminal.background,
           '--terminal-foreground': colors.light.terminal.foreground,
           '--terminal-accent': colors.light.terminal.accent,
           '--terminal-warning': colors.light.terminal.warning,
           '--terminal-error': colors.light.terminal.error,
+          '--terminal-success': colors.light.terminal.success,
+          '--terminal-info': colors.light.terminal.info,
           '--code-bg': colors.light.terminal.code.background,
           '--code-foreground': colors.light.terminal.code.foreground,
-          // Sidebar variables
+          '--code-keyword': colors.light.terminal.code.keyword,
+          '--code-string': colors.light.terminal.code.string,
+          '--code-comment': colors.light.terminal.code.comment,
+          '--code-number': colors.light.terminal.code.number,
+          '--code-operator': colors.light.terminal.code.operator,
           '--sidebar-background': colors.light.sidebar.background,
           '--sidebar-foreground': colors.light.sidebar.foreground,
           '--sidebar-primary': colors.light.sidebar.primary,
@@ -190,15 +193,20 @@ const tailwindPreset: Partial<Config> = {
           '--border': colors.dark.border.default,
           '--input': colors.dark.border.input,
           '--ring': colors.dark.primary.default,
-          // Terminal-specific variables (dark)
           '--terminal-bg': colors.dark.terminal.background,
           '--terminal-foreground': colors.dark.terminal.foreground,
           '--terminal-accent': colors.dark.terminal.accent,
           '--terminal-warning': colors.dark.terminal.warning,
           '--terminal-error': colors.dark.terminal.error,
+          '--terminal-success': colors.dark.terminal.success,
+          '--terminal-info': colors.dark.terminal.info,
           '--code-bg': colors.dark.terminal.code.background,
           '--code-foreground': colors.dark.terminal.code.foreground,
-          // Sidebar variables (dark)
+          '--code-keyword': colors.dark.terminal.code.keyword,
+          '--code-string': colors.dark.terminal.code.string,
+          '--code-comment': colors.dark.terminal.code.comment,
+          '--code-number': colors.dark.terminal.code.number,
+          '--code-operator': colors.dark.terminal.code.operator,
           '--sidebar-background': colors.dark.sidebar.background,
           '--sidebar-foreground': colors.dark.sidebar.foreground,
           '--sidebar-primary': colors.dark.sidebar.primary,
@@ -210,50 +218,7 @@ const tailwindPreset: Partial<Config> = {
         },
       });
 
-      // Terminal-inspired utility classes
-      addUtilities({
-        '.terminal-window': {
-          '@apply rounded-lg border border-border overflow-hidden': {},
-          background: gradients.light.terminal,
-          'box-shadow': shadows.light.terminal,
-          '.dark &': {
-            background: gradients.dark.terminal,
-            'box-shadow': shadows.dark.terminal,
-          },
-        },
-        '.terminal-header': {
-          '@apply flex items-center justify-between p-3 border-b border-border/50': {},
-          background: 'linear-gradient(to bottom, hsl(var(--muted)), hsl(var(--muted) / 0.8))',
-        },
-        '.terminal-content': {
-          '@apply p-4': {},
-          'background-color': 'hsl(var(--terminal-bg))',
-          color: 'hsl(var(--terminal-foreground))',
-          'font-family': typography.fontMono,
-        },
-        '.code-card': {
-          '@apply rounded-lg border border-border overflow-hidden transition-all duration-300 hover:shadow-lg': {},
-          background: gradients.light.card,
-          'box-shadow': shadows.light.md,
-          '.dark &': {
-            background: gradients.dark.card,
-            'box-shadow': shadows.dark.md,
-          },
-        },
-        '.code-card:hover': {
-          'box-shadow': shadows.light.lg,
-          transform: 'translateY(-2px)',
-          '.dark &': {
-            'box-shadow': shadows.dark.lg,
-          },
-        },
-        '.terminal-glow': {
-          'box-shadow': shadows.light.glow,
-          '.dark &': {
-            'box-shadow': shadows.dark.glow,
-          },
-        },
-      });
+      addUtilities({});
     },
   ],
 };
