@@ -1,4 +1,4 @@
-import { Button, Input } from '@imkdw-dev/ui';
+import { Button, Input, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@imkdw-dev/ui';
 import { ThemeToggle } from './components/ThemeToggle';
 
 export default function DesignSystemPage() {
@@ -205,6 +205,210 @@ export default function DesignSystemPage() {
         </div>
       </section>
 
+      {/* Card Components Section */}
+      <section className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-semibold text-foreground mb-4">Card 컴포넌트</h2>
+          <p className="text-muted-foreground mb-6">
+            헤더/바디/푸터 구조와 그라데이션을 지원하는 카드 컴포넌트입니다.
+          </p>
+        </div>
+
+        {/* Variants */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Variants</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card variant="default">
+              <CardHeader>
+                <CardTitle>Default Card</CardTitle>
+                <CardDescription>기본 카드 스타일입니다.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  기본 배경과 그림자를 사용하는 표준 카드입니다.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button size="sm">액션</Button>
+              </CardFooter>
+            </Card>
+
+            <Card variant="gradient">
+              <CardHeader>
+                <CardTitle>Gradient Card</CardTitle>
+                <CardDescription>그라데이션 배경 카드입니다.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  미묘한 그라데이션 효과를 가진 카드입니다.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button size="sm" variant="outline">액션</Button>
+              </CardFooter>
+            </Card>
+
+            <Card variant="terminal">
+              <CardHeader>
+                <CardTitle variant="terminal">Terminal Card</CardTitle>
+                <CardDescription variant="terminal">터미널 스타일 카드입니다.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-terminal-foreground/70 font-mono">
+                  $ ls -la /usr/local/bin
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button size="sm" variant="terminal">실행</Button>
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
+
+        {/* Sizes */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Sizes</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card size="sm">
+              <CardHeader size="sm">
+                <CardTitle size="sm">Small Card</CardTitle>
+                <CardDescription size="sm">작은 크기 카드</CardDescription>
+              </CardHeader>
+              <CardContent size="sm">
+                <p className="text-xs text-muted-foreground">컴팩트한 레이아웃</p>
+              </CardContent>
+              <CardFooter size="sm">
+                <Button size="xs">액션</Button>
+              </CardFooter>
+            </Card>
+
+            <Card size="md">
+              <CardHeader size="md">
+                <CardTitle size="md">Medium Card</CardTitle>
+                <CardDescription size="md">중간 크기 카드 (기본값)</CardDescription>
+              </CardHeader>
+              <CardContent size="md">
+                <p className="text-sm text-muted-foreground">표준 레이아웃</p>
+              </CardContent>
+              <CardFooter size="md">
+                <Button size="sm">액션</Button>
+              </CardFooter>
+            </Card>
+
+            <Card size="lg">
+              <CardHeader size="lg">
+                <CardTitle size="lg">Large Card</CardTitle>
+                <CardDescription size="lg">큰 크기 카드</CardDescription>
+              </CardHeader>
+              <CardContent size="lg">
+                <p className="text-base text-muted-foreground">넓은 레이아웃</p>
+              </CardContent>
+              <CardFooter size="lg">
+                <Button size="md">액션</Button>
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
+
+        {/* Shadow Variants */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Shadow Variants</h3>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <Card shadow="none">
+              <CardHeader>
+                <CardTitle>No Shadow</CardTitle>
+                <CardDescription>그림자 없음</CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card shadow="sm">
+              <CardHeader>
+                <CardTitle>Small Shadow</CardTitle>
+                <CardDescription>작은 그림자</CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card shadow="md">
+              <CardHeader>
+                <CardTitle>Medium Shadow</CardTitle>
+                <CardDescription>중간 그림자</CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card shadow="lg">
+              <CardHeader>
+                <CardTitle>Large Shadow</CardTitle>
+                <CardDescription>큰 그림자</CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+        </div>
+
+        {/* Combined Examples */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Combined Examples</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card variant="default" size="md" shadow="md">
+              <CardHeader>
+                <CardTitle>사용자 프로필</CardTitle>
+                <CardDescription>사용자 정보를 관리합니다</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <Input label="이름" placeholder="홍길동" />
+                  <Input label="이메일" type="email" placeholder="hong@example.com" />
+                </div>
+              </CardContent>
+              <CardFooter className="justify-end space-x-2">
+                <Button variant="outline" size="sm">취소</Button>
+                <Button size="sm">저장</Button>
+              </CardFooter>
+            </Card>
+
+            <Card variant="gradient" size="md" shadow="lg">
+              <CardHeader>
+                <CardTitle>프로젝트 상태</CardTitle>
+                <CardDescription>현재 진행 중인 작업</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>진행률</span>
+                    <span>75%</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-primary h-2 rounded-full" style={{ width: '75%' }}></div>
+                  </div>
+                  <p className="text-xs text-muted-foreground">3개 작업 완료, 1개 남음</p>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button size="sm" className="w-full">상세 보기</Button>
+              </CardFooter>
+            </Card>
+
+            <Card variant="terminal" size="md" shadow="md">
+              <CardHeader>
+                <CardTitle variant="terminal">시스템 정보</CardTitle>
+                <CardDescription variant="terminal">서버 상태 모니터링</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-1 font-mono text-xs text-terminal-foreground/80">
+                  <div>$ uptime</div>
+                  <div>up 15 days, 4:23</div>
+                  <div>$ df -h</div>
+                  <div>Filesystem: 85% used</div>
+                </div>
+              </CardContent>
+              <CardFooter className="justify-between">
+                <Button variant="terminal" size="xs">새로고침</Button>
+                <Button variant="terminal" size="xs">로그 보기</Button>
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Design Tokens Section */}
       <section className="space-y-6">
         <div>
@@ -241,7 +445,7 @@ export default function DesignSystemPage() {
       {/* Footer */}
       <footer className="pt-8 border-t border-border">
         <p className="text-sm text-muted-foreground">
-          Phase 3 완료: Input 컴포넌트 (CVA 패턴, 터미널 테마, 다양한 크기 및 상태)
+          Phase 4 완료: Card 컴포넌트 (CVA 패턴, 헤더/바디/푸터 구조, 그라데이션 지원, 터미널 테마)
         </p>
       </footer>
     </div>
