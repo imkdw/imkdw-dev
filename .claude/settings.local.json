@@ -40,7 +40,8 @@
       "mcp__playwright__browser_take_screenshot",
       "mcp__playwright__browser_close",
       "Bash(pnpm -F @imkdw-dev/ui build)",
-      "Bash(pnpm -F @imkdw-dev/ui check-types)"
+      "Bash(pnpm -F @imkdw-dev/ui check-types)",
+      "mcp__playwright__browser_snapshot"
     ],
     "deny": [],
     "ask": []

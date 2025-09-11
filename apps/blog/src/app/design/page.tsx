@@ -1,4 +1,4 @@
-import { Button, Input, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge } from '@imkdw-dev/ui';
+import { Button, Input, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge, Label } from '@imkdw-dev/ui';
 import { ThemeToggle } from './components/ThemeToggle';
 
 export default function DesignSystemPage() {
@@ -572,6 +572,199 @@ export default function DesignSystemPage() {
         </div>
       </section>
 
+      {/* Label Components Section */}
+      <section className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-semibold text-foreground mb-4">Label 컴포넌트</h2>
+          <p className="text-muted-foreground mb-6">
+            폼 연동과 접근성을 지원하는 라벨 컴포넌트입니다.
+          </p>
+        </div>
+
+        {/* Variants */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Variants</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-foreground">Basic Variants</h4>
+              <div className="space-y-2">
+                <Label variant="default">기본 라벨</Label>
+                <Label variant="required">필수 라벨</Label>
+                <Label variant="optional">선택 라벨</Label>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-foreground">Terminal Variant</h4>
+              <div className="space-y-2">
+                <Label variant="terminal">터미널 라벨</Label>
+                <Label variant="terminal" required>터미널 필수 라벨</Label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Sizes */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Sizes</h3>
+          <div className="space-y-3">
+            <Label size="xs">Extra Small Label</Label>
+            <Label size="sm">Small Label</Label>
+            <Label size="md">Medium Label (기본값)</Label>
+            <Label size="lg">Large Label</Label>
+          </div>
+        </div>
+
+        {/* States */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">States</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-foreground">Default State</h4>
+              <div className="space-y-2">
+                <Label state="default">일반 상태</Label>
+                <Label state="default" required>필수 필드</Label>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-foreground">Error State</h4>
+              <div className="space-y-2">
+                <Label state="error">오류 상태</Label>
+                <Label state="error" required>필수 필드 오류</Label>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-foreground">Success State</h4>
+              <div className="space-y-2">
+                <Label state="success">성공 상태</Label>
+                <Label state="success" required>검증 완료</Label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Required/Optional Indicators */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Required/Optional Indicators</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-foreground">Required Fields</h4>
+              <div className="space-y-2">
+                <Label required>이메일 주소</Label>
+                <Label required size="sm">비밀번호</Label>
+                <Label required variant="terminal">사용자명</Label>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-foreground">Optional Fields</h4>
+              <div className="space-y-2">
+                <Label optional>전화번호</Label>
+                <Label optional size="sm">회사명</Label>
+                <Label optional variant="terminal">별명</Label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Form Integration Examples */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Form Integration Examples</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle size="sm">사용자 등록</CardTitle>
+                <CardDescription>필수 정보 입력 폼</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="register-email" required>이메일</Label>
+                    <Input id="register-email" type="email" placeholder="user@example.com" className="mt-1" />
+                  </div>
+                  <div>
+                    <Label htmlFor="register-password" required state="error">비밀번호</Label>
+                    <Input id="register-password" type="password" placeholder="••••••••" className="mt-1" />
+                  </div>
+                  <div>
+                    <Label htmlFor="register-phone" optional>전화번호</Label>
+                    <Input id="register-phone" placeholder="010-1234-5678" className="mt-1" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle size="sm">프로필 설정</CardTitle>
+                <CardDescription>선택적 정보 입력</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="profile-name" required state="success">이름</Label>
+                    <Input id="profile-name" placeholder="홍길동" className="mt-1" />
+                  </div>
+                  <div>
+                    <Label htmlFor="profile-bio" optional>자기소개</Label>
+                    <Input id="profile-bio" placeholder="간단한 소개를 입력하세요" className="mt-1" />
+                  </div>
+                  <div>
+                    <Label htmlFor="profile-website" optional>웹사이트</Label>
+                    <Input id="profile-website" placeholder="https://example.com" className="mt-1" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card variant="terminal">
+              <CardHeader>
+                <CardTitle variant="terminal" size="sm">터미널 설정</CardTitle>
+                <CardDescription variant="terminal">개발 환경 구성</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="terminal-path" variant="terminal" required>PATH</Label>
+                    <Input id="terminal-path" variant="terminal" placeholder="/usr/local/bin" className="mt-1" />
+                  </div>
+                  <div>
+                    <Label htmlFor="terminal-shell" variant="terminal" required>Shell</Label>
+                    <Input id="terminal-shell" variant="terminal" placeholder="/bin/zsh" className="mt-1" />
+                  </div>
+                  <div>
+                    <Label htmlFor="terminal-editor" variant="terminal" optional>Editor</Label>
+                    <Input id="terminal-editor" variant="terminal" placeholder="code" className="mt-1" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* Disabled State */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Disabled State</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-foreground">Disabled Labels</h4>
+              <div className="space-y-2">
+                <Label disabled>비활성화된 라벨</Label>
+                <Label disabled required>비활성화된 필수 라벨</Label>
+                <Label disabled optional>비활성화된 선택 라벨</Label>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-foreground">With Form Elements</h4>
+              <div className="space-y-3">
+                <div>
+                  <Label htmlFor="disabled-input" disabled>비활성화된 필드</Label>
+                  <Input id="disabled-input" disabled placeholder="입력할 수 없습니다" className="mt-1" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Design Tokens Section */}
       <section className="space-y-6">
         <div>
@@ -608,7 +801,7 @@ export default function DesignSystemPage() {
       {/* Footer */}
       <footer className="pt-8 border-t border-border">
         <p className="text-sm text-muted-foreground">
-          Phase 5 완료: Badge 컴포넌트 (CVA 패턴, 상태별 색상, 크기 variants, 터미널 테마)
+          Phase 6 완료: Label 컴포넌트 (CVA 패턴, 폼 연동, 접근성 지원, 필수/선택 표시, 터미널 테마)
         </p>
       </footer>
     </div>
