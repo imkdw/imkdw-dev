@@ -1,4 +1,4 @@
-import { Button, Input, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@imkdw-dev/ui';
+import { Button, Input, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge } from '@imkdw-dev/ui';
 import { ThemeToggle } from './components/ThemeToggle';
 
 export default function DesignSystemPage() {
@@ -409,6 +409,169 @@ export default function DesignSystemPage() {
         </div>
       </section>
 
+      {/* Badge Components Section */}
+      <section className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-semibold text-foreground mb-4">Badge 컴포넌트</h2>
+          <p className="text-muted-foreground mb-6">
+            상태별 색상과 크기를 지원하는 배지 컴포넌트입니다.
+          </p>
+        </div>
+
+        {/* Variants */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Variants</h3>
+          <div className="flex flex-wrap gap-3">
+            <Badge variant="default">Default</Badge>
+            <Badge variant="secondary">Secondary</Badge>
+            <Badge variant="destructive">Destructive</Badge>
+            <Badge variant="success">Success</Badge>
+            <Badge variant="warning">Warning</Badge>
+            <Badge variant="info">Info</Badge>
+            <Badge variant="outline">Outline</Badge>
+            <Badge variant="terminal">Terminal</Badge>
+          </div>
+        </div>
+
+        {/* Sizes */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Sizes</h3>
+          <div className="flex flex-wrap items-center gap-3">
+            <Badge size="xs">Extra Small</Badge>
+            <Badge size="sm">Small</Badge>
+            <Badge size="md">Medium</Badge>
+            <Badge size="lg">Large</Badge>
+          </div>
+        </div>
+
+        {/* Shapes */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Shapes</h3>
+          <div className="flex flex-wrap gap-3">
+            <Badge shape="pill">Pill Shape</Badge>
+            <Badge shape="rounded">Rounded Shape</Badge>
+          </div>
+        </div>
+
+        {/* State Examples */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">State Examples</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="p-4 border border-border rounded-lg space-y-3">
+              <h4 className="font-medium text-foreground">Success States</h4>
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="success">완료</Badge>
+                <Badge variant="success" size="sm">승인됨</Badge>
+                <Badge variant="success" size="xs">활성</Badge>
+              </div>
+            </div>
+            
+            <div className="p-4 border border-border rounded-lg space-y-3">
+              <h4 className="font-medium text-foreground">Warning States</h4>
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="warning">대기중</Badge>
+                <Badge variant="warning" size="sm">검토 필요</Badge>
+                <Badge variant="warning" size="xs">주의</Badge>
+              </div>
+            </div>
+
+            <div className="p-4 border border-border rounded-lg space-y-3">
+              <h4 className="font-medium text-foreground">Error States</h4>
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="destructive">실패</Badge>
+                <Badge variant="destructive" size="sm">오류</Badge>
+                <Badge variant="destructive" size="xs">차단됨</Badge>
+              </div>
+            </div>
+
+            <div className="p-4 border border-border rounded-lg space-y-3">
+              <h4 className="font-medium text-foreground">Info States</h4>
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="info">정보</Badge>
+                <Badge variant="info" size="sm">베타</Badge>
+                <Badge variant="info" size="xs">새로움</Badge>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Combined Examples */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Combined Examples</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle size="sm">프로젝트 A</CardTitle>
+                  <Badge variant="success" size="sm">활성</Badge>
+                </div>
+                <CardDescription>React 기반 웹 애플리케이션</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">상태:</span>
+                    <Badge variant="success" size="xs">배포됨</Badge>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">환경:</span>
+                    <Badge variant="info" size="xs">Production</Badge>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle size="sm">프로젝트 B</CardTitle>
+                  <Badge variant="warning" size="sm">대기중</Badge>
+                </div>
+                <CardDescription>Node.js API 서버</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">상태:</span>
+                    <Badge variant="warning" size="xs">검토중</Badge>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">환경:</span>
+                    <Badge variant="secondary" size="xs">Staging</Badge>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card variant="terminal">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle variant="terminal" size="sm">시스템 상태</CardTitle>
+                  <Badge variant="terminal" size="sm">모니터링</Badge>
+                </div>
+                <CardDescription variant="terminal">서버 상태 체크</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2 font-mono text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="text-terminal-foreground/70">CPU:</span>
+                    <Badge variant="success" size="xs" shape="rounded">정상</Badge>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-terminal-foreground/70">Memory:</span>
+                    <Badge variant="warning" size="xs" shape="rounded">75%</Badge>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-terminal-foreground/70">Network:</span>
+                    <Badge variant="success" size="xs" shape="rounded">연결됨</Badge>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Design Tokens Section */}
       <section className="space-y-6">
         <div>
@@ -445,7 +608,7 @@ export default function DesignSystemPage() {
       {/* Footer */}
       <footer className="pt-8 border-t border-border">
         <p className="text-sm text-muted-foreground">
-          Phase 4 완료: Card 컴포넌트 (CVA 패턴, 헤더/바디/푸터 구조, 그라데이션 지원, 터미널 테마)
+          Phase 5 완료: Badge 컴포넌트 (CVA 패턴, 상태별 색상, 크기 variants, 터미널 테마)
         </p>
       </footer>
     </div>
