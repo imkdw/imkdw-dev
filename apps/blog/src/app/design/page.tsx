@@ -1,4 +1,4 @@
-import { Button } from '@imkdw-dev/ui';
+import { Button, Input } from '@imkdw-dev/ui';
 import { ThemeToggle } from './components/ThemeToggle';
 
 export default function DesignSystemPage() {
@@ -89,6 +89,122 @@ export default function DesignSystemPage() {
         </div>
       </section>
 
+      {/* Input Components Section */}
+      <section className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-semibold text-foreground mb-4">Input 컴포넌트</h2>
+          <p className="text-muted-foreground mb-6">
+            다양한 variant와 크기, 상태를 지원하는 입력 컴포넌트입니다.
+          </p>
+        </div>
+
+        {/* Variants */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Variants</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-foreground">Default</h4>
+              <Input placeholder="Enter your text..." />
+              <Input label="Email" placeholder="user@example.com" />
+              <Input label="Password" type="password" placeholder="••••••••" />
+            </div>
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-foreground">Terminal</h4>
+              <Input variant="terminal" placeholder="$ command input" />
+              <Input variant="terminal" label="Username" placeholder="root@localhost" />
+              <Input variant="terminal" label="Directory" placeholder="/home/user" />
+            </div>
+          </div>
+        </div>
+
+        {/* Sizes */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Sizes</h3>
+          <div className="space-y-3">
+            <div className="space-y-2">
+              <label className="text-sm text-foreground">Small (sm)</label>
+              <Input size="sm" placeholder="Small input" />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm text-foreground">Medium (md) - Default</label>
+              <Input size="md" placeholder="Medium input" />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm text-foreground">Large (lg)</label>
+              <Input size="lg" placeholder="Large input" />
+            </div>
+          </div>
+        </div>
+
+        {/* States */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">States</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <div className="space-y-2">
+                <Input label="Normal State" placeholder="Normal input" helperText="This is a helper text" />
+              </div>
+              <div className="space-y-2">
+                <Input label="Error State" placeholder="Error input" errorMessage="This field is required" />
+              </div>
+              <div className="space-y-2">
+                <Input label="Success State" placeholder="Success input" successMessage="Valid input!" />
+              </div>
+              <div className="space-y-2">
+                <Input label="Disabled State" placeholder="Disabled input" disabled />
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="space-y-2">
+                <Input variant="terminal" label="Terminal Normal" placeholder="$ normal" helperText="Terminal helper text" />
+              </div>
+              <div className="space-y-2">
+                <Input variant="terminal" label="Terminal Error" placeholder="$ error" errorMessage="Command not found" />
+              </div>
+              <div className="space-y-2">
+                <Input variant="terminal" label="Terminal Success" placeholder="$ success" successMessage="Command executed successfully" />
+              </div>
+              <div className="space-y-2">
+                <Input variant="terminal" label="Terminal Disabled" placeholder="$ disabled" disabled />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Combined Examples */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-foreground">Combined Examples</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="p-4 border border-border rounded-lg space-y-3">
+              <h4 className="font-medium text-foreground">User Registration</h4>
+              <div className="space-y-3">
+                <Input label="Full Name" placeholder="John Doe" />
+                <Input label="Email" type="email" placeholder="john@example.com" />
+                <Input label="Password" type="password" placeholder="••••••••" />
+              </div>
+            </div>
+            
+            <div className="p-4 border border-border rounded-lg space-y-3">
+              <h4 className="font-medium text-foreground">Search & Filter</h4>
+              <div className="space-y-3">
+                <Input size="sm" placeholder="Search..." />
+                <Input size="sm" placeholder="Filter by category" />
+                <Input size="sm" type="number" placeholder="Min price" />
+              </div>
+            </div>
+
+            <div className="p-4 border border-border rounded-lg space-y-3">
+              <h4 className="font-medium text-foreground">Terminal Commands</h4>
+              <div className="space-y-3">
+                <Input variant="terminal" size="sm" placeholder="$ npm install" />
+                <Input variant="terminal" size="sm" placeholder="$ git commit -m" />
+                <Input variant="terminal" size="sm" placeholder="$ docker run" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Design Tokens Section */}
       <section className="space-y-6">
         <div>
@@ -125,7 +241,7 @@ export default function DesignSystemPage() {
       {/* Footer */}
       <footer className="pt-8 border-t border-border">
         <p className="text-sm text-muted-foreground">
-          Phase 2 완료: Button 컴포넌트 + 디자인 시스템 쇼케이스
+          Phase 3 완료: Input 컴포넌트 (CVA 패턴, 터미널 테마, 다양한 크기 및 상태)
         </p>
       </footer>
     </div>
