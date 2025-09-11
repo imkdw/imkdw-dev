@@ -8,8 +8,6 @@ export class SeriesMapper {
       title: entity.title,
       slug: entity.slug,
       createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
-      deletedAt: entity.deletedAt,
     });
   }
 }

@@ -1,5 +1,10 @@
-export * from './button';
-export * from './input';
+export { Button, buttonVariants, type Props as ButtonProps } from './button';
+export { Input, type Props as InputProps } from './input';
 export * from './card';
-export * from './badge';
+export { Badge, badgeVariants, type Props as BadgeProps } from './badge';
 export * from './label';
+export { SidebarTrigger, type Props as SidebarTriggerProps } from './sidebar';
+export { MacOSControls, type Props as MacOSControlsProps } from './macos-controls';
+export * from './dropdown-menu';
+export * from './dialog';
+export * from './avatar';

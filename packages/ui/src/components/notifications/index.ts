@@ -1,0 +1,1 @@
+export { NotificationCenter, type Props as NotificationCenterProps } from './notification-center';

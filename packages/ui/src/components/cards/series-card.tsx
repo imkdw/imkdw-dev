@@ -1,7 +1,7 @@
 import { Button } from '../../primitives/button';
 import { Badge } from '../../primitives/badge';
 
-export interface SeriesCardProps {
+export interface Props {
   title: string;
   description: string;
   articleCount: number;
@@ -25,7 +25,7 @@ export const SeriesCard = ({
   status = 'active',
   onClick,
   className = '',
-}: SeriesCardProps) => {
+}: Props) => {
   const getStatusBadge = () => {
     switch (status) {
       case 'completed':
@@ -136,4 +136,3 @@ export const SeriesCard = ({
   );
 };
 
-export default SeriesCard;

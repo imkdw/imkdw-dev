@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss';
-import tailwindPreset from '@imkdw-dev/ui/tailwind-preset';
+import { tailwindPreset } from '@imkdw-dev/ui/tailwind-preset';
 
 const config: Config = {
   presets: [tailwindPreset],

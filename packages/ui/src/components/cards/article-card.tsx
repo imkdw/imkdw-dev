@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button } from '../../primitives/button';
 import { Badge } from '../../primitives/badge';
 
-export interface ArticleCardProps {
+export interface Props {
   title: string;
   excerpt: string;
   publishedAt: string;
@@ -28,7 +28,7 @@ export const ArticleCard = ({
   isBookmarked = false,
   onClick,
   className = '',
-}: ArticleCardProps) => {
+}: Props) => {
   const [starred, setStarred] = useState(isBookmarked);
 
   const handleStar = (e: React.MouseEvent) => {
@@ -140,4 +140,3 @@ export const ArticleCard = ({
   );
 };
 
-export default ArticleCard;

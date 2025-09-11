@@ -44,7 +44,13 @@
       "mcp__playwright__browser_snapshot",
       "mcp__playwright__browser_hover",
       "mcp__playwright__browser_resize",
-      "mcp__playwright__browser_press_key"
+      "mcp__playwright__browser_press_key",
+      "Bash(playwright-cli screenshot:*)",
+      "Bash(node:*)",
+      "Bash(pnpm ui:*)",
+      "Bash(pnpm -F blog build)",
+      "Bash(find:*)",
+      "Bash(pnpm:*)"
     ],
     "deny": [],
     "ask": []

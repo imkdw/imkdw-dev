@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss';
 import { colors, gradients, shadows, spacing, typography } from './colors';
 
-const tailwindPreset: Partial<Config> = {
+export const tailwindPreset: Partial<Config> = {
   darkMode: ['class'],
   theme: {
     container: {
@@ -221,113 +221,114 @@ const tailwindPreset: Partial<Config> = {
       addUtilities({
         // Terminal window styles
         '.terminal-window': {
-          'background': 'linear-gradient(135deg, hsl(var(--terminal-bg)) 0%, hsl(215 25% 27%) 100%)',
+          background: 'linear-gradient(135deg, hsl(var(--terminal-bg)) 0%, hsl(215 25% 27%) 100%)',
           'border-radius': '0.5rem',
-          'border': '1px solid hsl(var(--border))',
+          border: '1px solid hsl(var(--border))',
           'box-shadow': '0 8px 32px -8px hsl(var(--primary) / 0.3), inset 0 1px 0 hsl(220 43% 11% / 0.1)',
-          'overflow': 'hidden',
-          'position': 'relative',
+          overflow: 'hidden',
+          position: 'relative',
         },
         '.terminal-header': {
-          'background': 'linear-gradient(135deg, hsl(215 25% 35%) 0%, hsl(215 25% 30%) 100%)',
+          display: 'flex',
+          background: 'linear-gradient(135deg, hsl(215 25% 35%) 0%, hsl(215 25% 30%) 100%)',
           'border-bottom': '1px solid hsl(var(--border))',
-          'padding': '0.75rem 1rem',
+          padding: '0.75rem 1rem',
         },
         '.terminal-content': {
-          'background': 'hsl(var(--terminal-bg))',
-          'color': 'hsl(var(--terminal-foreground))',
+          background: 'hsl(var(--terminal-bg))',
+          color: 'hsl(var(--terminal-foreground))',
           'font-family': 'var(--font-mono)',
         },
         '.terminal-prompt': {
-          'display': 'flex',
+          display: 'flex',
           'align-items': 'center',
-          'gap': '0.5rem',
+          gap: '0.5rem',
           'font-family': 'var(--font-mono)',
           'font-size': '0.875rem',
         },
         '.prompt-symbol': {
-          'color': 'hsl(var(--primary))',
+          color: 'hsl(var(--primary))',
           'font-weight': 'bold',
         },
         '.prompt-path': {
-          'color': 'hsl(var(--terminal-accent))',
+          color: 'hsl(var(--terminal-accent))',
         },
         '.window-controls': {
-          'display': 'flex',
+          display: 'flex',
           'align-items': 'center',
-          'gap': '0.5rem',
+          gap: '0.5rem',
         },
         '.control-dot': {
-          'width': '0.75rem',
-          'height': '0.75rem',
+          width: '0.75rem',
+          height: '0.75rem',
           'border-radius': '50%',
-          'border': '1px solid rgba(0, 0, 0, 0.2)',
+          border: '1px solid rgba(0, 0, 0, 0.2)',
         },
         '.control-dot.close': {
-          'background': '#ff5f57',
+          background: '#ff5f57',
         },
         '.control-dot.minimize': {
-          'background': '#ffbd2e',
+          background: '#ffbd2e',
         },
         '.control-dot.maximize': {
-          'background': '#28ca42',
+          background: '#28ca42',
         },
         // Code card styles
         '.code-card': {
-          'background': 'linear-gradient(145deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%)',
-          'border': '1px solid hsl(var(--border))',
+          background: 'linear-gradient(145deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%)',
+          border: '1px solid hsl(var(--border))',
           'border-radius': '0.75rem',
-          'padding': '1.5rem',
-          'transition': 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          'position': 'relative',
-          'overflow': 'hidden',
+          padding: '1.5rem',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          position: 'relative',
+          overflow: 'hidden',
         },
         '.code-card:hover': {
           'border-color': 'hsl(var(--primary) / 0.5)',
           'box-shadow': '0 20px 25px -5px hsl(var(--primary) / 0.1), 0 10px 10px -5px hsl(var(--primary) / 0.04)',
-          'transform': 'translateY(-2px)',
+          transform: 'translateY(-2px)',
         },
         '.code-card-content': {
           'z-index': '1',
         },
         // Syntax highlighting
         '.syntax-keyword': {
-          'color': 'hsl(var(--code-keyword))',
+          color: 'hsl(var(--code-keyword))',
           'font-family': 'var(--font-mono)',
         },
         '.syntax-string': {
-          'color': 'hsl(var(--code-string))',
+          color: 'hsl(var(--code-string))',
           'font-family': 'var(--font-mono)',
         },
         '.syntax-comment': {
-          'color': 'hsl(var(--code-comment))',
+          color: 'hsl(var(--code-comment))',
           'font-family': 'var(--font-mono)',
         },
         '.syntax-number': {
-          'color': 'hsl(var(--code-number))',
+          color: 'hsl(var(--code-number))',
           'font-family': 'var(--font-mono)',
         },
         '.syntax-operator': {
-          'color': 'hsl(var(--code-operator))',
+          color: 'hsl(var(--code-operator))',
           'font-family': 'var(--font-mono)',
         },
         // Animation utilities
         '.smooth-transition': {
-          'transition': 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         },
         '.bounce-in': {
-          'animation': 'scale-in 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          animation: 'scale-in 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         },
         // Line clamp utilities
         '.line-clamp-2': {
-          'overflow': 'hidden',
-          'display': '-webkit-box',
+          overflow: 'hidden',
+          display: '-webkit-box',
           '-webkit-box-orient': 'vertical',
           '-webkit-line-clamp': '2',
         },
         '.line-clamp-3': {
-          'overflow': 'hidden',
-          'display': '-webkit-box',
+          overflow: 'hidden',
+          display: '-webkit-box',
           '-webkit-box-orient': 'vertical',
           '-webkit-line-clamp': '3',
         },
@@ -335,5 +336,3 @@ const tailwindPreset: Partial<Config> = {
     },
   ],
 };
-
-export default tailwindPreset;

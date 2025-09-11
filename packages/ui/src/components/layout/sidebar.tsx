@@ -1,12 +1,12 @@
 import { ReactNode } from 'react';
 
-export interface SidebarProps {
+interface Props {
   children?: ReactNode;
   className?: string;
   isOpen?: boolean;
 }
 
-export const Sidebar = ({ children, className = '', isOpen = false }: SidebarProps) => {
+export const Sidebar = ({ children, className = '', isOpen = false }: Props) => {
   return (
     <aside
       className={`
@@ -17,11 +17,7 @@ export const Sidebar = ({ children, className = '', isOpen = false }: SidebarPro
         ${className}
       `}
     >
-      <div className="flex flex-col h-full p-4">
-        {children}
-      </div>
+      <div className="flex flex-col h-full p-4">{children}</div>
     </aside>
   );
 };
-
-export default Sidebar;

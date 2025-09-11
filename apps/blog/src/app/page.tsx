@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { Layout, TerminalSection, ArticleCard, SeriesCard, BlogHeader } from '@imkdw-dev/ui';
+import { BookOpen, Clock, FileText, Folder, Zap } from 'lucide-react';
+import { Layout, TerminalSection, ArticleCard, SeriesCard } from '@imkdw-dev/ui';
 
-// 더미 데이터
 const recentArticles = [
   {
     title: 'React 18의 Concurrent Features 완전 정복',
@@ -78,10 +77,10 @@ const blogStats = [
 ];
 
 const terminalCommands = [
-  { command: 'git clone https://github.com/imkdw/blog.git' },
-  { command: 'cd blog && npm install' },
-  { command: 'npm run dev' },
-  { command: 'echo "Welcome to my blog! 🚀"' },
+  { command: 'git clone https://github.com/imkdw/imkdw-dev.git' },
+  { command: 'cd imkdw-dev && pnpm install' },
+  { command: 'pnpm dev' },
+  { command: 'echo "Welcome to my blog!"' },
 ];
 
 export const metadata: Metadata = {
@@ -120,166 +119,112 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  const headerComponent = (
-    <BlogHeader 
-      LinkComponent={Link}
-      navigation={[
-        { name: 'Articles', href: '/articles' },
-        { name: 'Series', href: '/series' },
-        { name: 'About', href: '/about' },
-      ]}
-      logo={{ text: 'DevBlog', icon: 'D' }}
-    />
-  );
-
-  const footerContent = (
-    <div className="text-center text-sm text-muted-foreground">
-      <p>&copy; 2024 imkdw. All rights reserved.</p>
-      <p className="mt-1">Built with Next.js, TypeScript, and Tailwind CSS</p>
-    </div>
-  );
-
   return (
-    <>
-      {headerComponent}
-      <Layout footer={footerContent}>
-        <main>
-          {/* Terminal Section */}
-          <TerminalSection
-            commands={terminalCommands}
-            title="개발자를 위한 공간"
-            description="최신 웹 기술, 프로그래밍 튜토리얼, 그리고 실무에서 바로 활용할 수 있는 코드 예제들을 제공합니다. 함께 성장하는 개발자 커뮤니티를 만들어가요."
-            stats={blogStats}
-            tags={['React', 'TypeScript', 'Node.js', 'Frontend', 'Backend']}
-          />
+    <Layout>
+      <main>
+        <TerminalSection
+          commands={terminalCommands}
+          title="Tech Blog"
+          description="학습하고 경험한 내용들을 공유하는 기술블로그 입니다"
+          stats={blogStats}
+          tags={['Node.js', 'TypeScript', 'Nestjs', 'Prisma', 'Nextjs']}
+        />
 
-          <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10 space-y-8 md:space-y-10">
-            {/* 최근 시리즈 섹션 */}
-            <section className="bg-background border border-border rounded-lg p-4 md:p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <svg className="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h2 className="text-lg lg:text-xl font-semibold text-foreground">최근 시리즈</h2>
-                    <div className="text-xs text-muted-foreground font-mono">find ./series -type d | head -2</div>
-                  </div>
+        <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10 space-y-8 md:space-y-10">
+          {/* 최근 시리즈 섹션 */}
+          <section className="bg-background border border-border rounded-lg p-4 md:p-6">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <BookOpen className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h2 className="text-lg lg:text-xl font-semibold text-foreground">최근 시리즈</h2>
+                  <div className="text-xs text-muted-foreground font-mono">find ./series -type d | head -2</div>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-                {recentSeries.map((series, index) => (
-                  <div key={series.slug} className="bounce-in h-full" style={{ animationDelay: `${index * 0.1}s` }}>
-                    <SeriesCard {...series} />
-                  </div>
-                ))}
-              </div>
-            </section>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+              {recentSeries.map((series, index) => (
+                <div key={series.slug} className="bounce-in h-full" style={{ animationDelay: `${index * 0.1}s` }}>
+                  <SeriesCard {...series} />
+                </div>
+              ))}
+            </div>
+          </section>
 
-            {/* 최근 게시글 섹션 */}
-            <section className="bg-background border border-border rounded-lg p-4 md:p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <svg className="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <circle cx="12" cy="12" r="10" />
-                      <polyline points="12,6 12,12 16,14" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h2 className="text-lg lg:text-xl font-semibold text-foreground">최근 게시글</h2>
-                    <div className="text-xs text-muted-foreground font-mono">ls -la *.md | head -4</div>
-                  </div>
+          {/* 최근 게시글 섹션 */}
+          <section className="bg-background border border-border rounded-lg p-4 md:p-6">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <Clock className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h2 className="text-lg lg:text-xl font-semibold text-foreground">최근 게시글</h2>
+                  <div className="text-xs text-muted-foreground font-mono">ls -la *.md | head -4</div>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-                {recentArticles.map((article, index) => (
-                  <div
-                    key={article.slug}
-                    className="bounce-in h-full"
-                    style={{ animationDelay: `${(index + 2) * 0.1}s` }}
-                  >
-                    <ArticleCard {...article} />
-                  </div>
-                ))}
-              </div>
-            </section>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+              {recentArticles.map((article, index) => (
+                <div
+                  key={article.slug}
+                  className="bounce-in h-full"
+                  style={{ animationDelay: `${(index + 2) * 0.1}s` }}
+                >
+                  <ArticleCard {...article} />
+                </div>
+              ))}
+            </div>
+          </section>
 
-            {/* Blog Stats Cards */}
-            <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-              <div className="group relative overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-4 md:p-6 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                    <svg
-                      className="h-5 w-5 md:h-6 md:w-6 text-primary"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                    >
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                      <polyline points="14,2 14,8 20,8" />
-                      <line x1="16" y1="13" x2="8" y2="13" />
-                      <line x1="16" y1="17" x2="8" y2="17" />
-                      <polyline points="10,9 9,9 8,9" />
-                    </svg>
-                  </div>
-                  <div className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full font-mono">.md</div>
+          {/* Blog Stats Cards */}
+          <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            <div className="group relative overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-4 md:p-6 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                  <FileText className="h-5 w-5 md:h-6 md:w-6 text-primary" />
                 </div>
-                <div className="space-y-1">
-                  <div className="text-2xl md:text-3xl font-bold font-mono text-primary">127</div>
-                  <div className="text-sm md:text-base font-medium text-foreground">총 게시글</div>
-                  <div className="text-xs text-muted-foreground">지식 공유의 여정</div>
-                </div>
+                <div className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full font-mono">.md</div>
               </div>
+              <div className="space-y-1">
+                <div className="text-2xl md:text-3xl font-bold font-mono text-primary">127</div>
+                <div className="text-sm md:text-base font-medium text-foreground">총 게시글</div>
+                <div className="text-xs text-muted-foreground">지식 공유의 여정</div>
+              </div>
+            </div>
 
-              <div className="group relative overflow-hidden bg-gradient-to-br from-accent/5 to-accent/10 border border-accent/20 rounded-xl p-4 md:p-6 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300 hover:-translate-y-1">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="p-2 bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">
-                    <svg
-                      className="h-5 w-5 md:h-6 md:w-6 text-accent"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                    >
-                      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2v11z" />
-                    </svg>
-                  </div>
-                  <div className="text-xs px-2 py-1 bg-accent/10 text-accent rounded-full font-mono">active</div>
+            <div className="group relative overflow-hidden bg-gradient-to-br from-accent/5 to-accent/10 border border-accent/20 rounded-xl p-4 md:p-6 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-2 bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">
+                  <Folder className="h-5 w-5 md:h-6 md:w-6 text-accent" />
                 </div>
-                <div className="space-y-1">
-                  <div className="text-2xl md:text-3xl font-bold font-mono text-accent">15</div>
-                  <div className="text-sm md:text-base font-medium text-foreground">진행중인 시리즈</div>
-                  <div className="text-xs text-muted-foreground">체계적인 학습 경험</div>
-                </div>
+                <div className="text-xs px-2 py-1 bg-accent/10 text-accent rounded-full font-mono">active</div>
               </div>
+              <div className="space-y-1">
+                <div className="text-2xl md:text-3xl font-bold font-mono text-accent">15</div>
+                <div className="text-sm md:text-base font-medium text-foreground">진행중인 시리즈</div>
+                <div className="text-xs text-muted-foreground">체계적인 학습 경험</div>
+              </div>
+            </div>
 
-              <div className="group relative overflow-hidden bg-gradient-to-br from-green-500/5 to-green-500/10 border border-green-500/20 rounded-xl p-4 md:p-6 hover:shadow-lg hover:shadow-green-500/10 transition-all duration-300 hover:-translate-y-1">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="p-2 bg-green-500/10 rounded-lg group-hover:bg-green-500/20 transition-colors">
-                    <svg
-                      className="h-5 w-5 md:h-6 md:w-6 text-green-500"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                    >
-                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                    </svg>
-                  </div>
-                  <div className="text-xs px-2 py-1 bg-green-500/10 text-green-500 rounded-full font-mono">weekly</div>
+            <div className="group relative overflow-hidden bg-gradient-to-br from-green-500/5 to-green-500/10 border border-green-500/20 rounded-xl p-4 md:p-6 hover:shadow-lg hover:shadow-green-500/10 transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-2 bg-green-500/10 rounded-lg group-hover:bg-green-500/20 transition-colors">
+                  <Zap className="h-5 w-5 md:h-6 md:w-6 text-green-500" />
                 </div>
-                <div className="space-y-1">
-                  <div className="text-2xl md:text-3xl font-bold font-mono text-green-500">매주</div>
-                  <div className="text-sm md:text-base font-medium text-foreground">새로운 콘텐츠</div>
-                  <div className="text-xs text-muted-foreground">꾸준한 업데이트</div>
-                </div>
+                <div className="text-xs px-2 py-1 bg-green-500/10 text-green-500 rounded-full font-mono">weekly</div>
               </div>
-            </section>
-          </div>
-        </main>
-      </Layout>
-    </>
+              <div className="space-y-1">
+                <div className="text-2xl md:text-3xl font-bold font-mono text-green-500">매주</div>
+                <div className="text-sm md:text-base font-medium text-foreground">새로운 콘텐츠</div>
+                <div className="text-xs text-muted-foreground">꾸준한 업데이트</div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </Layout>
   );
 }
