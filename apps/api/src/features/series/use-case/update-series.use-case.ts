@@ -19,6 +19,7 @@ export class UpdateSeriesUseCase {
       id: existingSeries.id,
       title: dto.title,
       slug: existingSeries.slug,
+      description: dto.description,
       createdAt: existingSeries.createdAt,
     });
 

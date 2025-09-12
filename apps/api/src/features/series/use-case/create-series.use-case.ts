@@ -20,6 +20,7 @@ export class CreateSeriesUseCase {
       id: generateUUID(),
       title: dto.title,
       slug: dto.slug,
+      description: dto.description,
       createdAt: new Date(),
     });
 

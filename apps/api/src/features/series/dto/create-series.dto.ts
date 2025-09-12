@@ -1,5 +1,5 @@
 import { IsNotEmptyString } from '@/common/decorator/is-not-empty-string.decorator';
-import { SERIES_MAX_TITLE_LENGTH, SERIES_MAX_SLUG_LENGTH } from '@imkdw-dev/consts';
+import { SERIES_MAX_TITLE_LENGTH, SERIES_MAX_SLUG_LENGTH, SERIES_MAX_DESCRIPTION_LENGTH } from '@imkdw-dev/consts';
 import { ICreateSeriesDto, IResponseCreateSeriesDto } from '@imkdw-dev/types';
 import { ApiProperty } from '@nestjs/swagger';
 import { MaxLength } from 'class-validator';
@@ -19,6 +19,15 @@ export class CreateSeriesDto implements ICreateSeriesDto {
   @MaxLength(SERIES_MAX_SLUG_LENGTH)
   @IsNotEmptyString()
   readonly slug: string;
+
+  @ApiProperty({
+    description: '시리즈 설명',
+    example: 'Node.js의 내부 동작 원리를 상세히 알아보는 시리즈',
+    maxLength: SERIES_MAX_DESCRIPTION_LENGTH,
+  })
+  @MaxLength(SERIES_MAX_DESCRIPTION_LENGTH)
+  @IsNotEmptyString()
+  readonly description: string;
 }
 
 export class ResponseCreateSeriesDto implements IResponseCreateSeriesDto {

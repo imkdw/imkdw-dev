@@ -7,6 +7,7 @@ export class SeriesMapper {
       id: entity.id,
       title: entity.title,
       slug: entity.slug,
+      description: entity.description,
       createdAt: entity.createdAt,
     });
   }

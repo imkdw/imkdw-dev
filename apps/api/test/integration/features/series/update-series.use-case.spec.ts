@@ -33,6 +33,7 @@ describe('시리즈 수정 유스케이스', () => {
       const nonExistentId = 'non-existent-id';
       const updateSeriesDto: UpdateSeriesDto = {
         title: '수정된 시리즈 제목',
+        description: '수정된 시리즈 설명',
       };
 
       await expect(sut.execute(nonExistentId, updateSeriesDto)).rejects.toThrow(SeriesNotFoundException);
@@ -48,6 +49,7 @@ describe('시리즈 수정 유스케이스', () => {
 
       const updateSeriesDto: UpdateSeriesDto = {
         title: duplicateTitle,
+        description: '중복된 시리즈 설명',
       };
 
       await expect(sut.execute(existingSeries.id, updateSeriesDto)).rejects.toThrow(ExistSeriesTitleException);
@@ -63,6 +65,7 @@ describe('시리즈 수정 유스케이스', () => {
 
       const updateSeriesDto: UpdateSeriesDto = {
         title: existingSeries.title,
+        description: '동일한 제목 수정 테스트',
       };
 
       await expect(sut.execute(existingSeries.id, updateSeriesDto)).resolves.not.toThrow();
@@ -79,12 +82,14 @@ describe('시리즈 수정 유스케이스', () => {
 
       const updateSeriesDto: UpdateSeriesDto = {
         title: '수정된 시리즈 제목',
+        description: '수정된 시리즈 설명',
       };
 
       await sut.execute(existingSeries.id, updateSeriesDto);
 
       const updatedSeries = await prisma.series.findUnique({ where: { id: existingSeries.id } });
       expect(updatedSeries?.title).toBe(updateSeriesDto.title);
+      expect(updatedSeries?.description).toBe(updateSeriesDto.description);
       expect(updatedSeries?.slug).toBe(existingSeries.slug);
     });
   });

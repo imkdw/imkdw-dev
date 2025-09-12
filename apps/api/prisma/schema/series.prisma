@@ -8,6 +8,9 @@ model Series {
   /// 시리즈 URL 경로
   slug String
 
+  /// 시리즈 설명
+  description String
+
   /// 시리즈에 속한 게시글들
   articles Article[]
 

@@ -1,2 +1,3 @@
 export const SERIES_MAX_TITLE_LENGTH = 100;
 export const SERIES_MAX_SLUG_LENGTH = 100;
+export const SERIES_MAX_DESCRIPTION_LENGTH = 100;

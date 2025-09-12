@@ -8,6 +8,11 @@ export interface ICreateSeriesDto {
    * 시리즈 슬러그
    */
   slug: string;
+
+  /**
+   * 시리즈 설명
+   */
+  description: string;
 }
 
 export interface IResponseCreateSeriesDto {

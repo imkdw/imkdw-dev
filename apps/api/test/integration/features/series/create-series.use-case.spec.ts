@@ -36,6 +36,7 @@ describe('시리즈 생성 유스케이스', () => {
       const createSeriesDto: CreateSeriesDto = {
         title: existingTitle,
         slug: 'new-series-slug',
+        description: 'new-series-description',
       };
 
       await expect(sut.execute(createSeriesDto)).rejects.toThrow(ExistSeriesTitleException);
@@ -50,6 +51,7 @@ describe('시리즈 생성 유스케이스', () => {
       const createSeriesDto: CreateSeriesDto = {
         title: '새로운 시리즈 제목',
         slug: existingSlug,
+        description: 'new-series-description',
       };
 
       await expect(sut.execute(createSeriesDto)).rejects.toThrow(ExistSeriesSlugException);
@@ -61,6 +63,7 @@ describe('시리즈 생성 유스케이스', () => {
       const createSeriesDto: CreateSeriesDto = {
         title: '새로운 시리즈 제목',
         slug: 'new-series-slug',
+        description: '새로운 시리즈 설명',
       };
 
       const result = await sut.execute(createSeriesDto);
@@ -69,6 +72,7 @@ describe('시리즈 생성 유스케이스', () => {
       expect(savedSeries).not.toBeNull();
       expect(savedSeries?.title).toBe(createSeriesDto.title);
       expect(savedSeries?.slug).toBe(createSeriesDto.slug);
+      expect(savedSeries?.description).toBe(createSeriesDto.description);
     });
   });
 });

@@ -3,10 +3,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Series } from '@/shared/domain/series/series';
 
 export class SeriesDto implements ISeriesDto {
-  private constructor(id: string, title: string, slug: string, createdAt: Date) {
+  private constructor(id: string, title: string, slug: string, description: string, createdAt: Date) {
     this.id = id;
     this.title = title;
     this.slug = slug;
+    this.description = description;
     this.createdAt = createdAt;
   }
 
@@ -19,10 +20,13 @@ export class SeriesDto implements ISeriesDto {
   @ApiProperty({ description: '시리즈 슬러그', example: 'nodejs-deep-dive' })
   readonly slug: string;
 
+  @ApiProperty({ description: '시리즈 설명', example: 'Node.js의 내부 동작 원리를 상세히 알아보는 시리즈' })
+  readonly description: string;
+
   @ApiProperty({ description: '생성 일시', example: '2024-01-01T00:00:00.000Z' })
   readonly createdAt: Date;
 
   static from(series: Series): SeriesDto {
-    return new SeriesDto(series.id, series.title, series.slug, series.createdAt);
+    return new SeriesDto(series.id, series.title, series.slug, series.description, series.createdAt);
   }
 }

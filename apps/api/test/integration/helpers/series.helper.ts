@@ -11,6 +11,7 @@ export const createTestSeries = async (
       id: generateUUID(),
       title: data?.title ?? `Test Series ${Date.now()}`,
       slug: data?.slug ?? `test-series-${Date.now()}`,
+      description: data?.description ?? `Test Series Description ${Date.now()}`,
       createdAt: data?.createdAt ?? new Date(),
       deletedAt: data?.deletedAt ?? null,
       ...data,

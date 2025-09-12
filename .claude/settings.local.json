@@ -51,7 +51,10 @@
       "Bash(pnpm -F blog build)",
       "Bash(find:*)",
       "Bash(pnpm:*)",
-      "mcp__playwright__browser_evaluate"
+      "mcp__playwright__browser_evaluate",
+      "Bash(npx jest:*)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"예\" pnpm -F api prisma migrate reset --force)",
+      "Bash(DATABASE_URL=\"postgres://postgres:postgres@localhost:5432/imkdw-dev-test\" pnpm -F api prisma db push)"
     ],
     "deny": [],
     "ask": []
