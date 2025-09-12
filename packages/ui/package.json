@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "echo 'UI package is ready for development'",
-    "lint": "eslint src/",
+    "lint": "eslint src/ --fix",
     "check-types": "tsc --noEmit"
   },
   "peerDependencies": {
@@ -32,8 +32,10 @@
     "react-dom": "19.1.0"
   },
   "devDependencies": {
+    "@imkdw-dev/eslint-config": "workspace:*",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint": "^9.18.0",
     "typescript": "^5"
   }
 }

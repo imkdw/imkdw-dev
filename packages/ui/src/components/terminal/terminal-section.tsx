@@ -54,7 +54,7 @@ export const TerminalSection = ({ commands, title, description, stats, tags, cla
               setCurrentCommand('');
               setTimeout(typeCommand, 500);
             }
-          }, currentCmd.delay || 2000);
+          }, currentCmd.delay ?? 2000);
         }
       } else {
         // 애니메이션 재시작

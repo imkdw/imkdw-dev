@@ -38,7 +38,7 @@ export function Header({ user: externalUser, theme, onThemeChange, onNavigate, o
   const [activeTab, setActiveTab] = useState('blog.tsx');
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState('ko');
-  const [user, setUser] = useState<User | null>(externalUser || null);
+  const [user, setUser] = useState<User | null>(externalUser ?? null);
 
   const handleLogin = () => {
     if (onLogin) {

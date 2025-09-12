@@ -39,9 +39,7 @@ const DropdownMenuSubTrigger = React.forwardRef<HTMLButtonElement, DropdownMenuS
 );
 DropdownMenuSubTrigger.displayName = 'DropdownMenuSubTrigger';
 
-interface DropdownMenuSubContentProps extends React.ComponentPropsWithoutRef<'div'> {}
-
-const DropdownMenuSubContent = React.forwardRef<HTMLDivElement, DropdownMenuSubContentProps>(
+const DropdownMenuSubContent = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'div'>>(
   ({ className, children, ...props }, ref) => (
     <div
       ref={ref}
@@ -207,9 +205,7 @@ const DropdownMenuLabel = React.forwardRef<HTMLDivElement, DropdownMenuLabelProp
 );
 DropdownMenuLabel.displayName = 'DropdownMenuLabel';
 
-interface DropdownMenuSeparatorProps extends React.ComponentPropsWithoutRef<'div'> {}
-
-const DropdownMenuSeparator = React.forwardRef<HTMLDivElement, DropdownMenuSeparatorProps>(
+const DropdownMenuSeparator = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'div'>>(
   ({ className, ...props }, ref) => (
     <div ref={ref} className={cn('-mx-1 my-1 h-px bg-muted', className)} {...props} />
   )

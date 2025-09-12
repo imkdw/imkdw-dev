@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss';
-import { colors, gradients, shadows, spacing, typography } from './colors';
+import { colors, shadows, spacing, typography } from './colors';
 
 export const tailwindPreset: Partial<Config> = {
   darkMode: ['class'],
@@ -127,7 +127,7 @@ export const tailwindPreset: Partial<Config> = {
     },
   },
   plugins: [
-    function ({ addBase, addUtilities }: any) {
+    function ({ addBase, addUtilities }: { addBase: (styles: Record<string, unknown>) => void; addUtilities: (utilities: Record<string, unknown>) => void }) {
       addBase({
         ':root': {
           '--background': colors.light.background.primary,

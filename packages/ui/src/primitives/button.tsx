@@ -40,8 +40,8 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
     
     if (asChild && React.isValidElement(children)) {
       // asChild가 true이고 children이 React element인 경우
-      return React.cloneElement(children as React.ReactElement<any>, {
-        className: cn(baseClassName, (children as React.ReactElement<any>).props?.className),
+      return React.cloneElement(children as React.ReactElement<React.HTMLAttributes<HTMLElement>>, {
+        className: cn(baseClassName, (children as React.ReactElement<React.HTMLAttributes<HTMLElement>>).props.className),
         ref,
         ...props,
       });

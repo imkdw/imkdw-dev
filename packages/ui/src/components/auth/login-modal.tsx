@@ -5,10 +5,17 @@ import { Github, Chrome } from 'lucide-react';
 import { Button } from '../../primitives/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../primitives/dialog';
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string;
+}
+
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  onLoginSuccess: (user: any) => void;
+  onLoginSuccess: (user: User) => void;
 }
 
 export function LoginModal({ isOpen, onClose, onLoginSuccess }: Props) {

@@ -21,7 +21,7 @@ const themes = [
 ];
 
 export function ThemeSelector({ theme = 'system', onThemeChange }: Props) {
-  const getCurrentTheme = () => themes.find(t => t.value === theme) || themes[0];
+  const getCurrentTheme = () => themes.find(t => t.value === theme) ?? themes[0];
 
   const handleThemeChange = (themeValue: string) => {
     onThemeChange?.(themeValue);

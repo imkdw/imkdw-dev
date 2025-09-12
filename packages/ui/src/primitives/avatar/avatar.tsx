@@ -3,9 +3,7 @@
 import * as React from 'react';
 import { cn } from '../../lib/utils';
 
-interface Props extends React.ComponentPropsWithoutRef<'div'> {}
-
-export function Avatar({ className, ...props }: Props) {
+export function Avatar({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   return (
     <div
       className={cn(
@@ -35,6 +33,7 @@ export function AvatarImage({ className, src, alt, ...props }: AvatarImageProps)
   }
 
   return (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       className={cn('aspect-square h-full w-full object-cover', className)}
       src={src}
@@ -45,9 +44,7 @@ export function AvatarImage({ className, src, alt, ...props }: AvatarImageProps)
   );
 }
 
-interface AvatarFallbackProps extends React.ComponentPropsWithoutRef<'div'> {}
-
-export function AvatarFallback({ className, ...props }: AvatarFallbackProps) {
+export function AvatarFallback({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   return (
     <div
       className={cn(

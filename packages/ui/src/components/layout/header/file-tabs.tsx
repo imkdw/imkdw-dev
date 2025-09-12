@@ -16,9 +16,9 @@ interface Props {
 }
 
 export function FileTabs({ tabs, activeTab: controlledActiveTab, onTabChange }: Props) {
-  const [internalActiveTab, setInternalActiveTab] = useState(controlledActiveTab || tabs[0]?.name || '');
+  const [internalActiveTab, setInternalActiveTab] = useState(controlledActiveTab ?? tabs[0]?.name ?? '');
 
-  const activeTab = controlledActiveTab || internalActiveTab;
+  const activeTab = controlledActiveTab ?? internalActiveTab;
 
   const handleTabChange = (tabName: string) => {
     setInternalActiveTab(tabName);

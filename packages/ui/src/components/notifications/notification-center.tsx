@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Bell, Check, X } from 'lucide-react';
+import { Bell, X } from 'lucide-react';
 import { Button } from '../../primitives/button';
 import {
   DropdownMenu,
@@ -16,7 +16,7 @@ export interface Props {
   className?: string;
 }
 
-export const NotificationCenter = ({ className }: Props) => {
+export const NotificationCenter = () => {
   const [notifications] = useState([
     { id: 1, title: '새 댓글', message: '당신의 게시물에 새 댓글이 달렸습니다.', read: false },
     { id: 2, title: '시스템 업데이트', message: '시스템이 성공적으로 업데이트되었습니다.', read: true },

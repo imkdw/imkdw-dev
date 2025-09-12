@@ -72,17 +72,13 @@ export function DialogContent({ className, children, onClose, ...props }: Dialog
   );
 }
 
-interface DialogHeaderProps extends React.ComponentPropsWithoutRef<'div'> {}
-
-export function DialogHeader({ className, ...props }: DialogHeaderProps) {
+export function DialogHeader({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   return (
     <div className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)} {...props} />
   );
 }
 
-interface DialogTitleProps extends React.ComponentPropsWithoutRef<typeof HeadlessDialog.Title> {}
-
-export function DialogTitle({ className, ...props }: DialogTitleProps) {
+export function DialogTitle({ className, ...props }: React.ComponentPropsWithoutRef<typeof HeadlessDialog.Title>) {
   return (
     <HeadlessDialog.Title
       className={cn('text-lg font-semibold leading-none tracking-tight', className)}
@@ -91,9 +87,7 @@ export function DialogTitle({ className, ...props }: DialogTitleProps) {
   );
 }
 
-interface DialogDescriptionProps extends React.ComponentPropsWithoutRef<typeof HeadlessDialog.Description> {}
-
-export function DialogDescription({ className, ...props }: DialogDescriptionProps) {
+export function DialogDescription({ className, ...props }: React.ComponentPropsWithoutRef<typeof HeadlessDialog.Description>) {
   return (
     <HeadlessDialog.Description className={cn('text-sm text-muted-foreground', className)} {...props} />
   );

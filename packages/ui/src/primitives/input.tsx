@@ -3,9 +3,8 @@
 import * as React from 'react';
 import { cn } from '../lib/utils';
 
-export interface Props extends React.InputHTMLAttributes<HTMLInputElement> {}
-
-const Input = React.forwardRef<HTMLInputElement, Props>(
+const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
+  // eslint-disable-next-line react/prop-types
   ({ className, type, ...props }, ref) => {
     return (
       <input

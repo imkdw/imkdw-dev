@@ -14,7 +14,7 @@ export interface Props {
   tags: string[];
   series: string;
   slug: string;
-  isBookmarked?: boolean;
+  // isBookmarked?: boolean; // TODO: implement bookmark functionality
   onClick?: (slug: string) => void;
   className?: string;
 }
@@ -27,7 +27,7 @@ export function ArticleCard({
   tags,
   series,
   slug,
-  isBookmarked: _isBookmarked = false,
+  // isBookmarked = false, // TODO: implement bookmark functionality
   onClick,
   className,
 }: Props) {

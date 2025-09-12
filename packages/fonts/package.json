@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "echo 'fonts package is ready for development'",
-    "lint": "eslint src/",
+    "lint": "eslint src/ --fix",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
@@ -17,9 +17,11 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@imkdw-dev/eslint-config": "workspace:*",
     "@types/node": "^22.13.0",
     "@types/react": "19.0.8",
     "@types/react-dom": "19.0.3",
+    "eslint": "^9.18.0",
     "typescript": "5.7.3"
   }
 }
