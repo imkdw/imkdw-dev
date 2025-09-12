@@ -30,34 +30,29 @@ const buttonVariants = cva(
   }
 );
 
-export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, Props>(
-  ({ className, variant, size, asChild = false, children, ...props }, ref) => {
-    const baseClassName = cn(buttonVariants({ variant, size }), className);
-    
-    if (asChild && React.isValidElement(children)) {
-      // asChild가 true이고 children이 React element인 경우
-      return React.cloneElement(children as React.ReactElement<React.HTMLAttributes<HTMLElement>>, {
-        className: cn(baseClassName, (children as React.ReactElement<React.HTMLAttributes<HTMLElement>>).props.className),
-        ref,
-        ...props,
-      });
-    }
-    
-    return (
-      <button
-        className={baseClassName}
-        ref={ref}
-        {...props}
-      >
-        {children}
-      </button>
-    );
+export function Button({ className, variant, size, asChild = false, children, ...props }: ButtonProps) {
+  const baseClassName = cn(buttonVariants({ variant, size }), className);
+  
+  if (asChild && React.isValidElement(children)) {
+    // asChild가 true이고 children이 React element인 경우
+    return React.cloneElement(children as React.ReactElement<React.HTMLAttributes<HTMLElement>>, {
+      className: cn(baseClassName, (children as React.ReactElement<React.HTMLAttributes<HTMLElement>>).props.className),
+      ...props,
+    });
   }
-);
-Button.displayName = 'Button';
+  
+  return (
+    <button
+      className={baseClassName}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}
 
-export { Button, buttonVariants };
+export { buttonVariants };

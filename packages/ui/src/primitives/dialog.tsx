@@ -3,13 +3,13 @@
 import * as React from 'react';
 import { Dialog as HeadlessDialog, Transition } from '@headlessui/react';
 import { X } from 'lucide-react';
-import { cn } from '../../lib/utils';
+import { cn } from '../lib/utils';
 
-interface Props extends React.ComponentPropsWithoutRef<typeof HeadlessDialog> {
+interface DialogProps extends React.ComponentPropsWithoutRef<typeof HeadlessDialog> {
   children: React.ReactNode;
 }
 
-export function Dialog({ open, onClose, children, className, ...props }: Props) {
+export function Dialog({ open, onClose, children, className, ...props }: DialogProps) {
   return (
     <Transition appear show={open} as={React.Fragment}>
       <HeadlessDialog as="div" className={cn('relative z-50', className)} onClose={onClose} {...props}>

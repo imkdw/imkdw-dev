@@ -127,7 +127,7 @@ export const tailwindPreset: Partial<Config> = {
     },
   },
   plugins: [
-    function ({ addBase, addUtilities }: { addBase: (styles: Record<string, unknown>) => void; addUtilities: (utilities: Record<string, unknown>) => void }) {
+    function ({ addBase, addUtilities }: { addBase: (base: any) => void; addUtilities: (utilities: any) => void }) {
       addBase({
         ':root': {
           '--background': colors.light.background.primary,
