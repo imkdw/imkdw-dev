@@ -10,12 +10,11 @@ export function BlogStatsSection() {
           <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
             <FileText className="h-5 w-5 md:h-6 md:w-6 text-primary" />
           </div>
-          <div className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">.md</div>
+          <div className="text-sm px-2 py-1 bg-primary/10 text-primary rounded-full">.md</div>
         </div>
         <div className="space-y-1">
           <div className="text-2xl md:text-3xl font-bold text-primary">127</div>
           <div className="text-sm md:text-base font-medium text-foreground">총 게시글</div>
-          <div className="text-xs text-muted-foreground">지식 공유의 여정</div>
         </div>
         <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-primary/5 rounded-full"></div>
       </div>
@@ -25,12 +24,11 @@ export function BlogStatsSection() {
           <div className="p-2 bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">
             <Folder className="h-5 w-5 md:h-6 md:w-6 text-accent" />
           </div>
-          <div className="text-xs px-2 py-1 bg-accent/10 text-accent rounded-full">active</div>
+          <div className="text-sm px-2 py-1 bg-accent/10 text-accent rounded-full">active</div>
         </div>
         <div className="space-y-1">
           <div className="text-2xl md:text-3xl font-bold text-accent">15</div>
           <div className="text-sm md:text-base font-medium text-foreground">진행중인 시리즈</div>
-          <div className="text-xs text-muted-foreground">체계적인 학습 경험</div>
         </div>
         <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-accent/5 rounded-full"></div>
       </div>
@@ -40,12 +38,11 @@ export function BlogStatsSection() {
           <div className="p-2 bg-terminal-warning/10 rounded-lg group-hover:bg-terminal-warning/20 transition-colors">
             <Zap className="h-5 w-5 md:h-6 md:w-6 text-terminal-warning" />
           </div>
-          <div className="text-xs px-2 py-1 bg-terminal-warning/10 text-terminal-warning rounded-full">cron</div>
+          <div className="text-sm px-2 py-1 bg-terminal-warning/10 text-terminal-warning rounded-full">cron</div>
         </div>
         <div className="space-y-1">
           <div className="text-2xl md:text-3xl font-bold text-terminal-warning">매주</div>
           <div className="text-sm md:text-base font-medium text-foreground">새로운 콘텐츠</div>
-          <div className="text-xs text-muted-foreground">꾸준한 업데이트</div>
         </div>
         <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-terminal-warning/5 rounded-full"></div>
       </div>

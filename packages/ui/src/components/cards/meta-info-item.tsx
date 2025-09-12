@@ -8,7 +8,7 @@ interface Props {
 
 export function MetaInfoItem({ icon, text, className }: Props) {
   return (
-    <div className={cn('flex items-center space-x-1', className)}>
+    <div className={cn('flex items-center space-x-1 text-sm', className)}>
       {icon}
       <span>{text}</span>
     </div>

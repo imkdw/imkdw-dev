@@ -1,15 +1,14 @@
 {
   "name": "@imkdw-dev/fonts",
   "version": "0.0.1",
-  "private": true,
   "type": "module",
   "main": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts"
   },
   "scripts": {
-    "lint": "biome check --write",
-    "generate:component": "turbo gen react-component",
+    "dev": "echo 'fonts package is ready for development'",
+    "lint": "eslint src/",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {

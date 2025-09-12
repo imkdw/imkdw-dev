@@ -62,11 +62,7 @@ export function Header({ user: externalUser, theme, onThemeChange, onNavigate, o
     onNavigate?.(path);
   };
 
-  const tabs = [
-    { name: 'blog.tsx', active: true },
-    { name: 'articles.ts', active: false },
-    { name: 'series.json', active: false },
-  ];
+  const tabs = [{ name: 'blog.tsx', active: true }];
 
   return (
     <header className="w-full border-b border-border bg-background">

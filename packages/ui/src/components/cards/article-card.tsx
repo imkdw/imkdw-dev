@@ -47,23 +47,18 @@ export function ArticleCard({
               </Badge>
             </div>
           )}
-
           <h3 className="text-base md:text-lg font-bold leading-tight mb-2 md:mb-3 group-hover:text-primary smooth-transition line-clamp-2">
             {title}
           </h3>
-
           <p className="text-muted-foreground mb-2 md:mb-3 text-md leading-relaxed line-clamp-3 flex-1">{excerpt}</p>
-
           <TagList tags={tags} maxVisible={3} variant="custom" className="mb-2 md:mb-3" />
-
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs text-muted-foreground mt-auto space-y-2 sm:space-y-0">
             <div className="flex items-center space-x-2 md:space-x-3">
               <MetaInfoItem icon={<Calendar className="h-3 w-3" />} text={publishedAt} className="truncate" />
               <MetaInfoItem icon={<Clock className="h-3 w-3" />} text={readTime} />
             </div>
-
             <div className="flex items-center space-x-1 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-              <span>Read</span>
+              <span className="text-sm">Read</span>
               <ChevronRight className="h-3 w-3" />
             </div>
           </div>
