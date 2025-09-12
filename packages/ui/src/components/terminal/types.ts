@@ -9,10 +9,6 @@ export interface StatItem {
   color?: string;
 }
 
-export interface TerminalHeaderProps {
-  title?: string;
-}
-
 export interface TerminalContentProps {
   commands: TerminalCommand[];
   currentCommand: string;

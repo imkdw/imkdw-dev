@@ -158,7 +158,7 @@ export const spacing = {
 } as const;
 
 export const typography = {
-  fontMono: "'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
+  fontMono: "Pretendard, 'Fira Code', 'SF Mono', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
 } as const;
 
 export const windowControls = {

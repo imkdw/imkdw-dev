@@ -13,6 +13,8 @@ import { FileTabs } from './file-tabs';
 import { DesktopNavigation } from './desktop-navigation';
 import { SearchInput } from './search-input';
 import { MobileNavigation } from './mobile-navigation';
+import { cn } from '../../../lib';
+import { jetBrainsMono } from '@imkdw-dev/fonts';
 
 interface User {
   id: string;
@@ -68,13 +70,12 @@ export function Header({ user: externalUser, theme, onThemeChange, onNavigate, o
 
   return (
     <header className="w-full border-b border-border bg-background">
-      {/* VS Code style title bar */}
       <div className="terminal-header items-center justify-between">
         <div className="flex items-center space-x-4">
           <MacOSControls className="window-controls" />
           <div className="flex items-center space-x-2">
             <Terminal className="h-4 w-4 text-primary" />
-            <span className="text-sm font-mono font-medium">@imkdw-dev/blog</span>
+            <span className={cn('text-sm font-medium', jetBrainsMono.className)}>@imkdw-dev/blog</span>
           </div>
         </div>
 
@@ -93,7 +94,6 @@ export function Header({ user: externalUser, theme, onThemeChange, onNavigate, o
         </div>
       </div>
 
-      {/* Editor tabs */}
       <div className="flex items-center justify-between border-b border-border/50 bg-muted/30">
         <div className="flex items-center min-w-0 flex-1">
           {/* Sidebar Toggle - 모바일에서만 */}

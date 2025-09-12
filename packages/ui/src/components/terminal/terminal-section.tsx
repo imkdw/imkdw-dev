@@ -7,18 +7,18 @@ import { BlogInfo } from './blog-info';
 import { StatsGrid } from './stats-grid';
 import { TagsList } from './tags-list';
 import { Props } from './types';
+import { cn } from '../../lib';
+import { jetBrainsMono } from '@imkdw-dev/fonts';
 
 export const TerminalSection = ({ commands, title, description, stats, tags, className = '' }: Props) => {
   const [currentCommand, setCurrentCommand] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
-  // SSR 안전성을 위한 클라이언트 체크
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // 커서 깜빡임 효과
   useEffect(() => {
     if (!isClient) return;
 
@@ -28,9 +28,10 @@ export const TerminalSection = ({ commands, title, description, stats, tags, cla
     return () => clearInterval(interval);
   }, [isClient]);
 
-  // 타이핑 애니메이션
   useEffect(() => {
-    if (!isClient) return;
+    if (!isClient) {
+      return;
+    }
 
     let commandIndex = 0;
     let charIndex = 0;
@@ -70,13 +71,15 @@ export const TerminalSection = ({ commands, title, description, stats, tags, cla
   }, [commands, isClient]);
 
   return (
-    <section className={`py-4 md:py-6 lg:py-8 bg-muted/20 border-b border-border ${className}`}>
+    <section
+      className={cn('py-4 md:py-6 lg:py-8 bg-muted/20 border-b border-border', className, jetBrainsMono.className)}
+    >
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 items-stretch">
           {/* 터미널 창 */}
           <div className="terminal-window h-full flex flex-col min-h-[300px] md:min-h-[350px]">
             <TerminalHeader />
-            <TerminalContent 
+            <TerminalContent
               commands={commands}
               currentCommand={currentCommand}
               showCursor={showCursor}
