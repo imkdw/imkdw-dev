@@ -8,7 +8,6 @@ export type {
   Props as TerminalSectionProps,
   TerminalCommand,
   StatItem,
-  TerminalHeaderProps,
   TerminalContentProps,
   BlogInfoProps,
   StatsGridProps,

@@ -291,7 +291,6 @@ export const tailwindPreset: Partial<Config> = {
         '.code-card-content': {
           'z-index': '1',
         },
-        // Syntax highlighting
         '.syntax-keyword': {
           color: 'hsl(var(--code-keyword))',
           'font-family': 'var(--font-mono)',
@@ -312,14 +311,12 @@ export const tailwindPreset: Partial<Config> = {
           color: 'hsl(var(--code-operator))',
           'font-family': 'var(--font-mono)',
         },
-        // Animation utilities
         '.smooth-transition': {
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         },
         '.bounce-in': {
           animation: 'scale-in 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         },
-        // Line clamp utilities
         '.line-clamp-2': {
           overflow: 'hidden',
           display: '-webkit-box',
