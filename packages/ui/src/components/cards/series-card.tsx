@@ -1,7 +1,7 @@
-import { Button } from '../../primitives/button';
 import { Badge } from '../../primitives/badge';
 import { BookOpen, Clock } from 'lucide-react';
 import Link from 'next/link';
+import { cn } from '../../lib';
 
 export interface Props {
   title: string;
@@ -11,9 +11,7 @@ export interface Props {
   tags: string[];
   slug: string;
   lastUpdated: string;
-  status?: 'active' | 'completed' | 'coming-soon';
-  onClick?: (slug: string) => void;
-  className?: string;
+  classNames?: string;
 }
 
 export function SeriesCard({
@@ -24,12 +22,10 @@ export function SeriesCard({
   tags,
   slug,
   lastUpdated,
-  status = 'active',
-  onClick,
-  className = '',
+  classNames,
 }: Props) {
   return (
-    <Link href={`/series/${slug}`} className="block h-full">
+    <Link href={`/series/${slug}`} className={cn('block h-full', classNames)}>
       <div className="rounded-xl p-2 group cursor-pointer h-full flex flex-col bg-gradient-to-br from-card via-card to-muted/30 border-2 border-border/60 hover:border-primary/30 hover:shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.3)] transition-all duration-300">
         <div className="flex-1 p-3 md:p-4">
           <div className="flex items-start justify-between mb-2 md:mb-3">
@@ -59,13 +55,13 @@ export function SeriesCard({
               <Badge
                 key={tag}
                 variant="secondary"
-                className="text-xs bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 px-2 py-1"
+                className="text-xs bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 px-2 py-1 border"
               >
                 {tag}
               </Badge>
             ))}
             {tags.length > 2 && (
-              <Badge variant="secondary" className="text-xs bg-accent/10 text-accent border-accent/20 px-2 py-0">
+              <Badge variant="secondary" className="text-xs bg-accent/10 text-accent border-accent/20 px-2 py-0 border">
                 +{tags.length - 2}
               </Badge>
             )}
