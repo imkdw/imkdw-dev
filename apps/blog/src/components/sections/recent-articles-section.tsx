@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { Clock, Terminal } from 'lucide-react';
-import { Button, ArticleCard } from '@imkdw-dev/ui';
+import { Button, ArticleCard, cn } from '@imkdw-dev/ui';
+import { jetBrainsMono } from '@imkdw-dev/fonts';
 
 interface Props {
   articles: Array<{
@@ -27,7 +28,9 @@ export function RecentArticlesSection({ articles }: Props) {
           </div>
           <div>
             <h2 className="text-lg lg:text-xl font-semibold text-foreground">최근 게시글</h2>
-            <div className="terminal-prompt text-xs text-muted-foreground">ls -la *.md | head -4</div>
+            <div className={cn('terminal-prompt text-xs text-muted-foreground', jetBrainsMono.className)}>
+              ls -la *.md | head -4
+            </div>
           </div>
         </div>
         <Button variant="outline" size="sm" asChild>

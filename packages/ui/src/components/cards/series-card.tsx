@@ -1,6 +1,6 @@
 import { Button } from '../../primitives/button';
 import { Badge } from '../../primitives/badge';
-import { BookOpen, Clock, ArrowRight, ChevronRight } from 'lucide-react';
+import { BookOpen, Clock } from 'lucide-react';
 import Link from 'next/link';
 
 export interface Props {
@@ -73,21 +73,6 @@ export function SeriesCard({
 
           <div className="mb-2 text-xs text-muted-foreground">
             <span>최근 업데이트: {lastUpdated}</span>
-          </div>
-        </div>
-
-        <div className="mt-auto pt-2 md:pt-3 px-3 md:px-4 border-t border-border/50">
-          <div className="flex items-center justify-between">
-            <span className="text-xs md:text-sm font-medium text-foreground/80">
-              {status === 'completed' ? '시리즈 완료' : status === 'coming-soon' ? '곧 시작' : '읽기 시작'}
-            </span>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="opacity-70 group-hover:opacity-100 group-hover:text-primary smooth-transition p-1 h-6"
-            >
-              <ChevronRight className="h-3 w-3" />
-            </Button>
           </div>
         </div>
       </div>
