@@ -12,7 +12,7 @@ interface Props {
     publishedAt: string;
     readTime: string;
     tags: string[];
-    series?: string;
+    series: string;
     slug: string;
     isBookmarked: boolean;
   }>;

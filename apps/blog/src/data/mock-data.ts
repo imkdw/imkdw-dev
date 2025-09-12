@@ -28,6 +28,7 @@ export const recentArticles = [
     readTime: '8분',
     tags: ['CSS', 'Layout', 'Frontend'],
     slug: 'css-grid-vs-flexbox',
+    series: 'CSS 마스터하기',
     isBookmarked: false,
   },
   {
@@ -38,6 +39,7 @@ export const recentArticles = [
     readTime: '12분',
     tags: ['JavaScript', 'Async', 'Programming'],
     slug: 'javascript-async-programming',
+    series: 'Javascript 딥다이브',
     isBookmarked: false,
   },
 ];

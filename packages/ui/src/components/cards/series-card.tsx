@@ -1,7 +1,9 @@
-import { Badge } from '../../primitives/badge';
 import { BookOpen, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '../../lib';
+import { MetaInfoItem } from './meta-info-item';
+import { TagList } from './tag-list';
+import { LastUpdated } from './last-updated';
 
 export interface Props {
   title: string;
@@ -36,40 +38,17 @@ export function SeriesCard({
                 </h3>
               </div>
               <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground mb-2 md:mb-3">
-                <div className="flex items-center space-x-1">
-                  <BookOpen className="h-4 w-4" />
-                  <span>{articleCount} articles</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <Clock className="h-4 w-4" />
-                  <span>{totalReadTime}</span>
-                </div>
+                <MetaInfoItem icon={<BookOpen className="h-4 w-4" />} text={`${articleCount} articles`} />
+                <MetaInfoItem icon={<Clock className="h-4 w-4" />} text={totalReadTime} />
               </div>
             </div>
           </div>
 
           <p className="text-muted-foreground mb-2 md:mb-3 line-clamp-2 leading-relaxed text-sm">{description}</p>
 
-          <div className="flex flex-wrap gap-1 mb-2 md:mb-3">
-            {tags.slice(0, 2).map(tag => (
-              <Badge
-                key={tag}
-                variant="secondary"
-                className="text-xs bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 px-2 py-1 border"
-              >
-                {tag}
-              </Badge>
-            ))}
-            {tags.length > 2 && (
-              <Badge variant="secondary" className="text-xs bg-accent/10 text-accent border-accent/20 px-2 py-0 border">
-                +{tags.length - 2}
-              </Badge>
-            )}
-          </div>
+          <TagList tags={tags} maxVisible={2} variant="badge" className="mb-2 md:mb-3" />
 
-          <div className="mb-2 text-xs text-muted-foreground">
-            <span>최근 업데이트: {lastUpdated}</span>
-          </div>
+          <LastUpdated date={lastUpdated} className="mb-2" />
         </div>
       </div>
     </Link>

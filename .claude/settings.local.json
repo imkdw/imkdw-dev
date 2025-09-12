@@ -54,7 +54,8 @@
       "mcp__playwright__browser_evaluate",
       "Bash(npx jest:*)",
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"예\" pnpm -F api prisma migrate reset --force)",
-      "Bash(DATABASE_URL=\"postgres://postgres:postgres@localhost:5432/imkdw-dev-test\" pnpm -F api prisma db push)"
+      "Bash(DATABASE_URL=\"postgres://postgres:postgres@localhost:5432/imkdw-dev-test\" pnpm -F api prisma db push)",
+      "Bash(npx eslint:*)"
     ],
     "deny": [],
     "ask": []
