@@ -20,7 +20,7 @@ const themes = [
   { value: 'system', label: '시스템', icon: Monitor },
 ];
 
-export function ThemeSelector({ theme = 'system', onThemeChange }: Props) {
+export function ThemeSelector({ theme = 'dark', onThemeChange }: Props) {
   const getCurrentTheme = () => themes.find(t => t.value === theme) ?? themes[0];
 
   const handleThemeChange = (themeValue: string) => {

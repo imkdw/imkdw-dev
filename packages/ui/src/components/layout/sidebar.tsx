@@ -11,7 +11,7 @@ export const Sidebar = ({ children, className = '', isOpen = false }: Props) => 
     <aside
       className={`
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-        fixed inset-y-0 left-0 z-50 w-64 bg-card border-r border-border
+        fixed inset-y-0 left-0 z-50 w-64 border-r border-border
         transition-transform duration-300 ease-in-out
         md:relative md:translate-x-0 md:w-auto
         ${className}

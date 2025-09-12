@@ -20,7 +20,7 @@ interface Props {
 
 export function RecentArticlesSection({ articles }: Props) {
   return (
-    <div className="bg-background border border-border rounded-lg p-4 md:p-6">
+    <section className="bg-background border border-border rounded-lg p-4 md:p-6">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
           <div className="p-2 bg-primary/10 rounded-lg">
@@ -48,6 +48,6 @@ export function RecentArticlesSection({ articles }: Props) {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

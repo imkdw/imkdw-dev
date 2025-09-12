@@ -8,7 +8,7 @@ export const tailwindPreset: Partial<Config> = {
       center: true,
       padding: '2rem',
       screens: {
-        '2xl': '1400px',
+        '2xl': '1200px',
       },
     },
     extend: {
@@ -127,6 +127,7 @@ export const tailwindPreset: Partial<Config> = {
     },
   },
   plugins: [
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function ({ addBase, addUtilities }: { addBase: (base: any) => void; addUtilities: (utilities: any) => void }) {
       addBase({
         ':root': {
@@ -250,11 +251,6 @@ export const tailwindPreset: Partial<Config> = {
         },
         '.prompt-path': {
           color: 'hsl(var(--terminal-accent))',
-        },
-        '.window-controls': {
-          display: 'flex',
-          'align-items': 'center',
-          gap: '0.5rem',
         },
         '.control-dot': {
           width: '0.75rem',

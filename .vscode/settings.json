@@ -6,13 +6,6 @@
   ],
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.preferences.importModuleSpecifierEnding": "auto",
-  "cSpell.words": [
-    "chax",
-    "DEEPL",
-    "imkdw",
-    "Milkdown",
-    "pretendard",
-    "Turbopack",
-    "Turborepo"
-  ]
+  "cSpell.words": ["chax", "DEEPL", "imkdw", "Milkdown", "pretendard", "Turbopack", "Turborepo"],
+  "discord.enabled": true
 }

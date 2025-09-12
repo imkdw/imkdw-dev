@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <Layout>
-      <main>
+      <div>
         <TerminalSection
           commands={terminalCommands}
           title="Tech Blog"
@@ -54,7 +54,7 @@ export default function Home() {
           <RecentArticlesSection articles={recentArticles} />
           <BlogStatsSection />
         </div>
-      </main>
+      </div>
     </Layout>
   );
 }

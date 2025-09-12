@@ -4,7 +4,7 @@ import { FileText, Folder, Zap } from 'lucide-react';
 
 export function BlogStatsSection() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
       <div className="group relative overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-4 md:p-6 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
         <div className="flex items-center justify-between mb-3">
           <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
@@ -46,6 +46,6 @@ export function BlogStatsSection() {
         </div>
         <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-terminal-warning/5 rounded-full"></div>
       </div>
-    </div>
+    </section>
   );
 }

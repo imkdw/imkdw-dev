@@ -7,4 +7,6 @@ export * from './dropdown-menu';
 export * from './input';
 export * from './label';
 export * from './macos-controls';
+export * from './pagination';
+export * from './select';
 export * from './sidebar';

@@ -15,6 +15,7 @@ import { SearchInput } from './search-input';
 import { MobileNavigation } from './mobile-navigation';
 import { cn } from '../../../lib';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
+import Link from 'next/link';
 
 interface User {
   id: string;
@@ -62,22 +63,29 @@ export function Header({ user: externalUser, theme, onThemeChange, onNavigate, o
     onNavigate?.(path);
   };
 
-  const tabs = [{ name: 'blog.tsx', active: true }];
+  const tabs = [
+    { name: 'blog.tsx', active: true },
+    { name: `What's Next?.tsx`, active: false },
+  ];
 
   return (
     <header className="w-full border-b border-border bg-background">
       <div className="terminal-header items-center justify-between">
         <div className="flex items-center space-x-4">
-          <MacOSControls className="window-controls" />
+          <MacOSControls />
           <div className="flex items-center space-x-2">
             <Terminal className="h-4 w-4 text-primary" />
-            <span className={cn('text-sm font-medium', jetBrainsMono.className)}>@imkdw-dev/blog</span>
+            <Link className={cn('text-md', jetBrainsMono.className)} href="/">
+              @imkdw-dev/blog
+            </Link>
           </div>
         </div>
 
         <div className="flex items-center space-x-1">
-          <LanguageSelector currentLanguage={currentLanguage} onLanguageChange={setCurrentLanguage} />
-          <ThemeSelector theme={theme} onThemeChange={onThemeChange} />
+          <div className="hidden md:flex items-center space-x-1">
+            <LanguageSelector currentLanguage={currentLanguage} onLanguageChange={setCurrentLanguage} />
+            <ThemeSelector theme={theme} onThemeChange={onThemeChange} />
+          </div>
           {user && <NotificationCenter />}
           <UserMenu
             user={user}
@@ -92,17 +100,16 @@ export function Header({ user: externalUser, theme, onThemeChange, onNavigate, o
 
       <div className="flex items-center justify-between border-b border-border/50 bg-muted/30">
         <div className="flex items-center min-w-0 flex-1">
-          {/* Sidebar Toggle - 모바일에서만 */}
+          {/* 사이드바 토글 - 모바일에서만 */}
           <div className="md:hidden flex-shrink-0 px-2">
             <SidebarTrigger />
           </div>
-
           <FileTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
 
-        {/* Search and navigation - desktop */}
+        {/* 데스크탑 환경 - 네비게이터, 검색창 */}
         <div className="hidden md:flex items-center space-x-2 lg:space-x-4 px-2 lg:px-4">
-          <DesktopNavigation onNavigate={handleNavigate} />
+          <DesktopNavigation />
           <SearchInput onSearch={onSearch} />
         </div>
       </div>
