@@ -4,11 +4,11 @@ import { cn } from '../../lib';
 interface Props {
   tags: string[];
   maxVisible?: number;
-  variant?: 'badge' | 'custom';
+  variant: 'badge' | 'custom';
   className?: string;
 }
 
-export function TagList({ tags, maxVisible = 2, variant = 'badge', className }: Props) {
+export function TagList({ tags, maxVisible = 2, variant, className }: Props) {
   const visibleTags = tags.slice(0, maxVisible);
   const remainingCount = tags.length - maxVisible;
 

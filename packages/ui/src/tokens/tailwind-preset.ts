@@ -271,24 +271,6 @@ export const tailwindPreset: Partial<Config> = {
         '.control-dot.maximize': {
           background: '#28ca42',
         },
-        // Code card styles
-        '.code-card': {
-          background: 'linear-gradient(145deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%)',
-          border: '1px solid hsl(var(--border))',
-          'border-radius': '0.75rem',
-          padding: '1.5rem',
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          position: 'relative',
-          overflow: 'hidden',
-        },
-        '.code-card:hover': {
-          'border-color': 'hsl(var(--primary) / 0.5)',
-          'box-shadow': '0 20px 25px -5px hsl(var(--primary) / 0.1), 0 10px 10px -5px hsl(var(--primary) / 0.04)',
-          transform: 'translateY(-2px)',
-        },
-        '.code-card-content': {
-          'z-index': '1',
-        },
         '.syntax-keyword': {
           color: 'hsl(var(--code-keyword))',
         },

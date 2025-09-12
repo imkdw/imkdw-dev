@@ -30,7 +30,7 @@ export function DesktopNavigation({ navigation = defaultNavigation, onNavigate }
           key={item.name}
           variant="ghost"
           size="sm"
-          className="text-xs h-8 px-2"
+          className="text-sm h-8 px-2"
           onClick={() => handleNavigate(item.path)}
         >
           <item.icon className="h-3 w-3 lg:mr-1" />

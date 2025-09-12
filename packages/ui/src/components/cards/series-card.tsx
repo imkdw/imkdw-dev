@@ -44,7 +44,7 @@ export function SeriesCard({
             </div>
           </div>
 
-          <p className="text-muted-foreground mb-2 md:mb-3 line-clamp-2 leading-relaxed text-sm">{description}</p>
+          <p className="text-muted-foreground mb-2 md:mb-3 line-clamp-2 leading-relaxed text-md">{description}</p>
 
           <TagList tags={tags} maxVisible={2} variant="badge" className="mb-2 md:mb-3" />
 

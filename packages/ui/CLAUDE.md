@@ -147,9 +147,6 @@ export default {
 .terminal-header    /* 터미널 헤더 */
 .terminal-content   /* 터미널 내용 */
 
-/* 코드 카드 */
-.code-card         /* 코드 표시용 카드 */
-
 /* 문법 하이라이팅 */
 .syntax-keyword    /* 키워드 색상 */
 .syntax-string     /* 문자열 색상 */
