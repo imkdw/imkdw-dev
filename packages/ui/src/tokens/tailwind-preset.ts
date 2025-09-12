@@ -237,13 +237,11 @@ export const tailwindPreset: Partial<Config> = {
         '.terminal-content': {
           background: 'hsl(var(--terminal-bg))',
           color: 'hsl(var(--terminal-foreground))',
-          'font-family': 'var(--font-mono)',
         },
         '.terminal-prompt': {
           display: 'flex',
           'align-items': 'center',
           gap: '0.5rem',
-          'font-family': 'var(--font-mono)',
           'font-size': '0.875rem',
         },
         '.prompt-symbol': {
@@ -293,23 +291,18 @@ export const tailwindPreset: Partial<Config> = {
         },
         '.syntax-keyword': {
           color: 'hsl(var(--code-keyword))',
-          'font-family': 'var(--font-mono)',
         },
         '.syntax-string': {
           color: 'hsl(var(--code-string))',
-          'font-family': 'var(--font-mono)',
         },
         '.syntax-comment': {
           color: 'hsl(var(--code-comment))',
-          'font-family': 'var(--font-mono)',
         },
         '.syntax-number': {
           color: 'hsl(var(--code-number))',
-          'font-family': 'var(--font-mono)',
         },
         '.syntax-operator': {
           color: 'hsl(var(--code-operator))',
-          'font-family': 'var(--font-mono)',
         },
         '.smooth-transition': {
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',

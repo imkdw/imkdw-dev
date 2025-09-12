@@ -42,7 +42,7 @@ export const ArticleCard = ({
   };
 
   return (
-    <article 
+    <article
       className={`code-card group cursor-pointer h-full flex flex-col ${className}`}
       {...(onClick && { onClick: handleClick })}
     >
@@ -72,7 +72,7 @@ export const ArticleCard = ({
               <circle cx="6" cy="18" r="3" />
               <path d="m18 9-1.5-1.5" />
             </svg>
-            <Badge variant="secondary" className="text-xs font-mono">
+            <Badge variant="secondary" className="text-xs">
               {series}
             </Badge>
           </div>
@@ -91,7 +91,7 @@ export const ArticleCard = ({
           {tags.slice(0, 3).map(tag => (
             <span
               key={tag}
-              className="inline-flex items-center px-2 py-1 rounded text-xs bg-muted/50 text-muted-foreground border border-border/50 font-mono"
+              className="inline-flex items-center px-2 py-1 rounded text-xs bg-muted/50 text-muted-foreground border border-border/50"
             >
               <svg className="h-2 w-2 mr-1 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
@@ -101,14 +101,14 @@ export const ArticleCard = ({
             </span>
           ))}
           {tags.length > 3 && (
-            <span className="inline-flex items-center px-2 py-1 rounded text-xs bg-muted/50 text-muted-foreground border border-border/50 font-mono">
+            <span className="inline-flex items-center px-2 py-1 rounded text-xs bg-muted/50 text-muted-foreground border border-border/50">
               +{tags.length - 3}
             </span>
           )}
         </div>
 
         {/* Footer */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs text-muted-foreground font-mono mt-auto space-y-2 sm:space-y-0">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs text-muted-foreground mt-auto space-y-2 sm:space-y-0">
           <div className="flex items-center space-x-2 md:space-x-3">
             <div className="flex items-center space-x-1">
               <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -139,4 +139,3 @@ export const ArticleCard = ({
     </article>
   );
 };
-

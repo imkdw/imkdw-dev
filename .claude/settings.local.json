@@ -50,7 +50,8 @@
       "Bash(pnpm ui:*)",
       "Bash(pnpm -F blog build)",
       "Bash(find:*)",
-      "Bash(pnpm:*)"
+      "Bash(pnpm:*)",
+      "mcp__playwright__browser_evaluate"
     ],
     "deny": [],
     "ask": []

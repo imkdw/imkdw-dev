@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { BookOpen, Terminal } from 'lucide-react';
-import { Button, SeriesCard } from '@imkdw-dev/ui';
+import { Button, cn, SeriesCard } from '@imkdw-dev/ui';
+import { jetBrainsMono } from '@imkdw-dev/fonts';
 
 interface Props {
   series: Array<{
@@ -27,12 +28,12 @@ export function RecentSeriesSection({ series }: Props) {
           </div>
           <div>
             <h2 className="text-lg lg:text-xl font-semibold text-foreground">최근 시리즈</h2>
-            <div className="terminal-prompt text-xs text-muted-foreground font-mono">
+            <div className={cn('terminal-prompt text-xs text-muted-foreground', jetBrainsMono.className)}>
               find ./series -type d | head -2
             </div>
           </div>
         </div>
-        <Button variant="outline" size="sm" className="font-mono" asChild>
+        <Button variant="outline" size="sm" asChild>
           <Link href="/series">
             <Terminal className="mr-2 h-4 w-4" />
             <span className="hidden sm:inline">모든 시리즈</span>

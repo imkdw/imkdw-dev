@@ -18,7 +18,6 @@ interface Props {
 }
 
 export function RecentArticlesSection({ articles }: Props) {
-
   return (
     <div className="bg-background border border-border rounded-lg p-4 md:p-6">
       <div className="flex items-center justify-between mb-6">
@@ -28,10 +27,10 @@ export function RecentArticlesSection({ articles }: Props) {
           </div>
           <div>
             <h2 className="text-lg lg:text-xl font-semibold text-foreground">최근 게시글</h2>
-            <div className="terminal-prompt text-xs text-muted-foreground font-mono">ls -la *.md | head -4</div>
+            <div className="terminal-prompt text-xs text-muted-foreground">ls -la *.md | head -4</div>
           </div>
         </div>
-        <Button variant="outline" size="sm" className="font-mono" asChild>
+        <Button variant="outline" size="sm" asChild>
           <Link href="/articles">
             <Terminal className="mr-2 h-4 w-4" />
             <span className="hidden sm:inline">모든 글</span>
@@ -41,11 +40,7 @@ export function RecentArticlesSection({ articles }: Props) {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
         {articles.map((article, index) => (
-          <div
-            key={article.slug}
-            className="bounce-in h-full"
-            style={{ animationDelay: `${(index + 2) * 0.1}s` }}
-          >
+          <div key={article.slug} className="bounce-in h-full" style={{ animationDelay: `${(index + 2) * 0.1}s` }}>
             <ArticleCard {...article} />
           </div>
         ))}
