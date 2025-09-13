@@ -113,33 +113,31 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   ];
 
   return (
-    <Layout>
-      <div className="max-w-7xl mx-auto p-6 sm:px-6 lg:px-8">
-        <div className="lg:grid lg:grid-cols-4 lg:gap-8">
-          <div className="lg:col-span-3">
-            <ArticleHeader
-              title="Understanding React Server Components: A Deep Dive into the Future"
-              author={author}
-              publishedAt="Dec 15, 2024"
-              readTime="12 min read"
-              tags={['React', 'Server Components', 'Next.js', 'Performance']}
-              series={series}
-              slug={slug}
-            >
-              <ArticleInteractions slug={slug} />
-            </ArticleHeader>
-            <ArticleContent content={<div>Article Content</div>} />
-            <RelatedArticles articles={relatedArticles} />
-            <ArticleNavigation
-              previousArticle={navigationArticles.previousArticle}
-              nextArticle={navigationArticles.nextArticle}
-            />
-            <CommentSection articleId={slug} />
-          </div>
-          <div className="hidden lg:block lg:col-span-1">
-            <TableOfContents items={tocItems} />
-          </div>
-        </div>
+    <Layout enableOverflow={false}>
+      <div className="max-w-7xl mx-auto p-6 lg:flex lg:gap-8">
+        <main className="flex-1 max-w-4xl">
+          <ArticleHeader
+            title="Understanding React Server Components: A Deep Dive into the Future"
+            author={author}
+            publishedAt="Dec 15, 2024"
+            readTime="12 min read"
+            tags={['React', 'Server Components', 'Next.js', 'Performance']}
+            series={series}
+            slug={slug}
+          >
+            <ArticleInteractions slug={slug} />
+          </ArticleHeader>
+          <ArticleContent content={<div>Article Content</div>} />
+          <RelatedArticles articles={relatedArticles} />
+          <ArticleNavigation
+            previousArticle={navigationArticles.previousArticle}
+            nextArticle={navigationArticles.nextArticle}
+          />
+          <CommentSection articleId={slug} />
+        </main>
+        <aside className="sticky top-4 self-start">
+          <TableOfContents items={tocItems} />
+        </aside>
       </div>
     </Layout>
   );

@@ -59,7 +59,8 @@
       "mcp__playwright__browser_type",
       "Bash(curl:*)",
       "Bash(pkill:*)",
-      "mcp__ide__getDiagnostics"
+      "mcp__ide__getDiagnostics",
+      "Bash(lsof:*)"
     ],
     "deny": [],
     "ask": []

@@ -9,7 +9,7 @@ interface Props {
 
 export function SeriesMainCard({ seriesData }: Props) {
   return (
-    <Card className="overflow-hidden border-0 bg-gradient-to-br from-primary/10 via-background to-secondary/80 shadow-lg">
+    <Card className="overflow-hidden border-0 bg-gradient-to-br from-primary/10 via-background to-secondary/50 shadow-lg">
       <CardContent className="p-0">
         {/* 상단 액션 바 */}
         <div className="flex justify-between items-center p-4 md:p-6 border-b border-border/50">
