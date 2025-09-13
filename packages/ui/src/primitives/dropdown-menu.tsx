@@ -61,20 +61,18 @@ export function DropdownMenuSubContent({ className, children, ...props }: React.
 
 interface DropdownMenuContentProps extends React.ComponentPropsWithoutRef<'div'> {
   align?: 'start' | 'center' | 'end';
-  sideOffset?: number;
 }
 
 export function DropdownMenuContent({
   className,
-  align = 'center',
-  sideOffset = 4,
+  align = 'end',
   children,
   ...props
 }: DropdownMenuContentProps) {
   const alignmentClasses = {
-    start: 'origin-top-left',
-    center: 'origin-top',
-    end: 'origin-top-right',
+    start: 'left-0',
+    center: 'left-1/2 -translate-x-1/2',
+    end: 'right-0',
   };
 
   return (
@@ -88,14 +86,12 @@ export function DropdownMenuContent({
       leaveTo="transform opacity-0 scale-95"
     >
       <Menu.Items
+        static
         className={cn(
-          'absolute z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md focus:outline-none',
+          'absolute top-full mt-2 z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md focus:outline-none',
           alignmentClasses[align],
-          align === 'end' && 'right-0',
-          align === 'start' && 'left-0',
           className
         )}
-        style={{ marginTop: sideOffset }}
         {...props}
       >
         {children}

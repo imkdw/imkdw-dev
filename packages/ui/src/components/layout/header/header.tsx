@@ -7,8 +7,6 @@ import { NotificationCenter } from '../../notifications/notification-center';
 import { UserMenu } from '../../auth/user-menu';
 import { LoginModal } from '../../auth/login-modal';
 import { MacOSControls } from '../../../primitives/macos-controls';
-import { LanguageSelector } from './language-selector';
-import { ThemeSelector } from './theme-selector';
 import { FileTabs } from './file-tabs';
 import { DesktopNavigation } from './desktop-navigation';
 import { SearchInput } from './search-input';
@@ -65,7 +63,7 @@ export function Header({ user: externalUser, theme, onThemeChange, onNavigate, o
 
   const tabs = [
     { name: 'blog.tsx', active: true },
-    { name: `What's Next?.tsx`, active: false },
+    { name: `Coming Soon...`, active: false },
   ];
 
   return (
@@ -82,10 +80,6 @@ export function Header({ user: externalUser, theme, onThemeChange, onNavigate, o
         </div>
 
         <div className="flex items-center space-x-1">
-          <div className="hidden md:flex items-center space-x-1">
-            <LanguageSelector currentLanguage={currentLanguage} onLanguageChange={setCurrentLanguage} />
-            <ThemeSelector theme={theme} onThemeChange={onThemeChange} />
-          </div>
           {user && <NotificationCenter />}
           <UserMenu
             user={user}
