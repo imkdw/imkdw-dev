@@ -5,6 +5,7 @@ import { GitBranch, Calendar, Clock, ChevronRight } from 'lucide-react';
 import { TagList } from './tag-list';
 import { MetaInfoItem } from './meta-info-item';
 import { cn } from '../../lib';
+import Link from 'next/link';
 
 export interface Props {
   title: string;
@@ -14,29 +15,21 @@ export interface Props {
   tags: string[];
   series: string;
   slug: string;
-  // isBookmarked?: boolean; // TODO: implement bookmark functionality
   onClick?: (slug: string) => void;
   className?: string;
 }
 
-export function ArticleCard({
-  title,
-  excerpt,
-  publishedAt,
-  readTime,
-  tags,
-  series,
-  slug,
-  // isBookmarked = false, // TODO: implement bookmark functionality
-  onClick,
-  className,
-}: Props) {
+export function ArticleCard({ title, excerpt, publishedAt, readTime, tags, series, slug, onClick, className }: Props) {
   const handleClick = () => {
     onClick?.(slug);
   };
 
   return (
-    <article className={cn('block h-full', className)} {...(onClick && { onClick: handleClick })}>
+    <Link
+      href={`/articles/${slug}`}
+      className={cn('block h-full', className)}
+      {...(onClick && { onClick: handleClick })}
+    >
       <div className="rounded-xl p-2 group cursor-pointer h-full flex flex-col bg-gradient-to-br from-card via-card to-muted/30 border-2 border-border/60 hover:border-primary/30 hover:shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.3)] transition-all duration-300">
         <div className="flex-1 p-3 md:p-4">
           {series && (
@@ -64,6 +57,6 @@ export function ArticleCard({
           </div>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }

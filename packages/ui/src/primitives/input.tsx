@@ -5,7 +5,7 @@ import { cn } from '../lib/utils';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement>;
 
-// eslint-disable-next-line react/prop-types
+ 
 export function Input({ className, type, ...props }: InputProps) {
   return (
     <input

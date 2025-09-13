@@ -1,10 +1,8 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
-import { Github, Chrome } from 'lucide-react';
+import { Chrome } from 'lucide-react';
 import { Button } from '../../primitives/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../primitives/dialog';
-import { OAuthProvider } from '@imkdw-dev/consts';
 
 interface User {
   id: string;
@@ -19,19 +17,7 @@ interface Props {
   onLoginSuccess?: (userData: User) => void;
 }
 
-function Provider({ icon, title }: { icon: ReactNode; title: string }) {
-  return (
-    <Button
-      className="w-full h-12 flex items-center justify-center space-x-2 bg-background border border-border hover:bg-muted text-foreground"
-      variant="outline"
-    >
-      {icon}
-      <span>{title}</span>
-    </Button>
-  );
-}
-
-export function LoginModal({ isOpen, onClose, onLoginSuccess }: Props) {
+export function LoginModal({ isOpen, onClose }: Props) {
   return (
     <Dialog open={isOpen} onClose={onClose}>
       <DialogContent className="w-[90vw] max-w-md mx-auto" onClose={onClose}>

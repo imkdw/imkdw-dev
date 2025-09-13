@@ -43,9 +43,14 @@ export function RecentArticlesSection({ articles }: Props) {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
         {articles.map((article, index) => (
-          <div key={article.slug} className="bounce-in h-full" style={{ animationDelay: `${(index + 2) * 0.1}s` }}>
+          <Link
+            href={`/articles/${article.slug}`}
+            key={article.slug}
+            className="bounce-in h-full"
+            style={{ animationDelay: `${(index + 2) * 0.1}s` }}
+          >
             <ArticleCard {...article} />
-          </div>
+          </Link>
         ))}
       </div>
     </section>

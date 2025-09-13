@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FileText, Search, Filter, Clock, Tag } from 'lucide-react';
+import { FileText, Search, Filter, Tag } from 'lucide-react';
 import {
   Button,
   Input,
@@ -87,16 +87,7 @@ export function ArticlesContent({ initialArticles }: Props) {
           <div className="bg-card rounded-lg p-3 md:p-4">
             <div className="flex items-center justify-between">
               <div className="min-w-0 flex-1">
-                <p className="text-xs md:text-sm text-muted-foreground truncate">평균 읽기 시간</p>
-                <p className="text-lg md:text-2xl font-bold">15분</p>
-              </div>
-              <Clock className="h-6 w-6 md:h-8 md:w-8 text-primary flex-shrink-0" />
-            </div>
-          </div>
-          <div className="bg-card rounded-lg p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <div className="min-w-0 flex-1">
-                <p className="text-xs md:text-sm text-muted-foreground truncate">기술 태그</p>
+                <p className="text-xs md:text-sm text-muted-foreground truncate">태그</p>
                 <p className="text-lg md:text-2xl font-bold">{tags.length - 1}</p>
               </div>
               <Tag className="h-6 w-6 md:h-8 md:w-8 text-primary flex-shrink-0" />

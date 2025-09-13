@@ -18,19 +18,20 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
-    "@imkdw-dev/fonts": "workspace:^",
-    "@imkdw-dev/consts": "workspace:^",
     "@headlessui/react": "^2.1.9",
+    "@imkdw-dev/consts": "workspace:^",
+    "@imkdw-dev/fonts": "workspace:^",
+    "@tailwindcss/typography": "^0.5.16",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.462.0",
-    "postcss": "^8.5.6",
-    "tailwind-merge": "^2.6.0",
-    "tailwindcss": "3",
     "next": "15.5.0",
+    "postcss": "^8.5.6",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss": "3"
   },
   "devDependencies": {
     "@imkdw-dev/eslint-config": "workspace:*",

@@ -127,6 +127,8 @@ export const tailwindPreset: Partial<Config> = {
     },
   },
   plugins: [
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require('@tailwindcss/typography'),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function ({ addBase, addUtilities }: { addBase: (base: any) => void; addUtilities: (utilities: any) => void }) {
       addBase({

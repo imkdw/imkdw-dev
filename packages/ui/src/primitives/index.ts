@@ -10,3 +10,5 @@ export * from './macos-controls';
 export * from './pagination';
 export * from './select';
 export * from './sidebar';
+export * from './textarea';
+export * from './toast';

@@ -24,15 +24,13 @@ interface User {
 
 interface Props {
   user?: User | null;
-  theme?: string;
-  onThemeChange?: (theme: string) => void;
   onNavigate?: (path: string) => void;
   onLogin?: () => void;
   onLogout?: () => void;
   onSearch?: (query: string) => void;
 }
 
-export function Header({ user: externalUser, theme, onThemeChange, onNavigate, onLogin, onLogout, onSearch }: Props) {
+export function Header({ user: externalUser, onNavigate, onLogin, onLogout, onSearch }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('blog.tsx');
   const [isLoginOpen, setIsLoginOpen] = useState(false);
