@@ -1,7 +1,6 @@
 import { generateUUID } from '@/common/utils/string.util';
 import { Member } from '@/shared/domain/member/member';
-import { OAuthProvider } from '@/auth/types/oauth.type';
-import { MEMBER_ROLE } from '@imkdw-dev/consts';
+import { MEMBER_ROLE, OAuthProvider } from '@imkdw-dev/consts';
 
 export class MemberFactory {
   static createNew(provider: OAuthProvider, providerId: string, email: string): Member {

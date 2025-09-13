@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@imkdw-dev/fonts": "workspace:^",
+    "@imkdw-dev/consts": "workspace:^",
     "@headlessui/react": "^2.1.9",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",

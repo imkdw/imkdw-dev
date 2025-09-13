@@ -22,13 +22,7 @@ const defaultNavigation: NavigationItem[] = [
   { name: 'Terminal', icon: Terminal, path: '/terminal' },
 ];
 
-export function MobileNavigation({ 
-  isOpen, 
-  navigation = defaultNavigation, 
-  onNavigate, 
-  onClose,
-  onSearch 
-}: Props) {
+export function MobileNavigation({ isOpen, navigation = defaultNavigation, onNavigate, onClose, onSearch }: Props) {
   const handleNavigate = (path: string) => {
     onNavigate?.(path);
     onClose?.();
@@ -42,11 +36,7 @@ export function MobileNavigation({
     <div className="md:hidden border-b border-border bg-muted/30 animate-fade-in">
       <div className="p-4 space-y-3">
         {/* Mobile search */}
-        <SearchInput 
-          variant="mobile" 
-          placeholder="Search files..." 
-          onSearch={onSearch}
-        />
+        <SearchInput variant="mobile" placeholder="Search files..." onSearch={onSearch} />
 
         {/* Mobile navigation */}
         <div className="space-y-1">

@@ -316,6 +316,9 @@ importers:
       '@headlessui/react':
         specifier: ^2.1.9
         version: 2.2.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@imkdw-dev/consts':
+        specifier: workspace:^
+        version: link:../shared/consts
       '@imkdw-dev/fonts':
         specifier: workspace:^
         version: link:../fonts

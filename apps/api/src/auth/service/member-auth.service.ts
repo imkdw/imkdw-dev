@@ -1,8 +1,8 @@
 import { MemberRepository } from '@/shared/repository/member/member.repository';
 import { Injectable } from '@nestjs/common';
 import { Member } from '@/shared/domain/member/member';
-import { OAuthProvider } from '@/auth/types/oauth.type';
 import { MemberFactory } from '@/shared/factory/member.factory';
+import { OAuthProvider } from '@imkdw-dev/consts';
 
 @Injectable()
 export class MemberAuthService {

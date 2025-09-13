@@ -3,12 +3,12 @@ import { Public } from '@/common/decorator/public.decorator';
 import { Controller, Get, Param, Query, Res } from '@nestjs/common';
 import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 import * as Swagger from '@/auth/swagger/oauth.swagger';
-import { OAuthProvider } from '@/auth/types/oauth.type';
 import { Response } from 'express';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/auth/consts/auth.const';
 import { ResponseGetOAuthUrlDto } from '@/auth/dto/get-oauth-url.dto';
 import { CookieService } from '@/infra/cookie/cookie.service';
 import { COOKIE_MAX_AGE } from '@/infra/cookie/cookie.const';
+import { OAuthProvider } from '@imkdw-dev/consts';
 
 @ApiTags('[인증] 소셜로그인')
 @Controller('oauth')

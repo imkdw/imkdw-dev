@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Github, Chrome } from 'lucide-react';
 import { Button } from '../../primitives/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../primitives/dialog';
+import { OAuthProvider } from '@imkdw-dev/consts';
 
 interface User {
   id: string;
@@ -21,7 +22,7 @@ interface Props {
 export function LoginModal({ isOpen, onClose, onLoginSuccess }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSocialLogin = async (provider: 'github' | 'google') => {
+  const handleSocialLogin = async (provider: OAuthProvider) => {
     setIsLoading(true);
 
     // 임시 사용자 데이터 (실제로는 API에서 가져옴)

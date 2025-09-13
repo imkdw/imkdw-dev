@@ -1,7 +1,7 @@
 import { NotSupportedOAuthProviderException } from '@/auth/exception/not-supported-oauth-provider.exception';
 import { GoogleOAuthStrategy } from '@/auth/strategy/google.strategy';
 import { OAuthStrategy } from '@/auth/strategy/oauth.strategy';
-import { OAuthProvider } from '@/auth/types/oauth.type';
+import { OAuthProvider } from '@imkdw-dev/consts';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

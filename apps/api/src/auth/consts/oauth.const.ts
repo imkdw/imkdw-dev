@@ -1,9 +1,5 @@
-import { OAuthUrl, OAuthProvider } from '@/auth/types/oauth.type';
-
-export const OAUTH_PROVIDER = {
-  GOOGLE: 'google',
-  GITHUB: 'github',
-} as const;
+import { OAuthUrl } from '@/auth/types/oauth.type';
+import { OAuthProvider } from '@imkdw-dev/consts';
 
 export const OAUTH_URL: Record<OAuthProvider, OAuthUrl> = {
   google: {

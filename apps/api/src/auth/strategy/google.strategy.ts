@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { OAuthStrategy } from './oauth.strategy';
 
-import { OAUTH_PROVIDER, OAUTH_URL } from '@/auth/consts/oauth.const';
+import { OAUTH_URL } from '@/auth/consts/oauth.const';
 import { MyConfigService } from '@/config/my-config.service';
 import { JwtService } from '@/auth/service/jwt.service';
 import {
@@ -15,6 +15,7 @@ import { OAuthSignInResult } from '@/auth/types/oauth.type';
 import { HttpService } from '@/infra/http/http.service';
 import { HTTP_SERVICE } from '@/infra/http/http.const';
 import { MemberAuthService } from '@/auth/service/member-auth.service';
+import { OAUTH_PROVIDER } from '@imkdw-dev/consts';
 
 @Injectable()
 export class GoogleOAuthStrategy implements OAuthStrategy {
