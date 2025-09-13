@@ -36,7 +36,7 @@ export class OAuthController {
     @Query('code') code: string,
     @Query('state') state: string,
     @Param('provider') provider: OAuthProvider,
-    @Res() res: Response
+    @Res({ passthrough: true }) res: Response
   ) {
     const strategy = this.oauthStrategyFactory.getStrategy(provider);
     const { accessToken, refreshToken, redirectUrl } = await strategy.signIn(code, state);
