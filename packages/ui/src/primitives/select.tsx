@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { ReactNode, Fragment } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { Check, ChevronDown } from 'lucide-react';
 import { cn } from '../lib/utils';
@@ -8,21 +8,21 @@ import { cn } from '../lib/utils';
 interface Props {
   value: string;
   onValueChange: (value: string) => void;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 interface SelectTriggerProps {
   className?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 interface SelectContentProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 interface SelectItemProps {
   value: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 interface SelectValueProps {
@@ -64,7 +64,7 @@ export function SelectValue({ placeholder }: SelectValueProps) {
 export function SelectContent({ children }: SelectContentProps) {
   return (
     <Transition
-      as={React.Fragment}
+      as={Fragment}
       leave="transition ease-in duration-100"
       leaveFrom="opacity-100"
       leaveTo="opacity-0"

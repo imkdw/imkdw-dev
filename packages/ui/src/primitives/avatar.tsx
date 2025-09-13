@@ -1,18 +1,10 @@
 'use client';
 
-import * as React from 'react';
+import { useState } from 'react';
 import { cn } from '../lib/utils';
 
 export function Avatar({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
-  return (
-    <div
-      className={cn(
-        'relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full',
-        className
-      )}
-      {...props}
-    />
-  );
+  return <div className={cn('relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full', className)} {...props} />;
 }
 
 interface AvatarImageProps extends React.ComponentPropsWithoutRef<'img'> {
@@ -21,7 +13,7 @@ interface AvatarImageProps extends React.ComponentPropsWithoutRef<'img'> {
 }
 
 export function AvatarImage({ className, src, alt, ...props }: AvatarImageProps) {
-  const [imageLoadError, setImageLoadError] = React.useState(false);
+  const [imageLoadError, setImageLoadError] = useState(false);
 
   const handleError = () => {
     setImageLoadError(true);
@@ -46,12 +38,6 @@ export function AvatarImage({ className, src, alt, ...props }: AvatarImageProps)
 
 export function AvatarFallback({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   return (
-    <div
-      className={cn(
-        'flex h-full w-full items-center justify-center rounded-full bg-muted',
-        className
-      )}
-      {...props}
-    />
+    <div className={cn('flex h-full w-full items-center justify-center rounded-full bg-muted', className)} {...props} />
   );
 }

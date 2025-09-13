@@ -161,14 +161,4 @@ export const typography = {
   fontMono: "Pretendard, 'Fira Code', 'SF Mono', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
 } as const;
 
-export const windowControls = {
-  close: '0 84% 60%',
-  minimize: '48 96% 53%',
-  maximize: '142 76% 36%',
-} as const;
-
 export const hsl = (color: string) => `hsl(${color})`;
-
-export type ColorTheme = 'light' | 'dark';
-export type ColorCategory = keyof typeof colors.light;
-export type ColorVariant<T extends ColorCategory> = keyof (typeof colors.light)[T];

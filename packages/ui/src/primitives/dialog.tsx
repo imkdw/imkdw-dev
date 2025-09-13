@@ -1,20 +1,20 @@
 'use client';
 
-import * as React from 'react';
+import { ComponentPropsWithoutRef, ReactNode, Fragment } from 'react';
 import { Dialog as HeadlessDialog, Transition } from '@headlessui/react';
 import { X } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-interface DialogProps extends React.ComponentPropsWithoutRef<typeof HeadlessDialog> {
-  children: React.ReactNode;
+interface DialogProps extends ComponentPropsWithoutRef<typeof HeadlessDialog> {
+  children: ReactNode;
 }
 
 export function Dialog({ open, onClose, children, className, ...props }: DialogProps) {
   return (
-    <Transition appear show={open} as={React.Fragment}>
+    <Transition appear show={open} as={Fragment}>
       <HeadlessDialog as="div" className={cn('relative z-50', className)} onClose={onClose} {...props}>
         <Transition.Child
-          as={React.Fragment}
+          as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
           enterTo="opacity-100"
@@ -35,14 +35,14 @@ export function Dialog({ open, onClose, children, className, ...props }: DialogP
   );
 }
 
-interface DialogContentProps extends React.ComponentPropsWithoutRef<'div'> {
+interface DialogContentProps extends ComponentPropsWithoutRef<'div'> {
   onClose?: () => void;
 }
 
 export function DialogContent({ className, children, onClose, ...props }: DialogContentProps) {
   return (
     <Transition.Child
-      as={React.Fragment}
+      as={Fragment}
       enter="ease-out duration-300"
       enterFrom="opacity-0 scale-95"
       enterTo="opacity-100 scale-100"
@@ -72,13 +72,13 @@ export function DialogContent({ className, children, onClose, ...props }: Dialog
   );
 }
 
-export function DialogHeader({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+export function DialogHeader({ className, ...props }: ComponentPropsWithoutRef<'div'>) {
   return (
     <div className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)} {...props} />
   );
 }
 
-export function DialogTitle({ className, ...props }: React.ComponentPropsWithoutRef<typeof HeadlessDialog.Title>) {
+export function DialogTitle({ className, ...props }: ComponentPropsWithoutRef<typeof HeadlessDialog.Title>) {
   return (
     <HeadlessDialog.Title
       className={cn('text-lg font-semibold leading-none tracking-tight', className)}
@@ -87,7 +87,7 @@ export function DialogTitle({ className, ...props }: React.ComponentPropsWithout
   );
 }
 
-export function DialogDescription({ className, ...props }: React.ComponentPropsWithoutRef<typeof HeadlessDialog.Description>) {
+export function DialogDescription({ className, ...props }: ComponentPropsWithoutRef<typeof HeadlessDialog.Description>) {
   return (
     <HeadlessDialog.Description className={cn('text-sm text-muted-foreground', className)} {...props} />
   );

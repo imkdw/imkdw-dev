@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { PropsWithChildren, ComponentPropsWithoutRef, Fragment, HTMLAttributes } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { Check, ChevronRight, Circle } from 'lucide-react';
 import { cn } from '../lib/utils';
@@ -9,23 +9,23 @@ export const DropdownMenu = Menu;
 
 export const DropdownMenuTrigger = Menu.Button;
 
-export function DropdownMenuGroup({ children }: React.PropsWithChildren) {
+export function DropdownMenuGroup({ children }: PropsWithChildren) {
   return <div role="group">{children}</div>;
 }
 
-export function DropdownMenuPortal({ children }: React.PropsWithChildren) {
+export function DropdownMenuPortal({ children }: PropsWithChildren) {
   return <>{children}</>;
 }
 
-export function DropdownMenuSub({ children }: React.PropsWithChildren) {
+export function DropdownMenuSub({ children }: PropsWithChildren) {
   return <>{children}</>;
 }
 
-export function DropdownMenuRadioGroup({ children }: React.PropsWithChildren) {
+export function DropdownMenuRadioGroup({ children }: PropsWithChildren) {
   return <div role="radiogroup">{children}</div>;
 }
 
-interface DropdownMenuSubTriggerProps extends React.ComponentPropsWithoutRef<'button'> {
+interface DropdownMenuSubTriggerProps extends ComponentPropsWithoutRef<'button'> {
   inset?: boolean;
 }
 
@@ -45,7 +45,7 @@ export function DropdownMenuSubTrigger({ className, inset, children, ...props }:
   );
 }
 
-export function DropdownMenuSubContent({ className, children, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+export function DropdownMenuSubContent({ className, children, ...props }: ComponentPropsWithoutRef<'div'>) {
   return (
     <div
       className={cn(
@@ -59,7 +59,7 @@ export function DropdownMenuSubContent({ className, children, ...props }: React.
   );
 }
 
-interface DropdownMenuContentProps extends React.ComponentPropsWithoutRef<'div'> {
+interface DropdownMenuContentProps extends ComponentPropsWithoutRef<'div'> {
   align?: 'start' | 'center' | 'end';
 }
 
@@ -72,7 +72,7 @@ export function DropdownMenuContent({ className, align = 'end', children, ...pro
 
   return (
     <Transition
-      as={React.Fragment}
+      as={Fragment}
       enter="transition ease-out duration-100"
       enterFrom="transform opacity-0 scale-95"
       enterTo="transform opacity-100 scale-100"
@@ -95,7 +95,7 @@ export function DropdownMenuContent({ className, align = 'end', children, ...pro
   );
 }
 
-interface DropdownMenuItemProps extends React.ComponentPropsWithoutRef<'button'> {
+interface DropdownMenuItemProps extends ComponentPropsWithoutRef<'button'> {
   inset?: boolean;
   disabled?: boolean;
 }
@@ -122,7 +122,7 @@ export function DropdownMenuItem({ className, inset, disabled, children, ...prop
   );
 }
 
-interface DropdownMenuCheckboxItemProps extends React.ComponentPropsWithoutRef<'button'> {
+interface DropdownMenuCheckboxItemProps extends ComponentPropsWithoutRef<'button'> {
   checked?: boolean;
   disabled?: boolean;
 }
@@ -157,7 +157,7 @@ export function DropdownMenuCheckboxItem({
   );
 }
 
-interface DropdownMenuRadioItemProps extends React.ComponentPropsWithoutRef<'button'> {
+interface DropdownMenuRadioItemProps extends ComponentPropsWithoutRef<'button'> {
   value?: string;
   disabled?: boolean;
   checked?: boolean;
@@ -193,7 +193,7 @@ export function DropdownMenuRadioItem({
   );
 }
 
-interface DropdownMenuLabelProps extends React.ComponentPropsWithoutRef<'div'> {
+interface DropdownMenuLabelProps extends ComponentPropsWithoutRef<'div'> {
   inset?: boolean;
 }
 
@@ -201,10 +201,10 @@ export function DropdownMenuLabel({ className, inset, ...props }: DropdownMenuLa
   return <div className={cn('px-2 py-1.5 text-sm font-semibold', inset && 'pl-8', className)} {...props} />;
 }
 
-export function DropdownMenuSeparator({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+export function DropdownMenuSeparator({ className, ...props }: ComponentPropsWithoutRef<'div'>) {
   return <div className={cn('-mx-1 my-1 h-px bg-muted', className)} {...props} />;
 }
 
-export function DropdownMenuShortcut({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) {
+export function DropdownMenuShortcut({ className, ...props }: HTMLAttributes<HTMLSpanElement>) {
   return <span className={cn('ml-auto text-xs tracking-widest opacity-60', className)} {...props} />;
 }

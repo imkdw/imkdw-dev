@@ -1,2 +1,2 @@
-export { UserMenu } from './user-menu';
-export { LoginModal } from './login-modal';
+export * from './user-menu';
+export * from './login-modal';

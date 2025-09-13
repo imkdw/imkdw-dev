@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { ButtonHTMLAttributes, isValidElement, cloneElement, ReactElement, HTMLAttributes } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
@@ -30,17 +30,17 @@ const buttonVariants = cva(
   }
 );
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
 export function Button({ className, variant, size, asChild = false, children, ...props }: ButtonProps) {
   const baseClassName = cn(buttonVariants({ variant, size }), className);
   
-  if (asChild && React.isValidElement(children)) {
+  if (asChild && isValidElement(children)) {
     // asChild가 true이고 children이 React element인 경우
-    return React.cloneElement(children as React.ReactElement<React.HTMLAttributes<HTMLElement>>, {
-      className: cn(baseClassName, (children as React.ReactElement<React.HTMLAttributes<HTMLElement>>).props.className),
+    return cloneElement(children as ReactElement<HTMLAttributes<HTMLElement>>, {
+      className: cn(baseClassName, (children as ReactElement<HTMLAttributes<HTMLElement>>).props.className),
       ...props,
     });
   }

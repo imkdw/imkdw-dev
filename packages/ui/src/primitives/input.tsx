@@ -1,9 +1,9 @@
 'use client';
 
-import * as React from 'react';
+import { InputHTMLAttributes } from 'react';
 import { cn } from '../lib/utils';
 
-type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
+type InputProps = InputHTMLAttributes<HTMLInputElement>;
 
 // eslint-disable-next-line react/prop-types
 export function Input({ className, type, ...props }: InputProps) {

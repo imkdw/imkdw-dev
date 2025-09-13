@@ -1,38 +1,38 @@
 'use client';
 
-import * as React from 'react';
+import { ReactNode, MouseEvent } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 interface PaginationContentProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 interface PaginationItemProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 interface PaginationLinkProps {
   href: string;
   isActive?: boolean;
-  onClick?: (e: React.MouseEvent) => void;
-  children: React.ReactNode;
+  onClick?: (e: MouseEvent) => void;
+  children: ReactNode;
   className?: string;
 }
 
 interface PaginationPreviousProps {
   href: string;
-  onClick?: (e: React.MouseEvent) => void;
+  onClick?: (e: MouseEvent) => void;
   className?: string;
 }
 
 interface PaginationNextProps {
   href: string;
-  onClick?: (e: React.MouseEvent) => void;
+  onClick?: (e: MouseEvent) => void;
   className?: string;
 }
 

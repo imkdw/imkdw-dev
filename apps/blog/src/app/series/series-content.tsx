@@ -57,9 +57,9 @@ export function SeriesContent({ initialSeries }: Props) {
     <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10">
       {/* 헤더 섹션 */}
       <div className="mb-6 md:mb-8">
-        <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-3 md:mb-4">
+        <div className="flex items-center mb-3 md:mb-4 gap-2">
           <BookOpen className="h-6 w-6 md:h-8 md:w-8 text-primary flex-shrink-0" />
-          <h1 className="text-2xl md:text-3xl font-bold">시리즈</h1>
+          <h1 className="text-2xl md:text-3xl font-bold m-0">시리즈</h1>
         </div>
 
         {/* 통계 카드 */}

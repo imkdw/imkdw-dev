@@ -1,4 +1,5 @@
 import { ThemeProvider } from 'next-themes';
+import { SidebarProvider } from '@imkdw-dev/ui';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -7,7 +8,7 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-      {children}
+      <SidebarProvider>{children}</SidebarProvider>
     </ThemeProvider>
   );
 }
