@@ -58,7 +58,8 @@
       "Bash(npx eslint:*)",
       "mcp__playwright__browser_type",
       "Bash(curl:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "mcp__ide__getDiagnostics"
     ],
     "deny": [],
     "ask": []

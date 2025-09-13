@@ -1,7 +1,7 @@
 'use client';
 
-import { ReactNode, Fragment } from 'react';
-import { Listbox, Transition } from '@headlessui/react';
+import { ReactNode } from 'react';
+import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/react';
 import { Check, ChevronDown } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -41,7 +41,7 @@ export function Select({ value, onValueChange, children }: Props) {
 
 export function SelectTrigger({ className, children }: SelectTriggerProps) {
   return (
-    <Listbox.Button
+    <ListboxButton
       className={cn(
         'flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
         className
@@ -49,57 +49,42 @@ export function SelectTrigger({ className, children }: SelectTriggerProps) {
     >
       {children}
       <ChevronDown className="h-4 w-4 opacity-50" />
-    </Listbox.Button>
+    </ListboxButton>
   );
 }
 
 export function SelectValue({ placeholder }: SelectValueProps) {
   return (
-    <Listbox.Label className="block truncate">
+    <span className="block truncate">
       {placeholder}
-    </Listbox.Label>
+    </span>
   );
 }
 
 export function SelectContent({ children }: SelectContentProps) {
   return (
-    <Transition
-      as={Fragment}
-      leave="transition ease-in duration-100"
-      leaveFrom="opacity-100"
-      leaveTo="opacity-0"
+    <ListboxOptions
+      transition
+      anchor="bottom"
+      className="z-10 max-h-60 w-[var(--button-width)] overflow-auto rounded-md bg-popover border py-1 text-base shadow-lg focus:outline-none sm:text-sm origin-top transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0"
     >
-      <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-popover border py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-        {children}
-      </Listbox.Options>
-    </Transition>
+      {children}
+    </ListboxOptions>
   );
 }
 
 export function SelectItem({ value, children }: SelectItemProps) {
   return (
-    <Listbox.Option
+    <ListboxOption
       value={value}
-      className={({ active, selected }) =>
-        cn(
-          'relative cursor-default select-none py-2 pl-10 pr-4',
-          active ? 'bg-accent text-accent-foreground' : 'text-foreground',
-          selected && 'bg-accent text-accent-foreground'
-        )
-      }
+      className="relative cursor-default select-none py-2 pl-10 pr-4 data-focus:bg-accent data-focus:text-accent-foreground data-selected:bg-accent data-selected:text-accent-foreground"
     >
-      {({ selected }) => (
-        <>
-          <span className={cn('block truncate', selected ? 'font-medium' : 'font-normal')}>
-            {children}
-          </span>
-          {selected && (
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-accent-foreground">
-              <Check className="h-4 w-4" />
-            </span>
-          )}
-        </>
-      )}
-    </Listbox.Option>
+      <span className="block truncate data-selected:font-medium data-not-selected:font-normal">
+        {children}
+      </span>
+      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-accent-foreground opacity-0 data-selected:opacity-100">
+        <Check className="h-4 w-4" />
+      </span>
+    </ListboxOption>
   );
 }

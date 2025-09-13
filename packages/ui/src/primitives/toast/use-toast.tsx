@@ -23,7 +23,7 @@ function generateId() {
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
 
 function removeToast(toastId: string, setToasts: React.Dispatch<React.SetStateAction<Toast[]>>) {
-  setToasts((prev) => prev.filter((t) => t.id !== toastId));
+  setToasts(prev => prev.filter(t => t.id !== toastId));
 
   const timeout = toastTimeouts.get(toastId);
   if (timeout) {
@@ -51,7 +51,7 @@ export function useToast() {
         timestamp: Date.now(),
       };
 
-      setToasts((prev) => [...prev, newToast]);
+      setToasts(prev => [...prev, newToast]);
 
       // 5초 후 자동 제거
       const timeout = setTimeout(() => {
@@ -97,7 +97,7 @@ export function toast(props: ToastProps) {
     timestamp: Date.now(),
   };
 
-  setToastsGlobal((prev) => [...prev, newToast]);
+  setToastsGlobal(prev => [...prev, newToast]);
 
   const timeout = setTimeout(() => {
     if (setToastsGlobal) {

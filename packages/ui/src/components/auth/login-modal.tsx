@@ -1,6 +1,6 @@
 'use client';
 
-import { Chrome } from 'lucide-react';
+import { Chrome, Github } from 'lucide-react';
 import { Button } from '../../primitives/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../primitives/dialog';
 
@@ -32,6 +32,13 @@ export function LoginModal({ isOpen, onClose }: Props) {
           >
             <Chrome className="h-5 w-5" />
             <span>Google로 로그인</span>
+          </Button>
+          <Button
+            className="w-full h-12 flex items-center justify-center space-x-2 bg-background border border-border hover:bg-muted text-foreground"
+            variant="outline"
+          >
+            <Github className="h-5 w-5" />
+            <span>Github로 로그인</span>
           </Button>
         </div>
 

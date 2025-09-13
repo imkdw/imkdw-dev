@@ -1,13 +1,13 @@
 'use client';
 
-import { PropsWithChildren, ComponentPropsWithoutRef, Fragment, HTMLAttributes } from 'react';
-import { Menu, Transition } from '@headlessui/react';
+import { PropsWithChildren, ComponentPropsWithoutRef, HTMLAttributes } from 'react';
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react';
 import { Check, ChevronRight, Circle } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export const DropdownMenu = Menu;
 
-export const DropdownMenuTrigger = Menu.Button;
+export const DropdownMenuTrigger = MenuButton;
 
 export function DropdownMenuGroup({ children }: PropsWithChildren) {
   return <div role="group">{children}</div>;
@@ -64,34 +64,18 @@ interface DropdownMenuContentProps extends ComponentPropsWithoutRef<'div'> {
 }
 
 export function DropdownMenuContent({ className, align = 'end', children, ...props }: DropdownMenuContentProps) {
-  const alignmentClasses = {
-    start: 'left-0',
-    center: 'left-1/2 -translate-x-1/2',
-    end: 'right-0',
-  };
-
   return (
-    <Transition
-      as={Fragment}
-      enter="transition ease-out duration-100"
-      enterFrom="transform opacity-0 scale-95"
-      enterTo="transform opacity-100 scale-100"
-      leave="transition ease-in duration-75"
-      leaveFrom="transform opacity-100 scale-100"
-      leaveTo="transform opacity-0 scale-95"
+    <MenuItems
+      transition
+      anchor={align === 'center' ? 'bottom' : `bottom ${align}`}
+      className={cn(
+        'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md origin-top transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0',
+        className
+      )}
+      {...props}
     >
-      <Menu.Items
-        static
-        className={cn(
-          'absolute top-full mt-2 z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md focus:outline-none',
-          alignmentClasses[align],
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </Menu.Items>
-    </Transition>
+      {children}
+    </MenuItems>
   );
 }
 
@@ -102,23 +86,18 @@ interface DropdownMenuItemProps extends ComponentPropsWithoutRef<'button'> {
 
 export function DropdownMenuItem({ className, inset, disabled, children, ...props }: DropdownMenuItemProps) {
   return (
-    <Menu.Item disabled={disabled}>
-      {({ active, disabled: itemDisabled }) => (
-        <button
-          className={cn(
-            'relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors',
-            active && 'bg-accent text-accent-foreground',
-            itemDisabled && 'pointer-events-none opacity-50',
-            inset && 'pl-8',
-            className
-          )}
-          disabled={itemDisabled}
-          {...props}
-        >
-          {children}
-        </button>
-      )}
-    </Menu.Item>
+    <MenuItem disabled={disabled}>
+      <button
+        className={cn(
+          'relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
+          inset && 'pl-8',
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </button>
+    </MenuItem>
   );
 }
 
@@ -135,25 +114,20 @@ export function DropdownMenuCheckboxItem({
   ...props
 }: DropdownMenuCheckboxItemProps) {
   return (
-    <Menu.Item disabled={disabled}>
-      {({ active, disabled: itemDisabled }) => (
-        <button
-          className={cn(
-            'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors',
-            active && 'bg-accent text-accent-foreground',
-            itemDisabled && 'pointer-events-none opacity-50',
-            className
-          )}
-          disabled={itemDisabled}
-          {...props}
-        >
-          <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-            {checked && <Check className="h-4 w-4" />}
-          </span>
-          {children}
-        </button>
-      )}
-    </Menu.Item>
+    <MenuItem disabled={disabled}>
+      <button
+        className={cn(
+          'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
+          className
+        )}
+        {...props}
+      >
+        <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+          {checked && <Check className="h-4 w-4" />}
+        </span>
+        {children}
+      </button>
+    </MenuItem>
   );
 }
 
@@ -171,25 +145,20 @@ export function DropdownMenuRadioItem({
   ...props
 }: DropdownMenuRadioItemProps) {
   return (
-    <Menu.Item disabled={disabled}>
-      {({ active, disabled: itemDisabled }) => (
-        <button
-          className={cn(
-            'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors',
-            active && 'bg-accent text-accent-foreground',
-            itemDisabled && 'pointer-events-none opacity-50',
-            className
-          )}
-          disabled={itemDisabled}
-          {...props}
-        >
-          <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-            {checked && <Circle className="h-2 w-2 fill-current" />}
-          </span>
-          {children}
-        </button>
-      )}
-    </Menu.Item>
+    <MenuItem disabled={disabled}>
+      <button
+        className={cn(
+          'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
+          className
+        )}
+        {...props}
+      >
+        <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+          {checked && <Circle className="h-2 w-2 fill-current" />}
+        </span>
+        {children}
+      </button>
+    </MenuItem>
   );
 }
 

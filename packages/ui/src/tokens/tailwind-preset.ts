@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from 'tailwindcss';
 import { colors, shadows, spacing, typography } from './colors';
 
@@ -127,7 +128,6 @@ export const tailwindPreset: Partial<Config> = {
     },
   },
   plugins: [
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
     require('@tailwindcss/typography'),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function ({ addBase, addUtilities }: { addBase: (base: any) => void; addUtilities: (utilities: any) => void }) {
