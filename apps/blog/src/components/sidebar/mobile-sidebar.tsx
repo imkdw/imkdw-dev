@@ -12,6 +12,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  useSidebar,
 } from '@imkdw-dev/ui';
 
 const mainItems = [
@@ -28,6 +29,7 @@ const utilityItems = [
 
 export function MobileSidebar() {
   const currentPath = usePathname();
+  const { close } = useSidebar();
 
   const isActive = (path: string) => {
     if (path === '/') {
@@ -57,6 +59,7 @@ export function MobileSidebar() {
                   <SidebarMenuButton asChild>
                     <Link
                       href={item.url}
+                      onClick={close}
                       className={`${getNavCls(item.url)} flex items-center gap-3 px-3 py-2 rounded-md transition-colors w-full`}
                     >
                       <item.icon className="h-4 w-4 flex-shrink-0" />
@@ -79,6 +82,7 @@ export function MobileSidebar() {
                   <SidebarMenuButton asChild>
                     <Link
                       href={item.url}
+                      onClick={close}
                       className={`${getNavCls(item.url)} flex items-center gap-3 px-3 py-2 rounded-md transition-colors w-full`}
                     >
                       <item.icon className="h-4 w-4 flex-shrink-0" />
@@ -98,7 +102,10 @@ export function MobileSidebar() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton>
-                  <div className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground cursor-pointer hover:text-foreground">
+                  <div
+                    className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground cursor-pointer hover:text-foreground"
+                    onClick={close}
+                  >
                     <Star className="h-4 w-4" />
                     <span>북마크한 글</span>
                   </div>
@@ -106,7 +113,10 @@ export function MobileSidebar() {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton>
-                  <div className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground cursor-pointer hover:text-foreground">
+                  <div
+                    className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground cursor-pointer hover:text-foreground"
+                    onClick={close}
+                  >
                     <Clock className="h-4 w-4" />
                     <span>최근 읽은 글</span>
                   </div>
