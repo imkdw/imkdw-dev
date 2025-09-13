@@ -14,30 +14,7 @@ import {
   DropdownMenuSeparator,
   useToast,
 } from '@imkdw-dev/ui';
-import { Heart, Reply, MoreHorizontal, Copy, Edit3, Trash2, Flag, UserX, Send } from 'lucide-react';
-
-// Simple markdown to HTML converter for comments
-function parseCommentMarkdown(text: string): string {
-  return (
-    text
-      // Bold text: **text** or __text__
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/__(.*?)__/g, '<strong>$1</strong>')
-      // Italic text: *text* or _text_
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/_(.*?)_/g, '<em>$1</em>')
-      // Inline code: `code`
-      .replace(/`([^`]+)`/g, '<code class="bg-muted px-1 py-0.5 rounded text-xs font-mono">$1</code>')
-      // Code blocks: ```language\ncode\n```
-      .replace(
-        /```(\w*)\n([\s\S]*?)\n```/g,
-        '<pre class="bg-muted border rounded-lg p-3 mt-2 mb-2 overflow-x-auto"><code class="text-xs font-mono">$2</code></pre>'
-      )
-      // Line breaks
-      .replace(/\n\n/g, '</p><p class="text-sm leading-relaxed">')
-      .replace(/\n/g, '<br>')
-  );
-}
+import { Reply, MoreHorizontal, Copy, Edit3, Trash2, Flag, UserX, Send } from 'lucide-react';
 
 interface Comment {
   id: string;
@@ -56,7 +33,6 @@ interface Comment {
 interface CommentItemProps {
   comment: Comment;
   onReply: (username: string, commentId: string) => void;
-  onLike: (commentId: string) => void;
   onDelete: (commentId: string) => void;
   onEdit: (commentId: string, newContent: string) => void;
   depth?: number;
@@ -66,7 +42,6 @@ interface CommentItemProps {
 function CommentItem({
   comment,
   onReply,
-  onLike,
   onDelete,
   onEdit,
   depth = 0,
@@ -81,10 +56,6 @@ function CommentItem({
 
   const handleReply = () => {
     onReply(comment.author.username, comment.id);
-  };
-
-  const handleLike = () => {
-    onLike(comment.id);
   };
 
   const handleCopyComment = async () => {
@@ -176,28 +147,11 @@ function CommentItem({
                 </div>
               </div>
             ) : (
-              <div
-                className="prose prose-sm dark:prose-invert max-w-none"
-                dangerouslySetInnerHTML={{
-                  __html: `<p class="text-sm leading-relaxed">${parseCommentMarkdown(comment.content)}</p>`,
-                }}
-              />
+              <div className="prose prose-sm dark:prose-invert max-w-none">{comment.content}</div>
             )}
           </div>
 
           <div className="flex items-center space-x-4 mt-2 ml-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleLike}
-              className={`h-auto p-1 text-xs hover:bg-transparent ${
-                comment.isLiked ? 'text-red-500' : 'text-muted-foreground'
-              }`}
-            >
-              <Heart className={`w-4 h-4 mr-1 ${comment.isLiked ? 'fill-current' : ''}`} />
-              {comment.likes > 0 && comment.likes}
-            </Button>
-
             {/* 답글 버튼은 최상위 댓글(depth 0)에서만 표시 */}
             {depth === 0 && (
               <Button
@@ -275,7 +229,6 @@ function CommentItem({
                   key={reply.id}
                   comment={reply}
                   onReply={onReply}
-                  onLike={onLike}
                   onDelete={onDelete}
                   onEdit={onEdit}
                   depth={depth + 1}
@@ -346,36 +299,6 @@ export function CommentSection({ articleId }: CommentSectionProps) {
   const handleReply = (username: string, commentId: string) => {
     setReplyingTo({ username, commentId });
     setNewComment(`@${username} `);
-  };
-
-  const handleLike = (commentId: string) => {
-    setComments(prevComments =>
-      prevComments.map(comment => {
-        if (comment.id === commentId) {
-          return {
-            ...comment,
-            isLiked: !comment.isLiked,
-            likes: comment.isLiked ? comment.likes - 1 : comment.likes + 1,
-          };
-        }
-        // Handle replies
-        if (comment.replies) {
-          return {
-            ...comment,
-            replies: comment.replies.map(reply =>
-              reply.id === commentId
-                ? {
-                    ...reply,
-                    isLiked: !reply.isLiked,
-                    likes: reply.isLiked ? reply.likes - 1 : reply.likes + 1,
-                  }
-                : reply
-            ),
-          };
-        }
-        return comment;
-      })
-    );
   };
 
   const handleDelete = (commentId: string) => {
@@ -530,7 +453,6 @@ export function CommentSection({ articleId }: CommentSectionProps) {
               key={comment.id}
               comment={comment}
               onReply={handleReply}
-              onLike={handleLike}
               onDelete={handleDelete}
               onEdit={handleEdit}
             />
