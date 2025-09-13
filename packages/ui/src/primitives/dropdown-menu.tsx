@@ -63,12 +63,7 @@ interface DropdownMenuContentProps extends React.ComponentPropsWithoutRef<'div'>
   align?: 'start' | 'center' | 'end';
 }
 
-export function DropdownMenuContent({
-  className,
-  align = 'end',
-  children,
-  ...props
-}: DropdownMenuContentProps) {
+export function DropdownMenuContent({ className, align = 'end', children, ...props }: DropdownMenuContentProps) {
   const alignmentClasses = {
     start: 'left-0',
     center: 'left-1/2 -translate-x-1/2',
