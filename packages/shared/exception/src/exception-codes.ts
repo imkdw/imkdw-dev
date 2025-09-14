@@ -1,4 +1,5 @@
 import { ARTICLE_EXCEPTION_CODES } from './article';
+import { ARTICLE_COMMENT_EXCEPTION_CODES } from './article-comment';
 import { AUTH_EXCEPTION_CODES, JWT_EXCEPTION_CODES, OAUTH_EXCEPTION_CODES } from './auth';
 import { SERIES_EXCEPTION_CODES } from './series';
 
@@ -8,4 +9,5 @@ export const EXCEPTION_CODES = {
   ...OAUTH_EXCEPTION_CODES,
   ...ARTICLE_EXCEPTION_CODES,
   ...SERIES_EXCEPTION_CODES,
+  ...ARTICLE_COMMENT_EXCEPTION_CODES,
 } as const;

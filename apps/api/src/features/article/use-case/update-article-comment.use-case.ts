@@ -1,8 +1,10 @@
 import { ArticleCommentValidator } from '@/shared/validator/article-comment.validator';
 import { ArticleCommentRepository } from '@/shared/repository/article-comment/article-comment.repository';
+import { CannotUpdateArticleCommentException } from '@/features/article/exception/cannot-update-article-comment.exception';
 import { UpdateArticleCommentDto } from '@/features/article/dto/update-article-comment.dto';
 import { ArticleComment } from '@/shared/domain/article-comment/article-comment';
 import { PrismaService } from '@/infra/database/prisma.service';
+import { Requester } from '@/common/types/requester.type';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -13,13 +15,14 @@ export class UpdateArticleCommentUseCase {
     private readonly prisma: PrismaService
   ) {}
 
-  async execute(commentId: string, dto: UpdateArticleCommentDto, authorId: string): Promise<void> {
+  async execute(commentId: string, dto: UpdateArticleCommentDto, requester: Requester): Promise<void> {
     return this.prisma.$transaction(async tx => {
       const existingComment = await this.articleCommentValidator.checkExist(commentId, tx);
 
-      // 작성자 권한 검증
-      if (existingComment.authorId !== authorId) {
-        throw new Error('댓글 수정 권한이 없습니다.');
+      // 댓글 수정 권한 검증
+      const comment = ArticleComment.create(existingComment);
+      if (!comment.canUpdate(requester.id)) {
+        throw new CannotUpdateArticleCommentException('댓글을 수정할 권한이 없습니다.');
       }
 
       const updatedComment = ArticleComment.create({

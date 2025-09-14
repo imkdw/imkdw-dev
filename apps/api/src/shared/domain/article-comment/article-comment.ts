@@ -1,3 +1,5 @@
+import { MEMBER_ROLE } from '@imkdw-dev/consts';
+
 interface Props {
   id: string;
   content: string;
@@ -28,11 +30,18 @@ export class ArticleComment {
     return new ArticleComment(props);
   }
 
-  /**
-   * 답글 작성 가능 여부 확인
-   * 댓글인 경우만 답글 작성 가능 (답글에는 답글 불가)
-   */
   canReceiveReply(): boolean {
     return this.parentId === null;
+  }
+
+  canUpdate(requesterId: string): boolean {
+    const isAuthor = this.authorId === requesterId;
+    return isAuthor;
+  }
+
+  canDelete(requesterId: string, requesterRole: string): boolean {
+    const isAuthor = this.authorId === requesterId;
+    const isAdmin = requesterRole === MEMBER_ROLE.ADMIN;
+    return isAuthor || isAdmin;
   }
 }

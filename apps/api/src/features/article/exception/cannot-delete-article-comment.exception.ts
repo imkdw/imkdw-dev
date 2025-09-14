@@ -2,12 +2,12 @@ import { EXCEPTION_CODES } from '@imkdw-dev/exception';
 import { CustomException } from '@/common/exception/custom.exception';
 import { HttpStatus } from '@nestjs/common';
 
-export class ArticleCommentNotFoundException extends CustomException {
+export class CannotDeleteArticleCommentException extends CustomException {
   constructor(message: string) {
     super({
       message,
-      errorCode: EXCEPTION_CODES.ARTICLE_COMMENT_NOT_FOUND,
-      statusCode: HttpStatus.NOT_FOUND,
+      errorCode: EXCEPTION_CODES.CANNOT_DELETE_ARTICLE_COMMENT,
+      statusCode: HttpStatus.FORBIDDEN,
     });
   }
 }

@@ -39,14 +39,14 @@ export class ArticleCommentController {
     @Body() dto: UpdateArticleCommentDto,
     @CurrentRequester() requester: Requester
   ): Promise<void> {
-    await this.updateArticleCommentUseCase.execute(commentId, dto, requester.id);
+    await this.updateArticleCommentUseCase.execute(commentId, dto, requester);
   }
 
   @Swagger.deleteComment('댓글 삭제')
   @Delete(':commentId')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteComment(@Param('commentId') commentId: string, @CurrentRequester() requester: Requester): Promise<void> {
-    await this.deleteArticleCommentUseCase.execute(commentId, requester.id);
+    await this.deleteArticleCommentUseCase.execute(commentId, requester);
   }
 
   @Swagger.createReply('답글 생성')
