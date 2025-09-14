@@ -10,7 +10,7 @@ import { CookieService } from '@/infra/cookie/cookie.service';
 import { COOKIE_MAX_AGE } from '@/infra/cookie/cookie.const';
 import { OAuthProvider } from '@imkdw-dev/consts';
 
-@ApiTags('[인증] 소셜로그인')
+@ApiTags('소셜로그인')
 @Controller('oauth')
 @Public()
 export class OAuthController {

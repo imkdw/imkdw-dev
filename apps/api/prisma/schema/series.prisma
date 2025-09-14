@@ -14,9 +14,12 @@ model Series {
   /// 시리즈에 속한 게시글들
   articles Article[]
 
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at")
+  /// 시리즈에 연결된 태그들
+  tags SeriesTag[]
+
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz
 
   @@map("series")
 }

@@ -8,16 +8,41 @@ import { Prisma } from '@prisma/client';
 export class SeriesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(series: Series): Promise<Series> {
-    const createdEntity = await this.prisma.series.create({ data: series });
+  async create(series: Series, tx: Prisma.TransactionClient = this.prisma): Promise<Series> {
+    const { tagIds, ...seriesData } = series;
+
+    const createdEntity = await tx.series.create({
+      data: {
+        ...seriesData,
+        tags: {
+          createMany: {
+            data: tagIds.map(tagId => ({ tagId })),
+          },
+        },
+      },
+    });
 
     return SeriesMapper.toDomain(createdEntity);
   }
 
-  async update(id: string, series: Series): Promise<void> {
-    await this.prisma.series.update({
+  async update(id: string, series: Series, tx: Prisma.TransactionClient = this.prisma): Promise<void> {
+    const { tagIds, ...seriesData } = series;
+
+    await tx.seriesTag.updateMany({
+      where: { seriesId: id },
+      data: { deletedAt: new Date() },
+    });
+
+    await tx.series.update({
       where: { id },
-      data: series,
+      data: {
+        ...seriesData,
+        tags: {
+          createMany: {
+            data: tagIds.map(tagId => ({ tagId })),
+          },
+        },
+      },
     });
   }
 

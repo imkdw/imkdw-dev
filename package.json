@@ -11,9 +11,13 @@
     "clean-repo": "find . -name \"node_modules\" -type d -prune -exec rm -rf {} + && find . -name \"dist\" -type d -prune -exec rm -rf {} + && find . -name \"tsconfig.tsbuildinfo\" -type f -exec rm -f {} +",
     "api": "pnpm -F api",
     "blog": "pnpm -F blog",
-    "ui": "pnpm -F ui"
+    "ui": "pnpm -F ui",
+    "setup:dev": "docker-compose down && docker-compose up -d --wait && npx dotenv-cli -e .env -- pnpm api prisma db push --force-reset",
+    "setup:test": "docker-compose down && docker-compose up -d --wait && npx dotenv-cli -e .env.test -- pnpm api prisma db push --force-reset",
+    "reset:test": "npx dotenv-cli -e .env.test -- pnpm api prisma db push --force-reset"
   },
   "devDependencies": {
+    "dotenv-cli": "^10.0.0",
     "prettier": "^3.6.2",
     "turbo": "^2.5.6",
     "typescript": "5.9.2"

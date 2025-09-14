@@ -18,10 +18,13 @@ model Member {
   provider String
 
   /// 회원 권한 (USER, ADMIN 등)
-  role         String    @default("USER")
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at")
-  deletedAt    DateTime? @map("deleted_at")
+  role String @default("USER")
+
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz
+
+  comments ArticleComment[]
 
   @@map("member")
 }

@@ -3,6 +3,7 @@ export class Series {
   title: string;
   slug: string;
   description: string;
+  tagIds: string[];
   createdAt: Date;
 
   private constructor(props: Series) {
@@ -10,6 +11,7 @@ export class Series {
     this.title = props.title;
     this.slug = props.slug;
     this.description = props.description;
+    this.tagIds = props.tagIds;
     this.createdAt = props.createdAt;
   }
 

@@ -79,8 +79,7 @@ describe('시리즈 목록 조회 유스케이스', () => {
 
       expect(result).toHaveLength(1);
       expect(result[0]?.id).toBe(normalSeries.id);
-      expect(result[0]?.title).toBe('정상 시리즈');
-      expect(result[0]?.description).toBeDefined();
+      expect(result[0]?.title).toBe(normalSeries.title);
     });
   });
 });

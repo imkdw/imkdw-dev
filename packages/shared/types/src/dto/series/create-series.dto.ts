@@ -13,6 +13,11 @@ export interface ICreateSeriesDto {
    * 시리즈 설명
    */
   description: string;
+
+  /**
+   * 시리즈 태그 목록
+   */
+  tags: string[];
 }
 
 export interface IResponseCreateSeriesDto {

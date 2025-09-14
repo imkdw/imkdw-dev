@@ -7,6 +7,8 @@ export const baseConfig: Config = {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
   testEnvironment: 'node',
+  // 테스트가 1개라도 실패하면 즉시 종료
+  bail: 1,
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@shared/(.*)$': '<rootDir>/src/shared/$1',
@@ -19,7 +21,6 @@ export const baseConfig: Config = {
   coverageDirectory: './coverage',
 };
 
-// 기본 설정: 단위 테스트
 const config: Config = {
   ...baseConfig,
   testMatch: ['<rootDir>/src/**/*.spec.ts', '<rootDir>/test/unit/**/*.spec.ts'],

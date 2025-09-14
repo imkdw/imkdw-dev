@@ -6,9 +6,13 @@ import { CreateArticleUseCase } from '@/features/article/use-case/create-article
 import { UpdateArticleUseCase } from '@/features/article/use-case/update-article.use-case';
 import { IncrementViewCountUseCase } from '@/features/article/use-case/increment-view-count.use-case';
 import * as Swagger from '@/features/article/swagger/article.swagger';
+import { MemberRoles } from '@/common/decorator/member-role.decorator';
+import { MEMBER_ROLE } from '@imkdw-dev/consts';
+import { Public } from '@/common/decorator/public.decorator';
 
 @ApiTags('게시글')
 @Controller('articles')
+@MemberRoles(MEMBER_ROLE.ADMIN)
 export class ArticleController {
   constructor(
     private readonly createArticleUseCase: CreateArticleUseCase,
@@ -32,6 +36,7 @@ export class ArticleController {
 
   @Swagger.incrementViewCount('게시글 조회수 증가')
   @HttpCode(HttpStatus.NO_CONTENT)
+  @Public()
   @Patch(':id/view-count')
   async incrementViewCount(@Param('id') id: string): Promise<void> {
     await this.incrementViewCountUseCase.execute(id);

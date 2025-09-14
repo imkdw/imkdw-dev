@@ -1,11 +1,24 @@
 import { ArticleController } from '@/features/article/controller/article.controller';
+import { ArticleCommentController } from '@/features/article/controller/article-comment.controller';
 import { CreateArticleUseCase } from '@/features/article/use-case/create-article.use-case';
 import { UpdateArticleUseCase } from '@/features/article/use-case/update-article.use-case';
 import { IncrementViewCountUseCase } from '@/features/article/use-case/increment-view-count.use-case';
+import { CreateArticleCommentUseCase } from '@/features/article/use-case/create-article-comment.use-case';
+import { UpdateArticleCommentUseCase } from '@/features/article/use-case/update-article-comment.use-case';
+import { DeleteArticleCommentUseCase } from '@/features/article/use-case/delete-article-comment.use-case';
+import { CreateArticleReplyUseCase } from '@/features/article/use-case/create-article-reply.use-case';
 import { Module } from '@nestjs/common';
 
 @Module({
-  controllers: [ArticleController],
-  providers: [CreateArticleUseCase, UpdateArticleUseCase, IncrementViewCountUseCase],
+  controllers: [ArticleController, ArticleCommentController],
+  providers: [
+    CreateArticleUseCase,
+    UpdateArticleUseCase,
+    IncrementViewCountUseCase,
+    CreateArticleCommentUseCase,
+    UpdateArticleCommentUseCase,
+    DeleteArticleCommentUseCase,
+    CreateArticleReplyUseCase,
+  ],
 })
 export class ArticleModule {}

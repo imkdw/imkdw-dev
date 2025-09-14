@@ -121,7 +121,7 @@ describe('게시글 생성 유스케이스', () => {
 
     it('기존 태그가 있으면 재사용하고 새로운 태그만 생성한다', async () => {
       await prisma.tag.create({
-        data: { id: 'existing-tag-id', name: 'JavaScript', createdAt: new Date() },
+        data: { id: 'existing-tag-id', name: 'JavaScript' },
       });
 
       const createArticleDto: CreateArticleDto = {

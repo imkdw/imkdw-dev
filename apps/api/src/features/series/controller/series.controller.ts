@@ -7,9 +7,13 @@ import { CreateSeriesUseCase } from '@/features/series/use-case/create-series.us
 import { UpdateSeriesUseCase } from '@/features/series/use-case/update-series.use-case';
 import { GetSeriesUseCase } from '@/features/series/use-case/get-series.use-case';
 import * as Swagger from '@/features/series/swagger/series.swagger';
+import { MemberRoles } from '@/common/decorator/member-role.decorator';
+import { MEMBER_ROLE } from '@imkdw-dev/consts';
+import { Public } from '@/common/decorator/public.decorator';
 
-@ApiTags('Series')
+@ApiTags('시리즈')
 @Controller('series')
+@MemberRoles(MEMBER_ROLE.ADMIN)
 export class SeriesController {
   constructor(
     private readonly createSeriesUseCase: CreateSeriesUseCase,
@@ -18,6 +22,7 @@ export class SeriesController {
   ) {}
 
   @Swagger.getSeries('시리즈 목록 조회')
+  @Public()
   @Get()
   async getAll(): Promise<SeriesDto[]> {
     const series = await this.getSeriesUseCase.execute();

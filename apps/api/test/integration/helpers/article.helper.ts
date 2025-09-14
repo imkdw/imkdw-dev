@@ -4,7 +4,7 @@ import { generateUUID } from '@/common/utils/string.util';
 
 export const createTestArticle = async (
   prisma: PrismaClient | Prisma.TransactionClient,
-  data: Partial<Article> & { seriesId: string }
+  data: { seriesId: string; title?: string; slug?: string; content?: string; viewCount?: number }
 ): Promise<Article> => {
   return prisma.article.create({
     data: {
@@ -13,7 +13,6 @@ export const createTestArticle = async (
       slug: data.slug ?? `test-article-${Date.now()}`,
       content: data.content ?? 'Test article content for integration testing',
       viewCount: data.viewCount ?? 0,
-      ...data,
       seriesId: data.seriesId,
     },
   });

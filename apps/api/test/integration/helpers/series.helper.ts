@@ -4,7 +4,7 @@ import { generateUUID } from '@/common/utils/string.util';
 
 export const createTestSeries = async (
   prisma: PrismaClient | Prisma.TransactionClient,
-  data?: Partial<Series>
+  data?: Partial<Prisma.SeriesCreateInput>
 ): Promise<Series> => {
   return prisma.series.create({
     data: {
@@ -12,8 +12,6 @@ export const createTestSeries = async (
       title: data?.title ?? `Test Series ${Date.now()}`,
       slug: data?.slug ?? `test-series-${Date.now()}`,
       description: data?.description ?? `Test Series Description ${Date.now()}`,
-      createdAt: data?.createdAt ?? new Date(),
-      deletedAt: data?.deletedAt ?? null,
       ...data,
     },
   });

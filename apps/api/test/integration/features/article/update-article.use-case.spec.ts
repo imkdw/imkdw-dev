@@ -61,9 +61,9 @@ describe('게시글 수정 유스케이스', () => {
 
   describe('존재하지 않는 시리즈 ID로 수정하면', () => {
     it('에러가 발생한다', async () => {
-      const existingArticle = await createTestArticle(prisma, { 
+      const existingArticle = await createTestArticle(prisma, {
         title: '기존 게시글 제목',
-        seriesId: testSeries.id 
+        seriesId: testSeries.id,
       });
 
       const updateArticleDto: UpdateArticleDto = {
@@ -81,13 +81,13 @@ describe('게시글 수정 유스케이스', () => {
     const duplicateTitle = '중복된 게시글 제목';
 
     it('에러가 발생한다', async () => {
-      const existingArticle = await createTestArticle(prisma, { 
+      const existingArticle = await createTestArticle(prisma, {
         title: '기존 게시글 제목',
-        seriesId: testSeries.id 
+        seriesId: testSeries.id,
       });
-      await createTestArticle(prisma, { 
+      await createTestArticle(prisma, {
         title: duplicateTitle,
-        seriesId: anotherSeries.id 
+        seriesId: anotherSeries.id,
       });
 
       const updateArticleDto: UpdateArticleDto = {
@@ -156,14 +156,14 @@ describe('게시글 수정 유스케이스', () => {
 
       await prisma.tag.createMany({
         data: [
-          { id: 'old-tag-1', name: 'OldTag1', createdAt: new Date() },
-          { id: 'old-tag-2', name: 'OldTag2', createdAt: new Date() },
+          { id: 'old-tag-1', name: 'OldTag1' },
+          { id: 'old-tag-2', name: 'OldTag2' },
         ],
       });
       await prisma.articleTag.createMany({
         data: [
-          { articleId: existingArticle.id, tagId: 'old-tag-1', createdAt: new Date(), updatedAt: new Date() },
-          { articleId: existingArticle.id, tagId: 'old-tag-2', createdAt: new Date(), updatedAt: new Date() },
+          { articleId: existingArticle.id, tagId: 'old-tag-1' },
+          { articleId: existingArticle.id, tagId: 'old-tag-2' },
         ],
       });
 
@@ -186,9 +186,7 @@ describe('게시글 수정 유스케이스', () => {
         include: { tag: true },
       });
       expect(articleTags).toHaveLength(3);
-      expect(articleTags.map(at => at.tag.name)).toEqual(
-        expect.arrayContaining(['JavaScript', 'React', 'TypeScript'])
-      );
+      expect(articleTags.map(at => at.tag.name)).toEqual(expect.arrayContaining(['JavaScript', 'React', 'TypeScript']));
 
       const oldTagRelations = await prisma.articleTag.findMany({
         where: {
@@ -207,7 +205,7 @@ describe('게시글 수정 유스케이스', () => {
       });
 
       await prisma.tag.create({
-        data: { id: 'existing-tag-id', name: 'JavaScript', createdAt: new Date() },
+        data: { id: 'existing-tag-id', name: 'JavaScript' },
       });
 
       const updateArticleDto: UpdateArticleDto = {
@@ -232,9 +230,7 @@ describe('게시글 수정 유스케이스', () => {
         include: { tag: true },
       });
       expect(articleTags).toHaveLength(3);
-      expect(articleTags.map(at => at.tag.name)).toEqual(
-        expect.arrayContaining(['JavaScript', 'React', 'Vue'])
-      );
+      expect(articleTags.map(at => at.tag.name)).toEqual(expect.arrayContaining(['JavaScript', 'React', 'Vue']));
     });
 
     it('게시글에서 모든 태그를 제거할 수 있다', async () => {
@@ -246,14 +242,14 @@ describe('게시글 수정 유스케이스', () => {
 
       await prisma.tag.createMany({
         data: [
-          { id: 'tag-1', name: 'Tag1', createdAt: new Date() },
-          { id: 'tag-2', name: 'Tag2', createdAt: new Date() },
+          { id: 'tag-1', name: 'Tag1' },
+          { id: 'tag-2', name: 'Tag2' },
         ],
       });
       await prisma.articleTag.createMany({
         data: [
-          { articleId: existingArticle.id, tagId: 'tag-1', createdAt: new Date(), updatedAt: new Date() },
-          { articleId: existingArticle.id, tagId: 'tag-2', createdAt: new Date(), updatedAt: new Date() },
+          { articleId: existingArticle.id, tagId: 'tag-1' },
+          { articleId: existingArticle.id, tagId: 'tag-2' },
         ],
       });
 
@@ -281,14 +277,14 @@ describe('게시글 수정 유스케이스', () => {
 
       await prisma.tag.createMany({
         data: [
-          { id: 'old-tag-1', name: 'OldTag1', createdAt: new Date() },
-          { id: 'old-tag-2', name: 'OldTag2', createdAt: new Date() },
+          { id: 'old-tag-1', name: 'OldTag1' },
+          { id: 'old-tag-2', name: 'OldTag2' },
         ],
       });
       await prisma.articleTag.createMany({
         data: [
-          { articleId: existingArticle.id, tagId: 'old-tag-1', createdAt: new Date(), updatedAt: new Date() },
-          { articleId: existingArticle.id, tagId: 'old-tag-2', createdAt: new Date(), updatedAt: new Date() },
+          { articleId: existingArticle.id, tagId: 'old-tag-1' },
+          { articleId: existingArticle.id, tagId: 'old-tag-2' },
         ],
       });
 
@@ -314,9 +310,7 @@ describe('게시글 수정 유스케이스', () => {
         include: { tag: true },
       });
       expect(articleTags).toHaveLength(3);
-      expect(articleTags.map(at => at.tag.name)).toEqual(
-        expect.arrayContaining(['NewTag1', 'NewTag2', 'NewTag3'])
-      );
+      expect(articleTags.map(at => at.tag.name)).toEqual(expect.arrayContaining(['NewTag1', 'NewTag2', 'NewTag3']));
     });
 
     it('트랜잭션 롤백시 태그 관계가 원상복구된다', async () => {
@@ -327,14 +321,12 @@ describe('게시글 수정 유스케이스', () => {
       });
 
       await prisma.tag.create({
-        data: { id: 'original-tag', name: 'OriginalTag', createdAt: new Date() },
+        data: { id: 'original-tag', name: 'OriginalTag' },
       });
       await prisma.articleTag.create({
         data: {
           articleId: existingArticle.id,
           tagId: 'original-tag',
-          createdAt: new Date(),
-          updatedAt: new Date(),
         },
       });
 

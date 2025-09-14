@@ -60,7 +60,12 @@
       "Bash(curl:*)",
       "Bash(pkill:*)",
       "mcp__ide__getDiagnostics",
-      "Bash(lsof:*)"
+      "Bash(lsof:*)",
+      "Bash(pnmp api test:integration:*)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"응 pnpm setup:dev, pnpm setup:test 2개가 정상 작동하는지 확인해봐\" pnpm setup:dev)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"응 pnmp setup:dev, pnpm setup:test 2개가 정상 작동하는지 확인해봐\" pnpm setup:test)",
+      "Bash(npm run build:*)",
+      "Bash(npm run lint)"
     ],
     "deny": [],
     "ask": []

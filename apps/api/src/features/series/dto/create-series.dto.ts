@@ -1,8 +1,8 @@
 import { IsNotEmptyString } from '@/common/decorator/is-not-empty-string.decorator';
-import { SERIES_MAX_TITLE_LENGTH, SERIES_MAX_SLUG_LENGTH, SERIES_MAX_DESCRIPTION_LENGTH } from '@imkdw-dev/consts';
+import { SERIES_MAX_TITLE_LENGTH, SERIES_MAX_SLUG_LENGTH, SERIES_MAX_DESCRIPTION_LENGTH, ARTICLE_MAX_TAGS } from '@imkdw-dev/consts';
 import { ICreateSeriesDto, IResponseCreateSeriesDto } from '@imkdw-dev/types';
 import { ApiProperty } from '@nestjs/swagger';
-import { MaxLength } from 'class-validator';
+import { ArrayMaxSize, IsArray, IsString, MaxLength } from 'class-validator';
 import { Series } from '@/shared/domain/series/series';
 
 export class CreateSeriesDto implements ICreateSeriesDto {
@@ -28,6 +28,16 @@ export class CreateSeriesDto implements ICreateSeriesDto {
   @MaxLength(SERIES_MAX_DESCRIPTION_LENGTH)
   @IsNotEmptyString()
   readonly description: string;
+
+  @ApiProperty({
+    description: '시리즈 태그 목록 (최소 1개 이상)',
+    example: ['JavaScript', 'Node.js', 'Backend', 'Tutorial'],
+    maxItems: ARTICLE_MAX_TAGS,
+  })
+  @ArrayMaxSize(ARTICLE_MAX_TAGS)
+  @IsArray()
+  @IsString({ each: true })
+  readonly tags: string[];
 }
 
 export class ResponseCreateSeriesDto implements IResponseCreateSeriesDto {

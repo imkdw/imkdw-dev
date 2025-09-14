@@ -1,0 +1,27 @@
+/// 게시글 댓글 정보를 저장하는 테이블
+model ArticleComment {
+  id String @id @default(uuid())
+
+  /// 내용
+  content String
+
+  /// 댓글이 작성된 게시글 아이디
+  articleId String @map("article_id")
+
+  /// 작성자(유저) 아이디
+  authorId String @map("author_id")
+
+  /// 부모 댓글 아이디
+  parentId String? @map("parent_id")
+
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz
+
+  article Article          @relation(fields: [articleId], references: [id])
+  author  Member           @relation(fields: [authorId], references: [id])
+  parent  ArticleComment?  @relation("ArticleCommentReplies", fields: [parentId], references: [id])
+  replies ArticleComment[] @relation("ArticleCommentReplies")
+
+  @@map("article_comment")
+}

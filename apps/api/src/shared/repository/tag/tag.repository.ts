@@ -21,13 +21,7 @@ export class TagRepository {
   }
 
   async createMany(names: string[], tx: Prisma.TransactionClient = this.prisma): Promise<Tag[]> {
-    const tagData = names.map(name => ({
-      id: generateUUID(),
-      name,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      deletedAt: null,
-    }));
+    const tagData = names.map(name => ({ id: generateUUID(), name }));
 
     await tx.tag.createMany({
       data: tagData,

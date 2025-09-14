@@ -12,5 +12,6 @@ import { Module } from '@nestjs/common';
   imports: [CookieModule, HttpModule, MyConfigModule],
   controllers: [OAuthController],
   providers: [OAuthStrategyFactory, GoogleOAuthStrategy, MemberAuthService, JwtService],
+  exports: [JwtService],
 })
 export class AuthModule {}
