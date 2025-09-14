@@ -3,18 +3,12 @@
 import { Chrome, Github } from 'lucide-react';
 import { Button } from '../../primitives/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../primitives/dialog';
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  avatar: string;
-}
+import { IMember } from '@imkdw-dev/types';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  onLoginSuccess?: (userData: User) => void;
+  onLoginSuccess?: (member: IMember) => void;
 }
 
 export function LoginModal({ isOpen, onClose }: Props) {

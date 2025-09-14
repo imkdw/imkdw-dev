@@ -1,4 +1,6 @@
-export class Member {
+import { IMember } from '@imkdw-dev/types';
+
+export class Member implements IMember {
   id: string;
   email: string;
   nickname: string;
