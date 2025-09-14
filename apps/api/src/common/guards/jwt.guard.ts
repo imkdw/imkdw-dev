@@ -1,6 +1,6 @@
 import { JwtService } from '@/auth/service/jwt.service';
 import { IS_PUBLIC_KEY } from '@/common/decorator/public.decorator';
-import { PrismaService } from '@/infra/database/prisma.service';
+import { MemberValidator } from '@/shared/validator/member.validator';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
@@ -10,7 +10,7 @@ export class JwtGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
     private readonly reflector: Reflector,
-    private readonly prisma: PrismaService
+    private readonly memberValidator: MemberValidator
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -35,6 +35,8 @@ export class JwtGuard implements CanActivate {
       if (!id) {
         return false;
       }
+
+      await this.memberValidator.checkExist(id);
 
       request.requester = { ...request.requester, id, role };
 

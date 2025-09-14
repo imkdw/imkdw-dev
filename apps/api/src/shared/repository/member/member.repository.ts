@@ -31,4 +31,15 @@ export class MemberRepository {
 
     return entity ? MemberMapper.toDomain(entity) : null;
   }
+
+  async findById(id: string): Promise<Member | null> {
+    const entity = await this.prisma.member.findFirst({
+      where: {
+        id,
+        deletedAt: null,
+      },
+    });
+
+    return entity ? MemberMapper.toDomain(entity) : null;
+  }
 }
