@@ -13,11 +13,11 @@ export function RelatedArticles({ articles }: RelatedArticlesProps) {
         {articles.map((article, index) => (
           <div
             key={index}
-            className="p-4 border rounded-lg hover:bg-card/50 transition-colors cursor-pointer border-border"
+            className="p-4 border rounded-lg hover:bg-card/50 transition-colors cursor-pointer border-border flex flex-col h-full"
           >
             <h4 className="font-medium mb-1">{article.title}</h4>
             <p className="text-sm text-muted-foreground mb-2">{article.description}</p>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="mt-auto flex items-center gap-2 text-xs text-muted-foreground">
               <Calendar className="h-3 w-3" />
               <span>{article.publishedAt}</span>
               <Clock className="h-3 w-3 ml-2" />
