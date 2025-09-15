@@ -8,10 +8,10 @@ import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/auth/consts/auth.const';
 import { ResponseGetOAuthUrlDto } from '@/auth/dto/get-oauth-url.dto';
 import { CookieService } from '@/infra/cookie/cookie.service';
 import { COOKIE_MAX_AGE } from '@/infra/cookie/cookie.const';
-import { OAuthProvider } from '@imkdw-dev/consts';
+import { API_ENDPOINTS, OAuthProvider } from '@imkdw-dev/consts';
 
 @ApiTags('소셜로그인')
-@Controller('oauth')
+@Controller()
 @Public()
 export class OAuthController {
   constructor(
@@ -20,7 +20,7 @@ export class OAuthController {
   ) {}
 
   @Swagger.getOAuthUrl('소셜로그인 URL 발급')
-  @Get(':provider/authorization')
+  @Get(API_ENDPOINTS.GET_OAUTH_URL)
   async getOAuthUrl(
     @Query('redirectUrl') redirectUrl: string,
     @Param('provider') provider: OAuthProvider

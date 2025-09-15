@@ -13,45 +13,34 @@ import { SearchInput } from './search-input';
 import { MobileNavigation } from './mobile-navigation';
 import { cn } from '../../../lib';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
+import { useAuth } from '@imkdw-dev/hooks';
 import Link from 'next/link';
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  avatar?: string;
-}
+import { IMember } from '@imkdw-dev/types';
 
 interface Props {
-  user?: User | null;
+  user?: IMember | null;
   onNavigate?: (path: string) => void;
-  onLogin?: () => void;
-  onLogout?: () => void;
   onSearch?: (query: string) => void;
 }
 
-export function Header({ user: externalUser, onNavigate, onLogin, onLogout, onSearch }: Props) {
+export function Header({ user: externalUser, onNavigate, onSearch }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('blog.tsx');
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [user, setUser] = useState<User | null>(externalUser ?? null);
+  const [user, setUser] = useState<IMember | null>(externalUser ?? null);
+  const { handleSocialLogin } = useAuth();
 
   const handleLogin = () => {
-    if (onLogin) {
-      onLogin();
-    } else {
-      setIsLoginOpen(true);
-    }
+    setIsLoginOpen(true);
   };
 
-  const handleLoginSuccess = (userData: User) => {
+  const handleLoginSuccess = (userData: IMember) => {
     setUser(userData);
     setIsLoginOpen(false);
   };
 
   const handleLogout = () => {
     setUser(null);
-    onLogout?.();
   };
 
   const handleNavigate = (path: string) => {
@@ -112,7 +101,12 @@ export function Header({ user: externalUser, onNavigate, onLogin, onLogout, onSe
         onSearch={onSearch}
       />
 
-      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} onLoginSuccess={handleLoginSuccess} />
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
+        onSocialLogin={handleSocialLogin}
+      />
     </header>
   );
 }

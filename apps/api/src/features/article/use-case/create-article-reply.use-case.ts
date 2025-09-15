@@ -3,7 +3,7 @@ import { ArticleValidator } from '@/shared/validator/article.validator';
 import { ArticleCommentValidator } from '@/shared/validator/article-comment.validator';
 import { ArticleCommentRepository } from '@/shared/repository/article-comment/article-comment.repository';
 import { CreateArticleCommentDto } from '@/features/article/dto/create-article-comment.dto';
-import { ArticleComment } from '@/shared/domain/article-comment/article-comment';
+import { ArticleComment } from '@/shared/domain/article/article-comment';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { Injectable } from '@nestjs/common';
 
@@ -16,7 +16,12 @@ export class CreateArticleReplyUseCase {
     private readonly prisma: PrismaService
   ) {}
 
-  async execute(articleId: string, commentId: string, dto: CreateArticleCommentDto, authorId: string): Promise<ArticleComment> {
+  async execute(
+    articleId: string,
+    commentId: string,
+    dto: CreateArticleCommentDto,
+    authorId: string
+  ): Promise<ArticleComment> {
     return this.prisma.$transaction(async tx => {
       await this.articleValidator.checkExist(articleId, tx);
       const parentComment = await this.articleCommentValidator.checkExist(commentId, tx);

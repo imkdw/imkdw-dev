@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { ArticleComment } from '@/shared/domain/article-comment/article-comment';
+import { ArticleComment } from '@/shared/domain/article/article-comment';
 import { ArticleCommentMapper } from '@/shared/mapper/article-comment/article-comment.mapper';
 import { PrismaService } from '@/infra/database/prisma.service';
 

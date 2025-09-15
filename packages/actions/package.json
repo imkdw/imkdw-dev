@@ -1,5 +1,5 @@
 {
-  "name": "@imkdw-dev/api-client",
+  "name": "@imkdw-dev/actions",
   "version": "0.0.1",
   "private": true,
   "main": "./dist/index.js",
@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@types/node": "^24.4.0",
+    "@imkdw-dev/api-client": "workspace:*",
     "@imkdw-dev/consts": "workspace:*"
   }
 }

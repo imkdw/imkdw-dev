@@ -1,5 +1,5 @@
 import { generateUUID } from '@/common/utils/string.util';
-import { ArticleComment } from '@/shared/domain/article-comment/article-comment';
+import { ArticleComment } from '@/shared/domain/article/article-comment';
 
 interface Props {
   id: string;

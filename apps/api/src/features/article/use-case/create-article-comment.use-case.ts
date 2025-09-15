@@ -2,7 +2,7 @@ import { generateUUID } from '@/common/utils/string.util';
 import { ArticleValidator } from '@/shared/validator/article.validator';
 import { ArticleCommentRepository } from '@/shared/repository/article-comment/article-comment.repository';
 import { CreateArticleCommentDto } from '@/features/article/dto/create-article-comment.dto';
-import { ArticleComment } from '@/shared/domain/article-comment/article-comment';
+import { ArticleComment } from '@/shared/domain/article/article-comment';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { Injectable } from '@nestjs/common';
 

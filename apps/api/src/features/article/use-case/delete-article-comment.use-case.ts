@@ -1,7 +1,7 @@
 import { ArticleCommentValidator } from '@/shared/validator/article-comment.validator';
 import { ArticleCommentRepository } from '@/shared/repository/article-comment/article-comment.repository';
 import { CannotDeleteArticleCommentException } from '@/features/article/exception/cannot-delete-article-comment.exception';
-import { ArticleComment } from '@/shared/domain/article-comment/article-comment';
+import { ArticleComment } from '@/shared/domain/article/article-comment';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { Requester } from '@/common/types/requester.type';
 import { Injectable } from '@nestjs/common';

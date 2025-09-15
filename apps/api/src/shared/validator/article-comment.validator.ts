@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { ArticleComment } from '@/shared/domain/article-comment/article-comment';
+import { ArticleComment } from '@/shared/domain/article/article-comment';
 import { ArticleCommentRepository } from '@/shared/repository/article-comment/article-comment.repository';
 import { ArticleCommentNotFoundException } from '@/features/article/exception/article-comment-not-found.exception';
 import { CannotReplyToReplyException } from '@/features/article/exception/cannot-reply-to-reply.exception';

@@ -1,22 +1,29 @@
 export interface ApiClientConfig {
-  baseURL?: string;
+  baseURL: string;
+  version: number;
   headers?: Record<string, string>;
   timeout?: number;
-  credentials?: RequestCredentials;
 }
 
-export interface RequestOptions extends Omit<RequestInit, 'method' | 'body'> {
-  params?: Record<string, any>;
+export interface RequestOptions {
+  headers?: Record<string, string>;
   timeout?: number;
 }
 
-export type RequestInterceptor = (config: RequestInit & { url: string }) => RequestInit & { url: string } | Promise<RequestInit & { url: string }>;
+export class ApiError extends Error {
+  constructor(
+    public readonly status: number,
+    public readonly statusText: string,
+    public readonly url: string,
+    message?: string
+  ) {
+    super(message || `HTTP ${status}: ${statusText}`);
+    this.name = 'ApiError';
+  }
+}
 
-export type ResponseInterceptor = (response: Response) => Response | Promise<Response>;
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   data: T;
-  status: number;
-  statusText: string;
-  headers: Headers;
 }

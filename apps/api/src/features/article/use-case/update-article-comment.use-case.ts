@@ -2,7 +2,7 @@ import { ArticleCommentValidator } from '@/shared/validator/article-comment.vali
 import { ArticleCommentRepository } from '@/shared/repository/article-comment/article-comment.repository';
 import { CannotUpdateArticleCommentException } from '@/features/article/exception/cannot-update-article-comment.exception';
 import { UpdateArticleCommentDto } from '@/features/article/dto/update-article-comment.dto';
-import { ArticleComment } from '@/shared/domain/article-comment/article-comment';
+import { ArticleComment } from '@/shared/domain/article/article-comment';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { Requester } from '@/common/types/requester.type';
 import { Injectable } from '@nestjs/common';

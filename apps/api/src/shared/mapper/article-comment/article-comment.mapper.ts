@@ -1,4 +1,4 @@
-import { ArticleComment } from '@/shared/domain/article-comment/article-comment';
+import { ArticleComment } from '@/shared/domain/article/article-comment';
 import { ArticleCommentEntity } from '@/shared/entity/article-comment/article-comment.entity';
 
 export class ArticleCommentMapper {

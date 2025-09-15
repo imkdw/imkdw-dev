@@ -12,6 +12,9 @@
     "api": "pnpm -F api",
     "blog": "pnpm -F blog",
     "ui": "pnpm -F ui",
+    "api-client": "pnpm -F api-client",
+    "actions": "pnpm -F actions",
+    "types": "pnpm -F types",
     "setup:dev": "docker-compose down && docker-compose up -d --wait && npx dotenv-cli -e .env -- pnpm api prisma db push --force-reset",
     "setup:test": "docker-compose down && docker-compose up -d --wait && npx dotenv-cli -e .env.test -- pnpm api prisma db push --force-reset",
     "reset:test": "npx dotenv-cli -e .env.test -- pnpm api prisma db push --force-reset"

@@ -4,14 +4,16 @@ import { Chrome, Github } from 'lucide-react';
 import { Button } from '../../primitives/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../primitives/dialog';
 import { IMember } from '@imkdw-dev/types';
+import { OAuthProvider } from '@imkdw-dev/consts';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
   onLoginSuccess?: (member: IMember) => void;
+  onSocialLogin: (provider: OAuthProvider) => void;
 }
 
-export function LoginModal({ isOpen, onClose }: Props) {
+export function LoginModal({ isOpen, onClose, onSocialLogin }: Props) {
   return (
     <Dialog open={isOpen} onClose={onClose}>
       <DialogContent className="w-[90vw] max-w-md mx-auto" onClose={onClose}>
@@ -23,6 +25,7 @@ export function LoginModal({ isOpen, onClose }: Props) {
           <Button
             className="w-full h-12 flex items-center justify-center space-x-2 bg-background border border-border hover:bg-muted text-foreground"
             variant="outline"
+            onClick={() => onSocialLogin('google')}
           >
             <Chrome className="h-5 w-5" />
             <span>Google로 로그인</span>
@@ -30,6 +33,7 @@ export function LoginModal({ isOpen, onClose }: Props) {
           <Button
             className="w-full h-12 flex items-center justify-center space-x-2 bg-background border border-border hover:bg-muted text-foreground"
             variant="outline"
+            onClick={() => onSocialLogin('github')}
           >
             <Github className="h-5 w-5" />
             <span>Github로 로그인</span>
