@@ -1,4 +1,4 @@
-import { getOAuthUrl } from '@imkdw-dev/actions';
+import { getOAuthUrl, getCurrentMember } from '@imkdw-dev/actions';
 import { OAuthProvider } from '@imkdw-dev/consts';
 
 export function useAuth() {
@@ -8,5 +8,8 @@ export function useAuth() {
     window.location.href = url;
   };
 
-  return { handleSocialLogin };
+  return {
+    handleSocialLogin,
+    getCurrentMember,
+  };
 }

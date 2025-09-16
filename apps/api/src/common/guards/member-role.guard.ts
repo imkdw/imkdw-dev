@@ -15,7 +15,7 @@ export class MemberRoleGuard implements CanActivate {
       context.getClass(),
     ]);
 
-    if (Array.isArray(requiredRoles) && requiredRoles.length === 0) {
+    if (!Array.isArray(requiredRoles)) {
       return true;
     }
 

@@ -263,10 +263,28 @@ importers:
       '@types/node':
         specifier: ^24.4.0
         version: 24.4.0
+      next:
+        specifier: 15.5.0
+        version: 15.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      next-themes:
+        specifier: ^0.4.6
+        version: 0.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react:
+        specifier: 19.1.0
+        version: 19.1.0
+      react-dom:
+        specifier: 19.1.0
+        version: 19.1.0(react@19.1.0)
     devDependencies:
       '@imkdw-dev/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@types/react':
+        specifier: ^19
+        version: 19.0.8
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.0.3(@types/react@19.0.8)
       eslint:
         specifier: ^9.18.0
         version: 9.33.0(jiti@2.5.1)
@@ -391,6 +409,10 @@ importers:
         version: 5.9.2
 
   packages/shared/types:
+    dependencies:
+      '@imkdw-dev/consts':
+        specifier: workspace:*
+        version: link:../consts
     devDependencies:
       typescript:
         specifier: ^5.9.2
@@ -403,6 +425,9 @@ importers:
       '@headlessui/react':
         specifier: ^2.1.9
         version: 2.2.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@imkdw-dev/actions':
+        specifier: workspace:*
+        version: link:../actions
       '@imkdw-dev/consts':
         specifier: workspace:*
         version: link:../shared/consts

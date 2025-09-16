@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import { ApiClientConfig, ApiError, ApiResponse, HttpMethod, RequestOptions } from './types';
 
 export class ApiClient {
@@ -33,13 +34,21 @@ export class ApiClient {
           searchParams.append(key, String(value));
         }
       });
+
       const queryString = searchParams.toString();
+
       if (queryString) {
         url += `?${queryString}`;
       }
     }
 
     const headers = { ...this.defaultHeaders, ...options?.headers };
+
+    const cookieStore = await cookies();
+    const cookieString = cookieStore.toString();
+    if (cookieString) {
+      headers['Cookie'] = cookieString;
+    }
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), options?.timeout || this.timeout);

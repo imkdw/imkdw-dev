@@ -15,32 +15,22 @@ import { cn } from '../../../lib';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
 import { useAuth } from '@imkdw-dev/hooks';
 import Link from 'next/link';
-import { IMember } from '@imkdw-dev/types';
+import { IMemberDto } from '@imkdw-dev/types';
 
 interface Props {
-  user?: IMember | null;
+  currentMember: IMemberDto | null;
   onNavigate?: (path: string) => void;
   onSearch?: (query: string) => void;
 }
 
-export function Header({ user: externalUser, onNavigate, onSearch }: Props) {
+export function Header({ currentMember, onNavigate, onSearch }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('blog.tsx');
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [user, setUser] = useState<IMember | null>(externalUser ?? null);
   const { handleSocialLogin } = useAuth();
 
   const handleLogin = () => {
     setIsLoginOpen(true);
-  };
-
-  const handleLoginSuccess = (userData: IMember) => {
-    setUser(userData);
-    setIsLoginOpen(false);
-  };
-
-  const handleLogout = () => {
-    setUser(null);
   };
 
   const handleNavigate = (path: string) => {
@@ -66,11 +56,12 @@ export function Header({ user: externalUser, onNavigate, onSearch }: Props) {
         </div>
 
         <div className="flex items-center space-x-1">
-          {user && <NotificationCenter />}
+          {currentMember && <NotificationCenter />}
           <UserMenu
-            user={user}
+            currentMember={currentMember}
             onLogin={handleLogin}
-            onLogout={handleLogout}
+            // TODO: 로그아웃 기능 추가
+            onLogout={() => {}}
             onNavigateToProfile={() => handleNavigate('/profile')}
             onNavigateToWrite={() => handleNavigate('/write')}
             onNavigateToSettings={() => handleNavigate('/settings')}
@@ -101,12 +92,7 @@ export function Header({ user: externalUser, onNavigate, onSearch }: Props) {
         onSearch={onSearch}
       />
 
-      <LoginModal
-        isOpen={isLoginOpen}
-        onClose={() => setIsLoginOpen(false)}
-        onLoginSuccess={handleLoginSuccess}
-        onSocialLogin={handleSocialLogin}
-      />
+      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} onSocialLogin={handleSocialLogin} />
     </header>
   );
 }

@@ -26,12 +26,24 @@ export class JwtGuard implements CanActivate {
     }
 
     const accessToken: string | undefined = request.headers['authorization'];
+
     if (!accessToken) {
       return false;
     }
 
+    const splittedAccessToken = accessToken.split(' ');
+    if (splittedAccessToken.length !== 2) {
+      return false;
+    }
+
+    const parsedAccessToken = splittedAccessToken[1];
+    if (!parsedAccessToken) {
+      return false;
+    }
+
     try {
-      const { id, role } = this.jwtService.verifyJwt(accessToken);
+      const { id, role } = this.jwtService.verifyJwt(parsedAccessToken);
+
       if (!id) {
         return false;
       }

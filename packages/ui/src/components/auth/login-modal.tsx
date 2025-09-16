@@ -3,13 +3,11 @@
 import { Chrome, Github } from 'lucide-react';
 import { Button } from '../../primitives/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../primitives/dialog';
-import { IMember } from '@imkdw-dev/types';
 import { OAuthProvider } from '@imkdw-dev/consts';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  onLoginSuccess?: (member: IMember) => void;
   onSocialLogin: (provider: OAuthProvider) => void;
 }
 
