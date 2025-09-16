@@ -24,7 +24,21 @@ export class ApiClient {
     options?: RequestOptions
   ): Promise<T> {
     const versionedPath = `/v${this.version}/${path.replace(/^\/+/, '')}`;
-    const url = `${this.baseURL}${versionedPath}`;
+    let url = `${this.baseURL}${versionedPath}`;
+
+    if (options?.query) {
+      const searchParams = new URLSearchParams();
+      Object.entries(options.query).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          searchParams.append(key, String(value));
+        }
+      });
+      const queryString = searchParams.toString();
+      if (queryString) {
+        url += `?${queryString}`;
+      }
+    }
+
     const headers = { ...this.defaultHeaders, ...options?.headers };
 
     const controller = new AbortController();
@@ -45,8 +59,11 @@ export class ApiClient {
       }
 
       const contentType = response.headers.get('content-type');
+
       if (contentType && contentType.includes('application/json')) {
         const apiResponse: ApiResponse<T> = await response.json();
+        console.log(apiResponse);
+
         return apiResponse.data;
       }
 

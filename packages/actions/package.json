@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@imkdw-dev/eslint-config": "workspace:*",
+    "@imkdw-dev/types": "workspace:*",
     "eslint": "^9.18.0",
     "typescript": "^5.9.2"
   },

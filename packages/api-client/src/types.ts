@@ -8,6 +8,7 @@ export interface ApiClientConfig {
 export interface RequestOptions {
   headers?: Record<string, string>;
   timeout?: number;
+  query?: Record<string, string | number | boolean>;
 }
 
 export class ApiError extends Error {

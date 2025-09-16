@@ -230,6 +230,31 @@ importers:
         specifier: ^5
         version: 5.9.2
 
+  packages/actions:
+    dependencies:
+      '@imkdw-dev/api-client':
+        specifier: workspace:*
+        version: link:../api-client
+      '@imkdw-dev/consts':
+        specifier: workspace:*
+        version: link:../shared/consts
+      '@types/node':
+        specifier: ^24.4.0
+        version: 24.4.0
+    devDependencies:
+      '@imkdw-dev/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@imkdw-dev/types':
+        specifier: workspace:*
+        version: link:../shared/types
+      eslint:
+        specifier: ^9.18.0
+        version: 9.33.0(jiti@2.5.1)
+      typescript:
+        specifier: ^5.9.2
+        version: 5.9.2
+
   packages/api-client:
     dependencies:
       '@imkdw-dev/consts':
@@ -318,6 +343,9 @@ importers:
 
   packages/hooks:
     dependencies:
+      '@imkdw-dev/actions':
+        specifier: workspace:*
+        version: link:../actions
       '@imkdw-dev/api-client':
         specifier: workspace:*
         version: link:../api-client

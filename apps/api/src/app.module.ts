@@ -7,10 +7,11 @@ import { RepositoryModule } from '@/shared/repository/repository.module';
 import { ValidatorModule } from '@/shared/validator/validator.module';
 import { ArticleModule } from '@/features/article/article.module';
 import { SeriesModule } from '@/features/series/series.module';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { JwtGuard } from '@/common/guards/jwt.guard';
 import { CookieToAuthMiddleware } from '@/common/middleware/cookie-to-auth.middleware';
 import { MemberRoleGuard } from '@/common/guards/member-role.guard';
+import { TransformInterceptor } from '@/common/interceptor/transform.interceptor';
 
 @Module({
   imports: [MyConfigModule, AuthModule, RepositoryModule, ValidatorModule, ArticleModule, SeriesModule],
@@ -23,6 +24,10 @@ import { MemberRoleGuard } from '@/common/guards/member-role.guard';
     {
       provide: APP_GUARD,
       useClass: MemberRoleGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TransformInterceptor,
     },
   ],
 })

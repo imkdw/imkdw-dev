@@ -31,7 +31,7 @@ export class OAuthController {
   }
 
   @ApiExcludeEndpoint()
-  @Get(':provider/callback')
+  @Get(API_ENDPOINTS.OAUTH_CALLBACK)
   async callback(
     @Query('code') code: string,
     @Query('state') state: string,
@@ -40,6 +40,8 @@ export class OAuthController {
   ) {
     const strategy = this.oauthStrategyFactory.getStrategy(provider);
     const { accessToken, refreshToken, redirectUrl } = await strategy.signIn(code, state);
+    console.log(redirectUrl);
+
     this.setToken(accessToken, refreshToken, res);
     return res.redirect(redirectUrl);
   }

@@ -1,4 +1,5 @@
 import { MEMBER_ROLES_KEY } from '@/common/decorator/member-role.decorator';
+import { IS_PUBLIC_KEY } from '@/common/decorator/public.decorator';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
@@ -14,7 +15,16 @@ export class MemberRoleGuard implements CanActivate {
       context.getClass(),
     ]);
 
-    if (requiredRoles.length === 0) {
+    if (Array.isArray(requiredRoles) && requiredRoles.length === 0) {
+      return true;
+    }
+
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
+    if (isPublic) {
       return true;
     }
 
