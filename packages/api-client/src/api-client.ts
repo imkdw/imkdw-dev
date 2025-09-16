@@ -62,8 +62,6 @@ export class ApiClient {
 
       if (contentType && contentType.includes('application/json')) {
         const apiResponse: ApiResponse<T> = await response.json();
-        console.log(apiResponse);
-
         return apiResponse.data;
       }
 

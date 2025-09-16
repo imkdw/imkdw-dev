@@ -1,10 +1,7 @@
 import type { SeriesData } from '../types/series';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function getMockSeriesData(slug: string): SeriesData {
-  // TODO: 실제 구현에서는 slug를 기반으로 실제 시리즈 데이터를 가져와야 함
-  // eslint-disable-next-line no-console -- development logging for slug parameter
-  console.log('Series slug:', slug);
-
   return {
     title: 'React 완전정복',
     description:
