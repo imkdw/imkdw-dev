@@ -16,7 +16,8 @@ export interface Props {
   className?: string;
 }
 
-export const NotificationCenter = () => {
+export function NotificationCenter() {
+  // TODO: 임시 알람 제거
   const [notifications] = useState([
     { id: 1, title: '새 댓글', message: '당신의 게시물에 새 댓글이 달렸습니다.', read: false },
     { id: 2, title: '시스템 업데이트', message: '시스템이 성공적으로 업데이트되었습니다.', read: true },
@@ -27,7 +28,7 @@ export const NotificationCenter = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="ghost h-6 px-2 relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
-        <Bell className="h-3 w-3" />
+        <Bell className="h-6 w-6" />
         {unreadCount > 0 && (
           <span className="absolute -top-1 -right-1 bg-destructive text-destructive-foreground text-xs rounded-full h-4 w-4 flex items-center justify-center">
             {unreadCount}
@@ -71,4 +72,4 @@ export const NotificationCenter = () => {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
+}

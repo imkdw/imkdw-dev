@@ -19,11 +19,10 @@ import { IMemberDto } from '@imkdw-dev/types';
 
 interface Props {
   currentMember: IMemberDto | null;
-  onNavigate?: (path: string) => void;
   onSearch?: (query: string) => void;
 }
 
-export function Header({ currentMember, onNavigate, onSearch }: Props) {
+export function Header({ currentMember, onSearch }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('blog.tsx');
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -33,8 +32,8 @@ export function Header({ currentMember, onNavigate, onSearch }: Props) {
     setIsLoginOpen(true);
   };
 
-  const handleNavigate = (path: string) => {
-    onNavigate?.(path);
+  const handleNavigate = (url: string) => {
+    window.location.href = url;
   };
 
   const tabs = [
@@ -55,16 +54,13 @@ export function Header({ currentMember, onNavigate, onSearch }: Props) {
           </div>
         </div>
 
-        <div className="flex items-center space-x-1">
+        <div className="flex items-center space-x-1 gap-2">
           {currentMember && <NotificationCenter />}
           <UserMenu
             currentMember={currentMember}
             onLogin={handleLogin}
             // TODO: 로그아웃 기능 추가
             onLogout={() => {}}
-            onNavigateToProfile={() => handleNavigate('/profile')}
-            onNavigateToWrite={() => handleNavigate('/write')}
-            onNavigateToSettings={() => handleNavigate('/settings')}
           />
         </div>
       </div>

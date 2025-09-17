@@ -165,9 +165,15 @@ importers:
 
   apps/blog:
     dependencies:
+      '@imkdw-dev/consts':
+        specifier: workspace:*
+        version: link:../../packages/shared/consts
       '@imkdw-dev/fonts':
         specifier: workspace:*
         version: link:../../packages/fonts
+      '@imkdw-dev/types':
+        specifier: workspace:*
+        version: link:../../packages/shared/types
       '@imkdw-dev/ui':
         specifier: workspace:*
         version: link:../../packages/ui

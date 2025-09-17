@@ -14,25 +14,11 @@ interface Props {
   currentMember: IMemberDto | null;
   onLogin: () => void;
   onLogout: () => void;
-  onNavigateToProfile?: () => void;
-  onNavigateToWrite?: () => void;
-  onNavigateToSettings?: () => void;
 }
 
-export function UserMenu({
-  currentMember: user,
-  onLogin,
-  onLogout,
-  onNavigateToProfile,
-  onNavigateToWrite,
-  onNavigateToSettings,
-}: Props) {
+export function UserMenu({ currentMember: user, onLogin, onLogout }: Props) {
   if (!user) {
-    return (
-      <Button onClick={onLogin} size="sm" variant="outline">
-        로그인
-      </Button>
-    );
+    return <Button onClick={onLogin}>로그인</Button>;
   }
 
   return (
@@ -55,20 +41,20 @@ export function UserMenu({
           </div>
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={onNavigateToProfile}>
+        <DropdownMenuItem>
           <User className="mr-2 h-4 w-4" />
           <span>마이페이지</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={onNavigateToWrite}>
+        <DropdownMenuItem>
           <Edit className="mr-2 h-4 w-4" />
           <span>글 작성</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={onNavigateToSettings}>
+        <DropdownMenuItem>
           <Settings className="mr-2 h-4 w-4" />
           <span>설정</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={onLogout}>
+        <DropdownMenuItem>
           <LogOut className="mr-2 h-4 w-4" />
           <span>로그아웃</span>
         </DropdownMenuItem>
