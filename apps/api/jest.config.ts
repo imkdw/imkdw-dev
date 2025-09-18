@@ -9,6 +9,7 @@ export const baseConfig: Config = {
   testEnvironment: 'node',
   // 테스트가 1개라도 실패하면 즉시 종료
   bail: 1,
+  verbose: true,
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@shared/(.*)$': '<rootDir>/src/shared/$1',

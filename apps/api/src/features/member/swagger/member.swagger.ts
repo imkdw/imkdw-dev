@@ -5,3 +5,7 @@ import { ApiOperation, ApiOkResponse } from '@nestjs/swagger';
 export function getCurrentMember(summary: string) {
   return applyDecorators(ApiOperation({ summary }), ApiOkResponse({ type: MemberDto }));
 }
+
+export function findMember(summary: string) {
+  return applyDecorators(ApiOperation({ summary }), ApiOkResponse({ type: MemberDto }));
+}

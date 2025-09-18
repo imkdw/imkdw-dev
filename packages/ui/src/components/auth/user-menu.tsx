@@ -43,7 +43,7 @@ export function UserMenu({ currentMember: user, onLogin, onLogout }: Props) {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href={`/users/${user.id}`} className="flex items-center justify-center">
+          <Link href={`/members/${user.id}`} className="flex items-center justify-center">
             <User className="mr-2 h-4 w-4" />
             <span>마이페이지</span>
           </Link>
