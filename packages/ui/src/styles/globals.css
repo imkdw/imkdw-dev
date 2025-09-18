@@ -11,6 +11,11 @@ html {
   animation: fadeIn 0.2s ease-in-out;
 }
 
+* {
+  border: none;
+  outline: none;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

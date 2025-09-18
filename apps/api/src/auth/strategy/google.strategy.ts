@@ -70,7 +70,8 @@ export class GoogleOAuthStrategy implements OAuthStrategy {
     const member = await this.memberAuthService.findOrCreateMember(
       OAUTH_PROVIDER.GOOGLE,
       googleUserInfo.data.sub,
-      googleUserInfo.data.email
+      googleUserInfo.data.email,
+      googleUserInfo.data.picture
     );
 
     const { accessToken, refreshToken } = this.jwtService.createJwt({ id: member.id, role: member.role });

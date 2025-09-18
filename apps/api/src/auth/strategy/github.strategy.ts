@@ -70,7 +70,8 @@ export class GithubOAuthStrategy implements OAuthStrategy {
     const member = await this.memberAuthService.findOrCreateMember(
       OAUTH_PROVIDER.GITHUB,
       githubUserInfo.data.id.toString(),
-      githubUserInfo.data.email
+      githubUserInfo.data.email,
+      githubUserInfo.data.avatar_url
     );
 
     const { accessToken, refreshToken } = this.jwtService.createJwt({ id: member.id, role: member.role });

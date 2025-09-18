@@ -8,14 +8,19 @@ import { OAuthProvider } from '@imkdw-dev/consts';
 export class MemberAuthService {
   constructor(private readonly memberRepository: MemberRepository) {}
 
-  async findOrCreateMember(provider: OAuthProvider, providerId: string, email: string): Promise<Member> {
+  async findOrCreateMember(
+    provider: OAuthProvider,
+    providerId: string,
+    email: string,
+    profileImage: string
+  ): Promise<Member> {
     const existingMember = await this.memberRepository.findByOAuth(provider, providerId);
 
     if (existingMember) {
       return existingMember;
     }
 
-    const newMember = MemberFactory.createNew(provider, providerId, email);
+    const newMember = MemberFactory.createNew(provider, providerId, email, profileImage);
 
     return this.memberRepository.create(newMember);
   }
