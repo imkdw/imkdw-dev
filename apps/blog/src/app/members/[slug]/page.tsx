@@ -1,19 +1,23 @@
-import { redirect } from 'next/navigation';
-import {
-  Layout,
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from '@imkdw-dev/ui';
-import { getCurrentMember } from '@/actions/member.action';
+import { Layout, Card, CardHeader, CardTitle, CardContent } from '@imkdw-dev/ui';
 import { EditableProfile } from '@/components/member/editable-profile';
+import { getCurrentMember, getMember } from '@imkdw-dev/actions';
+import { forbidden, notFound } from 'next/navigation';
 
-export default async function MemberDetail() {
-  const member = await getCurrentMember();
+interface Props {
+  params: Promise<{ slug: string }>;
+}
 
+export default async function MemberDetail({ params }: Props) {
+  const { slug } = await params;
+
+  const member = await getMember(slug);
   if (!member) {
-    redirect('/login');
+    notFound();
+  }
+
+  const currentMember = await getCurrentMember();
+  if (!currentMember || currentMember.id !== member.id) {
+    forbidden();
   }
 
   return (

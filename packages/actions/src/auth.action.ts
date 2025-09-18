@@ -11,11 +11,3 @@ export async function getOAuthUrl(provider: OAuthProvider, redirectUrl: string) 
     },
   });
 }
-
-export async function getCurrentMember() {
-  try {
-    return await apiClient.get<IMemberDto | null>(buildEndpoint('GET_CURRENT_MEMBER'));
-  } catch (err) {
-    return null;
-  }
-}
