@@ -67,7 +67,8 @@
       "Bash(npm run build:*)",
       "Bash(npm run lint)",
       "Bash(pnmp:*)",
-      "mcp__playwright__browser_wait_for"
+      "mcp__playwright__browser_wait_for",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []

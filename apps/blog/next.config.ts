@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname, '../..'),
   },
+  experimental: {
+    authInterrupts: true,
+  },
 };
 
 export default nextConfig;
