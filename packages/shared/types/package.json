@@ -11,7 +11,8 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@imkdw-dev/consts": "workspace:*"
+    "@imkdw-dev/consts": "workspace:*",
+    "@imkdw-dev/exception": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.9.2"

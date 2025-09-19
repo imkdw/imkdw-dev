@@ -422,6 +422,9 @@ importers:
       '@imkdw-dev/consts':
         specifier: workspace:*
         version: link:../consts
+      '@imkdw-dev/exception':
+        specifier: workspace:*
+        version: link:../exception
     devDependencies:
       typescript:
         specifier: ^5.9.2

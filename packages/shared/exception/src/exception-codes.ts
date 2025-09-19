@@ -11,3 +11,5 @@ export const EXCEPTION_CODES = {
   ...SERIES_EXCEPTION_CODES,
   ...ARTICLE_COMMENT_EXCEPTION_CODES,
 } as const;
+
+export type ExceptionCode = keyof typeof EXCEPTION_CODES;

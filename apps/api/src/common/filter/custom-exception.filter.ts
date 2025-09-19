@@ -1,6 +1,8 @@
 import { ArgumentsHost, Catch, ExceptionFilter, Logger } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import { CustomException } from '../exception/custom.exception';
+import { ErrorResponse } from '@imkdw-dev/types';
+import { ExceptionCode } from '@imkdw-dev/exception';
 
 @Catch(CustomException)
 export class CustomExceptionFilter implements ExceptionFilter {
@@ -15,9 +17,9 @@ export class CustomExceptionFilter implements ExceptionFilter {
 
     this.logger.error(exception.message);
 
-    const responseBody = {
+    const responseBody: ErrorResponse = {
       statusCode,
-      errorCode,
+      errorCode: errorCode as ExceptionCode,
       message,
       timestamp: new Date().toISOString(),
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
