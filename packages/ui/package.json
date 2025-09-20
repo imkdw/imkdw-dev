@@ -23,6 +23,7 @@
     "@imkdw-dev/consts": "workspace:*",
     "@imkdw-dev/fonts": "workspace:*",
     "@imkdw-dev/hooks": "workspace:*",
+    "@imkdw-dev/toast": "workspace:*",
     "@imkdw-dev/types": "workspace:*",
     "@tailwindcss/typography": "^0.5.16",
     "autoprefixer": "^10.4.21",

@@ -73,5 +73,6 @@
     "deny": [],
     "ask": []
   },
-  "outputStyle": "junior-dev-friendly"
+  "outputStyle": "junior-dev-friendly",
+  "spinnerTipsEnabled": false
 }

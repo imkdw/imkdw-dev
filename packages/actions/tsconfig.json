@@ -7,7 +7,8 @@
     "declarationMap": true,
     "composite": true,
     "moduleResolution": "node",
-    "lib": ["ES2020", "DOM"]
+    "lib": ["ES2020", "DOM"],
+    "jsx": "react-jsx"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

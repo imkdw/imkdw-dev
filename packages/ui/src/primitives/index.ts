@@ -12,4 +12,3 @@ export * from './select';
 export * from './separator';
 export * from './sidebar';
 export * from './textarea';
-export * from './toast';

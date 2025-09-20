@@ -21,6 +21,7 @@
     "@imkdw-dev/api-client": "workspace:*",
     "@imkdw-dev/consts": "workspace:*",
     "@imkdw-dev/exception": "workspace:*",
+    "@imkdw-dev/toast": "workspace:*",
     "next": "^15.1.6"
   }
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, Dispatch, SetStateAction } from 'react';
 
 interface ToastProps {
   title: string;
@@ -22,7 +22,7 @@ function generateId() {
 
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
 
-function removeToast(toastId: string, setToasts: React.Dispatch<React.SetStateAction<Toast[]>>) {
+function removeToast(toastId: string, setToasts: Dispatch<SetStateAction<Toast[]>>) {
   setToasts(prev => prev.filter(t => t.id !== toastId));
 
   const timeout = toastTimeouts.get(toastId);
@@ -32,12 +32,11 @@ function removeToast(toastId: string, setToasts: React.Dispatch<React.SetStateAc
   }
 }
 
-let setToastsGlobal: React.Dispatch<React.SetStateAction<Toast[]>> | null = null;
+let setToastsGlobal: Dispatch<SetStateAction<Toast[]>> | null = null;
 
 export function useToast() {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  // Global setter를 저장해서 다른 컴포넌트에서도 toast를 호출할 수 있게 함
   setToastsGlobal = setToasts;
 
   const toast = useCallback(
@@ -53,7 +52,6 @@ export function useToast() {
 
       setToasts(prev => [...prev, newToast]);
 
-      // 5초 후 자동 제거
       const timeout = setTimeout(() => {
         removeToast(id, setToasts);
       }, 5000);
@@ -82,10 +80,8 @@ export function useToast() {
   };
 }
 
-// Global toast function for use outside of components
 export function toast(props: ToastProps) {
   if (!setToastsGlobal) {
-    // eslint-disable-next-line no-console
     console.warn('Toast provider not initialized');
     return { id: '', dismiss: () => {} };
   }

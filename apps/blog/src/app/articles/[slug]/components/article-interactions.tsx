@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Button, useToast } from '@imkdw-dev/ui';
+import { Button } from '@imkdw-dev/ui';
+import { useToast } from '@imkdw-dev/toast';
 import { Star, Share2, Edit } from 'lucide-react';
 
 interface ArticleInteractionsProps {

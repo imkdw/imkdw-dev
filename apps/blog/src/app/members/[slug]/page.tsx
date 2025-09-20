@@ -1,7 +1,7 @@
 import { Layout, Card, CardHeader, CardTitle, CardContent } from '@imkdw-dev/ui';
 import { EditableProfile } from '@/components/member/editable-profile';
 import { getCurrentMember, getMember } from '@imkdw-dev/actions';
-import { forbidden, notFound } from 'next/navigation';
+import { forbidden } from 'next/navigation';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -11,9 +11,6 @@ export default async function MemberDetail({ params }: Props) {
   const { slug } = await params;
 
   const member = await getMember(slug);
-  if (!member) {
-    notFound();
-  }
 
   const currentMember = await getCurrentMember();
   if (!currentMember || currentMember.id !== member.id) {
@@ -27,10 +24,8 @@ export default async function MemberDetail({ params }: Props) {
           <h1 className="text-3xl font-bold">마이페이지</h1>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
-          {/* 프로필 정보 - 클라이언트 컴포넌트로 분리 */}
           <EditableProfile member={member} />
 
-          {/* 계정 통계 */}
           <div className="space-y-6">
             <Card className="bg-card border-none">
               <CardHeader>

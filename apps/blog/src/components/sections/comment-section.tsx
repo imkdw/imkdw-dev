@@ -12,8 +12,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  useToast,
 } from '@imkdw-dev/ui';
+import { useToast } from '@imkdw-dev/toast';
 import { Reply, MoreHorizontal, Copy, Edit3, Trash2, Flag, UserX, Send } from 'lucide-react';
 
 interface Comment {
