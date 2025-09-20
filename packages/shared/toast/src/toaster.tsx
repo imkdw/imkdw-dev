@@ -1,20 +1,26 @@
-import { useToast } from './use-toast';
-import { Toast, ToastClose, ToastDescription, ToastTitle } from './toast';
+'use client';
+
+import { Toaster as HotToaster } from 'react-hot-toast';
 
 export function Toaster() {
-  const { toasts, dismiss } = useToast();
-
   return (
-    <div className="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]">
-      {toasts.map(toast => (
-        <Toast key={toast.id} variant={toast.variant} className="mb-2">
-          <div className="grid gap-1">
-            <ToastTitle>{toast.title}</ToastTitle>
-            {toast.description && <ToastDescription>{toast.description}</ToastDescription>}
-          </div>
-          <ToastClose onClick={() => dismiss(toast.id)} />
-        </Toast>
-      ))}
-    </div>
+    <HotToaster
+      position="bottom-right"
+      gutter={20}
+      reverseOrder={false}
+      toastOptions={{
+        duration: 100000000,
+        style: {
+          background: 'transparent',
+          color: 'inherit',
+          border: 'none',
+          boxShadow: 'none',
+          padding: 0,
+          width: '360px',
+          maxWidth: '90vw',
+        },
+      }}
+      containerClassName="fixed bottom-4 right-4 z-[100] flex flex-col items-end space-y-2"
+    />
   );
 }

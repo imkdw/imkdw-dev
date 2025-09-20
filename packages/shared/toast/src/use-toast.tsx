@@ -1,113 +1,120 @@
 'use client';
 
-import { useState, useCallback, Dispatch, SetStateAction } from 'react';
+import { useCallback } from 'react';
+import hotToast, { ToastOptions as HotToastOptions } from 'react-hot-toast';
+import { Toast as ToastCard, ToastTitle, ToastDescription, ToastClose } from './toast';
 
 interface ToastProps {
   title: string;
   description?: string;
   variant?: 'default' | 'destructive';
+  duration?: number;
 }
-
-interface Toast extends ToastProps {
-  id: string;
-  timestamp: number;
-}
-
-let toastCount = 0;
-
-function generateId() {
-  toastCount = (toastCount + 1) % Number.MAX_SAFE_INTEGER;
-  return toastCount.toString();
-}
-
-const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
-
-function removeToast(toastId: string, setToasts: Dispatch<SetStateAction<Toast[]>>) {
-  setToasts(prev => prev.filter(t => t.id !== toastId));
-
-  const timeout = toastTimeouts.get(toastId);
-  if (timeout) {
-    clearTimeout(timeout);
-    toastTimeouts.delete(toastId);
-  }
-}
-
-let setToastsGlobal: Dispatch<SetStateAction<Toast[]>> | null = null;
 
 export function useToast() {
-  const [toasts, setToasts] = useState<Toast[]>([]);
+  const toast = useCallback(({ title, description, variant = 'default', duration }: ToastProps) => {
+    const options: HotToastOptions = {
+      duration: duration ?? 1000,
+      style: {
+        background: 'transparent',
+        color: 'inherit',
+        border: 'none',
+        boxShadow: 'none',
+        padding: 0,
+        width: '360px',
+        maxWidth: '90vw',
+      },
+    };
 
-  setToastsGlobal = setToasts;
+    const id = hotToast.custom(
+      t => (
+        <div
+          className={`transform transition-all duration-300 ease-out ${
+            t.visible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'
+          }`}
+        >
+          <ToastCard variant={variant} className="relative group" style={{ width: 360, maxWidth: '90vw' }}>
+            <div className="grid gap-1 pr-6">
+              <ToastTitle>{title}</ToastTitle>
+              {description ? <ToastDescription>{description}</ToastDescription> : null}
+            </div>
+            <ToastClose
+              aria-label="Close"
+              onClick={() => hotToast.dismiss(t.id)}
+              style={{ opacity: 1, position: 'absolute', top: '8px', right: '8px' }}
+              className="hover:opacity-80"
+            >
+              ×
+            </ToastClose>
+          </ToastCard>
+        </div>
+      ),
+      options
+    ) as unknown as string;
 
-  const toast = useCallback(
-    ({ title, description, variant = 'default' }: ToastProps) => {
-      const id = generateId();
-      const newToast: Toast = {
-        id,
-        title,
-        description,
-        variant,
-        timestamp: Date.now(),
-      };
+    return {
+      id,
+      dismiss: () => hotToast.dismiss(id),
+    };
+  }, []);
 
-      setToasts(prev => [...prev, newToast]);
-
-      const timeout = setTimeout(() => {
-        removeToast(id, setToasts);
-      }, 5000);
-
-      toastTimeouts.set(id, timeout);
-
-      return {
-        id,
-        dismiss: () => removeToast(id, setToasts),
-      };
-    },
-    [setToasts]
-  );
-
-  const dismiss = useCallback(
-    (toastId: string) => {
-      removeToast(toastId, setToasts);
-    },
-    [setToasts]
-  );
+  const dismiss = useCallback((toastId: string) => {
+    hotToast.dismiss(toastId);
+  }, []);
 
   return {
     toast,
     dismiss,
-    toasts,
+    toasts: [],
   };
 }
 
 export function toast(props: ToastProps) {
-  if (!setToastsGlobal) {
-    return { id: '', dismiss: () => {} };
-  }
-
-  const id = generateId();
-  const newToast: Toast = {
-    id,
-    ...props,
-    timestamp: Date.now(),
+  const options: HotToastOptions = {
+    duration: props.duration ?? 5000,
+    style: {
+      background: 'transparent',
+      color: 'inherit',
+      border: 'none',
+      boxShadow: 'none',
+      padding: 0,
+      width: '360px',
+      maxWidth: '90vw',
+    },
   };
 
-  setToastsGlobal(prev => [...prev, newToast]);
-
-  const timeout = setTimeout(() => {
-    if (setToastsGlobal) {
-      removeToast(id, setToastsGlobal);
-    }
-  }, 5000);
-
-  toastTimeouts.set(id, timeout);
+  const id = hotToast.custom(
+    t => (
+      <div
+        className={`transform transition-all duration-300 ease-out ${
+          t.visible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'
+        }`}
+      >
+        <ToastCard
+          variant={props.variant ?? 'default'}
+          className="relative group"
+          style={{ width: 360, maxWidth: '90vw' }}
+        >
+          <div className="grid gap-1 pr-6">
+            <ToastTitle>{props.title}</ToastTitle>
+            {props.description ? <ToastDescription>{props.description}</ToastDescription> : null}
+          </div>
+          <ToastClose
+            aria-label="Close"
+            onClick={() => hotToast.dismiss(t.id)}
+            style={{ opacity: 1, position: 'absolute', top: '8px', right: '8px' }}
+            className="hover:opacity-80"
+          >
+            ×
+          </ToastClose>
+        </ToastCard>
+      </div>
+    ),
+    options
+  ) as unknown as string;
 
   return {
     id,
-    dismiss: () => {
-      if (setToastsGlobal) {
-        removeToast(id, setToastsGlobal);
-      }
-    },
+    dismiss: () => hotToast.dismiss(id),
   };
 }
