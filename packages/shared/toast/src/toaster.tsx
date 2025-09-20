@@ -1,26 +1,24 @@
 'use client';
 
-import { Toaster as HotToaster } from 'react-hot-toast';
+import { Toaster as Sonner } from 'sonner';
 
 export function Toaster() {
   return (
-    <HotToaster
+    <Sonner
       position="bottom-right"
-      gutter={20}
-      reverseOrder={false}
       toastOptions={{
-        duration: 100000000,
+        duration: 5000,
+        className: 'sonner-toast',
         style: {
-          background: 'transparent',
-          color: 'inherit',
-          border: 'none',
-          boxShadow: 'none',
-          padding: 0,
-          width: '360px',
-          maxWidth: '90vw',
+          background: 'hsl(var(--background))',
+          color: 'hsl(var(--foreground))',
+          border: '1px solid hsl(var(--border))',
         },
       }}
-      containerClassName="fixed bottom-4 right-4 z-[100] flex flex-col items-end space-y-2"
+      className="toaster group"
+      expand={false}
+      richColors
+      closeButton
     />
   );
 }
