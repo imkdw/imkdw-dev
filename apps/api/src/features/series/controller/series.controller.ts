@@ -1,11 +1,11 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateSeriesDto, ResponseCreateSeriesDto } from '@/features/series/dto/create-series.dto';
 import { UpdateSeriesDto } from '@/features/series/dto/update-series.dto';
-import { SeriesDto } from '@/features/series/dto/series.dto';
+import { GetSeriesListDto, ResponseGetSeriesListDto } from '@/features/series/dto/get-series-list.dto';
 import { CreateSeriesUseCase } from '@/features/series/use-case/create-series.use-case';
 import { UpdateSeriesUseCase } from '@/features/series/use-case/update-series.use-case';
-import { GetSeriesUseCase } from '@/features/series/use-case/get-series.use-case';
+import { GetSeriesListQuery } from '@/features/series/query/get-series-list.query';
 import * as Swagger from '@/features/series/swagger/series.swagger';
 import { MemberRoles } from '@/common/decorator/member-role.decorator';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
@@ -18,15 +18,15 @@ export class SeriesController {
   constructor(
     private readonly createSeriesUseCase: CreateSeriesUseCase,
     private readonly updateSeriesUseCase: UpdateSeriesUseCase,
-    private readonly getSeriesUseCase: GetSeriesUseCase
+    private readonly getSeriesListQuery: GetSeriesListQuery
   ) {}
 
-  @Swagger.getSeries('시리즈 목록 조회')
+  @Swagger.getSeriesList('시리즈 목록 조회')
   @Public()
   @Get()
-  async getAll(): Promise<SeriesDto[]> {
-    const series = await this.getSeriesUseCase.execute();
-    return series.map(series => SeriesDto.from(series));
+  async getSeriesList(@Query() query: GetSeriesListDto): Promise<ResponseGetSeriesListDto> {
+    const result = await this.getSeriesListQuery.execute(query);
+    return ResponseGetSeriesListDto.from(result);
   }
 
   @Swagger.createSeries('시리즈 생성')

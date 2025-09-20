@@ -1,13 +1,13 @@
 import { CreateSeriesDto, ResponseCreateSeriesDto } from '@/features/series/dto/create-series.dto';
 import { UpdateSeriesDto } from '@/features/series/dto/update-series.dto';
-import { SeriesDto } from '@/features/series/dto/series.dto';
+import { ResponseGetSeriesListDto } from '@/features/series/dto/get-series-list.dto';
 import { applyDecorators } from '@nestjs/common';
 import { ApiBody, ApiCreatedResponse, ApiNoContentResponse, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 
-export function getSeries(summary: string) {
+export function getSeriesList(summary: string) {
   return applyDecorators(
     ApiOperation({ summary }),
-    ApiOkResponse({ type: [SeriesDto], description: '시리즈 목록이 성공적으로 조회되었습니다' })
+    ApiOkResponse({ type: ResponseGetSeriesListDto, description: '시리즈 목록이 성공적으로 조회되었습니다' })
   );
 }
 
