@@ -82,7 +82,6 @@ export function useToast() {
 
 export function toast(props: ToastProps) {
   if (!setToastsGlobal) {
-    console.warn('Toast provider not initialized');
     return { id: '', dismiss: () => {} };
   }
 
