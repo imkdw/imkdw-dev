@@ -26,7 +26,7 @@ export function EditableProfile({ member }: EditableProfileProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     name: member.nickname,
-    bio: '안녕하세요!' // TODO: 실제 bio 필드가 추가되면 member.bio로 변경
+    bio: '안녕하세요!', // TODO: 실제 bio 필드가 추가되면 member.bio로 변경
   });
 
   const handleSave = () => {
@@ -44,7 +44,7 @@ export function EditableProfile({ member }: EditableProfileProps) {
   };
 
   return (
-    <Card className="md:col-span-2">
+    <Card className="md:col-span-2 bg-card border-none">
       <CardHeader>
         <CardTitle>프로필 정보</CardTitle>
         <CardDescription>공개 프로필 정보를 수정할 수 있습니다</CardDescription>

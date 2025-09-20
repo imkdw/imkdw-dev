@@ -22,32 +22,24 @@ export default async function MemberDetail({ params }: Props) {
 
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="max-w-4xl mx-auto py-6 md:py-8 lg:py-10 flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold">마이페이지</h1>
-            <p className="text-muted-foreground">프로필과 설정을 관리하세요</p>
-          </div>
+          <h1 className="text-3xl font-bold">마이페이지</h1>
         </div>
-
         <div className="grid gap-6 md:grid-cols-3">
           {/* 프로필 정보 - 클라이언트 컴포넌트로 분리 */}
           <EditableProfile member={member} />
 
           {/* 계정 통계 */}
           <div className="space-y-6">
-            <Card>
+            <Card className="bg-card border-none">
               <CardHeader>
                 <CardTitle>활동 통계</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">작성한 글</span>
+                  <span className="text-muted-foreground">북마크한 게시글</span>
                   <span className="font-semibold">12개</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">받은 좋아요</span>
-                  <span className="font-semibold">48개</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">작성한 댓글</span>
@@ -56,18 +48,18 @@ export default async function MemberDetail({ params }: Props) {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="bg-card border-none">
               <CardHeader>
                 <CardTitle>계정 정보</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 bg-card border-none">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">가입일</span>
                   <span className="text-sm">2024.01.01</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">계정 상태</span>
-                  <span className="text-sm text-primary">활성</span>
+                  <span className="text-muted-foreground">계정 권한</span>
+                  <span className="text-sm text-primary">사용자</span>
                 </div>
               </CardContent>
             </Card>
