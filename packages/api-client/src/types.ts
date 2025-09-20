@@ -16,6 +16,7 @@ export class ApiError extends Error {
     public readonly status: number,
     public readonly statusText: string,
     public readonly url: string,
+    public readonly errorCode?: string,
     message?: string
   ) {
     super(message || `HTTP ${status}: ${statusText}`);

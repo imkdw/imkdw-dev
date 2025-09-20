@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { ApiClientConfig, ApiError, ApiResponse, HttpMethod, RequestOptions } from './types';
+import { ErrorResponse } from '@imkdw-dev/types';
 
 export class ApiClient {
   private readonly baseURL: string;
@@ -64,6 +65,22 @@ export class ApiClient {
       clearTimeout(timeoutId);
 
       if (!response.ok) {
+        const contentType = response.headers.get('content-type');
+
+        if (contentType && contentType.includes('application/json')) {
+          const errorData = await response.json();
+          const errorResponse: ErrorResponse = errorData.error;
+          if (errorResponse) {
+            throw new ApiError(
+              response.status,
+              response.statusText,
+              url,
+              errorResponse.errorCode,
+              errorResponse.message
+            );
+          }
+        }
+
         throw new ApiError(response.status, response.statusText, url);
       }
 
@@ -84,12 +101,12 @@ export class ApiClient {
 
       if (error instanceof Error) {
         if (error.name === 'AbortError') {
-          throw new ApiError(408, 'Request Timeout', url, 'Request timed out');
+          throw new ApiError(408, 'Request Timeout', url, undefined, 'Request timed out');
         }
-        throw new ApiError(500, 'Network Error', url, error.message);
+        throw new ApiError(500, 'Network Error', url, undefined, error.message);
       }
 
-      throw new ApiError(500, 'Unknown Error', url, 'An unknown error occurred');
+      throw new ApiError(500, 'Unknown Error', url, undefined, 'An unknown error occurred');
     }
   }
 
