@@ -247,9 +247,18 @@ importers:
       '@imkdw-dev/consts':
         specifier: workspace:*
         version: link:../shared/consts
+      '@imkdw-dev/exception':
+        specifier: workspace:*
+        version: link:../shared/exception
+      '@imkdw-dev/ui':
+        specifier: workspace:*
+        version: link:../ui
       '@types/node':
         specifier: ^24.4.0
         version: 24.4.0
+      next:
+        specifier: ^15.1.6
+        version: 15.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@imkdw-dev/eslint-config':
         specifier: workspace:*

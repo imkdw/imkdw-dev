@@ -19,6 +19,8 @@
   "dependencies": {
     "@types/node": "^24.4.0",
     "@imkdw-dev/api-client": "workspace:*",
-    "@imkdw-dev/consts": "workspace:*"
+    "@imkdw-dev/consts": "workspace:*",
+    "@imkdw-dev/exception": "workspace:*",
+    "next": "^15.1.6"
   }
 }
