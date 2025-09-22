@@ -3,8 +3,11 @@
 import { Toaster as Sonner } from 'sonner';
 
 export function Toaster() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const SonnerComponent = Sonner as any;
+
   return (
-    <Sonner
+    <SonnerComponent
       position="bottom-right"
       toastOptions={{
         duration: 5000,
