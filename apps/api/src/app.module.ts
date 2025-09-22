@@ -13,9 +13,19 @@ import { JwtGuard } from '@/common/guards/jwt.guard';
 import { CookieToAuthMiddleware } from '@/common/middleware/cookie-to-auth.middleware';
 import { MemberRoleGuard } from '@/common/guards/member-role.guard';
 import { TransformInterceptor } from '@/common/interceptor/transform.interceptor';
+import { StatsModule } from '@/features/stats/stats.module';
 
 @Module({
-  imports: [MyConfigModule, AuthModule, RepositoryModule, ValidatorModule, ArticleModule, SeriesModule, MemberModule],
+  imports: [
+    MyConfigModule,
+    AuthModule,
+    RepositoryModule,
+    ValidatorModule,
+    ArticleModule,
+    SeriesModule,
+    MemberModule,
+    StatsModule,
+  ],
   controllers: [AppController],
   providers: [
     {

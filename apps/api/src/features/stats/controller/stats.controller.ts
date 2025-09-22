@@ -14,7 +14,6 @@ export class StatsController {
   @Public()
   @Get()
   async getStats(): Promise<ResponseGetStatsDto> {
-    const result = await this.getStatsQuery.execute();
-    return ResponseGetStatsDto.from(result);
+    return this.getStatsQuery.execute();
   }
 }

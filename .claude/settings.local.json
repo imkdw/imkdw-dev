@@ -68,7 +68,9 @@
       "Bash(npm run lint)",
       "Bash(pnmp:*)",
       "mcp__playwright__browser_wait_for",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:www.npmjs.com)"
     ],
     "deny": [],
     "ask": []
