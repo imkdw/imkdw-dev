@@ -14,7 +14,7 @@ export class UpdateArticleUseCase {
     private readonly seriesValidator: SeriesValidator,
     private readonly articleRepository: ArticleRepository,
     private readonly tagRepository: TagRepository,
-    private readonly prisma: PrismaService,
+    private readonly prisma: PrismaService
   ) {}
 
   async execute(id: string, dto: UpdateArticleDto): Promise<void> {
@@ -33,6 +33,7 @@ export class UpdateArticleUseCase {
         content: dto.content,
         seriesId: dto.seriesId,
         viewCount: existingArticle.viewCount,
+        readMinute: Article.calculateReadMinute(dto.content),
         tagIds: tags.map(tag => tag.id),
         createdAt: existingArticle.createdAt,
       });

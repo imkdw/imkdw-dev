@@ -4,15 +4,17 @@ import { generateUUID } from '@/common/utils/string.util';
 
 export const createTestArticle = async (
   prisma: PrismaClient | Prisma.TransactionClient,
-  data: { seriesId: string; title?: string; slug?: string; content?: string; viewCount?: number }
+  data: { seriesId: string; title?: string; slug?: string; content?: string; viewCount?: number; readMinute?: number }
 ): Promise<Article> => {
+  const content = data.content ?? 'Test article content for integration testing';
   return prisma.article.create({
     data: {
       id: generateUUID(),
       title: data.title ?? `Test Article ${Date.now()}`,
       slug: data.slug ?? `test-article-${Date.now()}`,
-      content: data.content ?? 'Test article content for integration testing',
+      content: content,
       viewCount: data.viewCount ?? 0,
+      readMinute: data.readMinute ?? 1,
       seriesId: data.seriesId,
     },
   });

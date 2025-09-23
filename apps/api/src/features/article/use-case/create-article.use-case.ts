@@ -33,6 +33,7 @@ export class CreateArticleUseCase {
         content: dto.content,
         seriesId: dto.seriesId,
         viewCount: 0,
+        readMinute: Article.calculateReadMinute(dto.content),
         tagIds: tags.map(tag => tag.id),
         createdAt: new Date(),
       });

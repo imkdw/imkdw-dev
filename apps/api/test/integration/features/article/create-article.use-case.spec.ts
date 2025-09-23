@@ -90,6 +90,7 @@ describe('게시글 생성 유스케이스', () => {
       expect(savedArticle?.title).toBe(createArticleDto.title);
       expect(savedArticle?.content).toBe(createArticleDto.content);
       expect(savedArticle?.seriesId).toBe(testSeries.id);
+      expect(savedArticle?.readMinute).toBeGreaterThan(0);
     });
   });
 

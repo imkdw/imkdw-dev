@@ -17,6 +17,9 @@ model Article {
   /// 조회수
   viewCount Int @map("view_count")
 
+  /// 읽기 시간
+  readMinute Int @map("read_minute")
+
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz
   updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz
   deletedAt DateTime? @map("deleted_at") @db.Timestamptz

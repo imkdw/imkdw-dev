@@ -10,6 +10,7 @@ export class ArticleMapper {
       content: entity.content,
       seriesId: entity.seriesId,
       viewCount: entity.viewCount,
+      readMinute: entity.readMinute,
       createdAt: entity.createdAt,
       tagIds: [], // Repository에서는 tagIds를 채우지 않음 (별도 조회 필요)
     });

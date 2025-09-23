@@ -18,6 +18,7 @@ export class ArticleRepository {
         content: article.content,
         seriesId: article.seriesId,
         viewCount: article.viewCount,
+        readMinute: article.readMinute,
       },
     });
 
@@ -35,6 +36,7 @@ export class ArticleRepository {
         content: article.content,
         seriesId: article.seriesId,
         viewCount: article.viewCount,
+        readMinute: article.readMinute,
       },
     });
 
@@ -95,6 +97,13 @@ export class ArticleRepository {
       data: {
         viewCount: { increment: 1 },
       },
+    });
+  }
+
+  async delete(id: string, tx: Prisma.TransactionClient = this.prisma): Promise<void> {
+    await tx.article.update({
+      where: { id },
+      data: { deletedAt: new Date() },
     });
   }
 

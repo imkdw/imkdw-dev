@@ -143,6 +143,7 @@ describe('게시글 수정 유스케이스', () => {
       expect(updatedArticle?.title).toBe(updateArticleDto.title);
       expect(updatedArticle?.content).toBe(updateArticleDto.content);
       expect(updatedArticle?.seriesId).toBe(anotherSeries.id);
+      expect(updatedArticle?.readMinute).toBeGreaterThan(0);
     });
   });
 

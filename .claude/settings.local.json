@@ -70,7 +70,8 @@
       "mcp__playwright__browser_wait_for",
       "WebSearch",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:www.npmjs.com)"
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"예\" pnpm setup:test)"
     ],
     "deny": [],
     "ask": []
