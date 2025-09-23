@@ -1,3 +1,5 @@
+'use server';
+
 import { buildEndpoint } from '@imkdw-dev/consts';
 import { withErrorHandling } from './lib';
 import { apiClient } from '@imkdw-dev/api-client';
@@ -10,11 +12,3 @@ export const getSeriesList = withErrorHandling(async (params: IRequestGetSeriesL
     },
   });
 });
-
-// export const getOAuthUrl = withErrorHandling(async (provider: OAuthProvider, redirectUrl: string) => {
-//   return apiClient.get<IResponseGetOAuthUrlDto>(buildEndpoint('GET_OAUTH_URL', { provider }), {
-//     query: {
-//       redirectUrl,
-//     },
-//   });
-// });
