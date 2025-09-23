@@ -27,6 +27,9 @@ export class UpdateSeriesUseCase {
         title: dto.title,
         slug: existingSeries.slug,
         description: dto.description,
+        articleCount: existingSeries.articleCount,
+        totalReadMinute: existingSeries.totalReadMinute,
+        lastArticleCreatedAt: existingSeries.lastArticleCreatedAt,
         tagIds: tags.map(tag => tag.id),
         createdAt: existingSeries.createdAt,
       });

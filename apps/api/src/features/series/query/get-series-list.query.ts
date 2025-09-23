@@ -33,6 +33,9 @@ export class GetSeriesListQuery {
         slug: item.slug,
         title: item.title,
         description: item.description,
+        articleCount: item.articleCount,
+        totalReadMinute: item.totalReadMinute,
+        lastArticleCreatedAt: item.lastArticleCreatedAt,
         createdAt: item.createdAt,
       })
     );

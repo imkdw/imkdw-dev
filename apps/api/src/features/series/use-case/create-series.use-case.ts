@@ -28,6 +28,9 @@ export class CreateSeriesUseCase {
         title: dto.title,
         slug: dto.slug,
         description: dto.description,
+        articleCount: 0,
+        totalReadMinute: 0,
+        lastArticleCreatedAt: null,
         tagIds: tags.map(tag => tag.id),
         createdAt: new Date(),
       });

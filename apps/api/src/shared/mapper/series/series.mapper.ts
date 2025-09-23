@@ -8,6 +8,9 @@ export class SeriesMapper {
       title: entity.title,
       slug: entity.slug,
       description: entity.description,
+      articleCount: entity.articleCount,
+      totalReadMinute: entity.totalReadMinute,
+      lastArticleCreatedAt: entity.lastArticleCreatedAt,
       tagIds: [],
       createdAt: entity.createdAt,
     });

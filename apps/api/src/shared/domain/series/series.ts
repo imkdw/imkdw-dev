@@ -3,6 +3,9 @@ export class Series {
   title: string;
   slug: string;
   description: string;
+  articleCount: number;
+  totalReadMinute: number;
+  lastArticleCreatedAt: Date | null;
   tagIds: string[];
   createdAt: Date;
 
@@ -11,6 +14,9 @@ export class Series {
     this.title = props.title;
     this.slug = props.slug;
     this.description = props.description;
+    this.articleCount = props.articleCount;
+    this.totalReadMinute = props.totalReadMinute;
+    this.lastArticleCreatedAt = props.lastArticleCreatedAt;
     this.tagIds = props.tagIds;
     this.createdAt = props.createdAt;
   }

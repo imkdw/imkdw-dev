@@ -11,6 +11,15 @@ model Series {
   /// 시리즈 설명
   description String
 
+  /// 시리즈에 속한 게시글 개수
+  articleCount Int @default(0) @map("article_count")
+
+  /// 시리즈에 속한 모든 게시글의 읽기 시간(분)
+  totalReadMinute Int @default(0) @map("total_read_minute")
+
+  /// 마지막 게시글 추가시간
+  lastArticleCreatedAt DateTime? @map("last_article_created_at")
+
   /// 시리즈에 속한 게시글들
   articles Article[]
 

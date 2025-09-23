@@ -3,11 +3,23 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Series } from '@/shared/domain/series/series';
 
 export class SeriesDto implements ISeriesDto {
-  private constructor(id: string, title: string, slug: string, description: string, createdAt: Date) {
+  private constructor(
+    id: string,
+    title: string,
+    slug: string,
+    description: string,
+    articleCount: number,
+    totalReadMinute: number,
+    lastArticleCreatedAt: Date | null,
+    createdAt: Date
+  ) {
     this.id = id;
     this.title = title;
     this.slug = slug;
     this.description = description;
+    this.articleCount = articleCount;
+    this.totalReadMinute = totalReadMinute;
+    this.lastArticleCreatedAt = lastArticleCreatedAt;
     this.createdAt = createdAt;
   }
 
@@ -23,10 +35,28 @@ export class SeriesDto implements ISeriesDto {
   @ApiProperty({ description: '시리즈 설명', example: 'Node.js의 내부 동작 원리를 상세히 알아보는 시리즈' })
   readonly description: string;
 
+  @ApiProperty({ description: '시리즈에 속한 게시글 개수', example: 12 })
+  readonly articleCount: number;
+
+  @ApiProperty({ description: '시리즈에 속한 모든 게시글의 총 읽기 시간(분)', example: 240 })
+  readonly totalReadMinute: number;
+
+  @ApiProperty({ description: '마지막 게시글 추가 시간', example: '2024-01-15T00:00:00.000Z', nullable: true })
+  readonly lastArticleCreatedAt: Date | null;
+
   @ApiProperty({ description: '생성 일시', example: '2024-01-01T00:00:00.000Z' })
   readonly createdAt: Date;
 
   static from(series: Series): SeriesDto {
-    return new SeriesDto(series.id, series.title, series.slug, series.description, series.createdAt);
+    return new SeriesDto(
+      series.id,
+      series.title,
+      series.slug,
+      series.description,
+      series.articleCount,
+      series.totalReadMinute,
+      series.lastArticleCreatedAt,
+      series.createdAt
+    );
   }
 }

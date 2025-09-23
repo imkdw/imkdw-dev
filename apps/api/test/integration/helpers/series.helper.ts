@@ -12,6 +12,7 @@ export const createTestSeries = async (
       title: data?.title ?? `Test Series ${Date.now()}`,
       slug: data?.slug ?? `test-series-${Date.now()}`,
       description: data?.description ?? `Test Series Description ${Date.now()}`,
+      lastArticleCreatedAt: data?.lastArticleCreatedAt ?? null,
       ...data,
     },
   });
