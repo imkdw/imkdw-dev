@@ -21,7 +21,11 @@ function setSwagger(app: INestApplication, configService: MyConfigService) {
   if (configService.get('APP_ENV') !== 'production') {
     const SWAGGER_PATH = '/api';
 
-    const config = new DocumentBuilder().setTitle('API').build();
+    const config = new DocumentBuilder()
+      .setTitle('IMKDW Dev API')
+      .setVersion('1.0.0')
+      .addCookieAuth('accessToken', { type: 'apiKey', name: 'accessToken', in: 'cookie' })
+      .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup(SWAGGER_PATH, app, document, {
       swaggerOptions: { docExpansion: 'none', filter: true },
