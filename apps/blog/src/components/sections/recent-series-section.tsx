@@ -4,21 +4,13 @@ import Link from 'next/link';
 import { BookOpen, Terminal } from 'lucide-react';
 import { Button, cn, SeriesCard } from '@imkdw-dev/ui';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
+import { ISeriesListItemDto } from '@imkdw-dev/types';
 
 interface Props {
-  series: Array<{
-    title: string;
-    description: string;
-    articleCount: number;
-    totalReadTime: string;
-    lastUpdated: string;
-    tags: string[];
-    slug: string;
-    status: 'active' | 'completed' | 'coming-soon';
-  }>;
+  seriesList: ISeriesListItemDto[];
 }
 
-export function RecentSeriesSection({ series }: Props) {
+export function RecentSeriesSection({ seriesList }: Props) {
   return (
     <section className="bg-background border border-border rounded-lg p-4 md:p-6">
       <div className="flex items-center justify-between mb-6">
@@ -42,9 +34,9 @@ export function RecentSeriesSection({ series }: Props) {
         </Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-        {series.map((item, index) => (
+        {seriesList.map((item, index) => (
           <div key={item.slug} className="bounce-in h-full" style={{ animationDelay: `${index * 0.1}s` }}>
-            <SeriesCard {...item} />
+            <SeriesCard series={item} />
           </div>
         ))}
       </div>

@@ -54,7 +54,8 @@ export const recentArticles = [
   },
   {
     title: 'TypeScript 고급 타입 시스템',
-    excerpt: 'Utility Types, Conditional Types, Template Literal Types 등 TypeScript의 고급 기능들을 실무 예제와 함께 알아봅니다.',
+    excerpt:
+      'Utility Types, Conditional Types, Template Literal Types 등 TypeScript의 고급 기능들을 실무 예제와 함께 알아봅니다.',
     publishedAt: '2024년 11월 25일',
     readTime: '18분',
     tags: ['TypeScript', 'JavaScript'],
@@ -121,29 +122,6 @@ export const recentArticles = [
     slug: 'django-rest-framework-advanced',
     series: 'Python 웹 개발',
     isBookmarked: false,
-  },
-];
-
-export const recentSeries = [
-  {
-    title: 'React 마스터하기',
-    description: 'React의 기초부터 고급 패턴까지, 실무에서 바로 활용할 수 있는 React 개발 가이드',
-    articleCount: 12,
-    totalReadTime: '4시간 30분',
-    lastUpdated: '2024년 12월 8일',
-    tags: ['React', 'Frontend', 'JavaScript'],
-    slug: 'react-mastery',
-    status: 'active' as const,
-  },
-  {
-    title: '백엔드 개발 기초',
-    description: 'Node.js와 TypeScript를 활용한 현대적인 백엔드 개발 방법론과 베스트 프랙티스',
-    articleCount: 8,
-    totalReadTime: '3시간 15분',
-    lastUpdated: '2024년 12월 5일',
-    tags: ['Node.js', 'TypeScript', 'Backend'],
-    slug: 'backend-fundamentals',
-    status: 'active' as const,
   },
 ];
 
@@ -233,5 +211,5 @@ export const mockSeries = [
     lastUpdated: '2024년 11월 20일',
     tags: ['DevOps', 'CI/CD', 'Monitoring'],
     slug: 'devops-practical-guide',
-  }
+  },
 ];

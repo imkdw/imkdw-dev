@@ -1,6 +1,6 @@
 import { IOffsetPagingListDto, IRequestOffsetPagingDto } from '../common/pagination.dto';
 
-export interface IGetSeriesListDto extends IRequestOffsetPagingDto {}
+export interface IRequestGetSeriesListDto extends IRequestOffsetPagingDto {}
 
 export interface ISeriesListItemDto {
   id: string;
@@ -10,4 +10,4 @@ export interface ISeriesListItemDto {
   createdAt: Date;
 }
 
-export interface IGetSeriesListResponseDto extends IOffsetPagingListDto<ISeriesListItemDto> {}
+export interface IResponseGetSeriesListDto extends IOffsetPagingListDto<ISeriesListItemDto> {}

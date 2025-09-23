@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ISeriesListItemDto, IGetSeriesListDto, IGetSeriesListResponseDto } from '@imkdw-dev/types';
+import { ISeriesListItemDto, IRequestGetSeriesListDto, IResponseGetSeriesListDto } from '@imkdw-dev/types';
 import { RequestOffsetPagingDto, ResponseOffsetPagingDto } from '@/common/dto/offset-paging.dto';
 
 export class SeriesListItemDto implements ISeriesListItemDto {
@@ -27,9 +27,9 @@ export class SeriesListItemDto implements ISeriesListItemDto {
   readonly createdAt: Date;
 }
 
-export class GetSeriesListDto extends RequestOffsetPagingDto implements IGetSeriesListDto {}
+export class GetSeriesListDto extends RequestOffsetPagingDto implements IRequestGetSeriesListDto {}
 
-export class ResponseGetSeriesListDto extends ResponseOffsetPagingDto implements IGetSeriesListResponseDto {
+export class ResponseGetSeriesListDto extends ResponseOffsetPagingDto implements IResponseGetSeriesListDto {
   @ApiProperty({ type: [SeriesListItemDto], description: '시리즈 목록' })
   items: SeriesListItemDto[];
 }

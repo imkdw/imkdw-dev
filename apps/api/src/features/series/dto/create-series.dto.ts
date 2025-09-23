@@ -1,5 +1,10 @@
 import { IsNotEmptyString } from '@/common/decorator/is-not-empty-string.decorator';
-import { SERIES_MAX_TITLE_LENGTH, SERIES_MAX_SLUG_LENGTH, SERIES_MAX_DESCRIPTION_LENGTH, ARTICLE_MAX_TAGS } from '@imkdw-dev/consts';
+import {
+  SERIES_MAX_TITLE_LENGTH,
+  SERIES_MAX_SLUG_LENGTH,
+  SERIES_MAX_DESCRIPTION_LENGTH,
+  ARTICLE_MAX_TAGS,
+} from '@imkdw-dev/consts';
 import { ICreateSeriesDto, IResponseCreateSeriesDto } from '@imkdw-dev/types';
 import { ApiProperty } from '@nestjs/swagger';
 import { ArrayMaxSize, IsArray, IsString, MaxLength } from 'class-validator';
