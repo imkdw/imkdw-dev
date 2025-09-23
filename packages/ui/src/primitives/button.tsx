@@ -36,20 +36,16 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantPr
 
 export function Button({ className, variant, size, asChild = false, children, ...props }: ButtonProps) {
   const baseClassName = cn(buttonVariants({ variant, size }), className);
-  
+
   if (asChild && isValidElement(children)) {
-    // asChild가 true이고 children이 React element인 경우
     return cloneElement(children as ReactElement<HTMLAttributes<HTMLElement>>, {
       className: cn(baseClassName, (children as ReactElement<HTMLAttributes<HTMLElement>>).props.className),
       ...props,
     });
   }
-  
+
   return (
-    <button
-      className={baseClassName}
-      {...props}
-    >
+    <button className={baseClassName} {...props}>
       {children}
     </button>
   );

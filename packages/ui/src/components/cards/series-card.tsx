@@ -1,5 +1,8 @@
 import Link from 'next/link';
 import { ISeriesListItemDto } from '@imkdw-dev/types';
+import { MetaInfoItem } from './meta-info-item';
+import { BookOpen, Clock } from 'lucide-react';
+import { LastUpdated } from './last-updated';
 
 export interface Props {
   series: ISeriesListItemDto;
@@ -18,8 +21,8 @@ export function SeriesCard({ series }: Props) {
                 </h3>
               </div>
               <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground mb-2 md:mb-3">
-                {/* <MetaInfoItem icon={<BookOpen className="h-4 w-4" />} text={`${series.articleCount} articles`} />
-                <MetaInfoItem icon={<Clock className="h-4 w-4" />} text={series.totalReadTime} /> */}
+                <MetaInfoItem icon={<BookOpen className="h-4 w-4" />} text={`${series.articleCount} 개`} />
+                <MetaInfoItem icon={<Clock className="h-4 w-4" />} text={`${series.totalReadMinute} 분`} />
               </div>
             </div>
           </div>
@@ -27,7 +30,7 @@ export function SeriesCard({ series }: Props) {
             {series.description}
           </p>
           {/* <TagList tags={tags} maxVisible={2} variant="badge" className="mb-2 md:mb-3" /> */}
-          {/* <LastUpdated date={lastUpdated} className="mb-2" /> */}
+          <LastUpdated date={series.lastArticleCreatedAt} className="mb-2" />
         </div>
       </div>
     </Link>
