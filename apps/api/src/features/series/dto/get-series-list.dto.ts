@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ISeriesListItemDto, IRequestGetSeriesListDto, IResponseGetSeriesListDto } from '@imkdw-dev/types';
 import { RequestOffsetPagingDto, ResponseOffsetPagingDto } from '@/common/dto/offset-paging.dto';
+import { SeriesTagDto } from './series-tag.dto';
 
 export class SeriesListItemDto implements ISeriesListItemDto {
   private constructor(
@@ -11,7 +12,8 @@ export class SeriesListItemDto implements ISeriesListItemDto {
     articleCount: number,
     totalReadMinute: number,
     lastArticleCreatedAt: Date | null,
-    createdAt: Date
+    createdAt: Date,
+    tags: SeriesTagDto[]
   ) {
     this.id = id;
     this.title = title;
@@ -21,6 +23,7 @@ export class SeriesListItemDto implements ISeriesListItemDto {
     this.totalReadMinute = totalReadMinute;
     this.lastArticleCreatedAt = lastArticleCreatedAt;
     this.createdAt = createdAt;
+    this.tags = tags;
   }
 
   @ApiProperty({ description: '시리즈 ID', example: '123e4567-e89b-12d3-a456-426614174000' })
@@ -46,6 +49,9 @@ export class SeriesListItemDto implements ISeriesListItemDto {
 
   @ApiProperty({ description: '생성 일시', example: '2024-01-01T00:00:00.000Z' })
   readonly createdAt: Date;
+
+  @ApiProperty({ type: [SeriesTagDto], description: '시리즈 태그 목록' })
+  readonly tags: SeriesTagDto[];
 }
 
 export class GetSeriesListDto extends RequestOffsetPagingDto implements IRequestGetSeriesListDto {}

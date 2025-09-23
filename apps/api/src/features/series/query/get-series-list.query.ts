@@ -6,6 +6,7 @@ import {
   ResponseGetSeriesListDto,
   SeriesListItemDto,
 } from '@/features/series/dto/get-series-list.dto';
+import { SeriesTagDto } from '@/features/series/dto/series-tag.dto';
 
 @Injectable()
 export class GetSeriesListQuery {
@@ -21,10 +22,13 @@ export class GetSeriesListQuery {
         orderBy: { createdAt: 'desc' },
         skip: offset,
         take: limit,
+        include: {
+          tags: {
+            include: { tag: true },
+          },
+        },
       }),
-      this.prisma.series.count({
-        where: { deletedAt: null },
-      }),
+      this.prisma.series.count({ where: { deletedAt: null } }),
     ]);
 
     const series = items.map(
@@ -37,6 +41,12 @@ export class GetSeriesListQuery {
         totalReadMinute: item.totalReadMinute,
         lastArticleCreatedAt: item.lastArticleCreatedAt,
         createdAt: item.createdAt,
+        tags: item.tags.map(
+          (st): SeriesTagDto => ({
+            id: st.tag.id,
+            name: st.tag.name,
+          })
+        ),
       })
     );
 
