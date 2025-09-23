@@ -25,8 +25,7 @@ export class SeriesController {
   @Public()
   @Get()
   async getSeriesList(@Query() query: GetSeriesListDto): Promise<ResponseGetSeriesListDto> {
-    const result = await this.getSeriesListQuery.execute(query);
-    return ResponseGetSeriesListDto.from(result);
+    return this.getSeriesListQuery.execute(query);
   }
 
   @Swagger.createSeries('시리즈 생성')

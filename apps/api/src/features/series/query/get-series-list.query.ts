@@ -1,23 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/infra/database/prisma.service';
-import { Series } from '@/shared/domain/series/series';
-import { SeriesMapper } from '@/shared/mapper/series/series.mapper';
 import { createOffset, getOffsetPagingResult } from '@/common/function/offset-paging.function';
-import { GetSeriesListDto } from '@/features/series/dto/get-series-list.dto';
-
-interface GetSeriesListResult {
-  items: Series[];
-  totalPage: number;
-  haveNext: boolean;
-  havePrev: boolean;
-  totalCount: number;
-}
+import {
+  GetSeriesListDto,
+  ResponseGetSeriesListDto,
+  SeriesListItemDto,
+} from '@/features/series/dto/get-series-list.dto';
 
 @Injectable()
 export class GetSeriesListQuery {
   constructor(private readonly prisma: PrismaService) {}
 
-  async execute(params: GetSeriesListDto): Promise<GetSeriesListResult> {
+  async execute(params: GetSeriesListDto): Promise<ResponseGetSeriesListDto> {
     const { limit, page } = params;
     const { offset } = createOffset(limit, page);
 
@@ -33,13 +27,16 @@ export class GetSeriesListQuery {
       }),
     ]);
 
-    const series = items.map(item => SeriesMapper.toDomain(item));
+    const series = items.map(
+      (item): SeriesListItemDto => ({
+        id: item.id,
+        slug: item.slug,
+        title: item.title,
+        description: item.description,
+        createdAt: item.createdAt,
+      })
+    );
 
-    return getOffsetPagingResult({
-      items: series,
-      totalCount,
-      limit,
-      page,
-    });
+    return getOffsetPagingResult({ items: series, totalCount, limit, page });
   }
 }
