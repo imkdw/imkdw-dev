@@ -4,7 +4,6 @@ import { Badge } from '../../primitives/badge';
 import { GitBranch, Calendar, Clock, ChevronRight } from 'lucide-react';
 import { TagList } from './tag-list';
 import { MetaInfoItem } from './meta-info-item';
-import { cn } from '../../lib';
 import Link from 'next/link';
 
 export interface Props {
@@ -15,21 +14,11 @@ export interface Props {
   tags: string[];
   series: string;
   slug: string;
-  onClick?: (slug: string) => void;
-  className?: string;
 }
 
-export function ArticleCard({ title, excerpt, publishedAt, readTime, tags, series, slug, onClick, className }: Props) {
-  const handleClick = () => {
-    onClick?.(slug);
-  };
-
+export function ArticleCard({ title, excerpt, publishedAt, readTime, tags, series, slug }: Props) {
   return (
-    <Link
-      href={`/articles/${slug}`}
-      className={cn('block h-full', className)}
-      {...(onClick && { onClick: handleClick })}
-    >
+    <Link href={`/articles/${slug}`} className="block h-full">
       <div className="rounded-xl p-2 group cursor-pointer h-full flex flex-col bg-gradient-to-br from-card via-card to-muted/30 border-2 border-border/60 hover:border-primary/30 hover:shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.3)] transition-all duration-300">
         <div className="flex-1 p-3 md:p-4">
           {series && (
@@ -40,7 +29,7 @@ export function ArticleCard({ title, excerpt, publishedAt, readTime, tags, serie
               </Badge>
             </div>
           )}
-          <h3 className="text-base md:text-lg font-bold leading-tight mb-2 md:mb-3 group-hover:text-primary smooth-transition line-clamp-2">
+          <h3 className="text-base md:text-lg font-bold leading-tight mb-2 md:mb-3 group-hover:text-primary smooth-transition line-clamp-2 min-h-[2.5rem] md:min-h-[3rem]">
             {title}
           </h3>
           <p className="text-muted-foreground mb-2 md:mb-3 text-md leading-relaxed line-clamp-3 flex-1">{excerpt}</p>

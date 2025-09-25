@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { Layout, TerminalSection } from '@imkdw-dev/ui';
 import { RecentSeriesSection, RecentArticlesSection, BlogStatsSection } from '../components';
-import { recentArticles, blogStats, terminalCommands } from '../data/mock-data';
-import { getSeriesList } from '@imkdw-dev/actions';
+import { blogStats, terminalCommands } from '../data/mock-data';
+import { getSeriesList, getArticles } from '@imkdw-dev/actions';
 import { RECENT_SERIES_CARD_COUNT } from '@/consts/series.const';
+import { RECENT_ARTICLES_COUNT } from '@/consts/article.const';
 
 export const metadata: Metadata = {
   title: '@imkdw-dev/blog',
@@ -41,6 +42,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const series = await getSeriesList({ limit: RECENT_SERIES_CARD_COUNT, page: 1 });
+  const articles = await getArticles({ limit: RECENT_ARTICLES_COUNT, page: 1 });
 
   return (
     <Layout>
@@ -55,7 +57,7 @@ export default async function Home() {
 
         <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10 space-y-8 md:space-y-10">
           <RecentSeriesSection seriesList={series.items} />
-          <RecentArticlesSection articles={recentArticles} />
+          <RecentArticlesSection articles={articles.items} />
           <BlogStatsSection />
         </div>
       </div>

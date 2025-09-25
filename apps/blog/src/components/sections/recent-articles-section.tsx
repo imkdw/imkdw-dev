@@ -4,18 +4,10 @@ import Link from 'next/link';
 import { Clock, Terminal } from 'lucide-react';
 import { Button, ArticleCard, cn } from '@imkdw-dev/ui';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
+import { IArticleListItemDto } from '@imkdw-dev/types';
 
 interface Props {
-  articles: Array<{
-    title: string;
-    excerpt: string;
-    publishedAt: string;
-    readTime: string;
-    tags: string[];
-    series: string;
-    slug: string;
-    isBookmarked: boolean;
-  }>;
+  articles: IArticleListItemDto[];
 }
 
 export function RecentArticlesSection({ articles }: Props) {
@@ -49,7 +41,19 @@ export function RecentArticlesSection({ articles }: Props) {
             className="bounce-in h-full"
             style={{ animationDelay: `${(index + 2) * 0.1}s` }}
           >
-            <ArticleCard {...article} />
+            <ArticleCard
+              title={article.title}
+              excerpt="게시글 미리보기 내용입니다. (임시)"
+              publishedAt={new Date(article.createdAt).toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+              readTime={`${article.readMinute}분`}
+              tags={['React', 'TypeScript']}
+              series={article.series.title}
+              slug={article.slug}
+            />
           </Link>
         ))}
       </div>
