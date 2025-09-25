@@ -21,3 +21,10 @@ export function incrementViewCount(summary: string) {
     ApiNoContentResponse({ description: '조회수가 성공적으로 증가되었습니다' })
   );
 }
+
+export function deleteArticle(summary: string) {
+  return applyDecorators(
+    ApiOperation({ summary }),
+    ApiNoContentResponse({ description: '게시글이 성공적으로 삭제되었습니다' })
+  );
+}

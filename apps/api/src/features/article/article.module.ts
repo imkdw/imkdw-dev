@@ -3,6 +3,7 @@ import { ArticleCommentController } from '@/features/article/controller/article-
 import { CreateArticleUseCase } from '@/features/article/use-case/create-article.use-case';
 import { UpdateArticleUseCase } from '@/features/article/use-case/update-article.use-case';
 import { IncrementViewCountUseCase } from '@/features/article/use-case/increment-view-count.use-case';
+import { DeleteArticleUseCase } from '@/features/article/use-case/delete-article.use-case';
 import { CreateArticleCommentUseCase } from '@/features/article/use-case/create-article-comment.use-case';
 import { UpdateArticleCommentUseCase } from '@/features/article/use-case/update-article-comment.use-case';
 import { DeleteArticleCommentUseCase } from '@/features/article/use-case/delete-article-comment.use-case';
@@ -17,6 +18,7 @@ import { Module } from '@nestjs/common';
     CreateArticleUseCase,
     UpdateArticleUseCase,
     IncrementViewCountUseCase,
+    DeleteArticleUseCase,
     CreateArticleCommentUseCase,
     UpdateArticleCommentUseCase,
     DeleteArticleCommentUseCase,
