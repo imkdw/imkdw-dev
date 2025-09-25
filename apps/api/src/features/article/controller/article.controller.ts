@@ -1,11 +1,13 @@
-import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateArticleDto, ResponseCreateArticleDto } from '@/features/article/dto/create-article.dto';
 import { UpdateArticleDto } from '@/features/article/dto/update-article.dto';
+import { GetArticlesDto, ResponseGetArticlesDto } from '@/features/article/dto/get-articles.dto';
 import { CreateArticleUseCase } from '@/features/article/use-case/create-article.use-case';
 import { UpdateArticleUseCase } from '@/features/article/use-case/update-article.use-case';
 import { IncrementViewCountUseCase } from '@/features/article/use-case/increment-view-count.use-case';
 import { DeleteArticleUseCase } from '@/features/article/use-case/delete-article.use-case';
+import { GetArticlesQuery } from '@/features/article/query/get-articles.query';
 import * as Swagger from '@/features/article/swagger/article.swagger';
 import { MemberRoles } from '@/common/decorator/member-role.decorator';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
@@ -19,8 +21,16 @@ export class ArticleController {
     private readonly createArticleUseCase: CreateArticleUseCase,
     private readonly updateArticleUseCase: UpdateArticleUseCase,
     private readonly incrementViewCountUseCase: IncrementViewCountUseCase,
-    private readonly deleteArticleUseCase: DeleteArticleUseCase
+    private readonly deleteArticleUseCase: DeleteArticleUseCase,
+    private readonly getArticlesQuery: GetArticlesQuery
   ) {}
+
+  @Swagger.getArticles('게시글 목록 조회')
+  @Public()
+  @Get()
+  async getArticles(@Query() query: GetArticlesDto): Promise<ResponseGetArticlesDto> {
+    return this.getArticlesQuery.execute(query);
+  }
 
   @Swagger.createArticle('게시글 생성')
   @Post()

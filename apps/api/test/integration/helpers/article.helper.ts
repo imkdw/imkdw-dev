@@ -4,7 +4,16 @@ import { generateUUID } from '@/common/utils/string.util';
 
 export const createTestArticle = async (
   prisma: PrismaClient | Prisma.TransactionClient,
-  data: { seriesId: string; title?: string; slug?: string; content?: string; viewCount?: number; readMinute?: number }
+  data: {
+    seriesId: string;
+    title?: string;
+    slug?: string;
+    content?: string;
+    viewCount?: number;
+    readMinute?: number;
+    createdAt?: Date;
+    deletedAt?: Date | null;
+  }
 ): Promise<Article> => {
   const content = data.content ?? 'Test article content for integration testing';
   return prisma.article.create({
@@ -16,6 +25,8 @@ export const createTestArticle = async (
       viewCount: data.viewCount ?? 0,
       readMinute: data.readMinute ?? 1,
       seriesId: data.seriesId,
+      createdAt: data.createdAt,
+      deletedAt: data.deletedAt,
     },
   });
 };

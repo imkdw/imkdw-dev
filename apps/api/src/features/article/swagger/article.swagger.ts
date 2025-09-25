@@ -1,7 +1,8 @@
 import { CreateArticleDto } from '@/features/article/dto/create-article.dto';
 import { UpdateArticleDto } from '@/features/article/dto/update-article.dto';
+import { ResponseGetArticlesDto } from '@/features/article/dto/get-articles.dto';
 import { applyDecorators, HttpStatus } from '@nestjs/common';
-import { ApiBody, ApiNoContentResponse, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiNoContentResponse, ApiOkResponse, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 export function createArticle(summary: string) {
   return applyDecorators(ApiOperation({ summary }), ApiBody({ type: CreateArticleDto }));
@@ -26,5 +27,12 @@ export function deleteArticle(summary: string) {
   return applyDecorators(
     ApiOperation({ summary }),
     ApiNoContentResponse({ description: '게시글이 성공적으로 삭제되었습니다' })
+  );
+}
+
+export function getArticles(summary: string) {
+  return applyDecorators(
+    ApiOperation({ summary }),
+    ApiOkResponse({ type: ResponseGetArticlesDto, description: '게시글 목록을 성공적으로 조회했습니다' })
   );
 }
