@@ -9,9 +9,12 @@ import { UpdateArticleCommentDto } from '@/features/article/dto/update-article-c
 import * as Swagger from '@/features/article/swagger/article-comment.swagger';
 import { CurrentRequester } from '@/common/decorator/current-requester.decorator';
 import { Requester } from '@/common/types/requester.type';
+import { API_ENDPOINTS } from '@imkdw-dev/consts';
+
+const { CREATE_ARTICLE_COMMENT, UPDATE_ARTICLE_COMMENT, DELETE_ARTICLE_COMMENT, CREATE_ARTICLE_REPLY } = API_ENDPOINTS;
 
 @ApiTags('게시글 댓글')
-@Controller('articles/:articleId/comments')
+@Controller()
 export class ArticleCommentController {
   constructor(
     private readonly createArticleCommentUseCase: CreateArticleCommentUseCase,
@@ -22,7 +25,7 @@ export class ArticleCommentController {
 
   @Swagger.createComment('댓글 생성')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Post()
+  @Post(CREATE_ARTICLE_COMMENT)
   async createComment(
     @Param('articleId') articleId: string,
     @Body() dto: CreateArticleCommentDto,
@@ -32,7 +35,7 @@ export class ArticleCommentController {
   }
 
   @Swagger.updateComment('댓글 수정')
-  @Put(':commentId')
+  @Put(UPDATE_ARTICLE_COMMENT)
   @HttpCode(HttpStatus.NO_CONTENT)
   async updateComment(
     @Param('commentId') commentId: string,
@@ -43,14 +46,14 @@ export class ArticleCommentController {
   }
 
   @Swagger.deleteComment('댓글 삭제')
-  @Delete(':commentId')
+  @Delete(DELETE_ARTICLE_COMMENT)
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteComment(@Param('commentId') commentId: string, @CurrentRequester() requester: Requester): Promise<void> {
     await this.deleteArticleCommentUseCase.execute(commentId, requester);
   }
 
   @Swagger.createReply('답글 생성')
-  @Post(':commentId/replies')
+  @Post(CREATE_ARTICLE_REPLY)
   @HttpCode(HttpStatus.NO_CONTENT)
   async createReply(
     @Param('articleId') articleId: string,

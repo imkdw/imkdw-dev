@@ -8,11 +8,13 @@ import { UpdateSeriesUseCase } from '@/features/series/use-case/update-series.us
 import { GetSeriesListQuery } from '@/features/series/query/get-series-list.query';
 import * as Swagger from '@/features/series/swagger/series.swagger';
 import { MemberRoles } from '@/common/decorator/member-role.decorator';
-import { MEMBER_ROLE } from '@imkdw-dev/consts';
+import { MEMBER_ROLE, API_ENDPOINTS } from '@imkdw-dev/consts';
 import { Public } from '@/common/decorator/public.decorator';
 
+const { GET_SERIES_LIST, CREATE_SERIES, UPDATE_SERIES } = API_ENDPOINTS;
+
 @ApiTags('시리즈')
-@Controller('series')
+@Controller()
 @MemberRoles(MEMBER_ROLE.ADMIN)
 export class SeriesController {
   constructor(
@@ -23,13 +25,13 @@ export class SeriesController {
 
   @Swagger.getSeriesList('시리즈 목록 조회')
   @Public()
-  @Get()
+  @Get(GET_SERIES_LIST)
   async getSeriesList(@Query() query: GetSeriesListDto): Promise<ResponseGetSeriesListDto> {
     return this.getSeriesListQuery.execute(query);
   }
 
   @Swagger.createSeries('시리즈 생성')
-  @Post()
+  @Post(CREATE_SERIES)
   async create(@Body() dto: CreateSeriesDto): Promise<ResponseCreateSeriesDto> {
     const series = await this.createSeriesUseCase.execute(dto);
     return ResponseCreateSeriesDto.from(series);
@@ -37,7 +39,7 @@ export class SeriesController {
 
   @Swagger.updateSeries('시리즈 수정')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Put(':id')
+  @Put(UPDATE_SERIES)
   async update(@Param('id') id: string, @Body() dto: UpdateSeriesDto): Promise<void> {
     await this.updateSeriesUseCase.execute(id, dto);
   }

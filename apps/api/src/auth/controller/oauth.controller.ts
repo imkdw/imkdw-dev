@@ -10,6 +10,8 @@ import { CookieService } from '@/infra/cookie/cookie.service';
 import { COOKIE_MAX_AGE } from '@/infra/cookie/cookie.const';
 import { API_ENDPOINTS, OAuthProvider } from '@imkdw-dev/consts';
 
+const { GET_OAUTH_URL, OAUTH_CALLBACK } = API_ENDPOINTS;
+
 @ApiTags('소셜로그인')
 @Controller()
 @Public()
@@ -20,7 +22,7 @@ export class OAuthController {
   ) {}
 
   @Swagger.getOAuthUrl('소셜로그인 URL 발급')
-  @Get(API_ENDPOINTS.GET_OAUTH_URL)
+  @Get(GET_OAUTH_URL)
   async getOAuthUrl(
     @Query('redirectUrl') redirectUrl: string,
     @Param('provider') provider: OAuthProvider
@@ -31,7 +33,7 @@ export class OAuthController {
   }
 
   @ApiExcludeEndpoint()
-  @Get(API_ENDPOINTS.OAUTH_CALLBACK)
+  @Get(OAUTH_CALLBACK)
   async callback(
     @Query('code') code: string,
     @Query('state') state: string,

@@ -9,6 +9,8 @@ import { MemberAccessGuard } from '@/common/guards/member-access.guard';
 import * as Swagger from '@/features/member/swagger/member.swagger';
 import { API_ENDPOINTS } from '@imkdw-dev/consts';
 
+const { GET_CURRENT_MEMBER, FIND_MEMBER } = API_ENDPOINTS;
+
 @ApiTags('사용자')
 @Controller()
 export class MemberController {
@@ -18,7 +20,7 @@ export class MemberController {
   ) {}
 
   @Swagger.getCurrentMember('현재 로그인한 사용자 정보 조회')
-  @Get(API_ENDPOINTS.GET_CURRENT_MEMBER)
+  @Get(GET_CURRENT_MEMBER)
   async getCurrentMember(@CurrentRequester() requester: Requester): Promise<MemberDto> {
     const member = await this.getCurrentMemberUseCase.execute(requester.id);
     return MemberDto.from(member);
@@ -26,7 +28,7 @@ export class MemberController {
 
   @Swagger.findMember('특정 사용자 정보 조회')
   @UseGuards(MemberAccessGuard)
-  @Get(API_ENDPOINTS.FIND_MEMBER)
+  @Get(FIND_MEMBER)
   async findMember(@Param('memberId') memberId: string): Promise<MemberDto> {
     const member = await this.findMemberUseCase.execute(memberId);
     return MemberDto.from(member);
