@@ -4,6 +4,7 @@ import { SeriesValidator } from '@/shared/validator/series.validator';
 import { ArticleRepository } from '@/shared/repository/article/article.repository';
 import { SeriesRepository } from '@/shared/repository/series/series.repository';
 import { TagRepository } from '@/shared/repository/tag/tag.repository';
+import { SeriesStatsService } from '@/shared/services/series/series-stats.service';
 import { CreateArticleDto } from '@/features/article/dto/create-article.dto';
 import { ExistArticleException } from '@/features/article/exception/exist-article.exception';
 import { SeriesNotFoundException } from '@/features/series/exception/series-not-found.exception';
@@ -27,6 +28,7 @@ describe('게시글 생성 유스케이스', () => {
       ArticleRepository,
       SeriesRepository,
       TagRepository,
+      SeriesStatsService,
     ]);
     await testHelper.setup();
   });
@@ -187,6 +189,59 @@ describe('게시글 생성 유스케이스', () => {
       expect(articleTags.map(at => at.tag.name)).toEqual(
         expect.arrayContaining(['JavaScript', 'React', 'TypeScript', 'NestJS'])
       );
+    });
+  });
+
+  describe('게시글 생성 시 시리즈 통계가 갱신되면', () => {
+    it('시리즈의 게시글 수와 총 읽기 시간이 증가한다', async () => {
+      const initialSeries = await prisma.series.findUnique({ where: { id: testSeries.id } });
+      expect(initialSeries?.articleCount).toBe(0);
+      expect(initialSeries?.totalReadMinute).toBe(0);
+      expect(initialSeries?.lastArticleCreatedAt).toBeNull();
+
+      const createArticleDto: CreateArticleDto = {
+        title: '새로운 게시글 제목',
+        slug: 'new-article-slug',
+        content: '이것은 게시글 내용입니다. '.repeat(100),
+        seriesId: testSeries.id,
+        tags: ['JavaScript'],
+      };
+
+      const result = await sut.execute(createArticleDto);
+
+      const updatedSeries = await prisma.series.findUnique({ where: { id: testSeries.id } });
+      expect(updatedSeries?.articleCount).toBe(1);
+      expect(updatedSeries?.totalReadMinute).toBeGreaterThan(0);
+      expect(updatedSeries?.lastArticleCreatedAt).toEqual(result.createdAt);
+    });
+
+    it('여러 게시글을 생성하면 시리즈 통계가 누적된다', async () => {
+      const firstArticleDto: CreateArticleDto = {
+        title: '첫 번째 게시글',
+        slug: 'first-article',
+        content: '첫 번째 게시글 내용. '.repeat(50),
+        seriesId: testSeries.id,
+        tags: [],
+      };
+
+      const secondArticleDto: CreateArticleDto = {
+        title: '두 번째 게시글',
+        slug: 'second-article',
+        content: '두 번째 게시글 내용. '.repeat(75),
+        seriesId: testSeries.id,
+        tags: [],
+      };
+
+      const firstArticle = await sut.execute(firstArticleDto);
+      const firstSeriesStats = await prisma.series.findUnique({ where: { id: testSeries.id } });
+
+      await sut.execute(secondArticleDto);
+      const finalSeriesStats = await prisma.series.findUnique({ where: { id: testSeries.id } });
+
+      expect(finalSeriesStats?.articleCount).toBe(2);
+      expect(finalSeriesStats?.totalReadMinute).toBeGreaterThan(firstSeriesStats?.totalReadMinute ?? 0);
+      expect(finalSeriesStats?.lastArticleCreatedAt).toEqual(expect.any(Date));
+      expect(finalSeriesStats?.lastArticleCreatedAt?.getTime()).toBeGreaterThan(firstArticle.createdAt.getTime());
     });
   });
 });

@@ -5,6 +5,7 @@ import { CreateArticleDto } from '@/features/article/dto/create-article.dto';
 import { Article } from '@/shared/domain/article/article';
 import { ArticleRepository } from '@/shared/repository/article/article.repository';
 import { TagRepository } from '@/shared/repository/tag/tag.repository';
+import { SeriesStatsService } from '@/shared/services/series/series-stats.service';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { Injectable } from '@nestjs/common';
 
@@ -15,6 +16,7 @@ export class CreateArticleUseCase {
     private readonly seriesValidator: SeriesValidator,
     private readonly articleRepository: ArticleRepository,
     private readonly tagRepository: TagRepository,
+    private readonly seriesStatsService: SeriesStatsService,
     private readonly prisma: PrismaService
   ) {}
 
@@ -38,7 +40,11 @@ export class CreateArticleUseCase {
         createdAt: new Date(),
       });
 
-      return this.articleRepository.create(article, tx);
+      const createdArticle = await this.articleRepository.create(article, tx);
+
+      await this.seriesStatsService.recalculateSeries(dto.seriesId, tx);
+
+      return createdArticle;
     });
   }
 }

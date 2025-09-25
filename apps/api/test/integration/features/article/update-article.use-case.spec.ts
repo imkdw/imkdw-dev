@@ -4,6 +4,7 @@ import { SeriesValidator } from '@/shared/validator/series.validator';
 import { ArticleRepository } from '@/shared/repository/article/article.repository';
 import { SeriesRepository } from '@/shared/repository/series/series.repository';
 import { TagRepository } from '@/shared/repository/tag/tag.repository';
+import { SeriesStatsService } from '@/shared/services/series/series-stats.service';
 import { UpdateArticleDto } from '@/features/article/dto/update-article.dto';
 import { ArticleNotFoundException } from '@/features/article/exception/article-not-found.exception';
 import { ExistArticleException } from '@/features/article/exception/exist-article.exception';
@@ -29,6 +30,7 @@ describe('게시글 수정 유스케이스', () => {
       ArticleRepository,
       SeriesRepository,
       TagRepository,
+      SeriesStatsService,
     ]);
     await testHelper.setup();
   });
@@ -338,6 +340,189 @@ describe('게시글 수정 유스케이스', () => {
         where: { articleId: existingArticle.id },
       });
       expect(articleTagsAfterRollback).toHaveLength(0);
+    });
+  });
+
+  describe('게시글 수정 시 시리즈 통계가 갱신되면', () => {
+    it('게시글 내용 수정으로 읽기 시간이 변경되면 시리즈 총 읽기 시간이 갱신된다', async () => {
+      const existingArticle = await createTestArticle(prisma, {
+        title: '기존 게시글 제목',
+        content: '짧은 내용.',
+        seriesId: testSeries.id,
+      });
+
+      await createTestArticle(prisma, {
+        title: '다른 게시글',
+        content: '다른 게시글 내용. '.repeat(30),
+        seriesId: testSeries.id,
+      });
+
+      const initialSeries = await prisma.series.findUnique({ where: { id: testSeries.id } });
+      const initialTotalReadMinute = initialSeries?.totalReadMinute ?? 0;
+
+      const updateArticleDto: UpdateArticleDto = {
+        title: '수정된 게시글 제목',
+        content: '매우 긴 내용으로 수정됩니다. '.repeat(200),
+        seriesId: testSeries.id,
+        tags: [],
+      };
+
+      await sut.execute(existingArticle.id, updateArticleDto);
+
+      const updatedSeries = await prisma.series.findUnique({ where: { id: testSeries.id } });
+      expect(updatedSeries?.articleCount).toBe(2);
+      expect(updatedSeries?.totalReadMinute).toBeGreaterThan(initialTotalReadMinute);
+    });
+  });
+
+  describe('게시글을 다른 시리즈로 이동하면', () => {
+    it('이전 시리즈와 새 시리즈의 통계가 모두 갱신된다', async () => {
+      const firstArticle = await createTestArticle(prisma, {
+        title: '첫 번째 게시글',
+        content: '첫 번째 게시글 내용. '.repeat(50),
+        seriesId: testSeries.id,
+      });
+      await createTestArticle(prisma, {
+        title: '두 번째 게시글',
+        content: '두 번째 게시글 내용. '.repeat(30),
+        seriesId: testSeries.id,
+      });
+
+      await createTestArticle(prisma, {
+        title: '다른 시리즈 게시글',
+        content: '다른 시리즈 게시글 내용. '.repeat(40),
+        seriesId: anotherSeries.id,
+      });
+
+      await prisma.series.update({
+        where: { id: testSeries.id },
+        data: {
+          articleCount: 2,
+          totalReadMinute:
+            Math.ceil('첫 번째 게시글 내용. '.repeat(50).length / 300) +
+            Math.ceil('두 번째 게시글 내용. '.repeat(30).length / 300),
+          lastArticleCreatedAt: new Date(),
+        },
+      });
+      await prisma.series.update({
+        where: { id: anotherSeries.id },
+        data: {
+          articleCount: 1,
+          totalReadMinute: Math.ceil('다른 시리즈 게시글 내용. '.repeat(40).length / 300),
+          lastArticleCreatedAt: new Date(),
+        },
+      });
+
+      const initialFirstSeries = await prisma.series.findUnique({ where: { id: testSeries.id } });
+      const initialSecondSeries = await prisma.series.findUnique({ where: { id: anotherSeries.id } });
+
+      expect(initialFirstSeries?.articleCount).toBe(2);
+      expect(initialSecondSeries?.articleCount).toBe(1);
+
+      const updateArticleDto: UpdateArticleDto = {
+        title: '이동된 게시글',
+        content: '이동된 게시글 내용. '.repeat(60),
+        seriesId: anotherSeries.id,
+        tags: [],
+      };
+
+      await sut.execute(firstArticle.id, updateArticleDto);
+
+      const updatedFirstSeries = await prisma.series.findUnique({ where: { id: testSeries.id } });
+      const updatedSecondSeries = await prisma.series.findUnique({ where: { id: anotherSeries.id } });
+
+      expect(updatedFirstSeries?.articleCount).toBe(1);
+      expect(updatedFirstSeries?.totalReadMinute).toBeLessThan(initialFirstSeries?.totalReadMinute ?? 0);
+
+      expect(updatedSecondSeries?.articleCount).toBe(2);
+      expect(updatedSecondSeries?.totalReadMinute).toBeGreaterThan(initialSecondSeries?.totalReadMinute ?? 0);
+    });
+
+    it('시리즈에서 마지막 게시글을 이동하면 lastArticleCreatedAt이 재계산된다', async () => {
+      const firstArticle = await createTestArticle(prisma, {
+        title: '첫 번째 게시글',
+        content: '첫 번째 게시글 내용',
+        seriesId: testSeries.id,
+      });
+
+      await new Promise(resolve => setTimeout(resolve, 10));
+      const secondArticle = await createTestArticle(prisma, {
+        title: '두 번째 게시글',
+        content: '두 번째 게시글 내용',
+        seriesId: testSeries.id,
+      });
+
+      await prisma.series.update({
+        where: { id: testSeries.id },
+        data: {
+          articleCount: 2,
+          totalReadMinute: 2,
+          lastArticleCreatedAt: secondArticle.createdAt,
+        },
+      });
+
+      const initialSeries = await prisma.series.findUnique({ where: { id: testSeries.id } });
+      expect(initialSeries?.lastArticleCreatedAt?.getTime()).toBeCloseTo(secondArticle.createdAt.getTime(), -2);
+
+      const updateArticleDto: UpdateArticleDto = {
+        title: '이동된 게시글',
+        content: '이동된 게시글 내용',
+        seriesId: anotherSeries.id,
+        tags: [],
+      };
+
+      await sut.execute(secondArticle.id, updateArticleDto);
+
+      const updatedFirstSeries = await prisma.series.findUnique({ where: { id: testSeries.id } });
+      const updatedSecondSeries = await prisma.series.findUnique({ where: { id: anotherSeries.id } });
+
+      expect(updatedFirstSeries?.lastArticleCreatedAt?.getTime()).toBeCloseTo(firstArticle.createdAt.getTime(), -2);
+      expect(updatedFirstSeries?.articleCount).toBe(1);
+
+      expect(updatedSecondSeries?.lastArticleCreatedAt?.getTime()).toBeCloseTo(secondArticle.createdAt.getTime(), -2);
+      expect(updatedSecondSeries?.articleCount).toBe(1);
+    });
+
+    it('시리즈의 모든 게시글을 다른 시리즈로 이동하면 원래 시리즈는 빈 상태가 된다', async () => {
+      const onlyArticle = await createTestArticle(prisma, {
+        title: '유일한 게시글',
+        content: '유일한 게시글 내용. '.repeat(50),
+        seriesId: testSeries.id,
+      });
+
+      await prisma.series.update({
+        where: { id: testSeries.id },
+        data: {
+          articleCount: 1,
+          totalReadMinute: Math.ceil('유일한 게시글 내용. '.repeat(50).length / 300),
+          lastArticleCreatedAt: onlyArticle.createdAt,
+        },
+      });
+
+      const initialSeries = await prisma.series.findUnique({ where: { id: testSeries.id } });
+      expect(initialSeries?.articleCount).toBe(1);
+      expect(initialSeries?.totalReadMinute).toBeGreaterThan(0);
+      expect(initialSeries?.lastArticleCreatedAt).not.toBeNull();
+
+      const updateArticleDto: UpdateArticleDto = {
+        title: '이동된 유일한 게시글',
+        content: '이동된 유일한 게시글 내용. '.repeat(60),
+        seriesId: anotherSeries.id,
+        tags: [],
+      };
+
+      await sut.execute(onlyArticle.id, updateArticleDto);
+
+      const updatedFirstSeries = await prisma.series.findUnique({ where: { id: testSeries.id } });
+      const updatedSecondSeries = await prisma.series.findUnique({ where: { id: anotherSeries.id } });
+
+      expect(updatedFirstSeries?.articleCount).toBe(0);
+      expect(updatedFirstSeries?.totalReadMinute).toBe(0);
+      expect(updatedFirstSeries?.lastArticleCreatedAt).toBeNull();
+
+      expect(updatedSecondSeries?.articleCount).toBe(1);
+      expect(updatedSecondSeries?.totalReadMinute).toBeGreaterThan(0);
+      expect(updatedSecondSeries?.lastArticleCreatedAt).not.toBeNull();
     });
   });
 });

@@ -7,9 +7,11 @@ import { CreateArticleCommentUseCase } from '@/features/article/use-case/create-
 import { UpdateArticleCommentUseCase } from '@/features/article/use-case/update-article-comment.use-case';
 import { DeleteArticleCommentUseCase } from '@/features/article/use-case/delete-article-comment.use-case';
 import { CreateArticleReplyUseCase } from '@/features/article/use-case/create-article-reply.use-case';
+import { SeriesStatsModule } from '@/shared/services/series/series-stats.module';
 import { Module } from '@nestjs/common';
 
 @Module({
+  imports: [SeriesStatsModule],
   controllers: [ArticleController, ArticleCommentController],
   providers: [
     CreateArticleUseCase,

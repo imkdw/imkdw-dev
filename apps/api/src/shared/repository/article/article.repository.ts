@@ -91,6 +91,17 @@ export class ArticleRepository {
     return entity ? ArticleMapper.toDomain(entity) : null;
   }
 
+  async findBySeriesId(seriesId: string, tx: Prisma.TransactionClient = this.prisma): Promise<Article[]> {
+    const entities = await tx.article.findMany({
+      where: {
+        seriesId,
+        deletedAt: null,
+      },
+    });
+
+    return entities.map(entity => ArticleMapper.toDomain(entity));
+  }
+
   async incrementViewCount(id: string): Promise<void> {
     await this.prisma.article.update({
       where: { id },

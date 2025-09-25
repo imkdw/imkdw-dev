@@ -4,6 +4,7 @@ import { UpdateArticleDto } from '@/features/article/dto/update-article.dto';
 import { Article } from '@/shared/domain/article/article';
 import { ArticleRepository } from '@/shared/repository/article/article.repository';
 import { TagRepository } from '@/shared/repository/tag/tag.repository';
+import { SeriesStatsService } from '@/shared/services/series/series-stats.service';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { Injectable } from '@nestjs/common';
 
@@ -14,6 +15,7 @@ export class UpdateArticleUseCase {
     private readonly seriesValidator: SeriesValidator,
     private readonly articleRepository: ArticleRepository,
     private readonly tagRepository: TagRepository,
+    private readonly seriesStatsService: SeriesStatsService,
     private readonly prisma: PrismaService
   ) {}
 
@@ -39,6 +41,13 @@ export class UpdateArticleUseCase {
       });
 
       await this.articleRepository.save(updatedArticle, tx);
+
+      if (existingArticle.seriesId !== dto.seriesId) {
+        await this.seriesStatsService.recalculateSeries(existingArticle.seriesId, tx);
+        await this.seriesStatsService.recalculateSeries(dto.seriesId, tx);
+      } else {
+        await this.seriesStatsService.recalculateSeries(dto.seriesId, tx);
+      }
     });
   }
 }
