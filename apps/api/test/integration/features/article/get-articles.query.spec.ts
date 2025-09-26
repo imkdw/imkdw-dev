@@ -3,7 +3,7 @@ import { createTestArticle } from '@test/integration/helpers/article.helper';
 import { createTestSeries } from '@test/integration/helpers/series.helper';
 import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
 import { PrismaService } from '@/infra/database/prisma.service';
-import type { Article, Series } from '@prisma/client';
+import type { Series } from '@prisma/client';
 
 describe('GetArticlesQuery', () => {
   let testHelper: IntegrationTestHelper;
@@ -158,9 +158,6 @@ describe('GetArticlesQuery', () => {
   describe('게시글이 시리즈에 속해 있을 때', () => {
     let series1: Series;
     let series2: Series;
-    let article1: Article;
-    let article2: Article;
-    let article3: Article;
 
     beforeEach(async () => {
       [series1, series2] = await Promise.all([
@@ -174,7 +171,7 @@ describe('GetArticlesQuery', () => {
         }),
       ]);
 
-      [article1, article2, article3] = await Promise.all([
+      await Promise.all([
         createTestArticle(prisma, {
           seriesId: series1.id,
           title: '게시글 1',

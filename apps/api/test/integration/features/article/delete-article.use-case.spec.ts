@@ -251,7 +251,7 @@ describe('게시글 삭제 유스케이스', () => {
     });
 
     it('여러 게시글 중 일부를 삭제하면 나머지 게시글의 통계만 계산된다', async () => {
-      const article1 = await createTestArticle(prisma, {
+      await createTestArticle(prisma, {
         title: '첫 번째 게시글',
         content: '첫 번째 게시글 내용',
         seriesId: testSeries.id,
