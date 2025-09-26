@@ -1,10 +1,3 @@
-export const blogStats = [
-  { label: '총 게시글', value: '127', color: 'text-primary' },
-  { label: '진행 시리즈', value: '15', color: 'text-accent' },
-  { label: '총 조회수', value: '45.2k', color: 'text-green-500' },
-  { label: '기술 태그', value: '32', color: 'text-accent' },
-];
-
 export const terminalCommands = [
   { command: 'git clone https://github.com/imkdw/imkdw-dev.git' },
   { command: 'cd imkdw-dev && pnpm install' },

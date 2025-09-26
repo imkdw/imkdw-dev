@@ -3,9 +3,7 @@
 import { useState, useEffect } from 'react';
 import { TerminalHeader } from './terminal-header';
 import { TerminalContent } from './terminal-content';
-import { BlogInfo } from './blog-info';
 import { StatsGrid } from './stats-grid';
-import { TagsList } from './tags-list';
 import { Props } from './types';
 import { cn } from '../../lib';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
@@ -89,9 +87,25 @@ export const TerminalSection = ({ commands, title, description, stats, tags, cla
 
           {/* 블로그 정보 */}
           <div className="space-y-4 md:space-y-6 h-full flex flex-col justify-center">
-            <BlogInfo title={title} description={description} />
+            <div>
+              <h1 className="text-lg md:text-xl lg:text-2xl font-bold mb-2 md:mb-3">
+                <span className="text-blue-500">const</span> <span className="text-primary">@imkdw-dev/blog</span>{' '}
+                <span className="text-muted-foreground">=</span>{' '}
+                <span className="text-amber-500">&quot;{title.split('"')[1] ?? title}&quot;</span>
+              </h1>
+              <p className="text-muted-foreground leading-relaxed text-sm md:text-base">{description}</p>
+            </div>
             <StatsGrid stats={stats} />
-            <TagsList tags={tags} />
+            <div className="flex flex-wrap gap-1 md:gap-2">
+              {tags.map(tag => (
+                <span
+                  key={tag}
+                  className="tracking-wider inline-flex items-center px-2 md:px-3 py-1 rounded-full bg-primary/10 text-primary text-xs md:text-sm border border-primary/20 hover:bg-primary/20 cursor-pointer transition-colors"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>

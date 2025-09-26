@@ -16,7 +16,6 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-  SeriesCard,
 } from '@imkdw-dev/ui';
 
 interface Props {
@@ -50,8 +49,8 @@ export function SeriesContent({ initialSeries }: Props) {
 
   // 페이지네이션 계산
   const totalPages = Math.ceil(filteredSeries.length / seriesPerPage);
-  const startIndex = (currentPage - 1) * seriesPerPage;
-  const currentSeries = filteredSeries.slice(startIndex, startIndex + seriesPerPage);
+  // const startIndex = (currentPage - 1) * seriesPerPage;
+  // const currentSeries = filteredSeries.slice(startIndex, startIndex + seriesPerPage);
 
   return (
     <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10">
@@ -138,9 +137,10 @@ export function SeriesContent({ initialSeries }: Props) {
       {/* 시리즈 목록 */}
       <div className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-          {currentSeries.map(series => (
-            <SeriesCard key={series.slug} {...series} />
-          ))}
+          {/* TODO: SeriesCard Props를 API 응답 타입에 맞게 수정 필요 */}
+          {/* {currentSeries.map(series => (
+            <SeriesCard key={series.slug} series={series} />
+          ))} */}
         </div>
 
         {/* 페이지네이션 */}

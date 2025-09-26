@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Layout } from '@imkdw-dev/ui';
-import { recentArticles } from '../../data/mock-data';
 import { ArticlesContent } from './articles-content';
 
 export const metadata: Metadata = {
@@ -10,10 +9,21 @@ export const metadata: Metadata = {
 };
 
 export default function Articles() {
+  // TODO: ArticlesContent 컴포넌트의 Props 타입을 API 응답에 맞게 수정 필요
+  const initialArticles: Array<{
+    title: string;
+    excerpt: string;
+    publishedAt: string;
+    readTime: string;
+    tags: string[];
+    series: string;
+    slug: string;
+  }> = [];
+
   return (
     <Layout>
       <main>
-        <ArticlesContent initialArticles={recentArticles} />
+        <ArticlesContent initialArticles={initialArticles} />
       </main>
     </Layout>
   );

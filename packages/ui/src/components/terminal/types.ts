@@ -3,11 +3,7 @@ export interface TerminalCommand {
   delay?: number;
 }
 
-export interface StatItem {
-  label: string;
-  value: string;
-  color?: string;
-}
+import type { IResponseGetStatsDto } from '@imkdw-dev/types';
 
 export interface TerminalContentProps {
   commands: TerminalCommand[];
@@ -16,24 +12,15 @@ export interface TerminalContentProps {
   isClient: boolean;
 }
 
-export interface BlogInfoProps {
-  title: string;
-  description: string;
-}
-
 export interface StatsGridProps {
-  stats: StatItem[];
-}
-
-export interface TagsListProps {
-  tags: string[];
+  stats: IResponseGetStatsDto;
 }
 
 export interface Props {
   commands: TerminalCommand[];
   title: string;
   description: string;
-  stats: StatItem[];
+  stats: IResponseGetStatsDto;
   tags: string[];
   className?: string;
 }

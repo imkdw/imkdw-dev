@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Layout, TerminalSection } from '@imkdw-dev/ui';
 import { RecentSeriesSection, RecentArticlesSection, BlogStatsSection } from '../components';
-import { blogStats, terminalCommands } from '../data/mock-data';
-import { getSeriesList, getArticles } from '@imkdw-dev/actions';
+import { terminalCommands } from '../data/mock-data';
+import { getSeriesList, getArticles, getStats } from '@imkdw-dev/actions';
 import { RECENT_SERIES_CARD_COUNT } from '@/consts/series.const';
 import { RECENT_ARTICLES_COUNT } from '@/consts/article.const';
 
@@ -43,6 +43,7 @@ export const metadata: Metadata = {
 export default async function Home() {
   const series = await getSeriesList({ limit: RECENT_SERIES_CARD_COUNT, page: 1 });
   const articles = await getArticles({ limit: RECENT_ARTICLES_COUNT, page: 1 });
+  const statsData = await getStats();
 
   return (
     <Layout>
@@ -51,7 +52,7 @@ export default async function Home() {
           commands={terminalCommands}
           title="Tech Blog"
           description="학습하고 경험한 내용들을 공유하는 기술블로그 입니다"
-          stats={blogStats}
+          stats={statsData}
           tags={['Node.js', 'TypeScript', 'Nest.js', 'Prisma', 'Next.js']}
         />
 

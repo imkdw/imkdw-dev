@@ -25,6 +25,7 @@
     "@imkdw-dev/hooks": "workspace:*",
     "@imkdw-dev/toast": "workspace:*",
     "@imkdw-dev/types": "workspace:*",
+    "@imkdw-dev/utils": "workspace:*",
     "@tailwindcss/typography": "^0.5.16",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",
