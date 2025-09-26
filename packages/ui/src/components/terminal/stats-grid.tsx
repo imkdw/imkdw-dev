@@ -1,7 +1,11 @@
-import { StatsGridProps } from './types';
 import { formatNumber } from '@imkdw-dev/utils';
+import type { IResponseGetStatsDto } from '@imkdw-dev/types';
 
-export function StatsGrid({ stats }: StatsGridProps) {
+interface Props {
+  stats: IResponseGetStatsDto;
+}
+
+export function StatsGrid({ stats }: Props) {
   const statsItems = [
     {
       label: '총 게시글',

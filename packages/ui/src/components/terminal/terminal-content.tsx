@@ -1,6 +1,13 @@
-import { TerminalContentProps } from './types';
+import { TerminalCommand } from './types';
 
-export function TerminalContent({ commands, currentCommand, showCursor, isClient }: TerminalContentProps) {
+interface Props {
+  commands: TerminalCommand[];
+  currentCommand: string;
+  showCursor: boolean;
+  isClient: boolean;
+}
+
+export function TerminalContent({ commands, currentCommand, showCursor, isClient }: Props) {
   return (
     <div className="terminal-content flex-1 flex flex-col justify-center p-3 md:p-4">
       <div className="space-y-2">

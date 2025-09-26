@@ -6,7 +6,7 @@ import { TagList } from './tag-list';
 import { MetaInfoItem } from './meta-info-item';
 import Link from 'next/link';
 
-export interface Props {
+interface Props {
   title: string;
   excerpt: string;
   publishedAt: string;

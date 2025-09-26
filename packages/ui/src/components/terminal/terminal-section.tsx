@@ -4,9 +4,19 @@ import { useState, useEffect } from 'react';
 import { TerminalHeader } from './terminal-header';
 import { TerminalContent } from './terminal-content';
 import { StatsGrid } from './stats-grid';
-import { Props } from './types';
+import { TerminalCommand } from './types';
+import type { IResponseGetStatsDto } from '@imkdw-dev/types';
 import { cn } from '../../lib';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
+
+interface Props {
+  commands: TerminalCommand[];
+  title: string;
+  description: string;
+  stats: IResponseGetStatsDto;
+  tags: string[];
+  className?: string;
+}
 
 export const TerminalSection = ({ commands, title, description, stats, tags, className = '' }: Props) => {
   const [currentCommand, setCurrentCommand] = useState('');

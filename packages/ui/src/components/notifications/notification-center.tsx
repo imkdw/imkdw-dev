@@ -12,10 +12,6 @@ import {
   DropdownMenuTrigger,
 } from '../../primitives/dropdown-menu';
 
-export interface Props {
-  className?: string;
-}
-
 export function NotificationCenter() {
   // TODO: 임시 알람 제거
   const [notifications] = useState([

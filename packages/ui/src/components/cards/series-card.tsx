@@ -5,7 +5,7 @@ import { BookOpen, Clock } from 'lucide-react';
 import { LastUpdated } from './last-updated';
 import { TagList } from './tag-list';
 
-export interface Props {
+interface Props {
   series: ISeriesListItemDto;
 }
 

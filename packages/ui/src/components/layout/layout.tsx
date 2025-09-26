@@ -4,7 +4,7 @@ import { Footer } from './footer';
 import { cn } from '../../lib';
 import { getCurrentMember } from '@imkdw-dev/actions';
 
-export interface Props {
+interface Props {
   children: ReactNode;
   className?: string;
   enableOverflow?: boolean;
