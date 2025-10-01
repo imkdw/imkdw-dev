@@ -57,6 +57,7 @@ export default async function Page({
           totalPages={articlesData.totalPage}
           currentPage={currentPage}
           slug={slug}
+          totalCount={articlesData.totalCount}
         />
       </div>
     </Layout>

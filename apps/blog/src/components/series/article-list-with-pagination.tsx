@@ -10,9 +10,10 @@ interface Props {
   totalPages: number;
   currentPage: number;
   slug: string;
+  totalCount: number;
 }
 
-export function ArticleListWithPagination({ articles, totalPages, currentPage, slug }: Props) {
+export function ArticleListWithPagination({ articles, totalPages, currentPage, slug, totalCount }: Props) {
   return (
     <>
       <Card className="border-none bg-card">
@@ -32,7 +33,7 @@ export function ArticleListWithPagination({ articles, totalPages, currentPage, s
               <div className="flex-1 min-w-0">
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
                   <span className="text-sm md:text-base font-mono text-primary font-semibold">
-                    #{(index + 1).toString().padStart(2, '0')}
+                    #{(totalCount - (currentPage - 1) * articles.length - index).toString().padStart(2, '0')}
                   </span>
                   <h3 className="font-semibold text-lg md:text-xl line-clamp-2">{article.title}</h3>
                 </div>
