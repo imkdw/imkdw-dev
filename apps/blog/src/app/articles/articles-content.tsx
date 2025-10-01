@@ -116,8 +116,6 @@ export function ArticlesContent({ initialArticles }: Props) {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="latest">최신순</SelectItem>
-                  <SelectItem value="popular">인기순</SelectItem>
-                  <SelectItem value="name">이름순</SelectItem>
                 </SelectContent>
               </Select>
               <Button variant="outline" size="icon" className="flex-shrink-0">
