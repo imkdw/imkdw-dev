@@ -6,12 +6,14 @@ import { GetSeriesListDto, ResponseGetSeriesListDto } from '@/features/series/dt
 import { CreateSeriesUseCase } from '@/features/series/use-case/create-series.use-case';
 import { UpdateSeriesUseCase } from '@/features/series/use-case/update-series.use-case';
 import { GetSeriesListQuery } from '@/features/series/query/get-series-list.query';
+import { GetSeriesDetailQuery } from '@/features/series/query/get-series-detail.query';
 import * as Swagger from '@/features/series/swagger/series.swagger';
 import { MemberRoles } from '@/common/decorator/member-role.decorator';
 import { MEMBER_ROLE, API_ENDPOINTS } from '@imkdw-dev/consts';
 import { Public } from '@/common/decorator/public.decorator';
+import { SeriesDetailDto } from '@/features/series/dto/get-series-detail.dto';
 
-const { GET_SERIES_LIST, CREATE_SERIES, UPDATE_SERIES } = API_ENDPOINTS;
+const { GET_SERIES_LIST, GET_SERIES_DETAIL, CREATE_SERIES, UPDATE_SERIES } = API_ENDPOINTS;
 
 @ApiTags('시리즈')
 @Controller()
@@ -20,7 +22,8 @@ export class SeriesController {
   constructor(
     private readonly createSeriesUseCase: CreateSeriesUseCase,
     private readonly updateSeriesUseCase: UpdateSeriesUseCase,
-    private readonly getSeriesListQuery: GetSeriesListQuery
+    private readonly getSeriesListQuery: GetSeriesListQuery,
+    private readonly getSeriesDetailQuery: GetSeriesDetailQuery
   ) {}
 
   @Swagger.getSeriesList('시리즈 목록 조회')
@@ -28,6 +31,13 @@ export class SeriesController {
   @Get(GET_SERIES_LIST)
   async getSeriesList(@Query() query: GetSeriesListDto): Promise<ResponseGetSeriesListDto> {
     return this.getSeriesListQuery.execute(query);
+  }
+
+  @Swagger.getSeriesDetail('시리즈 상세 조회')
+  @Public()
+  @Get(GET_SERIES_DETAIL)
+  async getSeriesDetail(@Param('slug') slug: string): Promise<SeriesDetailDto> {
+    return this.getSeriesDetailQuery.execute(slug);
   }
 
   @Swagger.createSeries('시리즈 생성')
