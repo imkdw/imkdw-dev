@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post
 import { ApiTags } from '@nestjs/swagger';
 import { CreateArticleDto, ResponseCreateArticleDto } from '@/features/article/dto/create-article.dto';
 import { UpdateArticleDto } from '@/features/article/dto/update-article.dto';
-import { GetArticlesDto, ResponseGetArticlesDto } from '@/features/article/dto/get-articles.dto';
+import { RequestGetArticlesDto, ResponseGetArticlesDto } from '@/features/article/dto/get-articles.dto';
 import { CreateArticleUseCase } from '@/features/article/use-case/create-article.use-case';
 import { UpdateArticleUseCase } from '@/features/article/use-case/update-article.use-case';
 import { IncrementViewCountUseCase } from '@/features/article/use-case/increment-view-count.use-case';
@@ -30,7 +30,7 @@ export class ArticleController {
   @Swagger.getArticles('게시글 목록 조회')
   @Public()
   @Get(GET_ARTICLES)
-  async getArticles(@Query() query: GetArticlesDto): Promise<ResponseGetArticlesDto> {
+  async getArticles(@Query() query: RequestGetArticlesDto): Promise<ResponseGetArticlesDto> {
     return this.getArticlesQuery.execute(query);
   }
 

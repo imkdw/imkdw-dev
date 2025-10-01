@@ -6,6 +6,8 @@ import {
   IResponseGetArticlesDto,
 } from '@imkdw-dev/types';
 import { RequestOffsetPagingDto, ResponseOffsetPagingDto } from '@/common/dto/offset-paging.dto';
+import { IsOptional } from 'class-validator';
+import { IsNotEmptyString } from '@/common/decorator/is-not-empty-string.decorator';
 
 export class ArticleSeriesDto implements IArticleSeriesDto {
   @ApiProperty({ description: '시리즈 ID', example: '123e4567-e89b-12d3-a456-426614174000' })
@@ -41,7 +43,12 @@ export class ArticleListItemDto implements IArticleListItemDto {
   series: ArticleSeriesDto;
 }
 
-export class GetArticlesDto extends RequestOffsetPagingDto implements IRequestGetArticlesDto {}
+export class RequestGetArticlesDto extends RequestOffsetPagingDto implements IRequestGetArticlesDto {
+  @ApiProperty({ description: '시리즈 아이디', example: '123e4567-e89b-12d3-a456-426614174000' })
+  @IsNotEmptyString()
+  @IsOptional()
+  seriesId?: string;
+}
 
 export class ResponseGetArticlesDto extends ResponseOffsetPagingDto implements IResponseGetArticlesDto {
   @ApiProperty({ type: [ArticleListItemDto], description: '게시글 목록' })

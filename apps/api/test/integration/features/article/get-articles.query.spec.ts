@@ -290,4 +290,123 @@ describe('GetArticlesQuery', () => {
       });
     });
   });
+
+  describe('특정 시리즈의 게시글만 조회할 때', () => {
+    let series1: Series;
+    let series2: Series;
+
+    beforeEach(async () => {
+      [series1, series2] = await Promise.all([
+        createTestSeries(prisma, {
+          title: '시리즈 A',
+          slug: 'series-a',
+        }),
+        createTestSeries(prisma, {
+          title: '시리즈 B',
+          slug: 'series-b',
+        }),
+      ]);
+
+      await Promise.all([
+        createTestArticle(prisma, {
+          seriesId: series1.id,
+          title: 'A 시리즈 게시글 1',
+          slug: 'series-a-article-1',
+          createdAt: new Date('2025-01-01T00:00:00Z'),
+        }),
+        createTestArticle(prisma, {
+          seriesId: series1.id,
+          title: 'A 시리즈 게시글 2',
+          slug: 'series-a-article-2',
+          createdAt: new Date('2025-01-02T00:00:00Z'),
+        }),
+        createTestArticle(prisma, {
+          seriesId: series1.id,
+          title: 'A 시리즈 게시글 3',
+          slug: 'series-a-article-3',
+          createdAt: new Date('2025-01-03T00:00:00Z'),
+        }),
+        createTestArticle(prisma, {
+          seriesId: series2.id,
+          title: 'B 시리즈 게시글 1',
+          slug: 'series-b-article-1',
+          createdAt: new Date('2025-01-04T00:00:00Z'),
+        }),
+        createTestArticle(prisma, {
+          seriesId: series2.id,
+          title: 'B 시리즈 게시글 2',
+          slug: 'series-b-article-2',
+          createdAt: new Date('2025-01-05T00:00:00Z'),
+        }),
+      ]);
+    });
+
+    describe('시리즈 A의 게시글만 조회하면', () => {
+      it('시리즈 A에 속한 게시글만 반환되어야 한다', async () => {
+        const result = await sut.execute({ limit: 10, page: 1, seriesId: series1.id });
+
+        expect(result.items).toHaveLength(3);
+        expect(result.totalCount).toBe(3);
+        expect(result.totalPage).toBe(1);
+
+        result.items.forEach(item => {
+          expect(item.series.id).toBe(series1.id);
+          expect(item.series.title).toBe('시리즈 A');
+        });
+
+        const titles = result.items.map(item => item.title);
+        expect(titles).toContain('A 시리즈 게시글 1');
+        expect(titles).toContain('A 시리즈 게시글 2');
+        expect(titles).toContain('A 시리즈 게시글 3');
+      });
+    });
+
+    describe('시리즈 B의 게시글만 조회하면', () => {
+      it('시리즈 B에 속한 게시글만 반환되어야 한다', async () => {
+        const result = await sut.execute({ limit: 10, page: 1, seriesId: series2.id });
+
+        expect(result.items).toHaveLength(2);
+        expect(result.totalCount).toBe(2);
+        expect(result.totalPage).toBe(1);
+
+        result.items.forEach(item => {
+          expect(item.series.id).toBe(series2.id);
+          expect(item.series.title).toBe('시리즈 B');
+        });
+
+        const titles = result.items.map(item => item.title);
+        expect(titles).toContain('B 시리즈 게시글 1');
+        expect(titles).toContain('B 시리즈 게시글 2');
+      });
+    });
+
+    describe('시리즈 필터링과 페이지네이션을 함께 사용하면', () => {
+      it('필터링된 결과에서 페이지네이션이 올바르게 작동해야 한다', async () => {
+        const result = await sut.execute({ limit: 2, page: 1, seriesId: series1.id });
+
+        expect(result.items).toHaveLength(2);
+        expect(result.totalCount).toBe(3);
+        expect(result.totalPage).toBe(2);
+        expect(result.havePrev).toBe(false);
+        expect(result.haveNext).toBe(true);
+
+        const secondPage = await sut.execute({ limit: 2, page: 2, seriesId: series1.id });
+
+        expect(secondPage.items).toHaveLength(1);
+        expect(secondPage.havePrev).toBe(true);
+        expect(secondPage.haveNext).toBe(false);
+      });
+    });
+
+    describe('존재하지 않는 시리즈 ID로 조회하면', () => {
+      it('빈 배열을 반환해야 한다', async () => {
+        const nonExistentSeriesId = '00000000-0000-0000-0000-000000000000';
+        const result = await sut.execute({ limit: 10, page: 1, seriesId: nonExistentSeriesId });
+
+        expect(result.items).toEqual([]);
+        expect(result.totalCount).toBe(0);
+        expect(result.totalPage).toBe(0);
+      });
+    });
+  });
 });

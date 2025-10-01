@@ -1,25 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { createOffset, getOffsetPagingResult } from '@/common/function/offset-paging.function';
-import { GetArticlesDto, ResponseGetArticlesDto, ArticleListItemDto } from '@/features/article/dto/get-articles.dto';
+import {
+  RequestGetArticlesDto,
+  ResponseGetArticlesDto,
+  ArticleListItemDto,
+} from '@/features/article/dto/get-articles.dto';
 
 @Injectable()
 export class GetArticlesQuery {
   constructor(private readonly prisma: PrismaService) {}
 
-  async execute(params: GetArticlesDto): Promise<ResponseGetArticlesDto> {
-    const { limit, page } = params;
+  async execute(params: RequestGetArticlesDto): Promise<ResponseGetArticlesDto> {
+    const { limit, page, seriesId } = params;
     const { offset } = createOffset(limit, page);
+
+    const whereCondition = {
+      deletedAt: null,
+      ...(seriesId && { seriesId }),
+    };
 
     const [items, totalCount] = await Promise.all([
       this.prisma.article.findMany({
-        where: { deletedAt: null },
+        where: whereCondition,
         orderBy: { createdAt: 'desc' },
         skip: offset,
         take: limit,
         include: { series: true },
       }),
-      this.prisma.article.count({ where: { deletedAt: null } }),
+      this.prisma.article.count({ where: whereCondition }),
     ]);
 
     const articles = items.map(
