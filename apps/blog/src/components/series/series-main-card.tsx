@@ -1,10 +1,10 @@
 import { Card, CardContent, Badge } from '@imkdw-dev/ui';
 import { BookOpen } from 'lucide-react';
 import { SeriesActions } from './series-actions';
-import type { SeriesData } from '../../types/series';
+import type { ISeriesDetailDto } from '@imkdw-dev/types';
 
 interface Props {
-  seriesData: Pick<SeriesData, 'title' | 'description' | 'tags'>;
+  seriesData: ISeriesDetailDto;
 }
 
 export function SeriesMainCard({ seriesData }: Props) {
@@ -39,11 +39,11 @@ export function SeriesMainCard({ seriesData }: Props) {
           <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-8">
             {seriesData.tags.map(tag => (
               <Badge
-                key={tag}
+                key={tag.id}
                 variant="secondary"
                 className="px-3 py-1 text-sm font-medium bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 hover-scale"
               >
-                #{tag}
+                #{tag.name}
               </Badge>
             ))}
           </div>

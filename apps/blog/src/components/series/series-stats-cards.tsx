@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@imkdw-dev/ui';
 import { BookOpen, Clock, Calendar, LucideIcon } from 'lucide-react';
-import type { SeriesData } from '../../types/series';
+import type { ISeriesDetailDto } from '@imkdw-dev/types';
 
 interface StatCardProps {
   icon: LucideIcon;
@@ -11,7 +11,7 @@ interface StatCardProps {
 }
 
 interface Props {
-  seriesData: Pick<SeriesData, 'totalArticles' | 'totalReadTime' | 'createdAt' | 'updatedAt'>;
+  seriesData: ISeriesDetailDto;
 }
 
 function StatCard({ icon: Icon, value, label, colorClass, valueClass = 'text-2xl md:text-3xl' }: StatCardProps) {
@@ -31,31 +31,46 @@ function StatCard({ icon: Icon, value, label, colorClass, valueClass = 'text-2xl
 }
 
 export function SeriesStatsCards({ seriesData }: Props) {
+  const formatMinutes = (minutes: number): string => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    if (hours > 0) {
+      return mins > 0 ? `${hours}시간 ${mins}분` : `${hours}시간`;
+    }
+    return `${mins}분`;
+  };
+
+  const formatDate = (date: Date | string | null): string => {
+    if (!date) return '-';
+    const d = new Date(date);
+    return d.toISOString().split('T')[0];
+  };
+
   const statsData = [
     {
       icon: BookOpen,
-      value: seriesData.totalArticles,
+      value: seriesData.articleCount,
       label: '총 글 수',
       colorClass: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
       valueClass: 'text-2xl md:text-3xl',
     },
     {
       icon: Clock,
-      value: seriesData.totalReadTime,
+      value: formatMinutes(seriesData.totalReadMinute),
       label: '총 읽기 시간',
       colorClass: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
       valueClass: 'text-lg md:text-xl',
     },
     {
       icon: Calendar,
-      value: seriesData.updatedAt,
+      value: formatDate(seriesData.lastArticleCreatedAt),
       label: '최근 업데이트',
       colorClass: 'bg-purple-500/10 text-purple-600 dark:text-purple-400',
       valueClass: 'text-sm md:text-base',
     },
     {
       icon: Calendar,
-      value: seriesData.createdAt,
+      value: formatDate(seriesData.createdAt),
       label: '시리즈 생성일',
       colorClass: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400',
       valueClass: 'text-sm md:text-base',

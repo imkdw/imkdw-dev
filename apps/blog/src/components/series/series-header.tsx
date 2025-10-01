@@ -1,9 +1,9 @@
 import { SeriesMainCard } from './series-main-card';
 import { SeriesStatsCards } from './series-stats-cards';
-import type { SeriesData } from '../../types/series';
+import type { ISeriesDetailDto } from '@imkdw-dev/types';
 
 interface Props {
-  seriesData: SeriesData;
+  seriesData: ISeriesDetailDto;
 }
 
 export function SeriesHeader({ seriesData }: Props) {
