@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { BookOpen, Clock, Search, Filter } from 'lucide-react';
+import type { ISeriesListItemDto } from '@imkdw-dev/types';
 import {
   Button,
   Input,
@@ -19,15 +20,7 @@ import {
 } from '@imkdw-dev/ui';
 
 interface Props {
-  initialSeries: Array<{
-    title: string;
-    description: string;
-    articleCount: number;
-    totalReadTime: string;
-    tags: string[];
-    slug: string;
-    lastUpdated: string;
-  }>;
+  initialSeries: ISeriesListItemDto[];
 }
 
 export function SeriesContent({ initialSeries }: Props) {
@@ -43,7 +36,7 @@ export function SeriesContent({ initialSeries }: Props) {
     const matchesSearch =
       series.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       series.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesTag = selectedTag === 'all' || series.tags.includes(selectedTag);
+    const matchesTag = selectedTag === 'all' || series.tags.some(tag => tag.name === selectedTag);
     return matchesSearch && matchesTag;
   });
 

@@ -16,7 +16,9 @@ export interface IArticleListItemDto {
   series: IArticleSeriesDto;
 }
 
-export interface IRequestGetArticlesDto extends IRequestOffsetPagingDto {}
+export interface IRequestGetArticlesDto extends IRequestOffsetPagingDto {
+  seriesId?: string;
+}
 
 export interface IResponseGetArticlesDto extends IResponseOffsetPagingDto {
   items: IArticleListItemDto[];

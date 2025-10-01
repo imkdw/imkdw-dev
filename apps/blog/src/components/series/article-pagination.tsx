@@ -1,5 +1,3 @@
-'use client';
-
 import {
   Pagination,
   PaginationContent,
@@ -12,13 +10,15 @@ import {
 interface ArticlePaginationProps {
   totalPages: number;
   currentPage: number;
-  onPageChange: (page: number) => void;
+  slug: string;
 }
 
-export function ArticlePagination({ totalPages, currentPage, onPageChange }: ArticlePaginationProps) {
+export function ArticlePagination({ totalPages, currentPage, slug }: ArticlePaginationProps) {
   if (totalPages <= 1) {
     return null;
   }
+
+  const createPageUrl = (page: number) => `/series/${slug}?page=${page}`;
 
   return (
     <div className="mt-8 flex justify-center">
@@ -26,25 +26,14 @@ export function ArticlePagination({ totalPages, currentPage, onPageChange }: Art
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
-              href="#"
-              onClick={e => {
-                e.preventDefault();
-                if (currentPage > 1) onPageChange(currentPage - 1);
-              }}
+              href={currentPage > 1 ? createPageUrl(currentPage - 1) : '#'}
               className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
             />
           </PaginationItem>
 
           {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
             <PaginationItem key={page}>
-              <PaginationLink
-                href="#"
-                isActive={page === currentPage}
-                onClick={e => {
-                  e.preventDefault();
-                  onPageChange(page);
-                }}
-              >
+              <PaginationLink href={createPageUrl(page)} isActive={page === currentPage}>
                 {page}
               </PaginationLink>
             </PaginationItem>
@@ -52,11 +41,7 @@ export function ArticlePagination({ totalPages, currentPage, onPageChange }: Art
 
           <PaginationItem>
             <PaginationNext
-              href="#"
-              onClick={e => {
-                e.preventDefault();
-                if (currentPage < totalPages) onPageChange(currentPage + 1);
-              }}
+              href={currentPage < totalPages ? createPageUrl(currentPage + 1) : '#'}
               className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
             />
           </PaginationItem>

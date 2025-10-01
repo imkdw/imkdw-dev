@@ -3,7 +3,8 @@ import { Layout } from '@imkdw-dev/ui';
 import { SeriesBackButton } from '../../../components/series/series-back-button';
 import { SeriesHeader } from '../../../components/series/series-header';
 import { ArticleListWithPagination } from '../../../components/series/article-list-with-pagination';
-import { getSeriesDetail } from '@imkdw-dev/actions';
+import { getSeriesDetail, getArticles } from '@imkdw-dev/actions';
+import { SERIES_ARTICLES_PER_PAGE } from '@/consts/article.const';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -28,16 +29,35 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ page?: string }>;
+}) {
   const { slug } = await params;
+  const { page } = await searchParams;
+  const currentPage = Number(page) || 1;
+
   const seriesData = await getSeriesDetail(slug);
+  const articlesData = await getArticles({
+    seriesId: seriesData.id,
+    limit: SERIES_ARTICLES_PER_PAGE,
+    page: currentPage,
+  });
 
   return (
     <Layout>
       <div className="max-w-4xl mx-auto py-6 px-4">
         <SeriesBackButton />
         <SeriesHeader seriesData={seriesData} />
-        <ArticleListWithPagination articles={[]} />
+        <ArticleListWithPagination
+          articles={articlesData.items}
+          totalPages={articlesData.totalPage}
+          currentPage={currentPage}
+          slug={slug}
+        />
       </div>
     </Layout>
   );

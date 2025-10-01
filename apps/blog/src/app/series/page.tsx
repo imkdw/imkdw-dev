@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Layout } from '@imkdw-dev/ui';
-import { mockSeries } from '../../data/mock-data';
 import { SeriesContent } from './series-content';
+import { getSeriesList } from '@imkdw-dev/actions';
 
 export const metadata: Metadata = {
   title: '시리즈 - @imkdw-dev/blog',
@@ -9,11 +9,16 @@ export const metadata: Metadata = {
   keywords: ['시리즈', '튜토리얼', '학습 가이드', '프로그래밍', '개발'],
 };
 
-export default function Series() {
+export default async function Series() {
+  const seriesData = await getSeriesList({
+    limit: 100,
+    page: 1,
+  });
+
   return (
     <Layout>
       <main>
-        <SeriesContent initialSeries={mockSeries} />
+        <SeriesContent initialSeries={seriesData.items} />
       </main>
     </Layout>
   );

@@ -1,4 +1,5 @@
 import { Card, CardContent } from '@imkdw-dev/ui';
+import { formatDate } from '@imkdw-dev/utils';
 import { BookOpen, Clock, Calendar, LucideIcon } from 'lucide-react';
 import type { ISeriesDetailDto } from '@imkdw-dev/types';
 
@@ -40,12 +41,6 @@ export function SeriesStatsCards({ seriesData }: Props) {
     return `${mins}분`;
   };
 
-  const formatDate = (date: Date | string | null): string => {
-    if (!date) return '-';
-    const d = new Date(date);
-    return d.toISOString().split('T')[0];
-  };
-
   const statsData = [
     {
       icon: BookOpen,
@@ -63,7 +58,7 @@ export function SeriesStatsCards({ seriesData }: Props) {
     },
     {
       icon: Calendar,
-      value: formatDate(seriesData.lastArticleCreatedAt),
+      value: seriesData.lastArticleCreatedAt ? formatDate(seriesData.lastArticleCreatedAt) : '-',
       label: '최근 업데이트',
       colorClass: 'bg-purple-500/10 text-purple-600 dark:text-purple-400',
       valueClass: 'text-sm md:text-base',

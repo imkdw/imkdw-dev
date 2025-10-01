@@ -17,7 +17,7 @@ async function main() {
       await tx.member.deleteMany();
 
       const members: Member[] = [];
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 20; i++) {
         const firstName = faker.person.firstName();
         const lastName = faker.person.lastName();
         const member = await tx.member.create({
@@ -64,6 +64,7 @@ async function main() {
         'React Best Practices',
         'Backend with NestJS',
         'Full-Stack Development',
+        'Frontend Development',
       ];
 
       for (const title of seriesTitles) {
@@ -82,7 +83,7 @@ async function main() {
       }
 
       const articles: Article[] = [];
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 100; i++) {
         const title = faker.lorem.sentence({ min: 3, max: 8 });
         const slug = title
           .toLowerCase()
