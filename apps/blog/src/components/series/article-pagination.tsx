@@ -20,6 +20,29 @@ export function ArticlePagination({ totalPages, currentPage, slug }: ArticlePagi
 
   const createPageUrl = (page: number) => `/series/${slug}?page=${page}`;
 
+  const getPageRange = () => {
+    const pages: number[] = [];
+
+    if (totalPages <= 3) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      let start = Math.max(1, currentPage - 1);
+      const end = Math.min(totalPages, start + 2);
+
+      if (end === totalPages) {
+        start = Math.max(1, end - 2);
+      }
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+    }
+
+    return pages;
+  };
+
   return (
     <div className="mt-8 flex justify-center">
       <Pagination>
@@ -31,7 +54,7 @@ export function ArticlePagination({ totalPages, currentPage, slug }: ArticlePagi
             />
           </PaginationItem>
 
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+          {getPageRange().map(page => (
             <PaginationItem key={page}>
               <PaginationLink href={createPageUrl(page)} isActive={page === currentPage}>
                 {page}

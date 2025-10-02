@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Layout, SeriesCard } from '@imkdw-dev/ui';
 import { getSeriesList, getStats } from '@imkdw-dev/actions';
-import { SERIES_PER_PAGE } from '@/consts/article.const';
+import { SERIES_PER_PAGE } from '@/consts/series.const';
 import { SeriesPagination } from '@/components/series/series-pagination';
 import { BookOpen, Clock } from 'lucide-react';
 

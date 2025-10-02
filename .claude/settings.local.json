@@ -70,7 +70,8 @@
       "WebFetch(domain:www.npmjs.com)",
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"예\" pnpm setup:test)",
       "mcp__serena__find_file",
-      "mcp__serena__find_symbol"
+      "mcp__serena__find_symbol",
+      "mcp__serena__read_file"
     ],
     "deny": [],
     "ask": []
