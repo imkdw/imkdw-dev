@@ -5,6 +5,7 @@ import { AUTH_ENDPOINTS } from './auth.const';
 import { MEMBER_ENDPOINTS } from './member.const';
 import { SERIES_ENDPOINTS } from './series.const';
 import { STATS_ENDPOINTS } from './stats.const';
+import { TAG_ENDPOINTS } from './tag.const';
 
 export const API_ENDPOINTS = {
   ...APP_ENDPOINTS,
@@ -14,4 +15,5 @@ export const API_ENDPOINTS = {
   ...MEMBER_ENDPOINTS,
   ...SERIES_ENDPOINTS,
   ...STATS_ENDPOINTS,
+  ...TAG_ENDPOINTS,
 } as const;

@@ -5,3 +5,4 @@ export * from './common';
 export * from './member';
 export * from './series';
 export * from './stats';
+export * from './tag';

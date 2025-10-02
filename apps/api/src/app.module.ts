@@ -14,6 +14,7 @@ import { CookieToAuthMiddleware } from '@/common/middleware/cookie-to-auth.middl
 import { MemberRoleGuard } from '@/common/guards/member-role.guard';
 import { TransformInterceptor } from '@/common/interceptor/transform.interceptor';
 import { StatsModule } from '@/features/stats/stats.module';
+import { TagModule } from '@/features/tag/tag.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { StatsModule } from '@/features/stats/stats.module';
     SeriesModule,
     MemberModule,
     StatsModule,
+    TagModule,
   ],
   controllers: [AppController],
   providers: [
