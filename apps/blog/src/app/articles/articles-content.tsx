@@ -20,7 +20,6 @@ export function ArticlesContent({ articlesData, tags, currentPage }: Props) {
 
   const { items: articles, totalCount, totalPage } = articlesData;
 
-  // 클라이언트 사이드 필터링 (검색만 적용)
   const filteredArticles = articles.filter(article => {
     const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesSearch;
@@ -29,7 +28,6 @@ export function ArticlesContent({ articlesData, tags, currentPage }: Props) {
   return (
     <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10">
       <ArticlesHeader totalArticles={totalCount} totalTags={tags.length} />
-
       <ArticlesFilter
         searchQuery={searchQuery}
         selectedTag={selectedTag}
@@ -39,9 +37,7 @@ export function ArticlesContent({ articlesData, tags, currentPage }: Props) {
         onTagChange={setSelectedTag}
         onSortChange={setSortBy}
       />
-
       <ArticlesList articles={filteredArticles} />
-
       <ArticlesPagination totalPages={totalPage} currentPage={currentPage} />
     </div>
   );

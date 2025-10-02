@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IArticleListItemDto,
   IArticleSeriesDto,
+  IArticleTagDto,
   IRequestGetArticlesDto,
   IResponseGetArticlesDto,
 } from '@imkdw-dev/types';
@@ -20,6 +21,14 @@ export class ArticleSeriesDto implements IArticleSeriesDto {
   slug: string;
 }
 
+export class ArticleTagDto implements IArticleTagDto {
+  @ApiProperty({ description: '태그 ID', example: 'nodejs' })
+  id: string;
+
+  @ApiProperty({ description: '태그 이름', example: 'Node.js' })
+  name: string;
+}
+
 export class ArticleListItemDto implements IArticleListItemDto {
   @ApiProperty({ description: '게시글 ID', example: '123e4567-e89b-12d3-a456-426614174000' })
   id: string;
@@ -29,6 +38,12 @@ export class ArticleListItemDto implements IArticleListItemDto {
 
   @ApiProperty({ description: '게시글 슬러그', example: 'understanding-nodejs-event-loop' })
   slug: string;
+
+  @ApiProperty({
+    description: '게시글 내용 (200자 제한)',
+    example: 'Node.js의 이벤트 루프는 비동기 작업을 처리하는 핵심 메커니즘입니다...',
+  })
+  content: string;
 
   @ApiProperty({ description: '조회수', example: 1250 })
   viewCount: number;
@@ -41,6 +56,9 @@ export class ArticleListItemDto implements IArticleListItemDto {
 
   @ApiProperty({ type: ArticleSeriesDto, description: '시리즈 정보' })
   series: ArticleSeriesDto;
+
+  @ApiProperty({ type: [ArticleTagDto], description: '태그 목록' })
+  tags: ArticleTagDto[];
 }
 
 export class RequestGetArticlesDto extends RequestOffsetPagingDto implements IRequestGetArticlesDto {

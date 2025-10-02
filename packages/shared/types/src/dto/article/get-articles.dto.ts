@@ -6,14 +6,21 @@ export interface IArticleSeriesDto {
   slug: string;
 }
 
+export interface IArticleTagDto {
+  id: string;
+  name: string;
+}
+
 export interface IArticleListItemDto {
   id: string;
   title: string;
   slug: string;
+  content: string;
   viewCount: number;
   readMinute: number;
   createdAt: Date;
   series: IArticleSeriesDto;
+  tags: IArticleTagDto[];
 }
 
 export interface IRequestGetArticlesDto extends IRequestOffsetPagingDto {

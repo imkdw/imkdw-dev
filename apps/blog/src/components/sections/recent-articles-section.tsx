@@ -35,26 +35,9 @@ export function RecentArticlesSection({ articles }: Props) {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
         {articles.slice(0, 4).map((article, index) => (
-          <Link
-            href={`/articles/${article.slug}`}
-            key={article.slug}
-            className="bounce-in h-full"
-            style={{ animationDelay: `${(index + 2) * 0.1}s` }}
-          >
-            <ArticleCard
-              title={article.title}
-              excerpt="게시글 미리보기 내용입니다. (임시)"
-              publishedAt={new Date(article.createdAt).toLocaleDateString('ko-KR', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-              readTime={`${article.readMinute}분`}
-              tags={['React', 'TypeScript']}
-              series={article.series.title}
-              slug={article.slug}
-            />
-          </Link>
+          <div key={article.slug} className="bounce-in h-full" style={{ animationDelay: `${(index + 2) * 0.1}s` }}>
+            <ArticleCard article={article} />
+          </div>
         ))}
       </div>
     </section>

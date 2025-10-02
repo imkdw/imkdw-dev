@@ -5,3 +5,5 @@ export const ARTICLE_MAX_SLUG_LENGTH = 100;
 export const ARTICLE_MAX_CONTENT_LENGTH = 65_000;
 
 export const ARTICLE_MAX_TAGS = 4;
+
+export const ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST = 200;

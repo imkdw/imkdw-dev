@@ -2,10 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { createOffset, getOffsetPagingResult } from '@/common/function/offset-paging.function';
 import {
+  ArticleListItemDto,
+  ArticleTagDto,
   RequestGetArticlesDto,
   ResponseGetArticlesDto,
-  ArticleListItemDto,
 } from '@/features/article/dto/get-articles.dto';
+import { ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST } from '@imkdw-dev/consts';
 
 @Injectable()
 export class GetArticlesQuery {
@@ -26,7 +28,12 @@ export class GetArticlesQuery {
         orderBy: { createdAt: 'desc' },
         skip: offset,
         take: limit,
-        include: { series: true },
+        include: {
+          series: true,
+          tags: {
+            include: { tag: true },
+          },
+        },
       }),
       this.prisma.article.count({ where: whereCondition }),
     ]);
@@ -36,6 +43,7 @@ export class GetArticlesQuery {
         id: item.id,
         title: item.title,
         slug: item.slug,
+        content: item.content.slice(0, ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST),
         viewCount: item.viewCount,
         readMinute: item.readMinute,
         createdAt: item.createdAt,
@@ -44,6 +52,12 @@ export class GetArticlesQuery {
           title: item.series.title,
           slug: item.series.slug,
         },
+        tags: item.tags.map(
+          (at): ArticleTagDto => ({
+            id: at.tag.id,
+            name: at.tag.name,
+          })
+        ),
       })
     );
 
