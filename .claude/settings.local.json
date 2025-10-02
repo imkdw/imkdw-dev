@@ -72,7 +72,8 @@
       "mcp__serena__find_file",
       "mcp__serena__find_symbol",
       "mcp__serena__read_file",
-      "mcp__serena__list_dir"
+      "mcp__serena__list_dir",
+      "mcp__serena__activate_project"
     ],
     "deny": [],
     "ask": []

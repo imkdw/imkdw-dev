@@ -18,6 +18,7 @@ import {
   PaginationPrevious,
   ArticleCard,
 } from '@imkdw-dev/ui';
+import { ITagDto } from '@imkdw-dev/types';
 
 interface Props {
   initialArticles: Array<{
@@ -29,28 +30,17 @@ interface Props {
     series: string;
     slug: string;
   }>;
+  initialTags: ITagDto[];
 }
 
-export function ArticlesContent({ initialArticles }: Props) {
+export function ArticlesContent({ initialArticles, initialTags }: Props) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState('latest');
   const articlesPerPage = 12;
 
-  const tags = [
-    'all',
-    'React',
-    'TypeScript',
-    'Node.js',
-    'Next.js',
-    'AWS',
-    'Docker',
-    'Vue.js',
-    'GraphQL',
-    'Python',
-    'Kubernetes',
-  ];
+  const tags = ['all', ...initialTags.map(tag => tag.name)];
 
   const filteredArticles = initialArticles.filter(article => {
     const matchesSearch =
@@ -88,7 +78,7 @@ export function ArticlesContent({ initialArticles }: Props) {
             <div className="flex items-center justify-between">
               <div className="min-w-0 flex-1">
                 <p className="text-xs md:text-sm text-muted-foreground truncate">태그</p>
-                <p className="text-lg md:text-2xl font-bold">{tags.length - 1}</p>
+                <p className="text-lg md:text-2xl font-bold">{initialTags.length}</p>
               </div>
               <Tag className="h-6 w-6 md:h-8 md:w-8 text-primary flex-shrink-0" />
             </div>

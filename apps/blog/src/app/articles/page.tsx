@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Layout } from '@imkdw-dev/ui';
 import { ArticlesContent } from './articles-content';
+import { getTagList } from '@imkdw-dev/actions';
 
 export const metadata: Metadata = {
   title: '게시글 - @imkdw-dev/blog',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
   keywords: ['게시글', '개발', '프로그래밍', '기술', '튜토리얼'],
 };
 
-export default function Articles() {
+export default async function Articles() {
   // TODO: ArticlesContent 컴포넌트의 Props 타입을 API 응답에 맞게 수정 필요
   const initialArticles: Array<{
     title: string;
@@ -20,10 +21,12 @@ export default function Articles() {
     slug: string;
   }> = [];
 
+  const tags = await getTagList();
+
   return (
     <Layout>
       <main>
-        <ArticlesContent initialArticles={initialArticles} />
+        <ArticlesContent initialArticles={initialArticles} initialTags={tags} />
       </main>
     </Layout>
   );
