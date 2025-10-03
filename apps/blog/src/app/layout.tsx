@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { pretendard } from '@imkdw-dev/fonts';
+import '@imkdw-dev/ui/global.css';
 
-import './globals.css';
 import { Providers } from '../components/providers';
 import { MobileSidebar } from '../components/sidebar/mobile-sidebar';
 

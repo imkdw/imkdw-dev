@@ -3,14 +3,14 @@ services:
     image: postgres:16.4
     container_name: imkdw-dev-postgres
     ports:
-      - '5432:5432'
+      - '6432:5432'
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: imkdw-dev
       POSTGRES_INITDB_ARGS: '--auth-host=scram-sha-256 --auth-local=scram-sha-256'
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d imkdw-dev"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d imkdw-dev']
       interval: 2s
       timeout: 5s
       retries: 10

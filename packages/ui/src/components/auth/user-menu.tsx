@@ -49,7 +49,7 @@ export function UserMenu({ currentMember: user, onLogin, onLogout }: Props) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Link href={`/articles/new`} className="flex items-center justify-center">
+          <Link href={`/articles/create`} className="flex items-center justify-center">
             <Edit className="mr-2 h-4 w-4" />
             <span>글 작성</span>
           </Link>
