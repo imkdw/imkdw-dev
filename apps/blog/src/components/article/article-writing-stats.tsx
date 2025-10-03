@@ -10,7 +10,7 @@ export function ArticleWritingStats({ content }: Props) {
   const readingTime = Math.max(1, Math.ceil(wordCount / 200));
 
   return (
-    <Card className="p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow bg-gradient-to-br from-card to-muted/20">
+    <Card className="p-4 sm:p-6 shadow-sm hover:shadow-md">
       <h3 className="font-semibold text-base mb-4 flex items-center gap-2">
         <span className="w-1 h-5 bg-primary rounded-full"></span>
         작성 통계

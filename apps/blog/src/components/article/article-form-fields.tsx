@@ -15,16 +15,20 @@ export function ArticleFormFields({ title, slug, content, onTitleChange, onSlugC
       <div className="space-y-6">
         <div className="space-y-5">
           <div>
+            <label className="text-sm font-semibold text-foreground mb-2.5 flex items-center gap-2">
+              <span className="w-1 h-4 bg-primary rounded-full"></span>
+              제목
+            </label>
             <Input
               placeholder="게시글 제목을 입력하세요..."
               value={title}
               onChange={e => onTitleChange(e.target.value)}
-              className="text-2xl sm:text-3xl font-bold border-none px-0 py-3 sm:py-4 focus-visible:ring-0 placeholder:text-muted-foreground/40 hover:placeholder:text-muted-foreground/60 transition-colors"
+              className="text-xl px-0 py-3 sm:py-4 p-2"
             />
           </div>
 
-          <div className="border-t pt-5">
-            <label className="text-sm font-semibold text-foreground mb-2.5 block flex items-center gap-2">
+          <div className="pt-5">
+            <label className="text-sm font-semibold text-foreground mb-2.5 flex items-center gap-2">
               <span className="w-1 h-4 bg-primary rounded-full"></span>
               URL Slug
             </label>
@@ -36,14 +40,15 @@ export function ArticleFormFields({ title, slug, content, onTitleChange, onSlugC
             />
             <p className="text-xs text-muted-foreground/80 mt-2 flex items-center gap-1.5">
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/50"></span>
-              게시글 URL: <code className="px-1.5 py-0.5 bg-muted rounded text-primary">/articles/{slug || 'your-slug'}</code>
+              게시글 URL:{' '}
+              <code className="px-1.5 py-0.5 bg-muted rounded text-primary">/articles/{slug || 'your-slug'}</code>
             </p>
           </div>
         </div>
 
         {/* Content Editor */}
-        <div className="min-h-[500px] border-t pt-5">
-          <label className="text-sm font-semibold text-foreground mb-3 block flex items-center gap-2">
+        <div className="min-h-[500px] pt-5">
+          <label className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
             <span className="w-1 h-4 bg-primary rounded-full"></span>
             본문
           </label>

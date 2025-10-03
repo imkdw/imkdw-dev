@@ -11,7 +11,7 @@ export function ArticleFormHeader({ mode, onSaveDraft, onPublish }: Props) {
   const title = mode === 'create' ? '게시글 작성' : '게시글 수정';
 
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 lg:mb-8 pb-6 border-b">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 lg:mb-8 pb-6">
       <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
         {title}
       </h1>

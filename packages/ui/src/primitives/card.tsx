@@ -2,7 +2,15 @@ import { HTMLAttributes } from 'react';
 import { cn } from '../lib/utils';
 
 export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('rounded-lg text-card-foreground shadow-sm', className)} {...props} />;
+  return (
+    <div
+      className={cn(
+        'transition-shadow bg-gradient-to-br from-card to-muted/20 rounded-lg text-card-foreground shadow-sm',
+        className
+      )}
+      {...props}
+    />
+  );
 }
 
 export function CardHeader({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
