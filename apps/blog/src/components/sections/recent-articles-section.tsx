@@ -10,7 +10,7 @@ interface Props {
   articles: IArticleListItemDto[];
 }
 
-export function RecentArticlesSection({ articles }: Props) {
+export function RecentArticles({ articles }: Props) {
   return (
     <section className="bg-background border border-border rounded-lg p-4 md:p-6">
       <div className="flex items-center justify-between mb-6">

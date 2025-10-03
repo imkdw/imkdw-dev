@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Layout, TerminalSection } from '@imkdw-dev/ui';
-import { RecentSeriesSection, RecentArticlesSection } from '../components';
+import { RecentSeries, RecentArticles } from '../components';
 import { terminalCommands } from '../data/mock-data';
 import { getSeriesList, getArticles, getStats } from '@imkdw-dev/actions';
 import { RECENT_SERIES_CARD_COUNT } from '@/consts/series.const';
@@ -57,8 +57,8 @@ export default async function Home() {
         />
 
         <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10 space-y-8 md:space-y-10">
-          <RecentSeriesSection seriesList={series.items} />
-          <RecentArticlesSection articles={articles.items} />
+          <RecentSeries seriesList={series.items} />
+          <RecentArticles articles={articles.items} />
         </div>
       </div>
     </Layout>
