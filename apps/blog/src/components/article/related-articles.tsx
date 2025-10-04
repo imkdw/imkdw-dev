@@ -1,11 +1,11 @@
 import { Calendar, Clock } from 'lucide-react';
 import { RelatedArticle } from '../../types/article';
 
-interface RelatedArticlesProps {
+interface Props {
   articles: RelatedArticle[];
 }
 
-export function RelatedArticles({ articles }: RelatedArticlesProps) {
+export function RelatedArticles({ articles }: Props) {
   return (
     <div className="mt-12 pt-8 border-t border-border">
       <h3 className="text-lg font-semibold mb-6">관련 글</h3>

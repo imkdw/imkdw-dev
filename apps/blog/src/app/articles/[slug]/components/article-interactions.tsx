@@ -1,26 +1,16 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@imkdw-dev/ui';
 import { useToast } from '@imkdw-dev/toast';
-import { Star, Share2, Edit } from 'lucide-react';
+import { Share2, Edit } from 'lucide-react';
 
-interface ArticleInteractionsProps {
+interface Props {
   slug: string;
 }
 
-export function ArticleInteractions({ slug }: ArticleInteractionsProps) {
-  const [isStarred, setIsStarred] = useState(false);
+export function ArticleInteractions({ slug }: Props) {
   const { toast } = useToast();
-
-  const handleStar = () => {
-    setIsStarred(!isStarred);
-    toast({
-      title: isStarred ? '즐겨찾기에서 제거되었습니다' : '즐겨찾기에 추가되었습니다',
-      description: isStarred ? '이 글이 즐겨찾기에서 제거되었습니다.' : '이 글이 즐겨찾기에 추가되었습니다.',
-    });
-  };
 
   const handleShare = async () => {
     const url = `${window.location.origin}/articles/${slug}`;
@@ -34,7 +24,6 @@ export function ArticleInteractions({ slug }: ArticleInteractionsProps) {
           url,
         });
       } catch (error) {
-        // 사용자가 공유를 취소한 경우 아무것도 하지 않음
         if (error instanceof Error) {
           if (error.name !== 'AbortError') {
             handleCopyLink(url);
@@ -66,15 +55,6 @@ export function ArticleInteractions({ slug }: ArticleInteractionsProps) {
 
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      <Button
-        variant="outline"
-        size="sm"
-        className={`text-xs sm:text-sm ${isStarred ? 'text-yellow-600 border-yellow-600' : ''}`}
-        onClick={handleStar}
-      >
-        <Star className={`w-4 h-4 sm:mr-1 ${isStarred ? 'fill-current' : ''}`} />
-        <span className="hidden sm:inline">{isStarred ? 'Starred' : 'Star'}</span>
-      </Button>
       <Button variant="outline" size="sm" className="text-xs sm:text-sm" onClick={handleShare}>
         <Share2 className="w-4 h-4 sm:mr-1" />
         <span className="hidden sm:inline">Share</span>

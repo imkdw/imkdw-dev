@@ -8,6 +8,7 @@ import {
   IResponseGetArticlesDto,
   ICreateArticleDto,
   IResponseCreateArticleDto,
+  IResponseGetArticleDto,
 } from '@imkdw-dev/types';
 
 export const getArticles = withErrorHandling(async (params: IRequestGetArticlesDto) => {
@@ -16,6 +17,10 @@ export const getArticles = withErrorHandling(async (params: IRequestGetArticlesD
       ...params,
     },
   });
+});
+
+export const getArticle = withErrorHandling(async (slug: string) => {
+  return apiClient.get<IResponseGetArticleDto>(buildEndpoint('GET_ARTICLE', { slug }));
 });
 
 export const createArticle = withErrorHandling(async (data: ICreateArticleDto) => {

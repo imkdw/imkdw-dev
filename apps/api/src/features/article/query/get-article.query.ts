@@ -8,9 +8,9 @@ import { ArticleNotFoundException } from '@/features/article/exception/article-n
 export class GetArticleQuery {
   constructor(private readonly prisma: PrismaService) {}
 
-  async execute(id: string): Promise<ResponseGetArticleDto> {
-    const article = await this.prisma.article.findUnique({
-      where: { id, deletedAt: null },
+  async execute(slug: string): Promise<ResponseGetArticleDto> {
+    const article = await this.prisma.article.findFirst({
+      where: { slug, deletedAt: null },
       include: {
         series: true,
         tags: {

@@ -41,8 +41,8 @@ export class ArticleController {
   @Swagger.getArticle('게시글 상세 조회')
   @Public()
   @Get(GET_ARTICLE)
-  async getArticle(@Param('id') id: string): Promise<ResponseGetArticleDto> {
-    return this.getArticleQuery.execute(id);
+  async getArticle(@Param('slug') slug: string): Promise<ResponseGetArticleDto> {
+    return this.getArticleQuery.execute(slug);
   }
 
   @Swagger.createArticle('게시글 생성')
