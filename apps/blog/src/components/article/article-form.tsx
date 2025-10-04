@@ -6,15 +6,11 @@ import { ArticleTagManager } from './article-tag-manager';
 import { ArticleSeriesSelector } from './article-series-selector';
 import { ArticleWritingStats } from './article-writing-stats';
 import { useArticleForm } from '@imkdw-dev/hooks';
+import { IArticleDto } from '@imkdw-dev/types';
 
 interface Props {
   mode: 'create' | 'edit';
-  initialData?: {
-    title: string;
-    slug: string;
-    content: string;
-    tags: string[];
-  };
+  initialData?: IArticleDto;
 }
 
 export function ArticleForm({ mode, initialData }: Props) {
@@ -36,7 +32,6 @@ export function ArticleForm({ mode, initialData }: Props) {
           />
         </div>
 
-        {/* Sidebar */}
         <div className="order-1 lg:order-2 space-y-4 lg:space-y-6">
           <ArticleSeriesSelector value={formData.seriesId} onValueChange={handlers.setSeriesId} />
           <ArticleTagManager

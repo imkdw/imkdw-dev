@@ -31,9 +31,9 @@ export function ArticleFormFields({ title, slug, content, onTitleChange, onSlugC
       </div>
 
       <div className="flex-1">
-        <div className="h-[700px] border border-border/50 rounded-lg overflow-hidden bg-secondary/30 transition-colors hover:border-border focus-within:border-primary/50 p-6">
+        <div className="h-[700px] border border-border/50 rounded-lg overflow-hidden bg-secondary/30 p-2">
           <div className="w-full h-full flex flex-col">
-            <MDXEditor markdown={content} onChange={onContentChange} className="w-full h-full flex-1 bg-transparent" />
+            <MDXEditor markdown={content} onChange={onContentChange} className="w-full h-full flex-1" />
           </div>
         </div>
       </div>
