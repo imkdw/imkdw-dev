@@ -14,7 +14,10 @@ export const tailwindPreset: Partial<Config> = {
     },
     extend: {
       colors: {
-        border: 'hsl(var(--border))',
+        border: {
+          DEFAULT: 'hsl(var(--border))',
+          hover: 'hsl(var(--border-hover))',
+        },
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
@@ -34,6 +37,7 @@ export const tailwindPreset: Partial<Config> = {
         muted: {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))',
+          hover: 'hsl(var(--muted-hover))',
         },
         accent: {
           DEFAULT: 'hsl(var(--accent))',
@@ -150,8 +154,10 @@ export const tailwindPreset: Partial<Config> = {
           '--destructive': colors.light.destructive.primary,
           '--destructive-foreground': colors.light.destructive.foreground,
           '--border': colors.light.border.default,
+          '--border-hover': colors.light.border.hover,
           '--input': colors.light.border.input,
           '--ring': colors.light.primary.default,
+          '--muted-hover': colors.light.muted.hover,
           '--radius': spacing.radius,
           '--terminal-bg': colors.light.terminal.background,
           '--terminal-foreground': colors.light.terminal.foreground,
@@ -194,8 +200,10 @@ export const tailwindPreset: Partial<Config> = {
           '--destructive': colors.dark.destructive.primary,
           '--destructive-foreground': colors.dark.destructive.foreground,
           '--border': colors.dark.border.default,
+          '--border-hover': colors.dark.border.hover,
           '--input': colors.dark.border.input,
           '--ring': colors.dark.primary.default,
+          '--muted-hover': colors.dark.muted.hover,
           '--terminal-bg': colors.dark.terminal.background,
           '--terminal-foreground': colors.dark.terminal.foreground,
           '--terminal-accent': colors.dark.terminal.accent,

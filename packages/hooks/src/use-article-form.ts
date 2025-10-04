@@ -18,6 +18,7 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
   const [slug, setSlug] = useState(initialData?.slug ?? '');
   const [content, setContent] = useState(initialData?.content ?? '');
   const [tags, setTags] = useState<string[]>(initialData?.tags ?? []);
+  const [seriesId, setSeriesId] = useState('');
   const [isPublishing, setIsPublishing] = useState(false);
 
   const handleAddTag = (tag: string) => {
@@ -43,7 +44,7 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
         slug,
         content,
         tags,
-        seriesId: '',
+        seriesId,
       });
 
       router.push(`/articles/${result.slug}`);
@@ -58,11 +59,13 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
       slug,
       content,
       tags,
+      seriesId,
     },
     handlers: {
       setTitle,
       setSlug,
       setContent,
+      setSeriesId,
       handleAddTag,
       handleRemoveTag,
       handlePublish,

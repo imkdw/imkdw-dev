@@ -12,9 +12,13 @@ export const colors = {
       secondary: '220 13% 18%',
       muted: '220 9% 46%',
     },
+    muted: {
+      hover: '210 11% 88%',
+    },
     border: {
       default: '220 13% 91%',
       input: '220 13% 91%',
+      hover: '220 13% 85%',
     },
     accent: {
       primary: '197 71% 52%',
@@ -73,9 +77,13 @@ export const colors = {
       secondary: '142 76% 36%',
       muted: '220 9% 61%',
     },
+    muted: {
+      hover: '215 25% 32%',
+    },
     border: {
       default: '215 25% 27%',
       input: '215 25% 27%',
+      hover: '215 25% 35%',
     },
     accent: {
       primary: '197 71% 52%',

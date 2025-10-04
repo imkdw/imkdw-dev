@@ -17,7 +17,7 @@ export function ArticleFormFields({ title, slug, content, onTitleChange, onSlugC
           placeholder="제목"
           value={title}
           onChange={e => onTitleChange(e.target.value)}
-          className="text-3xl px-0 py-2 border-none bg-transparent focus:outline-none focus:ring-0 placeholder:text-muted-foreground/40"
+          className="text-3xl px-0 py-2 border-none bg-transparent focus:outline-none placeholder:text-muted-foreground/40"
         />
       </div>
 
@@ -26,7 +26,7 @@ export function ArticleFormFields({ title, slug, content, onTitleChange, onSlugC
           placeholder="URL Slug"
           value={slug}
           onChange={e => onSlugChange(e.target.value)}
-          className="text-xl p-1 border-none bg-transparent focus:outline-none focus:ring-0 placeholder:text-muted-foreground/40"
+          className="text-xl p-1 border-none bg-transparent focus:outline-none placeholder:text-muted-foreground/40"
         />
       </div>
 
