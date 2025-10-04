@@ -12,6 +12,7 @@
     "@imkdw-dev/actions": "workspace:*",
     "@imkdw-dev/consts": "workspace:*",
     "@imkdw-dev/fonts": "workspace:*",
+    "@imkdw-dev/hooks": "workspace:*",
     "@imkdw-dev/toast": "workspace:*",
     "@imkdw-dev/types": "workspace:*",
     "@imkdw-dev/ui": "workspace:*",

@@ -75,7 +75,8 @@
       "mcp__serena__list_dir",
       "mcp__serena__activate_project",
       "WebFetch(domain:mdxeditor.dev)",
-      "mcp__playwright__browser_console_messages"
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_network_requests"
     ],
     "deny": [],
     "ask": []
