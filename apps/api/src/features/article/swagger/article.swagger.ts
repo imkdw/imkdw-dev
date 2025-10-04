@@ -1,6 +1,7 @@
 import { CreateArticleDto } from '@/features/article/dto/create-article.dto';
 import { UpdateArticleDto } from '@/features/article/dto/update-article.dto';
 import { ResponseGetArticlesDto } from '@/features/article/dto/get-articles.dto';
+import { ResponseGetArticleDto } from '@/features/article/dto/get-article.dto';
 import { applyDecorators, HttpStatus } from '@nestjs/common';
 import { ApiBody, ApiNoContentResponse, ApiOkResponse, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
@@ -34,5 +35,12 @@ export function getArticles(summary: string) {
   return applyDecorators(
     ApiOperation({ summary }),
     ApiOkResponse({ type: ResponseGetArticlesDto, description: '게시글 목록을 성공적으로 조회했습니다' })
+  );
+}
+
+export function getArticle(summary: string) {
+  return applyDecorators(
+    ApiOperation({ summary }),
+    ApiOkResponse({ type: ResponseGetArticleDto, description: '게시글 상세 정보를 성공적으로 조회했습니다' })
   );
 }

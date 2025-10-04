@@ -1,5 +1,6 @@
 export const ARTICLE_ENDPOINTS = {
   GET_ARTICLES: 'articles',
+  GET_ARTICLE: 'articles/:id',
   CREATE_ARTICLE: 'articles',
   UPDATE_ARTICLE: 'articles/:id',
   INCREMENT_VIEW_COUNT: 'articles/:id/view-count',

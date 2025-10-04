@@ -3,17 +3,20 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateArticleDto, ResponseCreateArticleDto } from '@/features/article/dto/create-article.dto';
 import { UpdateArticleDto } from '@/features/article/dto/update-article.dto';
 import { RequestGetArticlesDto, ResponseGetArticlesDto } from '@/features/article/dto/get-articles.dto';
+import { ResponseGetArticleDto } from '@/features/article/dto/get-article.dto';
 import { CreateArticleUseCase } from '@/features/article/use-case/create-article.use-case';
 import { UpdateArticleUseCase } from '@/features/article/use-case/update-article.use-case';
 import { IncrementViewCountUseCase } from '@/features/article/use-case/increment-view-count.use-case';
 import { DeleteArticleUseCase } from '@/features/article/use-case/delete-article.use-case';
 import { GetArticlesQuery } from '@/features/article/query/get-articles.query';
+import { GetArticleQuery } from '@/features/article/query/get-article.query';
 import * as Swagger from '@/features/article/swagger/article.swagger';
 import { MemberRoles } from '@/common/decorator/member-role.decorator';
 import { MEMBER_ROLE, API_ENDPOINTS } from '@imkdw-dev/consts';
 import { Public } from '@/common/decorator/public.decorator';
 
-const { GET_ARTICLES, CREATE_ARTICLE, UPDATE_ARTICLE, INCREMENT_VIEW_COUNT, DELETE_ARTICLE } = API_ENDPOINTS;
+const { GET_ARTICLES, GET_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE, INCREMENT_VIEW_COUNT, DELETE_ARTICLE } =
+  API_ENDPOINTS;
 
 @ApiTags('게시글')
 @Controller()
@@ -24,7 +27,8 @@ export class ArticleController {
     private readonly updateArticleUseCase: UpdateArticleUseCase,
     private readonly incrementViewCountUseCase: IncrementViewCountUseCase,
     private readonly deleteArticleUseCase: DeleteArticleUseCase,
-    private readonly getArticlesQuery: GetArticlesQuery
+    private readonly getArticlesQuery: GetArticlesQuery,
+    private readonly getArticleQuery: GetArticleQuery
   ) {}
 
   @Swagger.getArticles('게시글 목록 조회')
@@ -32,6 +36,13 @@ export class ArticleController {
   @Get(GET_ARTICLES)
   async getArticles(@Query() query: RequestGetArticlesDto): Promise<ResponseGetArticlesDto> {
     return this.getArticlesQuery.execute(query);
+  }
+
+  @Swagger.getArticle('게시글 상세 조회')
+  @Public()
+  @Get(GET_ARTICLE)
+  async getArticle(@Param('id') id: string): Promise<ResponseGetArticleDto> {
+    return this.getArticleQuery.execute(id);
   }
 
   @Swagger.createArticle('게시글 생성')

@@ -20,7 +20,7 @@ services:
         PG_PID=$$!
         
         echo 'PostgreSQL 시작 대기 중...'
-        until pg_isready -h localhost -p 5432 -U postgres; do
+        until pg_isready -h localhost -p 6432 -U postgres; do
           sleep 1
         done
         
