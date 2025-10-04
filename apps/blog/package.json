@@ -16,6 +16,7 @@
     "@imkdw-dev/types": "workspace:*",
     "@imkdw-dev/ui": "workspace:*",
     "@imkdw-dev/utils": "workspace:*",
+    "@mdxeditor/editor": "^3.46.1",
     "@radix-ui/react-slot": "^1.2.3",
     "@tailwindcss/typography": "^0.5.16",
     "class-variance-authority": "^0.7.1",

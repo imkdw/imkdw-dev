@@ -27,6 +27,7 @@
     "@imkdw-dev/toast": "workspace:*",
     "@imkdw-dev/types": "workspace:*",
     "@imkdw-dev/utils": "workspace:*",
+    "@mdxeditor/editor": "^3.46.1",
     "@tailwindcss/typography": "^0.5.16",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",

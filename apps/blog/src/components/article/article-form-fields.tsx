@@ -1,4 +1,4 @@
-import { Card, Input, Textarea } from '@imkdw-dev/ui';
+import { Card, Input, MDXEditor } from '@imkdw-dev/ui';
 
 interface Props {
   title: string;
@@ -52,28 +52,7 @@ export function ArticleFormFields({ title, slug, content, onTitleChange, onSlugC
             <span className="w-1 h-4 bg-primary rounded-full"></span>
             본문
           </label>
-          <Textarea
-            placeholder="마크다운으로 글을 작성하세요...
-
-# 제목 1
-## 제목 2
-**굵은 글씨**
-*기울임 글씨*
-[링크](url)
-
-```javascript
-// 코드 블록
-console.log('Hello World');
-```
-
-> 인용문
-
-- 목록 아이템
-- 다른 아이템"
-            value={content}
-            onChange={e => onContentChange(e.target.value)}
-            className="min-h-[500px] resize-none border-none focus-visible:ring-0 text-base leading-relaxed placeholder:text-muted-foreground/50 hover:placeholder:text-muted-foreground/70 transition-colors"
-          />
+          <MDXEditor markdown={content} onChange={onContentChange} placeholder="마크다운으로 글을 작성하세요..." />
         </div>
       </div>
     </Card>
