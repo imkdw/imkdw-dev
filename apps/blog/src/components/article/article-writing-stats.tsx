@@ -11,10 +11,6 @@ export function ArticleWritingStats({ content }: Props) {
 
   return (
     <Card className="p-4 sm:p-6 shadow-sm hover:shadow-md">
-      <h3 className="font-semibold text-base mb-4 flex items-center gap-2">
-        <span className="w-1 h-5 bg-primary rounded-full"></span>
-        작성 통계
-      </h3>
       <div className="space-y-3.5 text-sm">
         <div className="flex justify-between items-center p-2.5 rounded-lg bg-background/50 hover:bg-background transition-colors">
           <span className="text-muted-foreground font-medium">글자 수</span>

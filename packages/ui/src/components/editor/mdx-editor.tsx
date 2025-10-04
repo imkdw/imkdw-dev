@@ -15,22 +15,22 @@ import {
   markdownShortcutPlugin,
   MDXEditorMethods,
 } from '@mdxeditor/editor';
+import { cn } from '../../lib';
 
 interface Props {
   markdown: string;
   onChange: (markdown: string) => void;
-  placeholder?: string;
   className?: string;
 }
 
-export const MDXEditor = forwardRef<MDXEditorMethods, Props>(({ markdown, onChange, placeholder, className }, ref) => {
+export const MDXEditor = forwardRef<MDXEditorMethods, Props>(({ markdown, onChange, className }, ref) => {
   return (
     <MDXEditorLib
       ref={ref}
       markdown={markdown}
       onChange={onChange}
-      placeholder={placeholder}
-      className={className}
+      className={cn(className, 'dark-theme dark-editor')}
+      contentEditableClassName="mdx-editor-content"
       plugins={[
         headingsPlugin(),
         listsPlugin(),

@@ -6,7 +6,8 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./global.css": "./src/styles/globals.css",
+    "./globals.css": "./src/styles/globals.css",
+    "./mdx-editor.css": "./src/styles/mdx-editor.css",
     "./tailwind-preset": "./src/tokens/tailwind-preset.ts"
   },
   "scripts": {
@@ -28,6 +29,7 @@
     "@imkdw-dev/types": "workspace:*",
     "@imkdw-dev/utils": "workspace:*",
     "@mdxeditor/editor": "^3.46.1",
+    "@radix-ui/colors": "^3.0.0",
     "@tailwindcss/typography": "^0.5.16",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",

@@ -29,18 +29,11 @@ export function ArticleTagManager({ tags, onAddTag, onRemoveTag }: Props) {
 
   return (
     <Card className="p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
-      <h3 className="font-semibold text-base mb-4 flex items-center gap-2">
-        <span className="w-1 h-5 bg-primary rounded-full"></span>
-        게시글 설정
-      </h3>
-
       <div className="space-y-4">
         <div>
           <label className="text-sm font-medium mb-3 block text-muted-foreground">태그</label>
           <div className="flex gap-2 flex-wrap mb-3 min-h-[32px]">
-            {tags.length === 0 && (
-              <span className="text-xs text-muted-foreground/60 italic">태그를 추가해보세요</span>
-            )}
+            {tags.length === 0 && <span className="text-xs text-muted-foreground/60 italic">태그를 추가해보세요</span>}
             {tags.map(tag => (
               <Badge
                 key={tag}
