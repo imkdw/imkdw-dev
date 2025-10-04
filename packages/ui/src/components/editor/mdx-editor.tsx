@@ -8,12 +8,12 @@ import {
   quotePlugin,
   linkPlugin,
   linkDialogPlugin,
-  codeBlockPlugin,
-  codeMirrorPlugin,
   tablePlugin,
   thematicBreakPlugin,
   markdownShortcutPlugin,
   MDXEditorMethods,
+  codeBlockPlugin,
+  codeMirrorPlugin,
 } from '@mdxeditor/editor';
 import { cn } from '../../lib';
 
@@ -37,22 +37,10 @@ export const MDXEditor = forwardRef<MDXEditorMethods, Props>(({ markdown, onChan
         quotePlugin(),
         linkPlugin(),
         linkDialogPlugin(),
-        codeBlockPlugin({ defaultCodeBlockLanguage: 'javascript' }),
-        codeMirrorPlugin({
-          codeBlockLanguages: {
-            javascript: 'JavaScript',
-            typescript: 'TypeScript',
-            jsx: 'JSX',
-            tsx: 'TSX',
-            css: 'CSS',
-            html: 'HTML',
-            json: 'JSON',
-            python: 'Python',
-            bash: 'Bash',
-          },
-        }),
         tablePlugin(),
         thematicBreakPlugin(),
+        codeBlockPlugin({ defaultCodeBlockLanguage: 'js' }),
+        codeMirrorPlugin({ codeBlockLanguages: { js: 'JavaScript', css: 'CSS', ts: 'TypeScript' } }),
         markdownShortcutPlugin(),
       ]}
     />

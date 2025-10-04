@@ -2,7 +2,6 @@
 @import url('@radix-ui/colors/mauve-dark.css');
 
 .dark-editor {
-  /* Accent colors - Primary green theme */
   --accentBase: hsl(142 76% 18%);
   --accentBgSubtle: hsl(142 76% 22%);
   --accentBg: hsl(142 76% 26%);
@@ -16,7 +15,6 @@
   --accentText: hsl(142 76% 56%);
   --accentTextContrast: hsl(142 76% 70%);
 
-  /* Base colors - Dark background theme */
   --baseBase: hsl(220 13% 18%);
   --baseBgSubtle: hsl(220 13% 20%);
   --baseBg: hsl(215 25% 27%);
@@ -30,7 +28,6 @@
   --baseText: hsl(220 9% 61%);
   --baseTextContrast: hsl(142 76% 36%);
 
-  /* Admonition colors - Blog theme aligned */
   --admonitionTipBg: hsl(197 71% 25%);
   --admonitionTipBorder: hsl(197 71% 52%);
 
@@ -53,13 +50,11 @@
   --basePageBg: transparent;
   background: transparent;
 
-  /* Full height support */
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-/* Force all wrapper divs to use full height and transparent background */
 .dark-editor,
 .dark-editor > div,
 .dark-editor > div > div,
@@ -70,12 +65,10 @@
   background: transparent !important;
 }
 
-/* Force all nested divs to be transparent */
 .dark-editor div {
   background-color: transparent !important;
 }
 
-/* ContentEditable wrapper - use absolute positioning */
 .dark-editor [class*='contentEditable'] {
   position: absolute !important;
   top: 0 !important;
@@ -86,12 +79,10 @@
   padding: 0 !important;
 }
 
-/* Make parent of contentEditable relative */
 .dark-editor > div > div {
   position: relative !important;
 }
 
-/* Actual editable area */
 .dark-editor [contenteditable] {
   min-height: 100% !important;
   padding: 1rem !important;
@@ -101,13 +92,11 @@
   min-height: 100% !important;
 }
 
-/* Placeholder should not block clicks */
 .dark-editor [class*='placeholder'] {
   pointer-events: none !important;
   z-index: 0 !important;
 }
 
-/* Remove focus outline */
 .dark-editor,
 .dark-editor:focus,
 .dark-editor:focus-visible,
@@ -133,17 +122,12 @@
   box-shadow: none !important;
 }
 
-/* ============================================ */
-/* Content Editable Area Styling */
-/* ============================================ */
-
 .mdx-editor-content {
   font-family: Pretendard, 'Fira Code', 'SF Mono', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
   color: hsl(220 9% 61%);
   line-height: 1.6;
 }
 
-/* Headings */
 .mdx-editor-content h1 {
   font-size: 1.875rem;
   font-weight: 700;
@@ -200,13 +184,11 @@
   color: hsl(220 9% 70%);
 }
 
-/* Paragraphs */
 .mdx-editor-content p {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
 }
 
-/* Lists */
 .mdx-editor-content ul,
 .mdx-editor-content ol {
   margin-top: 0.5rem;
@@ -227,7 +209,6 @@
   list-style-type: decimal;
 }
 
-/* Nested lists */
 .mdx-editor-content ul ul,
 .mdx-editor-content ol ul {
   list-style-type: circle;
@@ -239,7 +220,6 @@
   list-style-type: square;
 }
 
-/* Blockquotes */
 .mdx-editor-content blockquote {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
@@ -249,7 +229,6 @@
   font-style: italic;
 }
 
-/* Code blocks */
 .mdx-editor-content pre {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
@@ -264,7 +243,6 @@
   font-size: 0.875em;
 }
 
-/* Inline code */
 .mdx-editor-content :not(pre) > code {
   background-color: hsl(215 25% 27%);
   color: hsl(142 76% 56%);
@@ -273,7 +251,6 @@
   font-weight: 500;
 }
 
-/* Links */
 .mdx-editor-content a {
   color: hsl(142 76% 56%);
   text-decoration: underline;
@@ -285,7 +262,6 @@
   color: hsl(142 76% 66%);
 }
 
-/* Horizontal rule */
 .mdx-editor-content hr {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
@@ -293,7 +269,6 @@
   border-top: 1px solid hsl(215 25% 35%);
 }
 
-/* Strong and emphasis */
 .mdx-editor-content strong {
   font-weight: 700;
   color: hsl(220 9% 70%);
@@ -303,7 +278,6 @@
   font-style: italic;
 }
 
-/* Tables */
 .mdx-editor-content table {
   width: 100%;
   margin-top: 0.75rem;
