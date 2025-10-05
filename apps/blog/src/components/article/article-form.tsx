@@ -28,7 +28,7 @@ export function ArticleForm({ mode, initialData }: Props) {
             content={formData.content}
             onTitleChange={handlers.setTitle}
             onSlugChange={handlers.setSlug}
-            onContentChange={handlers.setContent}
+            onChangeContent={handlers.setContent}
           />
         </div>
 

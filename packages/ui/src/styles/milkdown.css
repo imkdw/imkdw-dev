@@ -1,0 +1,182 @@
+/* =============================== */
+/* Markdown Editor */
+/* =============================== */
+.milkdown {
+  @apply flex-1 bg-[#242424] h-full overflow-auto text-white;
+}
+
+div[data-milkdown-root='true'] {
+  @apply h-full overflow-hidden;
+}
+
+.milkdown-editor {
+  @apply text-white outline-0 h-full overflow-auto p-4 pb-6;
+}
+
+/* =============================== */
+/* Heading */
+/* =============================== */
+.milkdown-editor {
+  p {
+    @apply min-h-[1.2rem] text-[16px];
+  }
+
+  h1 {
+    @apply text-2xl font-bold mb-4 pb-2 border-b border-gray-600 text-white;
+  }
+
+  h2 {
+    @apply text-xl font-semibold mb-3 pb-2 border-b border-gray-700 text-white;
+  }
+
+  h3 {
+    @apply text-lg font-medium mb-3 text-white;
+  }
+}
+
+/* =============================== */
+/* Paragraph */
+/* =============================== */
+.milkdown-editor p {
+  @apply mb-2 leading-relaxed text-[#d4d4d4];
+}
+
+.milkdown-editor ul {
+  @apply text-[#d4d4d4];
+  list-style-type: disc !important;
+  list-style-position: outside !important;
+  padding-left: 1.5rem !important;
+}
+
+.milkdown-editor ol {
+  @apply mb-4 text-[#d4d4d4];
+  list-style-type: decimal !important;
+  list-style-position: outside !important;
+  padding-left: 1.5rem !important;
+}
+
+.milkdown-editor li {
+  @apply mb-2 leading-relaxed;
+  display: list-item !important;
+  list-style: inherit !important;
+}
+
+/* 만약 위의 방법이 안 되면 가상 요소로 강제 생성 */
+.milkdown-editor ul > li {
+  @apply relative;
+}
+
+.milkdown-editor ol {
+  counter-reset: list-counter;
+}
+
+.milkdown-editor ol > li {
+  @apply relative;
+  counter-increment: list-counter;
+}
+
+/* 중첩된 목록 */
+.milkdown-editor ul ul {
+  list-style-type: circle !important;
+}
+
+.milkdown-editor ul ul ul {
+  list-style-type: square !important;
+}
+
+.milkdown-editor ol ol {
+  list-style-type: lower-alpha !important;
+  counter-reset: list-counter-alpha;
+}
+
+.milkdown-editor ol ol > li {
+  counter-increment: list-counter-alpha;
+}
+
+.milkdown-editor ol ol ol {
+  list-style-type: lower-roman !important;
+  counter-reset: list-counter-roman;
+}
+
+.milkdown-editor ol ol ol > li {
+  counter-increment: list-counter-roman;
+}
+
+/* =============================== */
+/* Blockquote */
+/* =============================== */
+.milkdown-editor blockquote {
+  @apply border-l-4 border-blue-500 pl-4 py-2 mb-4 bg-gray-800/30 rounded-r;
+  color: #b4b4b4;
+  font-style: italic;
+}
+
+.milkdown-editor blockquote p {
+  @apply mb-2 last:mb-0;
+}
+
+/* =============================== */
+/* Code */
+/* =============================== */
+.milkdown-editor code {
+  @apply px-1.5 py-0.5 rounded text-sm font-mono;
+  background-color: #1e1e1e;
+  color: #d7ba7d;
+  border: 1px solid #333;
+}
+
+.milkdown-editor pre {
+  @apply p-4 mb-4 rounded-lg overflow-x-auto;
+  background-color: #0d1117;
+  border: 1px solid #30363d;
+}
+
+.milkdown-editor pre code {
+  @apply p-0 text-sm leading-relaxed;
+  background-color: transparent;
+  color: #e6edf3;
+  border: none;
+  white-space: pre;
+}
+
+/* =============================== */
+/* Horizontal Rule */
+/* =============================== */
+.milkdown-editor hr {
+  @apply border-0 h-px bg-gray-600 my-6;
+}
+
+/* =============================== */
+/* Image */
+/* =============================== */
+.milkdown-editor img {
+  @apply max-w-full h-auto rounded shadow-lg mb-4;
+}
+
+/* =============================== */
+/* Selection */
+/* =============================== */
+.milkdown-editor ::selection {
+  @apply bg-blue-600/30;
+}
+
+/* =============================== */
+/* Focus */
+/* =============================== */
+.milkdown-editor *:focus {
+  @apply outline-none ring-2 ring-blue-500/50 ring-offset-2 ring-offset-transparent;
+}
+
+/* =============================== */
+/* Code Block */
+/* =============================== */
+.milkdown-code-block .tools {
+  @apply hidden;
+}
+
+/* =============================== */
+/* Image */
+/* =============================== */
+.image-wrapper .operation {
+  @apply hidden;
+}

@@ -1,4 +1,4 @@
-import { Input, MDXEditor } from '@imkdw-dev/ui';
+import { Input, MilkdownWrapper } from '@imkdw-dev/ui';
 
 interface Props {
   title: string;
@@ -6,10 +6,10 @@ interface Props {
   content: string;
   onTitleChange: (value: string) => void;
   onSlugChange: (value: string) => void;
-  onContentChange: (value: string) => void;
+  onChangeContent: (value: string) => void;
 }
 
-export function ArticleFormFields({ title, slug, content, onTitleChange, onSlugChange, onContentChange }: Props) {
+export function ArticleFormFields({ title, slug, content, onTitleChange, onSlugChange, onChangeContent }: Props) {
   return (
     <div className="space-y-0 flex flex-col gap-4">
       <div className="border-b border-border/30 py-2">
@@ -33,7 +33,12 @@ export function ArticleFormFields({ title, slug, content, onTitleChange, onSlugC
       <div className="flex-1">
         <div className="h-[700px] border border-border/50 rounded-lg overflow-hidden bg-secondary/30 p-2">
           <div className="w-full h-full flex flex-col">
-            <MDXEditor markdown={content} onChange={onContentChange} className="w-full h-full flex-1" />
+            <MilkdownWrapper
+              content={content}
+              isEditable={true}
+              onChangeContent={onChangeContent}
+              onUploadImage={() => {}}
+            />
           </div>
         </div>
       </div>

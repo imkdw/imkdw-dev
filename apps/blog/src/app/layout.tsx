@@ -3,7 +3,7 @@ import { pretendard } from '@imkdw-dev/fonts';
 
 import '@mdxeditor/editor/style.css';
 import '@imkdw-dev/ui/globals.css';
-import '@imkdw-dev/ui/mdx-editor.css';
+import '@imkdw-dev/ui/milkdown.css';
 
 import { Providers } from '../components/providers';
 import { MobileSidebar } from '../components/sidebar/mobile-sidebar';
