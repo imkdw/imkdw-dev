@@ -2,20 +2,27 @@
   "name": "@imkdw-dev/utils",
   "version": "0.1.0",
   "description": "Shared utility functions for imkdw-dev project",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/client/index.js",
+  "types": "./dist/client/index.d.ts",
+  "exports": {
+    "./client": "./dist/client/index.js",
+    "./server": "./dist/server/index.js"
+  },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "build": "tsc",
+    "dev": "tsc --watch",
     "clean": "rm -rf dist"
   },
   "devDependencies": {
     "@imkdw-dev/typescript-config": "workspace:*",
-    "tsup": "^8.0.0",
     "typescript": "^5.0.0"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@types/jsdom": "^27.0.0",
+    "highlight.js": "^11.11.1",
+    "jsdom": "^27.0.0"
   }
 }

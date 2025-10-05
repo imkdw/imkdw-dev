@@ -6,7 +6,7 @@ import { ArticleHeader } from '../../../components/article/article-header';
 import { ArticleContent } from '../../../components/article/article-content';
 import { ArticleNavigation } from '../../../components/article/article-navigation';
 import { TableOfContents } from '../../../components/article/table-of-contents';
-import { NavigationArticle, TableOfContentsItem } from '../../../types/article';
+import { TableOfContentsItem } from '../../../types/article';
 import { getArticle } from '@imkdw-dev/actions';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -51,16 +51,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   const navigationArticles = {
     previousArticle: prevArticle
-      ? ({
+      ? {
           title: prevArticle.title,
           slug: prevArticle.slug,
-        } as NavigationArticle)
+        }
       : null,
     nextArticle: nextArticle
-      ? ({
+      ? {
           title: nextArticle.title,
           slug: nextArticle.slug,
-        } as NavigationArticle)
+        }
       : null,
   };
 
@@ -73,7 +73,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <ArticleHeader article={article}>
             <ArticleInteractions slug={slug} />
           </ArticleHeader>
-          <ArticleContent content={<div>{article.content}</div>} />
+          <ArticleContent article={article} />
           {/* <RelatedArticles articles={relatedArticles} /> */}
           <ArticleNavigation
             previousArticle={navigationArticles.previousArticle}

@@ -1,7 +1,7 @@
 import { Badge } from '@imkdw-dev/ui';
 import { BookOpen, Calendar, Clock } from 'lucide-react';
 import { IArticleDto } from '@imkdw-dev/types';
-import { formatDate, formatReadTime } from '@imkdw-dev/utils';
+import { formatDate, formatReadTime } from '@imkdw-dev/utils/client';
 
 interface ArticleHeaderProps {
   article: IArticleDto;

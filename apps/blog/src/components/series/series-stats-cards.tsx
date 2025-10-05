@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@imkdw-dev/ui';
-import { formatDate } from '@imkdw-dev/utils';
+import { formatDate } from '@imkdw-dev/utils/client';
 import { BookOpen, Clock, Calendar, LucideIcon } from 'lucide-react';
 import type { ISeriesDetailDto } from '@imkdw-dev/types';
 

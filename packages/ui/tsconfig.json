@@ -6,8 +6,8 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "jsx": "react-jsx",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "lib": ["es2022", "dom", "dom.iterable"]
   },
   "include": ["src/**/*"],

@@ -1,4 +1,4 @@
-import { formatNumber } from '@imkdw-dev/utils';
+import { formatNumber } from '@imkdw-dev/utils/client';
 import type { IResponseGetStatsDto } from '@imkdw-dev/types';
 
 interface Props {

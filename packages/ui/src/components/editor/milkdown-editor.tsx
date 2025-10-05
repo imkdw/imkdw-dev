@@ -22,7 +22,7 @@ import { createImageUploader } from './image-uploader';
 interface Props {
   content: string;
   isEditable: boolean;
-  onChangeContent(markdown: string, html: string): void;
+  onChangeContent(html: string): void;
   onUploadImage(imageName: string): void;
 }
 
@@ -65,7 +65,7 @@ export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadI
           if (markdown !== prevMarkdown) {
             const editor = innerCtx.get(editorCtx);
             const html = editor.action(getHTML());
-            onChangeContent(markdown, html);
+            onChangeContent(html);
           }
         });
       })

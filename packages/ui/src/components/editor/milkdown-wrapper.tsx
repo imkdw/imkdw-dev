@@ -6,7 +6,7 @@ import { MilkdownEditor } from './milkdown-editor';
 interface Props {
   content: string;
   isEditable: boolean;
-  onChangeContent(markdown: string, html: string): void;
+  onChangeContent(html: string): void;
   onUploadImage(imageName: string): void;
 }
 

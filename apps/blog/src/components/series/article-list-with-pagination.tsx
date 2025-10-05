@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Button, Card, CardContent, CardHeader, CardTitle, CardDescription } from '@imkdw-dev/ui';
-import { formatDate, formatReadTime } from '@imkdw-dev/utils';
+import { formatDate, formatReadTime } from '@imkdw-dev/utils/client';
 import { ArticlePagination } from './article-pagination';
 import { BookOpen, Calendar, Clock, Play } from 'lucide-react';
 import type { IArticleListItemDto } from '@imkdw-dev/types';

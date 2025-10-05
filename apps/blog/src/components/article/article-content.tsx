@@ -1,9 +1,16 @@
-import { ReactNode } from 'react';
+import { IArticleDto } from '@imkdw-dev/types';
+import { highlightCodeBlocks } from '@imkdw-dev/utils/server';
 
 interface Props {
-  content: ReactNode;
+  article: IArticleDto;
 }
 
-export function ArticleContent({ content }: Props) {
-  return <article className="prose prose-sm sm:prose-base lg:prose-lg dark:prose-invert max-w-none">{content}</article>;
+export function ArticleContent({ article }: Props) {
+  const highlightedHtml = highlightCodeBlocks(article.content);
+
+  return (
+    <article className="milkdown-editor">
+      <div dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
+    </article>
+  );
 }
