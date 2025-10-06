@@ -1,4 +1,4 @@
-import { generateUUID } from '@/common/utils/string.util';
+import { generateUUID } from '@imkdw-dev/utils';
 import { ArticleValidator } from '@/shared/validator/article.validator';
 import { ArticleCommentValidator } from '@/shared/validator/article-comment.validator';
 import { ArticleCommentRepository } from '@/shared/repository/article-comment/article-comment.repository';

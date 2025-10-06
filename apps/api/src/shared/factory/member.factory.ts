@@ -1,4 +1,4 @@
-import { generateUUID } from '@/common/utils/string.util';
+import { generateUUID } from '@imkdw-dev/utils';
 import { Member } from '@/shared/domain/member/member';
 import { MEMBER_ROLE, OAuthProvider } from '@imkdw-dev/consts';
 

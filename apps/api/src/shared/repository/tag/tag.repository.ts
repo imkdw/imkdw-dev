@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Tag } from '@/shared/domain/tag/tag';
 import { TagMapper } from '@/shared/mapper/tag/tag.mapper';
 import { PrismaService } from '@/infra/database/prisma.service';
-import { generateUUID } from '@/common/utils/string.util';
+import { generateUUID } from '@imkdw-dev/utils';
 import { Prisma } from '@prisma/client';
 
 @Injectable()

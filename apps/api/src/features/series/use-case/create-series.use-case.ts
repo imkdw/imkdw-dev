@@ -5,7 +5,7 @@ import { SeriesRepository } from '@/shared/repository/series/series.repository';
 import { TagRepository } from '@/shared/repository/tag/tag.repository';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { Injectable } from '@nestjs/common';
-import { generateUUID } from '@/common/utils/string.util';
+import { generateUUID } from '@imkdw-dev/utils';
 
 @Injectable()
 export class CreateSeriesUseCase {

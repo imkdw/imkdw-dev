@@ -1,5 +1,5 @@
 import { IArticleDto } from '@imkdw-dev/types';
-import { highlightCodeBlocks } from '@imkdw-dev/utils/server';
+import { highlightCodeBlocks } from '@imkdw-dev/utils';
 
 interface Props {
   article: IArticleDto;
