@@ -15,6 +15,7 @@ import { MemberRoleGuard } from '@/common/guards/member-role.guard';
 import { TransformInterceptor } from '@/common/interceptor/transform.interceptor';
 import { StatsModule } from '@/features/stats/stats.module';
 import { TagModule } from '@/features/tag/tag.module';
+import { StorageModule } from '@/infra/storage/storage.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { TagModule } from '@/features/tag/tag.module';
     MemberModule,
     StatsModule,
     TagModule,
+    StorageModule,
   ],
   controllers: [AppController],
   providers: [
