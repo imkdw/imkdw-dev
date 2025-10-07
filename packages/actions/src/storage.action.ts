@@ -1,3 +1,5 @@
+'use server';
+
 import { apiClient } from '@imkdw-dev/api-client';
 import { API_ENDPOINTS } from '@imkdw-dev/consts';
 import { IResponseGetUploadUrlDto } from '@imkdw-dev/types';

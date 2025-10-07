@@ -1,7 +1,7 @@
-import { SUPPORTED_IMAGE_TYPES } from './constants/image-upload.const';
+import { SUPPORTED_IMAGE_EXTENSIONS } from '@imkdw-dev/consts';
 import { ImageUploadError, ImageUploadResult } from './types/image-upload.type';
-import { getUploadUrl } from './api/get-upload-url';
 import { generateUUID } from '@imkdw-dev/utils';
+import { getUploadUrl } from '@imkdw-dev/actions';
 
 export const useImageUpload = () => {
   const createError = (code: ImageUploadError['code'], message: string, originalError?: unknown): ImageUploadError => {
@@ -9,10 +9,10 @@ export const useImageUpload = () => {
   };
 
   const validateFile = (file: File): ImageUploadError | null => {
-    if (!SUPPORTED_IMAGE_TYPES.includes(file.type)) {
+    if (!SUPPORTED_IMAGE_EXTENSIONS.includes(file.type)) {
       return createError(
         'INVALID_FILE_TYPE',
-        `지원하지 않는 파일 형식입니다. 지원 형식: ${SUPPORTED_IMAGE_TYPES.join(', ')}`
+        `지원하지 않는 파일 형식입니다. 지원 형식: ${SUPPORTED_IMAGE_EXTENSIONS.join(', ')}`
       );
     }
     return null;

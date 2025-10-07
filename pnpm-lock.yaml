@@ -424,6 +424,9 @@ importers:
       '@imkdw-dev/types':
         specifier: workspace:*
         version: link:../shared/types
+      '@imkdw-dev/utils':
+        specifier: workspace:*
+        version: link:../shared/utils
       next:
         specifier: '>=15.0.0'
         version: 15.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
