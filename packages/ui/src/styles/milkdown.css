@@ -11,6 +11,7 @@ div[data-milkdown-root='true'] {
   width: 100%;
   display: flex;
   flex: 1;
+  color: hsl(220 14% 70%);
 }
 
 /* Heading Styles */
