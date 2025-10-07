@@ -11,8 +11,8 @@ interface Props {
 
 export function ArticleFormFields({ title, slug, content, onTitleChange, onSlugChange, onChangeContent }: Props) {
   return (
-    <div className="space-y-0 flex flex-col gap-4">
-      <div className="border-b border-border/30 py-2">
+    <div className="flex flex-col gap-4 flex-1">
+      <div className="border-b border-border/50 py-2">
         <Input
           placeholder="제목"
           value={title}
@@ -21,7 +21,7 @@ export function ArticleFormFields({ title, slug, content, onTitleChange, onSlugC
         />
       </div>
 
-      <div className="border-b border-border/30 py-2">
+      <div className="border-b border-border/50 py-2">
         <Input
           placeholder="URL Slug"
           value={slug}
@@ -30,17 +30,13 @@ export function ArticleFormFields({ title, slug, content, onTitleChange, onSlugC
         />
       </div>
 
-      <div className="flex-1">
-        <div className="h-[700px] border border-border/50 rounded-lg overflow-hidden bg-secondary/30 p-2">
-          <div className="w-full h-full flex flex-col">
-            <MilkdownWrapper
-              content={content}
-              isEditable={true}
-              onChangeContent={onChangeContent}
-              onUploadImage={() => {}}
-            />
-          </div>
-        </div>
+      <div className="flex-1 flex">
+        <MilkdownWrapper
+          content={content}
+          isEditable={true}
+          onChangeContent={onChangeContent}
+          onUploadImage={() => {}}
+        />
       </div>
     </div>
   );

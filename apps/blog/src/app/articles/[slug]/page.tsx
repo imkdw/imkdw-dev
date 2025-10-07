@@ -69,7 +69,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   return (
     <Layout enableOverflow={false}>
       <div className="max-w-7xl mx-auto p-6 lg:flex lg:gap-8">
-        <main className="flex-1 max-w-4xl">
+        <main className="flex-1 max-w-4xl flex flex-col">
           <ArticleHeader article={article}>
             <ArticleInteractions slug={slug} />
           </ArticleHeader>

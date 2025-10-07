@@ -17,11 +17,10 @@ export function ArticleForm({ mode, initialData }: Props) {
   const { formData, handlers } = useArticleForm({ mode, initialData });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col">
       <ArticleFormHeader mode={mode} onSaveDraft={handlers.handleSaveDraft} onPublish={handlers.handlePublish} />
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-        <div className="lg:col-span-2 order-2 lg:order-1">
+      <div className="flex gap-4 flex-1">
+        <div className="flex flex-1">
           <ArticleFormFields
             title={formData.title}
             slug={formData.slug}
@@ -31,8 +30,7 @@ export function ArticleForm({ mode, initialData }: Props) {
             onChangeContent={handlers.setContent}
           />
         </div>
-
-        <div className="order-1 lg:order-2 space-y-4 lg:space-y-6">
+        <div className="flex flex-col gap-4 p-2">
           <ArticleSeriesSelector value={formData.seriesId} onValueChange={handlers.setSeriesId} />
           <ArticleTagManager
             tags={formData.tags}

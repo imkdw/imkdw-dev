@@ -48,7 +48,7 @@ export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadI
           ...prev,
           attributes: {
             ...prev.attributes,
-            class: 'milkdown-editor',
+            class: 'milkdown',
           },
           editable: () => isEditable,
         }))
@@ -70,7 +70,6 @@ export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadI
           }
         });
       })
-
       .use(listener)
       .use(commonmark)
       .use(history)

@@ -9,8 +9,8 @@ export function ArticleContent({ article }: Props) {
   const highlightedHtml = highlightCodeBlocks(article.content);
 
   return (
-    <article className="milkdown-editor">
-      <div dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
+    <article className="milkdown w-full">
+      <div className="w-full" dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
     </article>
   );
 }
