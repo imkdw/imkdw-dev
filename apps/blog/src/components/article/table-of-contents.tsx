@@ -1,10 +1,47 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { TableOfContentsItem } from '../../types/article';
 
-interface TableOfContentsProps {
-  items: TableOfContentsItem[];
+interface Props {
+  content: string;
 }
 
-export function TableOfContents({ items }: TableOfContentsProps) {
+export function TableOfContents({ content }: Props) {
+  const [items, setItems] = useState<TableOfContentsItem[]>([]);
+
+  useEffect(() => {
+    const article = document.querySelector('article');
+    if (!article) {
+      return;
+    }
+
+    const headings = article.querySelectorAll('h1, h2, h3, h4');
+
+    const tocItems: TableOfContentsItem[] = Array.from(headings).map((heading, index) => {
+      const level = parseInt(heading.tagName.substring(1));
+      const title = heading.textContent || '';
+      const id = heading.id || `heading-${index}`;
+
+      if (!heading.id) {
+        heading.id = id;
+      }
+
+      return {
+        id,
+        title,
+        level,
+        href: `#${id}`,
+      };
+    });
+
+    setItems(tocItems);
+  }, [content]);
+
+  if (items.length === 0) {
+    return null;
+  }
+
   return (
     <div className="bg-card p-4 rounded-md shadow-sm">
       <h3 className="font-semibold mb-4 text-primary">목차</h3>

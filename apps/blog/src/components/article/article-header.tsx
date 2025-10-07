@@ -12,7 +12,7 @@ export function ArticleHeader({ article, children }: ArticleHeaderProps) {
   const { title, createdAt, readMinute, tags, series } = article;
 
   return (
-    <div className="mb-8">
+    <div>
       {series !== null && (
         <div className="flex items-center gap-2 mb-4">
           <Badge variant="secondary" className="bg-accent/20 text-accent p-2 px-4">

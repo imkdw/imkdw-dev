@@ -6,7 +6,6 @@ import { ArticleHeader } from '../../../components/article/article-header';
 import { ArticleContent } from '../../../components/article/article-content';
 import { ArticleNavigation } from '../../../components/article/article-navigation';
 import { TableOfContents } from '../../../components/article/table-of-contents';
-import { TableOfContentsItem } from '../../../types/article';
 import { getArticle } from '@imkdw-dev/actions';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -64,8 +63,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       : null,
   };
 
-  const tocItems: TableOfContentsItem[] = [];
-
   return (
     <Layout enableOverflow={false}>
       <div className="max-w-7xl mx-auto p-6 lg:flex lg:gap-8">
@@ -81,8 +78,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           />
           <CommentSection articleId={slug} />
         </main>
-        <aside className="sticky top-4 self-start">
-          <TableOfContents items={tocItems} />
+        <aside className="hidden lg:block sticky top-4 self-start">
+          <TableOfContents content={article.content} />
         </aside>
       </div>
     </Layout>
