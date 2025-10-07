@@ -1,27 +1,44 @@
 import { ApiTags } from '@nestjs/swagger';
-import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { CreateArticleCommentUseCase } from '@/features/article/use-case/create-article-comment.use-case';
 import { UpdateArticleCommentUseCase } from '@/features/article/use-case/update-article-comment.use-case';
 import { DeleteArticleCommentUseCase } from '@/features/article/use-case/delete-article-comment.use-case';
 import { CreateArticleReplyUseCase } from '@/features/article/use-case/create-article-reply.use-case';
+import { GetArticleCommentsQuery } from '@/features/article/query/get-article-comments.query';
 import { CreateArticleCommentDto } from '@/features/article/dto/create-article-comment.dto';
 import { UpdateArticleCommentDto } from '@/features/article/dto/update-article-comment.dto';
+import { ResponseGetArticleCommentsDto } from '@/features/article/dto/get-article-comments.dto';
 import * as Swagger from '@/features/article/swagger/article-comment.swagger';
 import { CurrentRequester } from '@/common/decorator/current-requester.decorator';
 import { Requester } from '@/common/types/requester.type';
+import { Public } from '@/common/decorator/public.decorator';
 import { API_ENDPOINTS } from '@imkdw-dev/consts';
 
-const { CREATE_ARTICLE_COMMENT, UPDATE_ARTICLE_COMMENT, DELETE_ARTICLE_COMMENT, CREATE_ARTICLE_REPLY } = API_ENDPOINTS;
+const {
+  GET_ARTICLE_COMMENTS,
+  CREATE_ARTICLE_COMMENT,
+  UPDATE_ARTICLE_COMMENT,
+  DELETE_ARTICLE_COMMENT,
+  CREATE_ARTICLE_REPLY,
+} = API_ENDPOINTS;
 
 @ApiTags('게시글 댓글')
 @Controller()
 export class ArticleCommentController {
   constructor(
+    private readonly getArticleCommentsQuery: GetArticleCommentsQuery,
     private readonly createArticleCommentUseCase: CreateArticleCommentUseCase,
     private readonly updateArticleCommentUseCase: UpdateArticleCommentUseCase,
     private readonly deleteArticleCommentUseCase: DeleteArticleCommentUseCase,
     private readonly createArticleReplyUseCase: CreateArticleReplyUseCase
   ) {}
+
+  @Swagger.getComments('댓글 목록 조회')
+  @Public()
+  @Get(GET_ARTICLE_COMMENTS)
+  async getComments(@Param('articleSlug') articleSlug: string): Promise<ResponseGetArticleCommentsDto> {
+    return this.getArticleCommentsQuery.execute(articleSlug);
+  }
 
   @Swagger.createComment('댓글 생성')
   @HttpCode(HttpStatus.NO_CONTENT)

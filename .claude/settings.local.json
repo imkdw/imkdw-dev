@@ -82,7 +82,11 @@
       "WebFetch(domain:milkdown.dev)",
       "Bash(xargs kill:*)",
       "mcp__serena__replace_symbol_body",
-      "mcp__serena__replace_regex"
+      "mcp__serena__replace_regex",
+      "Bash(for i in {1..3})",
+      "Bash(do echo \"=== 테스트 실행 $i/3 ===\")",
+      "Bash(exit 1)",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []

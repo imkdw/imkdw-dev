@@ -54,7 +54,7 @@ describe('게시글 상세조회 쿼리', () => {
 
   describe('존재하는 게시글을 조회하면', () => {
     it('게시글 상세 정보를 반환한다', async () => {
-      const result = await sut.execute(testArticle.id);
+      const result = await sut.execute(testArticle.slug);
 
       expect(result.article).toEqual({
         id: testArticle.id,
@@ -110,7 +110,7 @@ describe('게시글 상세조회 쿼리', () => {
     });
 
     it('같은 시리즈의 이전/다음 게시글을 반환한다', async () => {
-      const result = await sut.execute(testArticle.id);
+      const result = await sut.execute(testArticle.slug);
 
       expect(result.prevArticle).toEqual({
         id: prevArticle.id,
@@ -126,14 +126,14 @@ describe('게시글 상세조회 쿼리', () => {
     });
 
     it('첫 번째 게시글의 경우 이전 게시글이 null이다', async () => {
-      const result = await sut.execute(prevArticle.id);
+      const result = await sut.execute(prevArticle.slug);
 
       expect(result.prevArticle).toBeNull();
       expect(result.nextArticle).not.toBeNull();
     });
 
     it('마지막 게시글의 경우 다음 게시글이 null이다', async () => {
-      const result = await sut.execute(nextArticle.id);
+      const result = await sut.execute(nextArticle.slug);
 
       expect(result.prevArticle).not.toBeNull();
       expect(result.nextArticle).toBeNull();
@@ -164,7 +164,7 @@ describe('게시글 상세조회 쿼리', () => {
     });
 
     it('다른 시리즈의 게시글은 이전/다음 게시글에 포함되지 않는다', async () => {
-      const result = await sut.execute(testArticle.id);
+      const result = await sut.execute(testArticle.slug);
 
       expect(result.prevArticle).toBeNull();
       expect(result.nextArticle).toBeNull();

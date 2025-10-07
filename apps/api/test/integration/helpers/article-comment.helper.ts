@@ -1,6 +1,6 @@
 import type { PrismaClient, ArticleComment } from '@prisma/client';
 import type { Prisma } from '@prisma/client';
-import { generateUUID } from '@/common/utils/string.util';
+import { generateUUID } from '@imkdw-dev/utils';
 
 /**
  * 테스트용 댓글 생성 (parentId = null)

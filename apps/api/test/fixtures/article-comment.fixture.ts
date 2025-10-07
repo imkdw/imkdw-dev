@@ -1,5 +1,5 @@
-import { generateUUID } from '@/common/utils/string.util';
 import { ArticleComment } from '@/shared/domain/article/article-comment';
+import { generateUUID } from '@imkdw-dev/utils';
 
 interface Props {
   id: string;

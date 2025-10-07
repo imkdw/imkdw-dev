@@ -1,7 +1,15 @@
 import { CreateArticleCommentDto } from '@/features/article/dto/create-article-comment.dto';
 import { UpdateArticleCommentDto } from '@/features/article/dto/update-article-comment.dto';
+import { ResponseGetArticleCommentsDto } from '@/features/article/dto/get-article-comments.dto';
 import { applyDecorators } from '@nestjs/common';
-import { ApiBody, ApiNoContentResponse, ApiOperation } from '@nestjs/swagger';
+import { ApiBody, ApiNoContentResponse, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
+
+export function getComments(summary: string) {
+  return applyDecorators(
+    ApiOperation({ summary }),
+    ApiOkResponse({ type: ResponseGetArticleCommentsDto, description: '댓글 목록 조회 성공' })
+  );
+}
 
 export function createComment(summary: string) {
   return applyDecorators(

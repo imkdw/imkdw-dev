@@ -61,7 +61,7 @@ describe('게시글 댓글 생성 유스케이스', () => {
         content: '테스트 댓글 내용입니다.',
       };
 
-      const result = await sut.execute(testArticle.id, createArticleCommentDto, testMember.id);
+      const result = await sut.execute(testArticle.slug, createArticleCommentDto, testMember.id);
 
       const savedComment = await prisma.articleComment.findUnique({ where: { id: result.id } });
       expect(savedComment).not.toBeNull();

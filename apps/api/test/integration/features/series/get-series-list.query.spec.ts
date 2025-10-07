@@ -3,8 +3,8 @@ import { createTestSeries } from '@test/integration/helpers/series.helper';
 import { createTestTag } from '@test/integration/helpers/tag.helper';
 import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
 import { PrismaService } from '@/infra/database/prisma.service';
-import { generateUUID } from '@/common/utils/string.util';
 import type { Series, Tag } from '@prisma/client';
+import { generateUUID } from '@imkdw-dev/utils';
 
 describe('GetSeriesListQuery', () => {
   let testHelper: IntegrationTestHelper;
@@ -148,11 +148,10 @@ describe('GetSeriesListQuery', () => {
     let tag3: Tag;
 
     beforeEach(async () => {
-      [tag1, tag2, tag3] = await Promise.all([
-        createTestTag(prisma, { id: generateUUID(), name: 'JavaScript' }),
-        createTestTag(prisma, { id: generateUUID(), name: 'Node.js' }),
-        createTestTag(prisma, { id: generateUUID(), name: 'React' }),
-      ]);
+      // Tag를 순차적으로 생성하여 데드락 방지
+      tag1 = await createTestTag(prisma, { id: generateUUID(), name: 'JavaScript' });
+      tag2 = await createTestTag(prisma, { id: generateUUID(), name: 'Node.js' });
+      tag3 = await createTestTag(prisma, { id: generateUUID(), name: 'React' });
 
       [series1, series2, series3] = await Promise.all([
         createTestSeries(prisma, {

@@ -1,4 +1,5 @@
 export const ARTICLE_COMMENT_ENDPOINTS = {
+  GET_ARTICLE_COMMENTS: 'articles/:articleSlug/comments',
   CREATE_ARTICLE_COMMENT: 'articles/:articleSlug/comments',
   UPDATE_ARTICLE_COMMENT: 'articles/:articleSlug/comments/:commentId',
   DELETE_ARTICLE_COMMENT: 'articles/:articleSlug/comments/:commentId',

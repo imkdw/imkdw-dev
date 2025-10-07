@@ -10,6 +10,7 @@ import { DeleteArticleCommentUseCase } from '@/features/article/use-case/delete-
 import { CreateArticleReplyUseCase } from '@/features/article/use-case/create-article-reply.use-case';
 import { GetArticlesQuery } from '@/features/article/query/get-articles.query';
 import { GetArticleQuery } from '@/features/article/query/get-article.query';
+import { GetArticleCommentsQuery } from '@/features/article/query/get-article-comments.query';
 import { SeriesStatsModule } from '@/shared/services/series/series-stats.module';
 import { Module } from '@nestjs/common';
 
@@ -27,6 +28,7 @@ import { Module } from '@nestjs/common';
     CreateArticleReplyUseCase,
     GetArticlesQuery,
     GetArticleQuery,
+    GetArticleCommentsQuery,
   ],
 })
 export class ArticleModule {}

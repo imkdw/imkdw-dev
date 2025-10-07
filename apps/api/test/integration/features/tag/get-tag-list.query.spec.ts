@@ -2,7 +2,7 @@ import { GetTagListQuery } from '@/features/tag/query/get-tag-list.query';
 import { createTestTag } from '@test/integration/helpers/tag.helper';
 import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
 import { PrismaService } from '@/infra/database/prisma.service';
-import { generateUUID } from '@/common/utils/string.util';
+import { generateUUID } from '@imkdw-dev/utils';
 
 describe('GetTagListQuery', () => {
   let testHelper: IntegrationTestHelper;

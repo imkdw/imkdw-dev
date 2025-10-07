@@ -1,6 +1,6 @@
 import type { PrismaClient, Series } from '@prisma/client';
 import type { Prisma } from '@prisma/client';
-import { generateUUID } from '@/common/utils/string.util';
+import { generateUUID } from '@imkdw-dev/utils';
 
 export const createTestSeries = async (
   prisma: PrismaClient | Prisma.TransactionClient,

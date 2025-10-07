@@ -73,7 +73,7 @@ describe('게시글 답글 생성 유스케이스', () => {
       };
 
       await expect(
-        sut.execute(testArticle.id, '123e4567-e89b-12d3-a456-426614174000', createReplyDto, otherMember.id)
+        sut.execute(testArticle.slug, '123e4567-e89b-12d3-a456-426614174000', createReplyDto, otherMember.id)
       ).rejects.toThrow(ArticleCommentNotFoundException);
     });
   });
@@ -90,7 +90,7 @@ describe('게시글 답글 생성 유스케이스', () => {
         content: '답글의 답글 내용입니다.',
       };
 
-      await expect(sut.execute(testArticle.id, firstReply.id, createReplyDto, testMember.id)).rejects.toThrow();
+      await expect(sut.execute(testArticle.slug, firstReply.id, createReplyDto, testMember.id)).rejects.toThrow();
     });
   });
 
@@ -100,7 +100,7 @@ describe('게시글 답글 생성 유스케이스', () => {
         content: '테스트 답글 내용입니다.',
       };
 
-      const result = await sut.execute(testArticle.id, testComment.id, createReplyDto, otherMember.id);
+      const result = await sut.execute(testArticle.slug, testComment.id, createReplyDto, otherMember.id);
 
       const savedReply = await prisma.articleComment.findUnique({ where: { id: result.id } });
       expect(savedReply).not.toBeNull();

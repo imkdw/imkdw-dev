@@ -1,4 +1,4 @@
-import { generateUUID } from '@/common/utils/string.util';
+import { generateUUID } from '@imkdw-dev/utils';
 import type { PrismaClient, Member } from '@prisma/client';
 import type { Prisma } from '@prisma/client';
 
