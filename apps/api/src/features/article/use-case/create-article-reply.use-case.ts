@@ -17,13 +17,13 @@ export class CreateArticleReplyUseCase {
   ) {}
 
   async execute(
-    articleId: string,
+    articleSlug: string,
     commentId: string,
     dto: CreateArticleCommentDto,
     authorId: string
   ): Promise<ArticleComment> {
     return this.prisma.$transaction(async tx => {
-      await this.articleValidator.checkExist(articleId, tx);
+      const article = await this.articleValidator.checkExistBySlug(articleSlug, tx);
       const parentComment = await this.articleCommentValidator.checkExist(commentId, tx);
 
       await this.articleCommentValidator.checkCanHaveReply(parentComment);
@@ -31,7 +31,7 @@ export class CreateArticleReplyUseCase {
       const reply = ArticleComment.create({
         id: generateUUID(),
         content: dto.content,
-        articleId: articleId,
+        articleId: article.id,
         authorId: authorId,
         parentId: commentId,
         createdAt: new Date(),

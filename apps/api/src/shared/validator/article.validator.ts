@@ -34,4 +34,14 @@ export class ArticleValidator {
 
     return article;
   }
+
+  async checkExistBySlug(slug: string, tx?: Prisma.TransactionClient) {
+    const article = await this.articleRepository.findBySlug(slug, tx);
+
+    if (!article) {
+      throw new ArticleNotFoundException(`게시글을 찾을 수 없습니다`);
+    }
+
+    return article;
+  }
 }

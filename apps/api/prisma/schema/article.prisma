@@ -1,6 +1,6 @@
 /// 블로그 게시글 정보를 저장하는 테이블
 model Article {
-  id String @id @default(uuid())
+  id String @id
 
   /// 게시글 제목
   title String
@@ -28,6 +28,7 @@ model Article {
   tags     ArticleTag[]
   comments ArticleComment[]
 
+  @@index([slug])
   @@map("article")
 }
 

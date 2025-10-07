@@ -10,9 +10,18 @@ interface Props {
   onSubmit: () => void;
   onCancelReply: () => void;
   onKeyPress: (e: React.KeyboardEvent) => void;
+  isSubmitting?: boolean;
 }
 
-export function CommentForm({ newComment, replyingTo, onCommentChange, onSubmit, onCancelReply, onKeyPress }: Props) {
+export function CommentForm({
+  newComment,
+  replyingTo,
+  onCommentChange,
+  onSubmit,
+  onCancelReply,
+  onKeyPress,
+  isSubmitting,
+}: Props) {
   return (
     <div className="mb-8 bg-muted/30 rounded-xl p-4">
       <div className="flex space-x-3">
@@ -42,7 +51,7 @@ export function CommentForm({ newComment, replyingTo, onCommentChange, onSubmit,
             />
             <Button
               onClick={onSubmit}
-              disabled={!newComment.trim()}
+              disabled={!newComment.trim() || isSubmitting}
               size="sm"
               className="absolute bottom-2 right-2 h-8 w-8 p-0"
             >

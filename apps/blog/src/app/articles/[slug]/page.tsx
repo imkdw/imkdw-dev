@@ -76,7 +76,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             previousArticle={navigationArticles.previousArticle}
             nextArticle={navigationArticles.nextArticle}
           />
-          <CommentSection articleId={slug} />
+          <CommentSection articleSlug={slug} />
         </main>
         <aside className="hidden lg:block sticky top-4 self-start">
           <TableOfContents content={article.content} />

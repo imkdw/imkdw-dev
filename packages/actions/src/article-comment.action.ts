@@ -6,28 +6,28 @@ import { ICreateArticleCommentDto, IUpdateArticleCommentDto } from '@imkdw-dev/t
 import { withErrorHandling } from './lib';
 
 export const createArticleComment = withErrorHandling(
-  async (articleId: string, data: ICreateArticleCommentDto): Promise<void> => {
-    await apiClient.post<ICreateArticleCommentDto, void>(buildEndpoint('CREATE_ARTICLE_COMMENT', { articleId }), data);
+  async (articleSlug: string, data: ICreateArticleCommentDto): Promise<void> => {
+    await apiClient.post<ICreateArticleCommentDto, void>(buildEndpoint('CREATE_ARTICLE_COMMENT', { articleSlug }), data);
   }
 );
 
 export const updateArticleComment = withErrorHandling(
-  async (articleId: string, commentId: string, data: IUpdateArticleCommentDto): Promise<void> => {
+  async (articleSlug: string, commentId: string, data: IUpdateArticleCommentDto): Promise<void> => {
     await apiClient.put<IUpdateArticleCommentDto, void>(
-      buildEndpoint('UPDATE_ARTICLE_COMMENT', { articleId, commentId }),
+      buildEndpoint('UPDATE_ARTICLE_COMMENT', { articleSlug, commentId }),
       data
     );
   }
 );
 
-export const deleteArticleComment = withErrorHandling(async (articleId: string, commentId: string): Promise<void> => {
-  await apiClient.delete<void>(buildEndpoint('DELETE_ARTICLE_COMMENT', { articleId, commentId }));
+export const deleteArticleComment = withErrorHandling(async (articleSlug: string, commentId: string): Promise<void> => {
+  await apiClient.delete<void>(buildEndpoint('DELETE_ARTICLE_COMMENT', { articleSlug, commentId }));
 });
 
 export const createArticleReply = withErrorHandling(
-  async (articleId: string, commentId: string, data: ICreateArticleCommentDto): Promise<void> => {
+  async (articleSlug: string, commentId: string, data: ICreateArticleCommentDto): Promise<void> => {
     await apiClient.post<ICreateArticleCommentDto, void>(
-      buildEndpoint('CREATE_ARTICLE_REPLY', { articleId, commentId }),
+      buildEndpoint('CREATE_ARTICLE_REPLY', { articleSlug, commentId }),
       data
     );
   }

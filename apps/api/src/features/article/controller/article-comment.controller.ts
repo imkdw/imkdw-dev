@@ -27,11 +27,11 @@ export class ArticleCommentController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @Post(CREATE_ARTICLE_COMMENT)
   async createComment(
-    @Param('articleId') articleId: string,
+    @Param('articleSlug') articleSlug: string,
     @Body() dto: CreateArticleCommentDto,
     @CurrentRequester() requester: Requester
   ): Promise<void> {
-    await this.createArticleCommentUseCase.execute(articleId, dto, requester.id);
+    await this.createArticleCommentUseCase.execute(articleSlug, dto, requester.id);
   }
 
   @Swagger.updateComment('댓글 수정')
@@ -56,11 +56,11 @@ export class ArticleCommentController {
   @Post(CREATE_ARTICLE_REPLY)
   @HttpCode(HttpStatus.NO_CONTENT)
   async createReply(
-    @Param('articleId') articleId: string,
+    @Param('articleSlug') articleSlug: string,
     @Param('commentId') commentId: string,
     @Body() dto: CreateArticleCommentDto,
     @CurrentRequester() requester: Requester
   ): Promise<void> {
-    await this.createArticleReplyUseCase.execute(articleId, commentId, dto, requester.id);
+    await this.createArticleReplyUseCase.execute(articleSlug, commentId, dto, requester.id);
   }
 }

@@ -14,14 +14,14 @@ export class CreateArticleCommentUseCase {
     private readonly prisma: PrismaService
   ) {}
 
-  async execute(articleId: string, dto: CreateArticleCommentDto, authorId: string): Promise<ArticleComment> {
+  async execute(articleSlug: string, dto: CreateArticleCommentDto, authorId: string): Promise<ArticleComment> {
     return this.prisma.$transaction(async tx => {
-      await this.articleValidator.checkExist(articleId, tx);
+      const article = await this.articleValidator.checkExistBySlug(articleSlug, tx);
 
       const comment = ArticleComment.create({
         id: generateUUID(),
         content: dto.content,
-        articleId: articleId,
+        articleId: article.id,
         parentId: null,
         authorId: authorId,
         createdAt: new Date(),
