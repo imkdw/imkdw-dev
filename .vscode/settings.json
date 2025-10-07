@@ -9,6 +9,7 @@
   "cSpell.words": [
     "chax",
     "commonmark",
+    "contenteditable",
     "DEEPL",
     "imkdw",
     "INITDB",
@@ -20,6 +21,7 @@
     "presigner",
     "pretendard",
     "psql",
+    "selectednode",
     "Timestamptz",
     "Turbopack",
     "Turborepo"
