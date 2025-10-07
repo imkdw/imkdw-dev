@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Layout } from '@imkdw-dev/ui';
-import { CommentSection } from '../../../components/sections/comment-section';
+import { CommentSection } from '../../../components/comment/comment-section';
 import { ArticleInteractions } from './components/article-interactions';
 import { ArticleHeader } from '../../../components/article/article-header';
 import { ArticleContent } from '../../../components/article/article-content';
