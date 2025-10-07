@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Terminal } from 'lucide-react';
 import { SidebarTrigger } from '../../../primitives/sidebar';
-import { NotificationCenter } from '../../notifications/notification-center';
 import { UserMenu } from '../../auth/user-menu';
 import { LoginModal } from '../../auth/login-modal';
 import { MacOSControls } from '../../../primitives/macos-controls';
@@ -55,7 +54,6 @@ export function Header({ currentMember, onSearch }: Props) {
         </div>
 
         <div className="flex items-center space-x-1 gap-2">
-          {currentMember && <NotificationCenter />}
           <UserMenu
             currentMember={currentMember}
             onLogin={handleLogin}
