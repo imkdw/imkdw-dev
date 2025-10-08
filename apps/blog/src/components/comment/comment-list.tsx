@@ -1,10 +1,10 @@
 'use client';
 
-import type { Comment } from './types';
+import { IArticleCommentDto } from '@imkdw-dev/types';
 import { CommentItem } from './comment-item';
 
 interface Props {
-  comments: Comment[];
+  comments: IArticleCommentDto[];
   onReply: (username: string, commentId: string) => void;
   onDelete: (commentId: string) => void;
   onEdit: (commentId: string, newContent: string) => void;

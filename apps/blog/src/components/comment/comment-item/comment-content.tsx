@@ -1,15 +1,11 @@
 'use client';
 
 import { Avatar, AvatarImage, AvatarFallback, Button, Textarea } from '@imkdw-dev/ui';
+import type { IArticleCommentDto } from '@imkdw-dev/types';
+import { formatDate } from '@imkdw-dev/utils';
 
-interface CommentContentProps {
-  author: {
-    name: string;
-    username: string;
-    avatar: string;
-  };
-  content: string;
-  timestamp: string;
+interface Props {
+  comment: IArticleCommentDto;
   isEditing: boolean;
   editContent: string;
   onEditContentChange: (value: string) => void;
@@ -18,28 +14,27 @@ interface CommentContentProps {
 }
 
 export function CommentContent({
-  author,
-  content,
-  timestamp,
+  comment,
   isEditing,
   editContent,
   onEditContentChange,
   onEditSave,
   onEditCancel,
-}: CommentContentProps) {
+}: Props) {
+
   return (
     <div className="flex items-start space-x-3">
       <Avatar className="w-8 h-8 flex-shrink-0">
-        <AvatarImage src={author.avatar} />
-        <AvatarFallback>{author.name.charAt(0)}</AvatarFallback>
+        <AvatarImage src={comment.author.profileImage} />
+        <AvatarFallback>{comment.author.nickname.charAt(0)}</AvatarFallback>
       </Avatar>
 
       <div className="flex-1 min-w-0">
         <div className="bg-muted/50 rounded-2xl px-4 py-3">
           <div className="flex items-center space-x-2 mb-1">
-            <span className="font-medium text-sm">{author.name}</span>
+            <span className="font-medium text-sm">{comment.author.nickname}</span>
             <span className="text-xs text-muted-foreground">·</span>
-            <span className="text-xs text-muted-foreground">{timestamp}</span>
+            <span className="text-xs text-muted-foreground">{formatDate(comment.createdAt)}</span>
             {isEditing && <span className="text-xs text-primary">편집 중</span>}
           </div>
 
@@ -60,7 +55,7 @@ export function CommentContent({
               </div>
             </div>
           ) : (
-            <div className="prose prose-sm dark:prose-invert max-w-none">{content}</div>
+            <div className="prose prose-sm dark:prose-invert max-w-none">{comment.content}</div>
           )}
         </div>
       </div>

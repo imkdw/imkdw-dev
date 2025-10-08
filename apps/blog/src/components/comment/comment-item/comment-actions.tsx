@@ -14,7 +14,6 @@ interface CommentActionsProps {
   depth: number;
   hasReplies: boolean;
   showReplies: boolean;
-  repliesCount: number;
   isOwner: boolean;
   isEditing: boolean;
   onReply: () => void;
@@ -27,7 +26,6 @@ export function CommentActions({
   depth,
   hasReplies,
   showReplies,
-  repliesCount,
   isOwner,
   isEditing,
   onReply,
@@ -57,7 +55,7 @@ export function CommentActions({
           onClick={onToggleReplies}
           className="h-auto p-1 text-xs text-muted-foreground hover:bg-transparent hover:text-foreground"
         >
-          {showReplies ? '답글 숨기기' : `답글 ${repliesCount}개 보기`}
+          {showReplies ? '답글 숨기기' : '답글 보기'}
         </Button>
       )}
 

@@ -3,16 +3,17 @@
 import { useState } from 'react';
 import { useToast } from '@imkdw-dev/toast';
 import { useCommentForm } from '@imkdw-dev/hooks';
-import type { Comment } from './types';
+import { IArticleCommentDto } from '@imkdw-dev/types';
 import { CommentForm } from './comment-form';
 import { CommentList } from './comment-list';
 
 interface Props {
   articleSlug: string;
+  initialComments?: IArticleCommentDto[];
 }
 
-export function CommentSection({ articleSlug }: Props) {
-  const [comments, setComments] = useState<Comment[]>([]);
+export function CommentSection({ articleSlug, initialComments = [] }: Props) {
+  const [comments, setComments] = useState<IArticleCommentDto[]>(initialComments);
   const { toast } = useToast();
 
   const { content, setContent, isSubmitting, handleSubmit } = useCommentForm({
@@ -25,31 +26,12 @@ export function CommentSection({ articleSlug }: Props) {
   });
 
   const handleDelete = (commentId: string) => {
-    setComments(prevComments =>
-      prevComments.filter(comment => {
-        if (comment.id === commentId) return false;
-        if (comment.replies) {
-          comment.replies = comment.replies.filter(reply => reply.id !== commentId);
-        }
-        return true;
-      })
-    );
+    setComments(prevComments => prevComments.filter(comment => comment.id !== commentId));
   };
 
   const handleEdit = (commentId: string, newContent: string) => {
     setComments(prevComments =>
-      prevComments.map(comment => {
-        if (comment.id === commentId) {
-          return { ...comment, content: newContent };
-        }
-        if (comment.replies) {
-          return {
-            ...comment,
-            replies: comment.replies.map(reply => (reply.id === commentId ? { ...reply, content: newContent } : reply)),
-          };
-        }
-        return comment;
-      })
+      prevComments.map(comment => (comment.id === commentId ? { ...comment, content: newContent } : comment))
     );
   };
 

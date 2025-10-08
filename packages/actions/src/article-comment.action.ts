@@ -2,12 +2,15 @@
 
 import { apiClient } from '@imkdw-dev/api-client';
 import { buildEndpoint } from '@imkdw-dev/consts';
-import { ICreateArticleCommentDto, IUpdateArticleCommentDto } from '@imkdw-dev/types';
+import { ICreateArticleCommentDto, IResponseGetArticleCommentsDto, IUpdateArticleCommentDto } from '@imkdw-dev/types';
 import { withErrorHandling } from './lib';
 
 export const createArticleComment = withErrorHandling(
   async (articleSlug: string, data: ICreateArticleCommentDto): Promise<void> => {
-    await apiClient.post<ICreateArticleCommentDto, void>(buildEndpoint('CREATE_ARTICLE_COMMENT', { articleSlug }), data);
+    await apiClient.post<ICreateArticleCommentDto, void>(
+      buildEndpoint('CREATE_ARTICLE_COMMENT', { articleSlug }),
+      data
+    );
   }
 );
 
@@ -30,5 +33,11 @@ export const createArticleReply = withErrorHandling(
       buildEndpoint('CREATE_ARTICLE_REPLY', { articleSlug, commentId }),
       data
     );
+  }
+);
+
+export const getArticleComments = withErrorHandling(
+  async (articleSlug: string): Promise<IResponseGetArticleCommentsDto> => {
+    return apiClient.get<IResponseGetArticleCommentsDto>(buildEndpoint('GET_ARTICLE_COMMENTS', { articleSlug }));
   }
 );

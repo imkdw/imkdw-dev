@@ -2,12 +2,12 @@
 
 import { useState } from 'react';
 import { useToast } from '@imkdw-dev/toast';
+import { IArticleCommentDto } from '@imkdw-dev/types';
 import { CommentContent } from './comment-content';
 import { CommentActions } from './comment-actions';
-import { Comment } from '@/components/comment/types';
 
 export interface Props {
-  comment: Comment;
+  comment: IArticleCommentDto;
   onReply: (username: string, commentId: string) => void;
   onDelete: (commentId: string) => void;
   onEdit: (commentId: string, newContent: string) => void;
@@ -21,10 +21,10 @@ export function CommentItem({ comment, onReply, onDelete, onEdit, depth = 0, cur
   const [editContent, setEditContent] = useState(comment.content);
   const { toast } = useToast();
 
-  const isOwner = comment.author.username === currentUserId;
+  const isOwner = comment.author.nickname === currentUserId;
 
   const handleReply = () => {
-    onReply(comment.author.username, comment.id);
+    onReply(comment.author.nickname, comment.id);
   };
 
   const handleDeleteComment = () => {
@@ -54,9 +54,7 @@ export function CommentItem({ comment, onReply, onDelete, onEdit, depth = 0, cur
   return (
     <div className={`${depth > 0 ? 'ml-8 mt-4' : 'mt-6'} animate-fade-in`}>
       <CommentContent
-        author={comment.author}
-        content={comment.content}
-        timestamp={comment.timestamp}
+        comment={comment}
         isEditing={isEditing}
         editContent={editContent}
         onEditContentChange={setEditContent}
@@ -66,9 +64,8 @@ export function CommentItem({ comment, onReply, onDelete, onEdit, depth = 0, cur
 
       <CommentActions
         depth={depth}
-        hasReplies={!!comment.replies && comment.replies.length > 0}
+        hasReplies={comment.hasReplies}
         showReplies={showReplies}
-        repliesCount={comment.replies?.length ?? 0}
         isOwner={isOwner}
         isEditing={isEditing}
         onReply={handleReply}
@@ -76,23 +73,6 @@ export function CommentItem({ comment, onReply, onDelete, onEdit, depth = 0, cur
         onEdit={() => setIsEditing(true)}
         onDelete={handleDeleteComment}
       />
-
-      {/* Replies */}
-      {showReplies && comment.replies && (
-        <div className="mt-4">
-          {comment.replies.map(reply => (
-            <CommentItem
-              key={reply.id}
-              comment={reply}
-              onReply={onReply}
-              onDelete={onDelete}
-              onEdit={onEdit}
-              depth={depth + 1}
-              currentUserId={currentUserId}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 }
