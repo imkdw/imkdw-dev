@@ -1,0 +1,23 @@
+{
+  "name": "@imkdw-dev/auth",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@imkdw-dev/actions": "workspace:*",
+    "@imkdw-dev/types": "workspace:*",
+    "zustand": "5.0.8",
+    "react": "19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "typescript": "^5.9.2"
+  }
+}

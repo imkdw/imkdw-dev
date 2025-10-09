@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@imkdw-dev/actions": "workspace:*",
+    "@imkdw-dev/auth": "workspace:*",
     "@imkdw-dev/consts": "workspace:*",
     "@imkdw-dev/fonts": "workspace:*",
     "@imkdw-dev/hooks": "workspace:*",
