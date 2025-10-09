@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useToast } from '@imkdw-dev/toast';
 import { useCommentForm } from '@imkdw-dev/hooks';
 import { IArticleCommentDto } from '@imkdw-dev/types';
+import { getArticleComments } from '@imkdw-dev/actions';
 import { CommentForm } from './comment-form';
 import { CommentList } from './comment-list';
 
@@ -14,14 +14,15 @@ interface Props {
 
 export function CommentSection({ articleSlug, initialComments = [] }: Props) {
   const [comments, setComments] = useState<IArticleCommentDto[]>(initialComments);
-  const { toast } = useToast();
+
+  const refetchComments = async () => {
+    const response = await getArticleComments(articleSlug);
+    setComments(response.comments);
+  };
 
   const { content, setContent, isSubmitting, handleSubmit } = useCommentForm({
-    onSuccess: () => {
-      toast({
-        title: '댓글이 등록되었습니다',
-        description: '댓글이 성공적으로 등록되었습니다.',
-      });
+    onSuccess: async () => {
+      await refetchComments();
     },
   });
 

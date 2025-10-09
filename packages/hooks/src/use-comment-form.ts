@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { createArticleComment } from '@imkdw-dev/actions';
 
 interface Props {
-  onSuccess?: () => void;
+  onSuccess: () => void;
 }
 
-export function useCommentForm({ onSuccess }: Props = {}) {
+export function useCommentForm({ onSuccess }: Props) {
   const [content, setContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -19,7 +19,7 @@ export function useCommentForm({ onSuccess }: Props = {}) {
     try {
       await createArticleComment(articleSlug, { content });
       setContent('');
-      onSuccess?.();
+      onSuccess();
     } finally {
       setIsSubmitting(false);
     }
