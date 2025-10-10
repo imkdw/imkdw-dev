@@ -1,4 +1,3 @@
-// @ts-check
 import { nestjsConfig } from '../../packages/eslint-config/nestjs.js';
 
 export default [

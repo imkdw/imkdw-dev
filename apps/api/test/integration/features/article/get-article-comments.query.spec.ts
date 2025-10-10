@@ -102,14 +102,14 @@ describe('게시글 댓글 목록 조회 쿼리', () => {
       const result = await sut.execute(testArticle.slug);
 
       expect(result.comments).toHaveLength(1);
-      expect(result.comments[0].hasReplies).toBe(true);
+      expect(result.comments[0]?.hasReplies).toBe(true);
     });
 
     it('답글은 목록에 포함되지 않는다', async () => {
       const result = await sut.execute(testArticle.slug);
 
       expect(result.comments).toHaveLength(1);
-      expect(result.comments[0].id).toBe(testComment.id);
+      expect(result.comments[0]?.id).toBe(testComment.id);
     });
   });
 
@@ -123,28 +123,31 @@ describe('게시글 댓글 목록 조회 쿼리', () => {
         articleId: testArticle.id,
         authorId: testMember.id,
         content: '첫 번째 댓글',
+        createdAt: new Date('2025-01-01T00:00:00Z'),
       });
 
       secondComment = await createTestComment(prisma, {
         articleId: testArticle.id,
         authorId: testMember.id,
         content: '두 번째 댓글',
+        createdAt: new Date('2025-01-02T00:00:00Z'),
       });
 
       thirdComment = await createTestComment(prisma, {
         articleId: testArticle.id,
         authorId: testMember.id,
         content: '세 번째 댓글',
+        createdAt: new Date('2025-01-03T00:00:00Z'),
       });
     });
 
-    it('최신순(createdAt 내림차순)으로 정렬된다', async () => {
+    it('작성일 기준 최신순으로 정렬된다', async () => {
       const result = await sut.execute(testArticle.slug);
 
       expect(result.comments).toHaveLength(3);
-      expect(result.comments[0].id).toBe(thirdComment.id);
-      expect(result.comments[1].id).toBe(secondComment.id);
-      expect(result.comments[2].id).toBe(firstComment.id);
+      expect(result.comments[0]?.id).toBe(thirdComment.id);
+      expect(result.comments[1]?.id).toBe(secondComment.id);
+      expect(result.comments[2]?.id).toBe(firstComment.id);
     });
   });
 
@@ -175,7 +178,7 @@ describe('게시글 댓글 목록 조회 쿼리', () => {
       const result = await sut.execute(testArticle.slug);
 
       expect(result.comments).toHaveLength(1);
-      expect(result.comments[0].id).toBe(normalComment.id);
+      expect(result.comments[0]?.id).toBe(normalComment.id);
     });
   });
 });

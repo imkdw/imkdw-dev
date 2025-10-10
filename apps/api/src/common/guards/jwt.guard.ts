@@ -25,13 +25,13 @@ export class JwtGuard implements CanActivate {
       return true;
     }
 
-    const accessToken: string | undefined = request.headers['authorization'];
+    const authorization: string | undefined = request.headers['authorization'];
 
-    if (!accessToken) {
+    if (!authorization) {
       return false;
     }
 
-    const splittedAccessToken = accessToken.split(' ');
+    const splittedAccessToken = authorization.split(' ');
     if (splittedAccessToken.length !== 2) {
       return false;
     }

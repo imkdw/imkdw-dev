@@ -7,7 +7,7 @@ import { generateUUID } from '@imkdw-dev/utils';
  */
 export const createTestComment = async (
   prisma: PrismaClient | Prisma.TransactionClient,
-  data: { articleId: string; authorId: string; content?: string }
+  data: { articleId: string; authorId: string; content?: string; createdAt?: Date }
 ): Promise<ArticleComment> => {
   return prisma.articleComment.create({
     data: {
@@ -15,6 +15,7 @@ export const createTestComment = async (
       content: data.content ?? `테스트 댓글 내용 ${Date.now()}`,
       articleId: data.articleId,
       authorId: data.authorId,
+      createdAt: data.createdAt ?? new Date(),
     },
   });
 };

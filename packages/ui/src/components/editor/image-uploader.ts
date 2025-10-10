@@ -29,7 +29,6 @@ export function createImageUploader({ uploadImage, onUploadImage }: CreateImageU
 
         if (!result.success || !result.data) {
           const errorMessage = result.error?.message ?? '이미지 업로드에 실패했습니다.';
-          // showErrorToast(errorMessage);
           throw new Error(errorMessage);
         }
 
@@ -44,6 +43,6 @@ export function createImageUploader({ uploadImage, onUploadImage }: CreateImageU
       })
     );
 
-    return nodes.filter(node => node !== null);
+    return nodes;
   };
 }

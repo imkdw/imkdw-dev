@@ -17,7 +17,6 @@ export const nestjsConfig = [
       },
     },
     rules: {
-      // NestJS specific rules - allow decorators
       '@typescript-eslint/no-unused-vars': [
         'error',
         {

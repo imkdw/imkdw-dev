@@ -59,7 +59,7 @@ export class JwtService {
         throw new JwtExpiredException('만료된 토큰');
       }
 
-      throw error;
+      throw new InvalidJwtException(error instanceof Error ? error.message : 'invalid jwt');
     }
   }
 
