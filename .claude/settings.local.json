@@ -86,7 +86,8 @@
       "Bash(for i in {1..3})",
       "Bash(do echo \"=== 테스트 실행 $i/3 ===\")",
       "Bash(exit 1)",
-      "Bash(done)"
+      "Bash(done)",
+      "mcp__serena__think_about_collected_information"
     ],
     "deny": [],
     "ask": []

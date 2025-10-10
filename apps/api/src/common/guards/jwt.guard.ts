@@ -1,5 +1,6 @@
 import { JwtService } from '@/auth/service/jwt.service';
 import { IS_PUBLIC_KEY } from '@/common/decorator/public.decorator';
+import { CustomException } from '@/common/exception/custom.exception';
 import { MemberValidator } from '@/shared/validator/member.validator';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
@@ -53,7 +54,11 @@ export class JwtGuard implements CanActivate {
       request.requester = { ...request.requester, id, role };
 
       return true;
-    } catch {
+    } catch (error) {
+      if (error instanceof CustomException) {
+        throw error;
+      }
+
       return false;
     }
   }
