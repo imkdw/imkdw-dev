@@ -7,7 +7,6 @@ export interface IArticleCommentDto {
   id: string;
   content: string;
   createdAt: Date;
-  hasReplies: boolean;
   author: IArticleCommentAuthorDto;
 }
 

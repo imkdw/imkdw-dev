@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Layout } from '@imkdw-dev/ui';
-import { IArticleCommentDto } from '@imkdw-dev/types';
 import { CommentSection } from '../../../components/comment/comment-section';
 import { ArticleInteractions } from './components/article-interactions';
 import { ArticleHeader } from '../../../components/article/article-header';
@@ -50,7 +49,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const { article, prevArticle, nextArticle } = response;
 
   const commentsResponse = await getArticleComments(slug);
-  const initialComments: IArticleCommentDto[] = commentsResponse.comments;
 
   const navigationArticles = {
     previousArticle: prevArticle
@@ -80,7 +78,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             previousArticle={navigationArticles.previousArticle}
             nextArticle={navigationArticles.nextArticle}
           />
-          <CommentSection articleSlug={slug} initialComments={initialComments} />
+          <CommentSection articleSlug={slug} initialComments={commentsResponse.comments} />
         </main>
         <aside className="hidden lg:block sticky top-4 self-start">
           <TableOfContents content={article.content} />

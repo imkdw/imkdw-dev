@@ -1,7 +1,7 @@
 import { getOAuthUrl, getCurrentMember } from '@imkdw-dev/actions';
 import { OAuthProvider } from '@imkdw-dev/consts';
 
-export function useAuth() {
+export function useOAuth() {
   const handleSocialLogin = async (provider: OAuthProvider) => {
     const { url } = await getOAuthUrl(provider, window.location.href);
 

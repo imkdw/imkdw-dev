@@ -25,14 +25,13 @@ export class GetArticleCommentsQuery {
           where: { deletedAt: null },
         },
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: 'asc' },
     });
 
     const commentList: ArticleCommentDto[] = comments.map(comment => ({
       id: comment.id,
       content: comment.content,
       createdAt: comment.createdAt,
-      hasReplies: comment.replies.length > 0,
       author: {
         nickname: comment.author.nickname,
         profileImage: comment.author.profileImage,

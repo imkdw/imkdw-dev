@@ -1,7 +1,6 @@
 import { cookies } from 'next/headers';
 import { ApiClientConfig, ApiError, ApiResponse, HttpMethod, RequestOptions } from './types';
 import { ErrorResponse } from '@imkdw-dev/types';
-import { EXCEPTION_CODES } from '@imkdw-dev/exception';
 import { API_ENDPOINTS } from '@imkdw-dev/consts';
 
 export class ApiClient {
@@ -99,11 +98,7 @@ export class ApiClient {
       clearTimeout(timeoutId);
 
       if (error instanceof ApiError) {
-        console.log(error.errorCode, error.message);
-
-        if (error.errorCode === EXCEPTION_CODES.JWT_EXPIRED) {
-          console.log('토큰 갱신을 시도함');
-
+        if (error.status === 401) {
           const refreshed = await this.handleTokenRefresh();
 
           if (refreshed) {
@@ -231,8 +226,6 @@ export class ApiClient {
         options.sameSite = val.toLowerCase();
       }
     });
-
-    console.log(name, value, options);
 
     cookieStore.set(name, value, options);
   }

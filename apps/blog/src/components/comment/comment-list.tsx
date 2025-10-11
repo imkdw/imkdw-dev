@@ -1,16 +1,15 @@
 'use client';
 
 import { IArticleCommentDto } from '@imkdw-dev/types';
-import { CommentItem } from './comment-item';
+import { CommentItem } from './comment-item/comment-item';
 
 interface Props {
   comments: IArticleCommentDto[];
-  onReply: (username: string, commentId: string) => void;
   onDelete: (commentId: string) => void;
   onEdit: (commentId: string, newContent: string) => void;
 }
 
-export function CommentList({ comments, onReply, onDelete, onEdit }: Props) {
+export function CommentList({ comments, onDelete, onEdit }: Props) {
   if (comments.length === 0) {
     return (
       <div className="text-center py-12">
@@ -23,7 +22,7 @@ export function CommentList({ comments, onReply, onDelete, onEdit }: Props) {
   return (
     <div className="space-y-6">
       {comments.map(comment => (
-        <CommentItem key={comment.id} comment={comment} onReply={onReply} onDelete={onDelete} onEdit={onEdit} />
+        <CommentItem key={comment.id} comment={comment} onDelete={onDelete} onEdit={onEdit} />
       ))}
     </div>
   );

@@ -1,5 +1,3 @@
-'use client';
-
 import {
   Button,
   DropdownMenu,
@@ -8,57 +6,18 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from '@imkdw-dev/ui';
-import { Reply, MoreHorizontal, Edit3, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Edit3, Trash2 } from 'lucide-react';
 
-interface CommentActionsProps {
-  depth: number;
-  hasReplies: boolean;
-  showReplies: boolean;
+interface Props {
   isOwner: boolean;
   isEditing: boolean;
-  onReply: () => void;
-  onToggleReplies: () => void;
   onEdit: () => void;
   onDelete: () => void;
 }
 
-export function CommentActions({
-  depth,
-  hasReplies,
-  showReplies,
-  isOwner,
-  isEditing,
-  onReply,
-  onToggleReplies,
-  onEdit,
-  onDelete,
-}: CommentActionsProps) {
+export function CommentActions({ isOwner, isEditing, onEdit, onDelete }: Props) {
   return (
     <div className="flex items-center space-x-4 mt-2 ml-2">
-      {/* 답글 버튼은 최상위 댓글(depth 0)에서만 표시 */}
-      {depth === 0 && (
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onReply}
-          className="h-auto p-1 text-xs text-muted-foreground hover:bg-transparent hover:text-foreground"
-        >
-          <Reply className="w-4 h-4 mr-1" />
-          답글
-        </Button>
-      )}
-
-      {hasReplies && (
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onToggleReplies}
-          className="h-auto p-1 text-xs text-muted-foreground hover:bg-transparent hover:text-foreground"
-        >
-          {showReplies ? '답글 숨기기' : '답글 보기'}
-        </Button>
-      )}
-
       {isOwner && (
         <DropdownMenu>
           <DropdownMenuTrigger>

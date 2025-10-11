@@ -5,23 +5,13 @@ import { Send } from 'lucide-react';
 
 interface Props {
   newComment: string;
-  replyingTo: { username: string; commentId: string } | null;
   onCommentChange: (value: string) => void;
   onSubmit: () => void;
-  onCancelReply: () => void;
   onKeyPress: (e: React.KeyboardEvent) => void;
   isSubmitting?: boolean;
 }
 
-export function CommentForm({
-  newComment,
-  replyingTo,
-  onCommentChange,
-  onSubmit,
-  onCancelReply,
-  onKeyPress,
-  isSubmitting,
-}: Props) {
+export function CommentForm({ newComment, onCommentChange, onSubmit, onKeyPress, isSubmitting }: Props) {
   return (
     <div className="mb-8 bg-muted/30 rounded-xl p-4">
       <div className="flex space-x-3">
@@ -31,19 +21,9 @@ export function CommentForm({
         </Avatar>
 
         <div className="flex-1">
-          {replyingTo && (
-            <div className="mb-2 p-2 bg-muted/50 rounded-lg text-sm">
-              <span className="text-muted-foreground">답글 작성 중:</span>
-              <span className="font-medium ml-1">{replyingTo.username}</span>
-              <Button variant="ghost" size="sm" onClick={onCancelReply} className="ml-2 h-auto p-1 text-xs">
-                취소
-              </Button>
-            </div>
-          )}
-
           <div className="relative">
             <Textarea
-              placeholder={replyingTo ? `${replyingTo.username}에게 답글 작성...` : '댓글을 작성해주세요...'}
+              placeholder="댓글을 작성해주세요..."
               value={newComment}
               onChange={e => onCommentChange(e.target.value)}
               onKeyDown={onKeyPress}

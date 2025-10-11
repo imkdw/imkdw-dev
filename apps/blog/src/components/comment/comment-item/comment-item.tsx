@@ -5,27 +5,21 @@ import { useToast } from '@imkdw-dev/toast';
 import { IArticleCommentDto } from '@imkdw-dev/types';
 import { CommentContent } from './comment-content';
 import { CommentActions } from './comment-actions';
+import { useAuth } from '@imkdw-dev/auth';
 
 export interface Props {
   comment: IArticleCommentDto;
-  onReply: (username: string, commentId: string) => void;
   onDelete: (commentId: string) => void;
   onEdit: (commentId: string, newContent: string) => void;
-  depth?: number;
-  currentUserId?: string;
 }
 
-export function CommentItem({ comment, onReply, onDelete, onEdit, depth = 0, currentUserId = 'currentuser' }: Props) {
-  const [showReplies, setShowReplies] = useState(false);
+export function CommentItem({ comment, onDelete, onEdit }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
   const { toast } = useToast();
+  const { user } = useAuth();
 
-  const isOwner = comment.author.nickname === currentUserId;
-
-  const handleReply = () => {
-    onReply(comment.author.nickname, comment.id);
-  };
+  const isOwner = comment.author.nickname === user?.nickname;
 
   const handleDeleteComment = () => {
     onDelete(comment.id);
@@ -52,7 +46,7 @@ export function CommentItem({ comment, onReply, onDelete, onEdit, depth = 0, cur
   };
 
   return (
-    <div className={`${depth > 0 ? 'ml-8 mt-4' : 'mt-6'} animate-fade-in`}>
+    <div className="mt-6 animate-fade-in">
       <CommentContent
         comment={comment}
         isEditing={isEditing}
@@ -61,15 +55,9 @@ export function CommentItem({ comment, onReply, onDelete, onEdit, depth = 0, cur
         onEditSave={handleEditSave}
         onEditCancel={handleEditCancel}
       />
-
       <CommentActions
-        depth={depth}
-        hasReplies={comment.hasReplies}
-        showReplies={showReplies}
         isOwner={isOwner}
         isEditing={isEditing}
-        onReply={handleReply}
-        onToggleReplies={() => setShowReplies(!showReplies)}
         onEdit={() => setIsEditing(true)}
         onDelete={handleDeleteComment}
       />

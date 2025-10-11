@@ -19,9 +19,6 @@ export class ArticleCommentDto implements IArticleCommentDto {
   @ApiProperty({ description: '댓글 작성일', example: '2024-01-15T00:00:00.000Z' })
   createdAt: Date;
 
-  @ApiProperty({ description: '답글 존재 여부', example: true })
-  hasReplies: boolean;
-
   @ApiProperty({ type: ArticleCommentAuthorDto, description: '작성자 정보' })
   author: ArticleCommentAuthorDto;
 }

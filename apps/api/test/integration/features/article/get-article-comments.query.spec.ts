@@ -4,7 +4,7 @@ import { ArticleNotFoundException } from '@/features/article/exception/article-n
 import { createTestArticle } from '@test/integration/helpers/article.helper';
 import { createTestMember } from '@test/integration/helpers/member.helper';
 import { createTestSeries } from '@test/integration/helpers/series.helper';
-import { createTestComment, createTestReply } from '@test/integration/helpers/article-comment.helper';
+import { createTestComment } from '@test/integration/helpers/article-comment.helper';
 import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
 import { PrismaService } from '@/infra/database/prisma.service';
 import type { Article, ArticleComment, Member, Series } from '@prisma/client';
@@ -77,39 +77,6 @@ describe('게시글 댓글 목록 조회 쿼리', () => {
           profileImage: testMember.profileImage,
         },
       });
-    });
-  });
-
-  describe('답글이 있는 댓글을 조회하면', () => {
-    let testComment: ArticleComment;
-
-    beforeEach(async () => {
-      testComment = await createTestComment(prisma, {
-        articleId: testArticle.id,
-        authorId: testMember.id,
-        content: '테스트 댓글 내용입니다.',
-      });
-
-      await createTestReply(prisma, {
-        articleId: testArticle.id,
-        authorId: testMember.id,
-        parentId: testComment.id,
-        content: '테스트 답글 내용입니다.',
-      });
-    });
-
-    it('hasReplies가 true로 반환된다', async () => {
-      const result = await sut.execute(testArticle.slug);
-
-      expect(result.comments).toHaveLength(1);
-      expect(result.comments[0]?.hasReplies).toBe(true);
-    });
-
-    it('답글은 목록에 포함되지 않는다', async () => {
-      const result = await sut.execute(testArticle.slug);
-
-      expect(result.comments).toHaveLength(1);
-      expect(result.comments[0]?.id).toBe(testComment.id);
     });
   });
 

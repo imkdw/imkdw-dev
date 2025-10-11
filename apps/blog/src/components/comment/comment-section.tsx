@@ -9,10 +9,10 @@ import { CommentList } from './comment-list';
 
 interface Props {
   articleSlug: string;
-  initialComments?: IArticleCommentDto[];
+  initialComments: IArticleCommentDto[];
 }
 
-export function CommentSection({ articleSlug, initialComments = [] }: Props) {
+export function CommentSection({ articleSlug, initialComments }: Props) {
   const [comments, setComments] = useState<IArticleCommentDto[]>(initialComments);
 
   const refetchComments = async () => {
@@ -51,20 +51,15 @@ export function CommentSection({ articleSlug, initialComments = [] }: Props) {
     <div className="mt-12 pt-8 border-t border-border">
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-2">댓글 {comments.length}개</h3>
-        <p className="text-sm text-muted-foreground">이 글에 대한 생각을 댓글로 나눠주세요.</p>
       </div>
-
       <CommentForm
         newComment={content}
-        replyingTo={null}
         onCommentChange={setContent}
         onSubmit={handleSubmitComment}
-        onCancelReply={() => {}}
         onKeyPress={handleKeyPress}
         isSubmitting={isSubmitting}
       />
-
-      <CommentList comments={comments} onReply={() => {}} onDelete={handleDelete} onEdit={handleEdit} />
+      <CommentList comments={comments} onDelete={handleDelete} onEdit={handleEdit} />
     </div>
   );
 }

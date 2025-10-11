@@ -2,7 +2,7 @@ import { JwtService } from '@/auth/service/jwt.service';
 import { IS_PUBLIC_KEY } from '@/common/decorator/public.decorator';
 import { CustomException } from '@/common/exception/custom.exception';
 import { MemberValidator } from '@/shared/validator/member.validator';
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
 
@@ -26,20 +26,11 @@ export class JwtGuard implements CanActivate {
       return true;
     }
 
-    const authorization: string | undefined = request.headers['authorization'];
+    const authorization: string = request.headers['authorization'] ?? '';
 
-    if (!authorization) {
-      return false;
-    }
-
-    const splittedAccessToken = authorization.split(' ');
-    if (splittedAccessToken.length !== 2) {
-      return false;
-    }
-
-    const parsedAccessToken = splittedAccessToken[1];
+    const parsedAccessToken = authorization.split(' ')[1];
     if (!parsedAccessToken) {
-      return false;
+      throw new UnauthorizedException();
     }
 
     try {

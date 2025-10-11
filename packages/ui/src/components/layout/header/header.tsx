@@ -12,7 +12,7 @@ import { SearchInput } from './search-input';
 import { MobileNavigation } from './mobile-navigation';
 import { cn } from '../../../lib';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
-import { useAuth } from '@imkdw-dev/hooks';
+import { useOAuth } from '@imkdw-dev/hooks';
 import Link from 'next/link';
 import { IMemberDto } from '@imkdw-dev/types';
 
@@ -25,7 +25,7 @@ export function Header({ currentMember, onSearch }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('blog.tsx');
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const { handleSocialLogin } = useAuth();
+  const { handleSocialLogin } = useOAuth();
 
   const handleLogin = () => {
     setIsLoginOpen(true);

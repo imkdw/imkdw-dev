@@ -21,7 +21,6 @@ export function CommentContent({
   onEditSave,
   onEditCancel,
 }: Props) {
-
   return (
     <div className="flex items-start space-x-3">
       <Avatar className="w-8 h-8 flex-shrink-0">
