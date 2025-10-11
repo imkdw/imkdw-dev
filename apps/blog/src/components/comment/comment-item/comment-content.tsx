@@ -3,23 +3,30 @@
 import { Avatar, AvatarImage, AvatarFallback, Button, Textarea } from '@imkdw-dev/ui';
 import type { IArticleCommentDto } from '@imkdw-dev/types';
 import { formatDate } from '@imkdw-dev/utils';
+import { CommentActions } from './comment-actions';
 
 interface Props {
   comment: IArticleCommentDto;
+  isOwner: boolean;
   isEditing: boolean;
   editContent: string;
   onEditContentChange: (value: string) => void;
   onEditSave: () => void;
   onEditCancel: () => void;
+  onEdit: () => void;
+  onDelete: () => void;
 }
 
 export function CommentContent({
   comment,
+  isOwner,
   isEditing,
   editContent,
   onEditContentChange,
   onEditSave,
   onEditCancel,
+  onEdit,
+  onDelete,
 }: Props) {
   return (
     <div className="flex items-start space-x-3">
@@ -34,6 +41,7 @@ export function CommentContent({
             <span className="font-medium text-sm">{comment.author.nickname}</span>
             <span className="text-xs text-muted-foreground">·</span>
             <span className="text-xs text-muted-foreground">{formatDate(comment.createdAt)}</span>
+            <CommentActions isOwner={isOwner} isEditing={isEditing} onEdit={onEdit} onDelete={onDelete} />
             {isEditing && <span className="text-xs text-primary">편집 중</span>}
           </div>
 

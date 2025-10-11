@@ -16,32 +16,32 @@ interface Props {
 }
 
 export function CommentActions({ isOwner, isEditing, onEdit, onDelete }: Props) {
+  if (!isOwner) {
+    return null;
+  }
+
   return (
-    <div className="flex items-center space-x-4 mt-2 ml-2">
-      {isOwner && (
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-auto p-1 text-xs text-muted-foreground hover:bg-transparent hover:text-foreground ml-auto"
-            >
-              <MoreHorizontal className="w-4 h-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem onClick={onEdit} disabled={isEditing}>
-              <Edit3 className="w-4 h-4 mr-2" />
-              댓글 수정
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={onDelete} className="text-destructive">
-              <Trash2 className="w-4 h-4 mr-2" />
-              댓글 삭제
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )}
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-auto p-1 text-xs text-muted-foreground hover:bg-transparent hover:text-foreground"
+        >
+          <MoreHorizontal className="w-4 h-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-48">
+        <DropdownMenuItem onClick={onEdit} disabled={isEditing}>
+          <Edit3 className="w-4 h-4 mr-2" />
+          댓글 수정
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={onDelete} className="text-destructive">
+          <Trash2 className="w-4 h-4 mr-2" />
+          댓글 삭제
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

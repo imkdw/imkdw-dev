@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useToast } from '@imkdw-dev/toast';
 import { IArticleCommentDto } from '@imkdw-dev/types';
 import { CommentContent } from './comment-content';
-import { CommentActions } from './comment-actions';
 import { useAuth } from '@imkdw-dev/auth';
 
 export interface Props {
@@ -49,15 +48,12 @@ export function CommentItem({ comment, onDelete, onEdit }: Props) {
     <div className="mt-6 animate-fade-in">
       <CommentContent
         comment={comment}
+        isOwner={isOwner}
         isEditing={isEditing}
         editContent={editContent}
         onEditContentChange={setEditContent}
         onEditSave={handleEditSave}
         onEditCancel={handleEditCancel}
-      />
-      <CommentActions
-        isOwner={isOwner}
-        isEditing={isEditing}
         onEdit={() => setIsEditing(true)}
         onDelete={handleDeleteComment}
       />
