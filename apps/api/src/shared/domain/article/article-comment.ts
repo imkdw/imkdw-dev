@@ -35,8 +35,8 @@ export class ArticleComment {
     return this.parentId === null;
   }
 
-  canUpdate(requesterId: string): boolean {
-    const isAuthor = this.authorId === requesterId;
+  canUpdate(requester: Requester): boolean {
+    const isAuthor = this.authorId === requester.id;
     return isAuthor;
   }
 

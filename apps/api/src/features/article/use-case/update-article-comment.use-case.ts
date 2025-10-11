@@ -18,10 +18,7 @@ export class UpdateArticleCommentUseCase {
   async execute(commentId: string, dto: UpdateArticleCommentDto, requester: Requester): Promise<void> {
     return this.prisma.$transaction(async tx => {
       const existingComment = await this.articleCommentValidator.checkExist(commentId, tx);
-
-      // 댓글 수정 권한 검증
-      const comment = ArticleComment.create(existingComment);
-      if (!comment.canUpdate(requester.id)) {
+      if (!existingComment.canUpdate(requester)) {
         throw new CannotUpdateArticleCommentException('댓글을 수정할 권한이 없습니다.');
       }
 
