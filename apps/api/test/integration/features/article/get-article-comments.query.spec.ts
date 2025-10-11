@@ -71,7 +71,6 @@ describe('게시글 댓글 목록 조회 쿼리', () => {
         id: testComment.id,
         content: testComment.content,
         createdAt: testComment.createdAt,
-        hasReplies: false,
         author: {
           nickname: testMember.nickname,
           profileImage: testMember.profileImage,
@@ -108,13 +107,13 @@ describe('게시글 댓글 목록 조회 쿼리', () => {
       });
     });
 
-    it('작성일 기준 최신순으로 정렬된다', async () => {
+    it('작성일 기준 오름으로 정렬된다', async () => {
       const result = await sut.execute(testArticle.slug);
 
       expect(result.comments).toHaveLength(3);
-      expect(result.comments[0]?.id).toBe(thirdComment.id);
+      expect(result.comments[0]?.id).toBe(firstComment.id);
       expect(result.comments[1]?.id).toBe(secondComment.id);
-      expect(result.comments[2]?.id).toBe(firstComment.id);
+      expect(result.comments[2]?.id).toBe(thirdComment.id);
     });
   });
 
