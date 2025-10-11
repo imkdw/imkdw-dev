@@ -87,7 +87,9 @@
       "Bash(do echo \"=== 테스트 실행 $i/3 ===\")",
       "Bash(exit 1)",
       "Bash(done)",
-      "mcp__serena__think_about_collected_information"
+      "mcp__serena__think_about_collected_information",
+      "mcp__serena__get_symbols_overview",
+      "mcp__serena__find_referencing_symbols"
     ],
     "deny": [],
     "ask": []

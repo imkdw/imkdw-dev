@@ -1,3 +1,4 @@
+import { Requester } from '@/common/types/requester.type';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
 
 interface Props {
@@ -39,9 +40,9 @@ export class ArticleComment {
     return isAuthor;
   }
 
-  canDelete(requesterId: string, requesterRole: string): boolean {
-    const isAuthor = this.authorId === requesterId;
-    const isAdmin = requesterRole === MEMBER_ROLE.ADMIN;
+  canDelete(requester: Requester): boolean {
+    const isAuthor = this.authorId === requester.id;
+    const isAdmin = requester.role === MEMBER_ROLE.ADMIN;
     return isAuthor || isAdmin;
   }
 }
