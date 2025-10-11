@@ -7,10 +7,9 @@ interface Props {
   comments: IArticleCommentDto[];
   articleSlug: string;
   onDelete: () => Promise<void>;
-  onEdit: (commentId: string, newContent: string) => void;
 }
 
-export function CommentList({ comments, articleSlug, onDelete, onEdit }: Props) {
+export function CommentList({ comments, articleSlug, onDelete }: Props) {
   if (comments.length === 0) {
     return (
       <div className="text-center py-12">
@@ -23,7 +22,7 @@ export function CommentList({ comments, articleSlug, onDelete, onEdit }: Props) 
   return (
     <div className="space-y-6">
       {comments.map(comment => (
-        <CommentItem key={comment.id} comment={comment} articleSlug={articleSlug} onDelete={onDelete} onEdit={onEdit} />
+        <CommentItem key={comment.id} comment={comment} articleSlug={articleSlug} onDelete={onDelete} />
       ))}
     </div>
   );

@@ -30,12 +30,6 @@ export function CommentSection({ articleSlug, initialComments }: Props) {
     await refetchComments();
   };
 
-  const handleEdit = (commentId: string, newContent: string) => {
-    setComments(prevComments =>
-      prevComments.map(comment => (comment.id === commentId ? { ...comment, content: newContent } : comment))
-    );
-  };
-
   const handleSubmitComment = () => {
     handleSubmit(articleSlug);
   };
@@ -59,7 +53,7 @@ export function CommentSection({ articleSlug, initialComments }: Props) {
         onKeyPress={handleKeyPress}
         isSubmitting={isSubmitting}
       />
-      <CommentList comments={comments} articleSlug={articleSlug} onDelete={handleDelete} onEdit={handleEdit} />
+      <CommentList comments={comments} articleSlug={articleSlug} onDelete={handleDelete} />
     </div>
   );
 }

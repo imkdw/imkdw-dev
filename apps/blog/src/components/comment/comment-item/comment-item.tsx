@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { IArticleCommentDto } from '@imkdw-dev/types';
-import { deleteArticleComment } from '@imkdw-dev/actions';
+import { deleteArticleComment, updateArticleComment } from '@imkdw-dev/actions';
 import { CommentContent } from './comment-content';
 import { useAuth } from '@imkdw-dev/auth';
 
@@ -10,10 +10,9 @@ export interface Props {
   comment: IArticleCommentDto;
   articleSlug: string;
   onDelete: () => Promise<void>;
-  onEdit: (commentId: string, newContent: string) => void;
 }
 
-export function CommentItem({ comment, articleSlug, onDelete, onEdit }: Props) {
+export function CommentItem({ comment, articleSlug, onDelete }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
   const { user } = useAuth();
@@ -25,9 +24,10 @@ export function CommentItem({ comment, articleSlug, onDelete, onEdit }: Props) {
     await onDelete();
   };
 
-  const handleEditSave = () => {
+  const handleEditSave = async () => {
     if (editContent.trim() && editContent !== comment.content) {
-      onEdit(comment.id, editContent.trim());
+      await updateArticleComment(articleSlug, comment.id, { content: editContent.trim() });
+      await onDelete();
     }
     setIsEditing(false);
   };

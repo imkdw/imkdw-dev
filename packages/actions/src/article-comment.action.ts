@@ -27,15 +27,6 @@ export const deleteArticleComment = withErrorHandling(async (articleSlug: string
   await apiClient.delete<void>(buildEndpoint('DELETE_ARTICLE_COMMENT', { articleSlug, commentId }));
 });
 
-export const createArticleReply = withErrorHandling(
-  async (articleSlug: string, commentId: string, data: ICreateArticleCommentDto): Promise<void> => {
-    await apiClient.post<ICreateArticleCommentDto, void>(
-      buildEndpoint('CREATE_ARTICLE_REPLY', { articleSlug, commentId }),
-      data
-    );
-  }
-);
-
 export const getArticleComments = withErrorHandling(
   async (articleSlug: string): Promise<IResponseGetArticleCommentsDto> => {
     return apiClient.get<IResponseGetArticleCommentsDto>(buildEndpoint('GET_ARTICLE_COMMENTS', { articleSlug }));
