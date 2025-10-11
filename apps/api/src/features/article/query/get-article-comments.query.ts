@@ -21,9 +21,6 @@ export class GetArticleCommentsQuery {
       },
       include: {
         author: true,
-        replies: {
-          where: { deletedAt: null },
-        },
       },
       orderBy: { createdAt: 'asc' },
     });
