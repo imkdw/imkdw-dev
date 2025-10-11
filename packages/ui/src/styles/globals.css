@@ -6,6 +6,10 @@ html {
   scroll-behavior: smooth;
 }
 
+button {
+  cursor: pointer;
+}
+
 /* Animation utilities */
 .animate-fade-in {
   animation: fadeIn 0.2s ease-in-out;

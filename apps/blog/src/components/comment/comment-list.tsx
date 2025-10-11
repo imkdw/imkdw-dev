@@ -5,11 +5,12 @@ import { CommentItem } from './comment-item/comment-item';
 
 interface Props {
   comments: IArticleCommentDto[];
-  onDelete: (commentId: string) => void;
+  articleSlug: string;
+  onDelete: () => Promise<void>;
   onEdit: (commentId: string, newContent: string) => void;
 }
 
-export function CommentList({ comments, onDelete, onEdit }: Props) {
+export function CommentList({ comments, articleSlug, onDelete, onEdit }: Props) {
   if (comments.length === 0) {
     return (
       <div className="text-center py-12">
@@ -22,7 +23,7 @@ export function CommentList({ comments, onDelete, onEdit }: Props) {
   return (
     <div className="space-y-6">
       {comments.map(comment => (
-        <CommentItem key={comment.id} comment={comment} onDelete={onDelete} onEdit={onEdit} />
+        <CommentItem key={comment.id} comment={comment} articleSlug={articleSlug} onDelete={onDelete} onEdit={onEdit} />
       ))}
     </div>
   );

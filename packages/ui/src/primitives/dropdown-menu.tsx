@@ -33,7 +33,7 @@ export function DropdownMenuSubTrigger({ className, inset, children, ...props }:
   return (
     <button
       className={cn(
-        'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent hover:bg-accent',
+        'flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent hover:bg-accent',
         inset && 'pl-8',
         className
       )}
@@ -89,7 +89,7 @@ export function DropdownMenuItem({ className, inset, disabled, children, ...prop
     <MenuItem disabled={disabled}>
       <button
         className={cn(
-          'relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
+          'relative flex w-full select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
           inset && 'pl-8',
           className
         )}
@@ -117,7 +117,7 @@ export function DropdownMenuCheckboxItem({
     <MenuItem disabled={disabled}>
       <button
         className={cn(
-          'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
+          'relative flex w-full select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
           className
         )}
         {...props}
@@ -148,7 +148,7 @@ export function DropdownMenuRadioItem({
     <MenuItem disabled={disabled}>
       <button
         className={cn(
-          'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
+          'relative flex w-full select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
           className
         )}
         {...props}

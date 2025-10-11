@@ -19,7 +19,6 @@ export function AvatarImage({ className, src, alt, ...props }: AvatarImageProps)
     setImageLoadError(true);
   };
 
-  // src가 없거나 이미지 로드 에러가 있으면 렌더링하지 않음
   if (!src || imageLoadError) {
     return null;
   }

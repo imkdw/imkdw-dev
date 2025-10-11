@@ -26,8 +26,8 @@ export function CommentSection({ articleSlug, initialComments }: Props) {
     },
   });
 
-  const handleDelete = (commentId: string) => {
-    setComments(prevComments => prevComments.filter(comment => comment.id !== commentId));
+  const handleDelete = async () => {
+    await refetchComments();
   };
 
   const handleEdit = (commentId: string, newContent: string) => {
@@ -59,7 +59,7 @@ export function CommentSection({ articleSlug, initialComments }: Props) {
         onKeyPress={handleKeyPress}
         isSubmitting={isSubmitting}
       />
-      <CommentList comments={comments} onDelete={handleDelete} onEdit={handleEdit} />
+      <CommentList comments={comments} articleSlug={articleSlug} onDelete={handleDelete} onEdit={handleEdit} />
     </div>
   );
 }
