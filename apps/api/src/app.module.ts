@@ -17,6 +17,7 @@ import { StatsModule } from '@/features/stats/stats.module';
 import { TagModule } from '@/features/tag/tag.module';
 import { StorageModule } from '@/infra/storage/storage.module';
 import { CustomExceptionFilter } from '@/common/filter/custom-exception.filter';
+import { SeoModule } from '@/features/seo/seo.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { CustomExceptionFilter } from '@/common/filter/custom-exception.filter';
     StatsModule,
     TagModule,
     StorageModule,
+    SeoModule,
   ],
   controllers: [AppController],
   providers: [

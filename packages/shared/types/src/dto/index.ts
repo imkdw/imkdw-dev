@@ -4,6 +4,7 @@ export * from './article-comment';
 export * from './common';
 export * from './member';
 export * from './series';
+export * from './seo';
 export * from './stats';
 export * from './storage';
 export * from './tag';
