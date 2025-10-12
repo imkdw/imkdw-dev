@@ -43,7 +43,7 @@ export class GetArticlesQuery {
         id: item.id,
         title: item.title,
         slug: item.slug,
-        content: item.content.slice(0, ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST),
+        content: item.plainContent.slice(0, ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST),
         viewCount: item.viewCount,
         readMinute: item.readMinute,
         createdAt: item.createdAt,

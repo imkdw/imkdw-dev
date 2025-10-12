@@ -525,4 +525,85 @@ describe('게시글 수정 유스케이스', () => {
       expect(updatedSecondSeries?.lastArticleCreatedAt).not.toBeNull();
     });
   });
+
+  describe('HTML 태그가 포함된 내용으로 게시글을 수정하면', () => {
+    it('HTML 태그가 제거된채로 저장된다', async () => {
+      const existingArticle = await createTestArticle(prisma, {
+        title: '기존 게시글',
+        content: '기존 내용입니다.',
+        seriesId: testSeries.id,
+      });
+
+      const updateArticleDto: UpdateArticleDto = {
+        title: 'HTML 포함 수정 게시글',
+        content: '<p>수정된 내용입니다</p>\n<div>추가 내용입니다</div>',
+        seriesId: testSeries.id,
+        tags: [],
+      };
+
+      await sut.execute(existingArticle.id, updateArticleDto);
+
+      const updatedArticle = await prisma.article.findUnique({ where: { id: existingArticle.id } });
+      expect(updatedArticle?.plainContent).toBe('수정된 내용입니다 추가 내용입니다');
+      expect(updatedArticle?.plainContent).not.toContain('<p>');
+      expect(updatedArticle?.plainContent).not.toContain('</p>');
+      expect(updatedArticle?.plainContent).not.toContain('<div>');
+      expect(updatedArticle?.plainContent).not.toContain('</div>');
+    });
+
+    it('순수한 텍스트로 수정하면 그대로 저장된다', async () => {
+      const existingArticle = await createTestArticle(prisma, {
+        title: '기존 게시글',
+        content: '<h1>기존 제목</h1><p>기존 내용</p>',
+        seriesId: testSeries.id,
+      });
+
+      const updateArticleDto: UpdateArticleDto = {
+        title: '순수 텍스트로 수정',
+        content: '이제는 HTML 태그가 없는 순수 텍스트입니다.',
+        seriesId: testSeries.id,
+        tags: [],
+      };
+
+      await sut.execute(existingArticle.id, updateArticleDto);
+
+      const updatedArticle = await prisma.article.findUnique({ where: { id: existingArticle.id } });
+      expect(updatedArticle?.plainContent).toBe('이제는 HTML 태그가 없는 순수 텍스트입니다.');
+      expect(updatedArticle?.content).toBe(updatedArticle?.plainContent);
+    });
+
+    it('여러 HTML 요소와 중첩 구조를 정확히 제거한다', async () => {
+      const existingArticle = await createTestArticle(prisma, {
+        title: '기존 게시글',
+        content: '기존 내용',
+        seriesId: testSeries.id,
+      });
+
+      const updateArticleDto: UpdateArticleDto = {
+        title: '복잡한 HTML 수정',
+        content: `
+          <article>
+            <header><h2>섹션 제목</h2></header>
+            <section>
+              <p>첫 번째 <em>강조된</em> 내용</p>
+              <blockquote>인용문입니다</blockquote>
+            </section>
+            <footer>
+              <a href="/link">링크</a>
+            </footer>
+          </article>
+        `,
+        seriesId: testSeries.id,
+        tags: ['HTML', 'Test'],
+      };
+
+      await sut.execute(existingArticle.id, updateArticleDto);
+
+      const updatedArticle = await prisma.article.findUnique({ where: { id: existingArticle.id } });
+      expect(updatedArticle?.plainContent).toBe('섹션 제목 첫 번째 강조된 내용 인용문입니다 링크');
+      expect(updatedArticle?.plainContent).not.toContain('<');
+      expect(updatedArticle?.plainContent).not.toContain('>');
+      expect(updatedArticle?.plainContent).not.toMatch(/\s{2,}/);
+    });
+  });
 });

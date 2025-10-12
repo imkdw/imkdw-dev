@@ -5,6 +5,7 @@ export interface IArticleDto {
   title: string;
   slug: string;
   content: string;
+  plainContent: string;
   viewCount: number;
   readMinute: number;
   createdAt: Date;

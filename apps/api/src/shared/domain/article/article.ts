@@ -3,6 +3,7 @@ export class Article {
   title: string;
   slug: string;
   content: string;
+  plainContent: string;
   seriesId: string;
   viewCount: number;
   readMinute: number;
@@ -14,6 +15,7 @@ export class Article {
     this.title = props.title;
     this.slug = props.slug;
     this.content = props.content;
+    this.plainContent = props.plainContent;
     this.seriesId = props.seriesId;
     this.viewCount = props.viewCount;
     this.readMinute = props.readMinute;
@@ -39,5 +41,12 @@ export class Article {
 
     const totalReadTime = Math.ceil(koreanReadTime + englishReadTime);
     return Math.max(totalReadTime, MINIMUM_READ_MINUTE);
+  }
+
+  static stripHtmlTags(content: string): string {
+    return content
+      .replace(/<[^>]*>/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
   }
 }

@@ -33,6 +33,7 @@ export class UpdateArticleUseCase {
         title: dto.title,
         slug: existingArticle.slug,
         content: dto.content,
+        plainContent: Article.stripHtmlTags(dto.content),
         seriesId: dto.seriesId,
         viewCount: existingArticle.viewCount,
         readMinute: Article.calculateReadMinute(dto.content),

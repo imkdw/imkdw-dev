@@ -3,6 +3,7 @@ import { PrismaService } from '@/infra/database/prisma.service';
 import { ArticleDto, ArticleNavigationDto, ResponseGetArticleDto } from '@/features/article/dto/get-article.dto';
 import { ArticleTagDto } from '@/features/article/dto/get-articles.dto';
 import { ArticleNotFoundException } from '@/features/article/exception/article-not-found.exception';
+import { ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST } from '@imkdw-dev/consts';
 
 @Injectable()
 export class GetArticleQuery {
@@ -33,6 +34,7 @@ export class GetArticleQuery {
       title: article.title,
       slug: article.slug,
       content: article.content,
+      plainContent: article.plainContent.slice(0, ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST),
       viewCount: article.viewCount,
       readMinute: article.readMinute,
       createdAt: article.createdAt,

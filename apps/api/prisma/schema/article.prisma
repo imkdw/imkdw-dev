@@ -11,6 +11,9 @@ model Article {
   /// 게시글 본문 내용
   content String
 
+  /// 게시글 본문 내용(HTML 태그 제거)
+  plainContent String @map("plain_content")
+
   /// 시리즈 ID
   seriesId String @map("series_id")
 

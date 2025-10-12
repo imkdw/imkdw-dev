@@ -61,6 +61,7 @@ describe('게시글 상세조회 쿼리', () => {
         title: testArticle.title,
         slug: testArticle.slug,
         content: testArticle.content,
+        plainContent: testArticle.plainContent,
         viewCount: testArticle.viewCount,
         readMinute: testArticle.readMinute,
         createdAt: testArticle.createdAt,

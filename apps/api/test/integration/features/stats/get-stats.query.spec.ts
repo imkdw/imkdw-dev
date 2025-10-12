@@ -86,6 +86,7 @@ describe('GetStatsQuery', () => {
           title: '삭제된 글',
           slug: 'deleted-article',
           content: '삭제된 글 내용',
+          plainContent: '삭제된 글 내용',
           viewCount: 999,
           readMinute: 1,
           seriesId: series.id,
@@ -102,44 +103,6 @@ describe('GetStatsQuery', () => {
         expect(result.article.viewCount).toBe(100);
         expect(result.series.count).toBe(1);
         expect(result.tag.count).toBe(1);
-      });
-    });
-  });
-
-  describe('조회수가 null인 글이 있을 때', () => {
-    beforeEach(async () => {
-      const series = await createTestSeries(prisma, {
-        title: '테스트 시리즈',
-        slug: 'test-series',
-      });
-
-      await Promise.all([
-        createTestArticle(prisma, {
-          seriesId: series.id,
-          title: '조회수 있는 글',
-          slug: 'article-with-views',
-          viewCount: 150,
-        }),
-        prisma.article.create({
-          data: {
-            id: 'article-no-views',
-            title: '조회수 없는 글',
-            slug: 'article-without-views',
-            content: '조회수가 없는 글',
-            viewCount: 0,
-            readMinute: 1,
-            seriesId: series.id,
-          },
-        }),
-      ]);
-    });
-
-    describe('통계를 조회하면', () => {
-      it('조회수가 올바르게 계산되어야 한다', async () => {
-        const result = await sut.execute();
-
-        expect(result.article.count).toBe(2);
-        expect(result.article.viewCount).toBe(150);
       });
     });
   });

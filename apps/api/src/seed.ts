@@ -116,13 +116,19 @@ async function main() {
             .replace(/\s+/g, '-');
           const readMinute = faker.number.int({ min: 3, max: 30 });
           const randomSeries = faker.helpers.arrayElement(series);
+          const content = faker.lorem.paragraphs(faker.number.int({ min: 5, max: 20 }), '\n\n');
+          const plainContent = content
+            .replace(/<[^>]*>/g, '')
+            .replace(/\s+/g, ' ')
+            .trim();
 
           const article = await tx.article.create({
             data: {
               id: faker.string.uuid(),
               title,
               slug,
-              content: faker.lorem.paragraphs(faker.number.int({ min: 5, max: 20 }), '\n\n'),
+              content,
+              plainContent,
               seriesId: randomSeries.id,
               viewCount: faker.number.int({ min: 0, max: 1000 }),
               readMinute,

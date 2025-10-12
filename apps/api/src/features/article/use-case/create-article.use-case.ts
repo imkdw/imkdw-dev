@@ -33,6 +33,7 @@ export class CreateArticleUseCase {
         title: dto.title,
         slug: dto.slug,
         content: dto.content,
+        plainContent: Article.stripHtmlTags(dto.content),
         seriesId: dto.seriesId,
         viewCount: 0,
         readMinute: Article.calculateReadMinute(dto.content),

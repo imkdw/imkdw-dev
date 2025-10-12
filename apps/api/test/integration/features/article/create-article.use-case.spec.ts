@@ -244,4 +244,72 @@ describe('게시글 생성 유스케이스', () => {
       expect(finalSeriesStats?.lastArticleCreatedAt?.getTime()).toBeGreaterThan(firstArticle.createdAt.getTime());
     });
   });
+
+  describe('HTML 태그가 포함된 게시글을 생성하면', () => {
+    it('HTML 태그가 제거되어 저장된다', async () => {
+      const createArticleDto: CreateArticleDto = {
+        title: 'HTML 포함 게시글',
+        slug: 'html-article',
+        content: '<p>안녕하세요</p>\n<div>테스트 내용입니다</div>',
+        seriesId: testSeries.id,
+        tags: [],
+      };
+
+      const result = await sut.execute(createArticleDto);
+
+      const savedArticle = await prisma.article.findUnique({ where: { id: result.id } });
+      expect(savedArticle?.plainContent).toBe('안녕하세요 테스트 내용입니다');
+      expect(savedArticle?.plainContent).not.toContain('<p>');
+      expect(savedArticle?.plainContent).not.toContain('</p>');
+      expect(savedArticle?.plainContent).not.toContain('<div>');
+      expect(savedArticle?.plainContent).not.toContain('</div>');
+    });
+
+    it('복잡한 HTML 구조와 공백이 정규화되어 저장된다', async () => {
+      const createArticleDto: CreateArticleDto = {
+        title: '복잡한 HTML 게시글',
+        slug: 'complex-html-article',
+        content: `
+          <h1>제목입니다</h1>
+          <p>첫 번째   문단입니다.</p>
+          <div>
+            <strong>중요한</strong> 내용이고
+            <a href="https://example.com">링크</a>도 있습니다.
+          </div>
+          <ul>
+            <li>항목 1</li>
+            <li>항목 2</li>
+          </ul>
+        `,
+        seriesId: testSeries.id,
+        tags: ['HTML'],
+      };
+
+      const result = await sut.execute(createArticleDto);
+
+      const savedArticle = await prisma.article.findUnique({ where: { id: result.id } });
+      expect(savedArticle?.plainContent).toBe(
+        '제목입니다 첫 번째 문단입니다. 중요한 내용이고 링크도 있습니다. 항목 1 항목 2'
+      );
+      expect(savedArticle?.plainContent).not.toContain('<');
+      expect(savedArticle?.plainContent).not.toContain('>');
+      expect(savedArticle?.plainContent).not.toMatch(/\s{2,}/);
+    });
+
+    it('순수 텍스트만 있는 경우 그대로 저장된다', async () => {
+      const createArticleDto: CreateArticleDto = {
+        title: '순수 텍스트 게시글',
+        slug: 'plain-text-article',
+        content: '이것은 HTML 태그가 없는 순수 텍스트입니다.',
+        seriesId: testSeries.id,
+        tags: [],
+      };
+
+      const result = await sut.execute(createArticleDto);
+
+      const savedArticle = await prisma.article.findUnique({ where: { id: result.id } });
+      expect(savedArticle?.plainContent).toBe('이것은 HTML 태그가 없는 순수 텍스트입니다.');
+      expect(savedArticle?.content).toBe(savedArticle?.plainContent);
+    });
+  });
 });
