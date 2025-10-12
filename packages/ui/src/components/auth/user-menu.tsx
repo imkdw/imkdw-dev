@@ -1,5 +1,5 @@
 import { User, Edit, LogOut } from 'lucide-react';
-import { Button } from '../../primitives/button';
+import { Button, buttonVariants } from '../../primitives/button';
 import { Avatar, AvatarImage, AvatarFallback } from '../../primitives/avatar';
 import {
   DropdownMenu,
@@ -10,6 +10,7 @@ import {
 } from '../../primitives/dropdown-menu';
 import { IMemberDto } from '@imkdw-dev/types';
 import Link from 'next/link';
+import { cn } from '../../lib/utils';
 
 interface Props {
   currentMember: IMemberDto | null;
@@ -24,15 +25,13 @@ export function UserMenu({ currentMember: user, onLogin, onLogout }: Props) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src={user.profileImage} alt={user.email} />
-            <AvatarFallback className="bg-primary text-primary-foreground">
-              {user.email.charAt(0).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-        </Button>
+      <DropdownMenuTrigger className={cn(buttonVariants({ variant: 'ghost' }), 'relative h-8 w-8 rounded-full')}>
+        <Avatar className="h-8 w-8">
+          <AvatarImage src={user.profileImage} alt={user.email} />
+          <AvatarFallback className="bg-primary text-primary-foreground">
+            {user.email.charAt(0).toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 border-none" align="end">
         <div className="flex items-center justify-start gap-2 p-2">
