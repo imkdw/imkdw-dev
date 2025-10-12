@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import { Layout } from '@imkdw-dev/ui';
 import { getSeriesList, getStats } from '@imkdw-dev/actions';
 import { SERIES_PER_PAGE } from '@/consts/series.const';
@@ -7,11 +6,12 @@ import { SeriesListHeader } from '@/components/series/series-list-header';
 import { SeriesListStats } from '@/components/series/series-list-stats';
 import { SeriesListGrid } from '@/components/series/series-list-grid';
 import { SeriesListEmpty } from '@/components/series/series-list-empty';
+import { createMetadata } from '@/utils/metadata-creator';
 
-export const metadata: Metadata = {
-  title: 'IMKDW-Dev - 시리즈 목록',
+export const metadata = createMetadata({
+  title: '시리즈 목록',
   description: '블로그에 작성된 시리즈 목록 페이지입니다',
-};
+});
 
 interface Props {
   searchParams: Promise<{ page?: string }>;

@@ -1,16 +1,19 @@
-import type { Metadata } from 'next';
 import { Layout } from '@imkdw-dev/ui';
-import { ArticlesContent } from './articles-content';
+import { ArticlesContent } from '../../components/article/articles-content';
 import { getTagList, getArticles } from '@imkdw-dev/actions';
 import { ARTICLES_PER_PAGE } from '@/consts/article.const';
+import { createMetadata } from '@/utils/metadata-creator';
 
-export const metadata: Metadata = {
-  title: '게시글 - @imkdw-dev/blog',
-  description: '개발과 기술에 대한 다양한 주제의 글들을 만나보세요',
-  keywords: ['게시글', '개발', '프로그래밍', '기술', '튜토리얼'],
-};
+export const metadata = createMetadata({
+  title: '게시글 목록',
+  description: '게시글 목록을 보여주는 페이지입니다',
+});
 
-export default async function Articles({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+interface Props {
+  searchParams: Promise<{ page?: string }>;
+}
+
+export default async function Articles({ searchParams }: Props) {
   const { page } = await searchParams;
   const currentPage = Number(page) || 1;
 

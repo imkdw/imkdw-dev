@@ -12,7 +12,15 @@ interface Props {
   onSortChange: (value: string) => void;
 }
 
-export function ArticlesFilter({ searchQuery, selectedTag, sortBy, tags, onSearchChange, onTagChange, onSortChange }: Props) {
+export function ArticlesFilter({
+  searchQuery,
+  selectedTag,
+  sortBy,
+  tags,
+  onSearchChange,
+  onTagChange,
+  onSortChange,
+}: Props) {
   const allTags = ['all', ...tags.map(tag => tag.name)];
 
   return (

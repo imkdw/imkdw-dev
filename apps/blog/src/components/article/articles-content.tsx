@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { ITagDto, IResponseGetArticlesDto } from '@imkdw-dev/types';
-import { ArticlesHeader } from './components/articles-header';
-import { ArticlesFilter } from './components/articles-filter';
-import { ArticlesList } from './components/articles-list';
+import { ArticlesHeader } from './articles-header';
+import { ArticlesFilter } from './articles-filter';
+import { ArticlesList } from './articles-list';
 import { CommonPagination } from '@/components/common/common-pagination';
 
 interface Props {

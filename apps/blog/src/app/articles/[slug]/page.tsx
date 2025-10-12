@@ -1,48 +1,29 @@
 import type { Metadata } from 'next';
 import { Layout } from '@imkdw-dev/ui';
 import { CommentSection } from '../../../components/comment/comment-section';
-import { ArticleInteractions } from './components/article-interactions';
+import { ArticleInteractions } from '../../../components/article/article-interactions';
 import { ArticleHeader } from '../../../components/article/article-header';
 import { ArticleContent } from '../../../components/article/article-content';
 import { ArticleNavigation } from '../../../components/article/article-navigation';
 import { TableOfContents } from '../../../components/article/table-of-contents';
 import { getArticle, getArticleComments } from '@imkdw-dev/actions';
+import { createMetadata } from '@/utils/metadata-creator';
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
-
-  try {
-    const response = await getArticle(slug);
-    const { article } = response;
-
-    return {
-      title: article.title,
-      description: article.content.slice(0, 200),
-      keywords: article.tags.map(tag => tag.name),
-      authors: [{ name: 'imkdw' }],
-      openGraph: {
-        title: article.title,
-        description: article.content.slice(0, 200),
-        type: 'article',
-        publishedTime: article.createdAt.toString(),
-        authors: ['imkdw'],
-        tags: article.tags.map(tag => tag.name),
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title: article.title,
-        description: article.content.slice(0, 200),
-      },
-    };
-  } catch {
-    return {
-      title: 'Article Not Found',
-      description: 'The article you are looking for does not exist.',
-    };
-  }
+interface Props {
+  params: Promise<{ slug: string }>;
 }
 
-export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const { article } = await getArticle(slug);
+
+  return createMetadata({
+    title: article.title,
+    description: article.content.slice(0, 200),
+  });
+}
+
+export default async function Page({ params }: Props) {
   const { slug } = await params;
 
   const response = await getArticle(slug);

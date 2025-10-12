@@ -5,37 +5,23 @@ import { SeriesHeader } from '../../../components/series/series-header';
 import { ArticleListWithPagination } from '../../../components/series/article-list-with-pagination';
 import { getSeriesDetail, getArticles } from '@imkdw-dev/actions';
 import { SERIES_ARTICLES_PER_PAGE } from '@/consts/article.const';
+import { createMetadata } from '@/utils/metadata-creator';
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+interface Props {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ page?: string }>;
+}
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const seriesData = await getSeriesDetail(slug);
 
-  return {
-    title: `${seriesData.title} - 시리즈`,
+  return createMetadata({
+    title: `${seriesData.title}`,
     description: seriesData.description,
-    keywords: seriesData.tags.map((tag: { id: string; name: string }) => tag.name),
-    authors: [{ name: 'imkdw' }],
-    openGraph: {
-      title: `${seriesData.title} - 시리즈`,
-      description: seriesData.description,
-      type: 'website',
-      siteName: 'imkdw Blog',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${seriesData.title} - 시리즈`,
-      description: seriesData.description,
-    },
-  };
+  });
 }
 
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<{ page?: string }>;
-}) {
+export default async function Page({ params, searchParams }: Props) {
   const { slug } = await params;
   const { page } = await searchParams;
   const currentPage = Number(page) || 1;
