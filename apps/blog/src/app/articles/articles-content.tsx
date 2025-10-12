@@ -5,7 +5,7 @@ import { ITagDto, IResponseGetArticlesDto } from '@imkdw-dev/types';
 import { ArticlesHeader } from './components/articles-header';
 import { ArticlesFilter } from './components/articles-filter';
 import { ArticlesList } from './components/articles-list';
-import { ArticlesPagination } from '@/components/articles/articles-pagination';
+import { CommonPagination } from '@/components/common/common-pagination';
 
 interface Props {
   articlesData: IResponseGetArticlesDto;
@@ -25,6 +25,8 @@ export function ArticlesContent({ articlesData, tags, currentPage }: Props) {
     return matchesSearch;
   });
 
+  const createPageUrl = (page: number) => `/articles?page=${page}`;
+
   return (
     <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10">
       <ArticlesHeader totalArticles={totalCount} totalTags={tags.length} />
@@ -38,7 +40,7 @@ export function ArticlesContent({ articlesData, tags, currentPage }: Props) {
         onSortChange={setSortBy}
       />
       <ArticlesList articles={filteredArticles} />
-      <ArticlesPagination totalPages={totalPage} currentPage={currentPage} />
+      <CommonPagination totalPages={totalPage} currentPage={currentPage} createPageUrl={createPageUrl} />
     </div>
   );
 }

@@ -2,16 +2,19 @@ import type { Metadata } from 'next';
 import { Layout, SeriesCard } from '@imkdw-dev/ui';
 import { getSeriesList, getStats } from '@imkdw-dev/actions';
 import { SERIES_PER_PAGE } from '@/consts/series.const';
-import { SeriesPagination } from '@/components/series/series-pagination';
 import { BookOpen, Clock } from 'lucide-react';
+import { CommonPagination } from '@/components/common/common-pagination';
 
 export const metadata: Metadata = {
-  title: '시리즈 - @imkdw-dev/blog',
-  description: '체계적으로 구성된 학습 시리즈로 깊이 있는 지식을 쌓아보세요',
-  keywords: ['시리즈', '튜토리얼', '학습 가이드', '프로그래밍', '개발'],
+  title: '시리즈 목록',
+  description: '블로그에 작성된 시리즈 목록 페이지',
 };
 
-export default async function Series({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+interface Props {
+  searchParams: Promise<{ page?: string }>;
+}
+
+export default async function Series({ searchParams }: Props) {
   const { page } = await searchParams;
   const currentPage = Number(page) || 1;
 
@@ -19,6 +22,8 @@ export default async function Series({ searchParams }: { searchParams: Promise<{
     getSeriesList({ limit: SERIES_PER_PAGE, page: currentPage }),
     getStats(),
   ]);
+
+  const createPageUrl = (page: number) => `/series?page=${page}`;
 
   return (
     <Layout>
@@ -63,7 +68,11 @@ export default async function Series({ searchParams }: { searchParams: Promise<{
                     <SeriesCard key={s.slug} series={s} />
                   ))}
                 </div>
-                <SeriesPagination totalPages={seriesData.totalPage} currentPage={currentPage} />
+                <CommonPagination
+                  totalPages={seriesData.totalPage}
+                  currentPage={currentPage}
+                  createPageUrl={createPageUrl}
+                />
               </>
             ) : (
               <div className="text-center py-12">

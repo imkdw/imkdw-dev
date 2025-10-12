@@ -10,6 +10,7 @@ div[data-milkdown-root='true'] {
 .milkdown {
   width: 100%;
   display: flex;
+  flex-direction: column;
   flex: 1;
   color: hsl(220 14% 70%);
 }
@@ -328,4 +329,8 @@ div[data-milkdown-root='true'] {
 
 .milkdown[contenteditable='false'] a {
   cursor: pointer;
+}
+
+.milkdown-code-block .tools {
+  display: none;
 }
