@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Layout } from '@imkdw-dev/ui';
 import { SeriesBackButton } from '../../../components/series/series-back-button';
 import { SeriesHeader } from '../../../components/series/series-header';
-import { ArticleListWithPagination } from '../../../components/series/article-list-with-pagination';
+import { SeriesArticles } from '../../../components/series/series-articles';
 import { getSeriesDetail, getArticles } from '@imkdw-dev/actions';
 import { SERIES_ARTICLES_PER_PAGE } from '@/consts/article.const';
 import { createMetadata } from '@/utils/metadata-creator';
@@ -38,7 +38,7 @@ export default async function Page({ params, searchParams }: Props) {
       <div className="max-w-4xl mx-auto py-6 px-4">
         <SeriesBackButton />
         <SeriesHeader seriesData={seriesData} />
-        <ArticleListWithPagination
+        <SeriesArticles
           articles={articlesData.items}
           totalPages={articlesData.totalPage}
           currentPage={currentPage}

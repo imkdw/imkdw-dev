@@ -4,7 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 
 export function SeriesBackButton() {
   return (
-    <div className="mb-6">
+    <div className="pb-6">
       <Link href="/series">
         <Button variant="ghost" className="mb-4">
           <ArrowLeft className="h-4 w-4 mr-2" />
