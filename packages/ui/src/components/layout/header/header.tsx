@@ -31,10 +31,6 @@ export function Header({ currentMember, onSearch }: Props) {
     setIsLoginOpen(true);
   };
 
-  const handleNavigate = (url: string) => {
-    window.location.href = url;
-  };
-
   const tabs = [
     { name: 'blog.tsx', active: true },
     { name: `Coming Soon...`, active: false },
@@ -78,14 +74,7 @@ export function Header({ currentMember, onSearch }: Props) {
           <SearchInput onSearch={onSearch} />
         </div>
       </div>
-
-      <MobileNavigation
-        isOpen={isMenuOpen}
-        onNavigate={handleNavigate}
-        onClose={() => setIsMenuOpen(false)}
-        onSearch={onSearch}
-      />
-
+      <MobileNavigation isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} onSearch={onSearch} />
       <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} onSocialLogin={handleSocialLogin} />
     </header>
   );

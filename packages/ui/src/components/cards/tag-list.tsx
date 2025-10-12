@@ -2,6 +2,7 @@ import { Badge } from '../../primitives/badge';
 import { cn } from '../../lib';
 
 type Variant = 'badge' | 'custom';
+
 interface Props {
   tags: string[];
   variant: Variant;

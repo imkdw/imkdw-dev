@@ -1,5 +1,3 @@
-'use client';
-
 import { GitBranch, Calendar, Clock } from 'lucide-react';
 import { TagList } from './tag-list';
 import { MetaInfoItem } from './meta-info-item';

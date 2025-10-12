@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import { Clock, Terminal } from 'lucide-react';
 import { Button, ArticleCard, cn } from '@imkdw-dev/ui';

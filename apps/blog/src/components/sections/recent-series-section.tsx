@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import { BookOpen, Terminal } from 'lucide-react';
 import { Button, cn, SeriesCard } from '@imkdw-dev/ui';
