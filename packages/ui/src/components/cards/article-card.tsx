@@ -14,7 +14,7 @@ export function ArticleCard({ article }: Props) {
   const publishedAt = new Date(article.createdAt).toLocaleDateString('ko-KR');
   const readTime = `${article.readMinute}분`;
   const tags = article.tags.map(tag => tag.name);
-  const { title, content, series, slug } = article;
+  const { title, plainContent, series, slug } = article;
 
   return (
     <Link href={`/articles/${slug}`} className="block h-full">
@@ -33,7 +33,9 @@ export function ArticleCard({ article }: Props) {
           <h3 className="text-base md:text-lg font-bold leading-tight group-hover:text-primary smooth-transition line-clamp-2 pb-2">
             {title}
           </h3>
-          <p className="text-muted-foreground mb-2 md:mb-3 text-md leading-relaxed line-clamp-3 flex-1">{content}</p>
+          <p className="text-muted-foreground mb-2 md:mb-3 text-md leading-relaxed line-clamp-3 flex-1">
+            {plainContent}
+          </p>
           <TagList tags={tags} maxVisible={3} variant="custom" className="mb-2 md:mb-3" />
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs text-muted-foreground mt-auto space-y-2 sm:space-y-0">
             <div className="flex items-center space-x-2 md:space-x-3">

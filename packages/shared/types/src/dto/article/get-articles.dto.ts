@@ -15,7 +15,7 @@ export interface IArticleListItemDto {
   id: string;
   title: string;
   slug: string;
-  content: string;
+  plainContent: string;
   viewCount: number;
   readMinute: number;
   createdAt: Date;

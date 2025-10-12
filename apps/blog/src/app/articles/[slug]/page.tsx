@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return createMetadata({
     title: article.title,
-    description: article.content.slice(0, 200),
+    description: article.plainContent,
   });
 }
 

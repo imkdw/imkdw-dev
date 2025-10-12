@@ -43,7 +43,7 @@ export class GetArticlesQuery {
         id: item.id,
         title: item.title,
         slug: item.slug,
-        content: item.plainContent.slice(0, ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST),
+        plainContent: item.plainContent.slice(0, ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST),
         viewCount: item.viewCount,
         readMinute: item.readMinute,
         createdAt: item.createdAt,
@@ -53,9 +53,9 @@ export class GetArticlesQuery {
           slug: item.series.slug,
         },
         tags: item.tags.map(
-          (at): ArticleTagDto => ({
-            id: at.tag.id,
-            name: at.tag.name,
+          (tag): ArticleTagDto => ({
+            id: tag.tag.id,
+            name: tag.tag.name,
           })
         ),
       })

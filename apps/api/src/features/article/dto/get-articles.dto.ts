@@ -40,10 +40,10 @@ export class ArticleListItemDto implements IArticleListItemDto {
   slug: string;
 
   @ApiProperty({
-    description: '게시글 내용 (200자 제한)',
+    description: '게시글 내용 (HTML 태그 제거)',
     example: 'Node.js의 이벤트 루프는 비동기 작업을 처리하는 핵심 메커니즘입니다...',
   })
-  content: string;
+  plainContent: string;
 
   @ApiProperty({ description: '조회수', example: 1250 })
   viewCount: number;

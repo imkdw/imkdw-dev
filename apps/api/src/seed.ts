@@ -4,6 +4,101 @@ import { Article, ArticleComment, Member, PrismaClient, Series, Tag } from '@pri
 
 const prisma = new PrismaClient();
 
+function generateRichHtmlContent(): string {
+  let html = '';
+  const sections = faker.number.int({ min: 3, max: 7 });
+
+  for (let i = 0; i < sections; i++) {
+    html += `<h2>${faker.lorem.sentence({ min: 3, max: 8 }).replace(/\.$/, '')}</h2>\n`;
+
+    const paragraphs = faker.number.int({ min: 2, max: 5 });
+    for (let j = 0; j < paragraphs; j++) {
+      const paragraph = faker.lorem.paragraph(faker.number.int({ min: 3, max: 8 }));
+
+      let enrichedParagraph = paragraph;
+      if (faker.datatype.boolean({ probability: 0.3 })) {
+        const words = enrichedParagraph.split(' ');
+        const randomIndex = faker.number.int({ min: 0, max: words.length - 1 });
+        words[randomIndex] = `<strong>${words[randomIndex]}</strong>`;
+        enrichedParagraph = words.join(' ');
+      }
+      if (faker.datatype.boolean({ probability: 0.3 })) {
+        const words = enrichedParagraph.split(' ');
+        const randomIndex = faker.number.int({ min: 0, max: words.length - 1 });
+        words[randomIndex] = `<em>${words[randomIndex]}</em>`;
+        enrichedParagraph = words.join(' ');
+      }
+      if (faker.datatype.boolean({ probability: 0.2 })) {
+        const words = enrichedParagraph.split(' ');
+        const randomIndex = faker.number.int({ min: 0, max: words.length - 1 });
+        words[randomIndex] = `<code>${words[randomIndex]}</code>`;
+        enrichedParagraph = words.join(' ');
+      }
+
+      html += `<p>${enrichedParagraph}</p>\n`;
+    }
+
+    if (faker.datatype.boolean({ probability: 0.3 })) {
+      const listType = faker.helpers.arrayElement(['ul', 'ol']);
+      html += `<${listType}>\n`;
+      const items = faker.number.int({ min: 3, max: 6 });
+      for (let k = 0; k < items; k++) {
+        html += `  <li>${faker.lorem.sentence({ min: 3, max: 10 })}</li>\n`;
+      }
+      html += `</${listType}>\n`;
+    }
+
+    if (faker.datatype.boolean({ probability: 0.4 })) {
+      const language = faker.helpers.arrayElement(['typescript', 'javascript', 'python', 'java', 'go']);
+      html += `<pre><code class="language-${language}">\n`;
+
+      switch (language) {
+        case 'typescript':
+        case 'javascript':
+          html += `const ${faker.lorem.word()} = ${faker.datatype.boolean() ? `"${faker.lorem.words(2)}"` : faker.number.int({ min: 1, max: 100 })};\n`;
+          html += `function ${faker.lorem.word()}() {\n`;
+          html += `  console.log('${faker.lorem.sentence()}');\n`;
+          html += `  return ${faker.datatype.boolean()};\n`;
+          html += `}\n`;
+          break;
+        case 'python':
+          html += `def ${faker.lorem.word()}():\n`;
+          html += `    print("${faker.lorem.sentence()}")\n`;
+          html += `    return ${faker.datatype.boolean() ? 'True' : 'False'}\n`;
+          break;
+        case 'java':
+          html += `public class ${faker.lorem.word().charAt(0).toUpperCase() + faker.lorem.word().slice(1)} {\n`;
+          html += `    public static void main(String[] args) {\n`;
+          html += `        System.out.println("${faker.lorem.sentence()}");\n`;
+          html += `    }\n`;
+          html += `}\n`;
+          break;
+        case 'go':
+          html += `func ${faker.lorem.word()}() bool {\n`;
+          html += `    fmt.Println("${faker.lorem.sentence()}")\n`;
+          html += `    return ${faker.datatype.boolean()}\n`;
+          html += `}\n`;
+          break;
+      }
+
+      html += `</code></pre>\n`;
+    }
+
+    if (faker.datatype.boolean({ probability: 0.2 })) {
+      html += `<blockquote>\n`;
+      html += `  <p>${faker.lorem.paragraph(faker.number.int({ min: 1, max: 3 }))}</p>\n`;
+      html += `</blockquote>\n`;
+    }
+
+    if (faker.datatype.boolean({ probability: 0.25 })) {
+      html += `<h3>${faker.lorem.sentence({ min: 2, max: 6 }).replace(/\.$/, '')}</h3>\n`;
+      html += `<p>${faker.lorem.paragraph(faker.number.int({ min: 2, max: 5 }))}</p>\n`;
+    }
+  }
+
+  return html;
+}
+
 async function main() {
   try {
     await prisma.$transaction(
@@ -116,7 +211,7 @@ async function main() {
             .replace(/\s+/g, '-');
           const readMinute = faker.number.int({ min: 3, max: 30 });
           const randomSeries = faker.helpers.arrayElement(series);
-          const content = faker.lorem.paragraphs(faker.number.int({ min: 5, max: 20 }), '\n\n');
+          const content = generateRichHtmlContent();
           const plainContent = content
             .replace(/<[^>]*>/g, '')
             .replace(/\s+/g, ' ')
@@ -134,6 +229,7 @@ async function main() {
               readMinute,
             },
           });
+
           articles.push(article);
         }
 
