@@ -10,7 +10,6 @@ export const metadata: Metadata = {
   title: '@imkdw-dev/blog',
   description: '직접 개발하고 운영하는 기술블로그',
   authors: [{ name: 'imkdw', url: 'https://github.com/imkdw' }],
-  creator: 'imkdw',
 };
 
 export default async function Home() {

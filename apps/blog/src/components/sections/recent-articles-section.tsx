@@ -34,7 +34,7 @@ export function RecentArticles({ articles }: Props) {
         </Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-        {articles.slice(0, 4).map((article, index) => (
+        {articles.map((article, index) => (
           <div key={article.slug} className="bounce-in h-full" style={{ animationDelay: `${(index + 2) * 0.1}s` }}>
             <ArticleCard article={article} />
           </div>

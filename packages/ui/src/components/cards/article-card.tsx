@@ -17,7 +17,7 @@ export function ArticleCard({ article }: Props) {
   const { title, plainContent, series, slug } = article;
 
   return (
-    <article className="block h-full">
+    <article className="h-full">
       <Link href={`/articles/${slug}`} className="block h-full">
         <div className="rounded-xl p-2 group h-full flex flex-col bg-gradient-to-br from-card via-card to-muted/30 border-2 border-border/60 hover:border-primary/30 hover:shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.3)] transition-all duration-300">
           <div className="flex-1 p-3 md:p-4">
@@ -27,7 +27,7 @@ export function ArticleCard({ article }: Props) {
                 <span className="text-sm font-medium text-primary">{series.title}</span>
               </div>
             </div>
-            <h3 className="text-base md:text-lg font-bold leading-tight group-hover:text-primary smooth-transition line-clamp-2 pb-2">
+            <h3 className="text-base md:text-lg font-bold leading-tight group-hover:text-primary smooth-transition truncate pb-2">
               {title}
             </h3>
             <p className="text-muted-foreground mb-2 md:mb-3 text-md leading-relaxed line-clamp-3 flex-1">
