@@ -8,11 +8,12 @@ import 'highlight.js/styles/atom-one-dark.css';
 
 import { Providers } from '../components/providers';
 import { MobileSidebar } from '../components/sidebar/mobile-sidebar';
+import { createMetadata } from '@/utils/metadata-creator';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createMetadata({
   title: '@imkdw-dev/blog',
-  description: 'Personal blog by @imkdw-dev',
-};
+  description: '직접 개발하고 운영하는 IT 기술블로그',
+});
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

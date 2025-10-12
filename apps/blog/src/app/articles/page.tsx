@@ -24,9 +24,7 @@ export default async function Articles({ searchParams }: Props) {
 
   return (
     <Layout>
-      <main>
-        <ArticlesContent articlesData={articlesData} tags={tags} currentPage={currentPage} />
-      </main>
+      <ArticlesContent articlesData={articlesData} tags={tags} currentPage={currentPage} />
     </Layout>
   );
 }
