@@ -1,5 +1,6 @@
 'use client';
 
+import { useAuth } from '@imkdw-dev/auth';
 import { Avatar, AvatarImage, AvatarFallback, Button, Textarea } from '@imkdw-dev/ui';
 import { Send } from 'lucide-react';
 
@@ -12,11 +13,12 @@ interface Props {
 }
 
 export function CommentForm({ newComment, onCommentChange, onSubmit, onKeyPress, isSubmitting }: Props) {
+  const { user } = useAuth();
   return (
     <div className="mb-8 bg-muted/30 rounded-xl p-4">
       <div className="flex space-x-3">
         <Avatar className="w-10 h-10 flex-shrink-0">
-          <AvatarImage src="/placeholder.svg" />
+          <AvatarImage src={user?.profileImage} />
           <AvatarFallback>ME</AvatarFallback>
         </Avatar>
 
