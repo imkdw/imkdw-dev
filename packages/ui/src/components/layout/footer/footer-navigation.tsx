@@ -8,12 +8,12 @@ export function FooterNavigation({ className }: Props) {
   const footerLinks = {
     content: [
       { name: 'Latest Articles', href: '/articles' },
-      { name: 'Popular Series', href: '/series' },
-      { name: 'All Tags', href: '/tags' },
+      { name: 'Latest Series', href: '/series' },
+      // { name: 'All Tags', href: '/tags' },
     ],
     resources: [
-      { name: 'About', href: '/about' },
-      { name: 'RSS Feed', href: '/rss.xml' },
+      // { name: 'About', href: '/about' },
+      // { name: 'RSS Feed', href: '/rss.xml' },
       { name: 'Sitemap', href: '/sitemap.xml' },
     ],
   };
