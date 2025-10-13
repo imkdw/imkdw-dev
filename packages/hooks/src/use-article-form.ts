@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createArticle } from '@imkdw-dev/actions';
+import { createArticle, updateArticle } from '@imkdw-dev/actions';
 import { IArticleDto } from '@imkdw-dev/types';
 
 interface UseArticleFormParams {
@@ -8,14 +8,13 @@ interface UseArticleFormParams {
   initialData?: IArticleDto;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
   const router = useRouter();
   const [title, setTitle] = useState(initialData?.title ?? '');
   const [slug, setSlug] = useState(initialData?.slug ?? '');
   const [content, setContent] = useState(initialData?.content ?? '');
   const [tags, setTags] = useState<string[]>(initialData?.tags.map(tag => tag.name) ?? []);
-  const [seriesId, setSeriesId] = useState('');
+  const [seriesId, setSeriesId] = useState(initialData?.series?.id ?? '');
   const [isPublishing, setIsPublishing] = useState(false);
 
   const handleAddTag = (tag: string) => {
@@ -36,9 +35,13 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
     setIsPublishing(true);
 
     try {
-      const result = await createArticle({ title, slug, content, tags, seriesId });
-
-      router.push(`/articles/${result.slug}`);
+      if (mode === 'create') {
+        const result = await createArticle({ title, slug, content, tags, seriesId });
+        router.push(`/articles/${result.slug}`);
+      } else {
+        await updateArticle(slug, { title, content, tags, seriesId });
+        router.push(`/articles/${slug}`);
+      }
     } finally {
       setIsPublishing(false);
     }

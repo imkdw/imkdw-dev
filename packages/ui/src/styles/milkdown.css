@@ -17,11 +17,11 @@ div[data-milkdown-root='true'] {
 
 /* Heading Styles */
 .milkdown h1 {
-  font-size: 2.25rem;
+  font-size: 1.875rem;
   font-weight: 700;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  line-height: 1.2;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
   color: hsl(var(--foreground));
 }
 

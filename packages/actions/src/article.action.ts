@@ -9,6 +9,7 @@ import {
   ICreateArticleDto,
   IResponseCreateArticleDto,
   IResponseGetArticleDto,
+  IUpdateArticleDto,
 } from '@imkdw-dev/types';
 
 export const getArticles = withErrorHandling(async (params: IRequestGetArticlesDto) => {
@@ -25,4 +26,8 @@ export const getArticle = withErrorHandling(async (slug: string) => {
 
 export const createArticle = withErrorHandling(async (data: ICreateArticleDto) => {
   return apiClient.post<ICreateArticleDto, IResponseCreateArticleDto>(buildEndpoint('CREATE_ARTICLE'), data);
+});
+
+export const updateArticle = withErrorHandling(async (slug: string, data: IUpdateArticleDto): Promise<void> => {
+  await apiClient.put<IUpdateArticleDto, void>(buildEndpoint('UPDATE_ARTICLE', { slug }), data);
 });

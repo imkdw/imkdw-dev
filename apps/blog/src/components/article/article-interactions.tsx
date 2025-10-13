@@ -60,7 +60,7 @@ export function ArticleInteractions({ slug }: Props) {
         <span className="hidden sm:inline">Share</span>
       </Button>
       <Button variant="outline" size="sm" asChild className="text-xs sm:text-sm">
-        <Link href={`/edit/${slug}`}>
+        <Link href={`${slug}/edit`}>
           <Edit className="w-4 h-4 sm:mr-1" />
           <span className="hidden sm:inline">Edit</span>
         </Link>
