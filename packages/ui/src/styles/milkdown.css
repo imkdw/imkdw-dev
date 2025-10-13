@@ -161,7 +161,8 @@ div[data-milkdown-root='true'] {
 }
 
 /* Code Styles */
-.milkdown code {
+/* 인라인 코드에만 스타일 적용 (pre 내부 제외) */
+.milkdown :not(pre) > code {
   padding-left: 0.375rem;
   padding-right: 0.375rem;
   padding-top: 0.125rem;
@@ -184,12 +185,19 @@ div[data-milkdown-root='true'] {
   border: 1px solid hsl(var(--border));
 }
 
+/* 코드 블록 내부 코드는 배경/테두리 제거, 기본 스타일만 유지 */
 .milkdown pre code {
   padding: 0;
   border: 0;
   background: transparent;
+  color: inherit; /* highlight.js 색상 사용 */
   font-size: 14px;
   line-height: 1.6;
+}
+
+/* highlight.js 토큰들이 배경색을 상속받지 않도록 명시 */
+.milkdown pre code * {
+  background: transparent !important;
 }
 
 /* Code Block Scrollbar */
@@ -309,7 +317,8 @@ div[data-milkdown-root='true'] {
 }
 
 /* Dark Mode */
-.dark .milkdown code {
+/* 인라인 코드만 다크 모드 배경 적용 */
+.dark .milkdown :not(pre) > code {
   background: hsl(var(--secondary) / 0.8);
 }
 
