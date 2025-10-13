@@ -17,6 +17,7 @@ import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
 import { getHTML } from '@milkdown/kit/utils';
 import { basicSetup } from 'codemirror';
 import { history } from '@milkdown/kit/plugin/history';
+import TurndownService from 'turndown';
 import { createImageUploader } from './image-uploader';
 import { useImageUpload } from '@imkdw-dev/hooks';
 
@@ -32,10 +33,26 @@ export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadI
 
   const uploader = createImageUploader({ uploadImage, onUploadImage });
 
+  const convertToMarkdown = (htmlContent: string): string => {
+    const isHTML = /<[^>]+>/.test(htmlContent);
+
+    if (isHTML) {
+      const turndownService = new TurndownService({
+        headingStyle: 'atx',
+        codeBlockStyle: 'fenced',
+      });
+      return turndownService.turndown(htmlContent);
+    }
+
+    return htmlContent;
+  };
+
+  const markdownContent = convertToMarkdown(content);
+
   useEditor(root =>
     Editor.make()
       .config(nord)
-      .config(ctx => ctx.set(defaultValueCtx, content))
+      .config(ctx => ctx.set(defaultValueCtx, markdownContent))
       .config(ctx => ctx.set(rootCtx, root))
       .config(ctx => {
         ctx.update(uploadConfig.key, prev => ({
