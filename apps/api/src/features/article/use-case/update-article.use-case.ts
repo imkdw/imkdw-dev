@@ -19,11 +19,11 @@ export class UpdateArticleUseCase {
     private readonly prisma: PrismaService
   ) {}
 
-  async execute(id: string, dto: UpdateArticleDto): Promise<void> {
+  async execute(slug: string, dto: UpdateArticleDto): Promise<void> {
     await this.prisma.$transaction(async tx => {
-      const existingArticle = await this.articleValidator.checkExist(id, tx);
+      const existingArticle = await this.articleValidator.checkExistBySlug(slug, tx);
 
-      await this.articleValidator.checkExistTitle(dto.title, id, tx);
+      await this.articleValidator.checkExistTitle(dto.title, existingArticle.id, tx);
       await this.seriesValidator.checkExist(dto.seriesId, tx);
 
       const tags = await this.tagRepository.findOrCreateMany(dto.tags, tx);

@@ -55,8 +55,8 @@ export class ArticleController {
   @Swagger.updateArticle('게시글 수정')
   @HttpCode(HttpStatus.NO_CONTENT)
   @Put(UPDATE_ARTICLE)
-  async updateArticle(@Param('id') id: string, @Body() dto: UpdateArticleDto): Promise<void> {
-    await this.updateArticleUseCase.execute(id, dto);
+  async updateArticle(@Param('slug') slug: string, @Body() dto: UpdateArticleDto): Promise<void> {
+    await this.updateArticleUseCase.execute(slug, dto);
   }
 
   @Swagger.incrementViewCount('게시글 조회수 증가')
