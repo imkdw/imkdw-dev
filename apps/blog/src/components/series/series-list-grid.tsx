@@ -1,8 +1,8 @@
 import { SeriesCard } from '@imkdw-dev/ui';
-import type { ISeriesDto } from '@imkdw-dev/types';
+import type { ISeriesListItemDto } from '@imkdw-dev/types';
 
 interface Props {
-  items: ISeriesDto[];
+  items: ISeriesListItemDto[];
 }
 
 export function SeriesListGrid({ items }: Props) {

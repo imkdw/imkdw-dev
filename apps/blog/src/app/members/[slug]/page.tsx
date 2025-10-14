@@ -1,6 +1,6 @@
 import { Layout, Card, CardHeader, CardTitle, CardContent } from '@imkdw-dev/ui';
 import { EditableProfile } from '@/components/member/editable-profile';
-import { getCurrentMember, getMember } from '@imkdw-dev/actions';
+import { getCurrentMember, getMember, getMemberStats } from '@imkdw-dev/actions';
 import { forbidden } from 'next/navigation';
 import { formatDate } from '@imkdw-dev/utils';
 
@@ -17,6 +17,8 @@ export default async function MemberDetail({ params }: Props) {
   if (!currentMember || currentMember.id !== member.id) {
     forbidden();
   }
+
+  const stats = await getMemberStats(member.id);
 
   return (
     <Layout>
@@ -35,7 +37,7 @@ export default async function MemberDetail({ params }: Props) {
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">작성한 댓글</span>
-                  <span className="font-semibold">156개</span>
+                  <span className="font-semibold">{stats.commentCount}개</span>
                 </div>
               </CardContent>
             </Card>

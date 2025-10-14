@@ -127,6 +127,3 @@ This is a Turborepo monorepo using pnpm as the package manager. The project cont
 - `/packages/*/CLAUDE.md` - 각 패키지별 상세 가이드
 
 각 폴더에서 작업할 때는 해당 폴더의 CLAUDE.md를 참고하세요.
-
-## 웹 테스트
-- 웹 테스트를 위해서 Playwright MCP 서버를 활용하세요
