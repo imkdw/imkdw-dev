@@ -1,10 +1,10 @@
-import { AUTH_EXCEPTION_MESSAGES } from './auth';
-import { JWT_EXCEPTION_MESSAGES } from './auth';
-import { OAUTH_EXCEPTION_MESSAGES } from './auth';
-import { MEMBER_EXCEPTION_MESSAGES } from './member/member-exception-messages';
-import { ARTICLE_EXCEPTION_MESSAGES } from './article/article-exception-messages';
-import { SERIES_EXCEPTION_MESSAGES } from './series/series-exception-messages';
-import { ARTICLE_COMMENT_EXCEPTION_MESSAGES } from './article-comment/article-comment-exception-messages';
+import { AUTH_EXCEPTION_MESSAGES } from './auth/auth-exception-codes';
+import { JWT_EXCEPTION_MESSAGES } from './auth/jwt-exception-codes';
+import { OAUTH_EXCEPTION_MESSAGES } from './auth/oauth-exception-codes';
+import { MEMBER_EXCEPTION_MESSAGES } from './member/member-exception-codes';
+import { ARTICLE_EXCEPTION_MESSAGES } from './article/article-exception-codes';
+import { SERIES_EXCEPTION_MESSAGES } from './series/series-exception-codes';
+import { ARTICLE_COMMENT_EXCEPTION_MESSAGES } from './article-comment/article-comment-exception-codes';
 
 export const EXCEPTION_MESSAGES = {
   ...AUTH_EXCEPTION_MESSAGES,
