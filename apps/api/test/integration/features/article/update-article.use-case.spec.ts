@@ -49,7 +49,7 @@ describe('게시글 수정 유스케이스', () => {
 
   describe('존재하지 않는 게시글을 수정하면', () => {
     it('에러가 발생한다', async () => {
-      const nonExistentId = 'non-existent-id';
+      const nonExistentSlug = 'non-existent-slug';
       const updateArticleDto: UpdateArticleDto = {
         title: '수정된 게시글 제목',
         content: '수정된 게시글 내용입니다.',
@@ -57,7 +57,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: ['JavaScript'],
       };
 
-      await expect(sut.execute(nonExistentId, updateArticleDto)).rejects.toThrow(ArticleNotFoundException);
+      await expect(sut.execute(nonExistentSlug, updateArticleDto)).rejects.toThrow(ArticleNotFoundException);
     });
   });
 
@@ -75,7 +75,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: ['JavaScript'],
       };
 
-      await expect(sut.execute(existingArticle.id, updateArticleDto)).rejects.toThrow(SeriesNotFoundException);
+      await expect(sut.execute(existingArticle.slug, updateArticleDto)).rejects.toThrow(SeriesNotFoundException);
     });
   });
 
@@ -99,7 +99,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: ['React'],
       };
 
-      await expect(sut.execute(existingArticle.id, updateArticleDto)).rejects.toThrow(ExistArticleException);
+      await expect(sut.execute(existingArticle.slug, updateArticleDto)).rejects.toThrow(ExistArticleException);
     });
   });
 
@@ -118,7 +118,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: ['Vue'],
       };
 
-      await expect(sut.execute(existingArticle.id, updateArticleDto)).resolves.not.toThrow();
+      await expect(sut.execute(existingArticle.slug, updateArticleDto)).resolves.not.toThrow();
 
       const updatedArticle = await prisma.article.findUnique({ where: { id: existingArticle.id } });
       expect(updatedArticle?.content).toBe(updateArticleDto.content);
@@ -139,7 +139,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: ['Node.js'],
       };
 
-      await sut.execute(existingArticle.id, updateArticleDto);
+      await sut.execute(existingArticle.slug, updateArticleDto);
 
       const updatedArticle = await prisma.article.findUnique({ where: { id: existingArticle.id } });
       expect(updatedArticle?.title).toBe(updateArticleDto.title);
@@ -177,7 +177,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: ['JavaScript', 'React', 'TypeScript'],
       };
 
-      await sut.execute(existingArticle.id, updateArticleDto);
+      await sut.execute(existingArticle.slug, updateArticleDto);
 
       const newTags = await prisma.tag.findMany({
         where: { name: { in: updateArticleDto.tags } },
@@ -218,7 +218,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: ['JavaScript', 'React', 'Vue'],
       };
 
-      await sut.execute(existingArticle.id, updateArticleDto);
+      await sut.execute(existingArticle.slug, updateArticleDto);
 
       const allTags = await prisma.tag.findMany({
         where: { name: { in: updateArticleDto.tags } },
@@ -263,7 +263,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: [],
       };
 
-      await sut.execute(existingArticle.id, updateArticleDto);
+      await sut.execute(existingArticle.slug, updateArticleDto);
 
       const articleTags = await prisma.articleTag.findMany({
         where: { articleId: existingArticle.id },
@@ -298,7 +298,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: ['NewTag1', 'NewTag2', 'NewTag3'],
       };
 
-      await sut.execute(existingArticle.id, updateArticleDto);
+      await sut.execute(existingArticle.slug, updateArticleDto);
 
       const oldTagRelations = await prisma.articleTag.findMany({
         where: {
@@ -367,7 +367,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: [],
       };
 
-      await sut.execute(existingArticle.id, updateArticleDto);
+      await sut.execute(existingArticle.slug, updateArticleDto);
 
       const updatedSeries = await prisma.series.findUnique({ where: { id: testSeries.id } });
       expect(updatedSeries?.articleCount).toBe(2);
@@ -426,7 +426,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: [],
       };
 
-      await sut.execute(firstArticle.id, updateArticleDto);
+      await sut.execute(firstArticle.slug, updateArticleDto);
 
       const updatedFirstSeries = await prisma.series.findUnique({ where: { id: testSeries.id } });
       const updatedSecondSeries = await prisma.series.findUnique({ where: { id: anotherSeries.id } });
@@ -471,7 +471,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: [],
       };
 
-      await sut.execute(secondArticle.id, updateArticleDto);
+      await sut.execute(secondArticle.slug, updateArticleDto);
 
       const updatedFirstSeries = await prisma.series.findUnique({ where: { id: testSeries.id } });
       const updatedSecondSeries = await prisma.series.findUnique({ where: { id: anotherSeries.id } });
@@ -511,7 +511,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: [],
       };
 
-      await sut.execute(onlyArticle.id, updateArticleDto);
+      await sut.execute(onlyArticle.slug, updateArticleDto);
 
       const updatedFirstSeries = await prisma.series.findUnique({ where: { id: testSeries.id } });
       const updatedSecondSeries = await prisma.series.findUnique({ where: { id: anotherSeries.id } });
@@ -541,7 +541,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: [],
       };
 
-      await sut.execute(existingArticle.id, updateArticleDto);
+      await sut.execute(existingArticle.slug, updateArticleDto);
 
       const updatedArticle = await prisma.article.findUnique({ where: { id: existingArticle.id } });
       expect(updatedArticle?.plainContent).toBe('수정된 내용입니다 추가 내용입니다');
@@ -565,7 +565,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: [],
       };
 
-      await sut.execute(existingArticle.id, updateArticleDto);
+      await sut.execute(existingArticle.slug, updateArticleDto);
 
       const updatedArticle = await prisma.article.findUnique({ where: { id: existingArticle.id } });
       expect(updatedArticle?.plainContent).toBe('이제는 HTML 태그가 없는 순수 텍스트입니다.');
@@ -597,7 +597,7 @@ describe('게시글 수정 유스케이스', () => {
         tags: ['HTML', 'Test'],
       };
 
-      await sut.execute(existingArticle.id, updateArticleDto);
+      await sut.execute(existingArticle.slug, updateArticleDto);
 
       const updatedArticle = await prisma.article.findUnique({ where: { id: existingArticle.id } });
       expect(updatedArticle?.plainContent).toBe('섹션 제목 첫 번째 강조된 내용 인용문입니다 링크');
