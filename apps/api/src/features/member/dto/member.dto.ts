@@ -10,7 +10,8 @@ export class MemberDto implements IMemberDto {
     nickname: string,
     profileImage: string,
     role: string,
-    provider: string
+    provider: string,
+    createdAt: Date
   ) {
     this.id = id;
     this.email = email;
@@ -18,6 +19,7 @@ export class MemberDto implements IMemberDto {
     this.profileImage = profileImage;
     this.role = role;
     this.provider = provider;
+    this.createdAt = createdAt;
   }
 
   @ApiProperty({ description: '사용자 ID', example: '12345678-1234-1234-1234-123456789012' })
@@ -38,7 +40,18 @@ export class MemberDto implements IMemberDto {
   @ApiProperty({ description: 'OAuth 제공자', enum: OAUTH_PROVIDER })
   provider: string;
 
+  @ApiProperty({ description: '가입일', example: '2024-01-01T00:00:00.000Z' })
+  createdAt: Date;
+
   static from(member: Member): MemberDto {
-    return new MemberDto(member.id, member.email, member.nickname, member.profileImage, member.role, member.provider);
+    return new MemberDto(
+      member.id,
+      member.email,
+      member.nickname,
+      member.profileImage,
+      member.role,
+      member.provider,
+      member.createdAt
+    );
   }
 }

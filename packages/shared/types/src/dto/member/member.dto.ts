@@ -28,4 +28,9 @@ export interface IMemberDto {
    * OAuth 제공자
    */
   provider: string;
+
+  /**
+   * 가입일
+   */
+  createdAt: Date;
 }

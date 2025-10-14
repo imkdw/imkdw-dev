@@ -17,6 +17,7 @@ export class MemberFactory {
       provider,
       // TODO: 기본 권한 USER로 변경필요
       role: MEMBER_ROLE.ADMIN,
+      createdAt: new Date(),
     });
   }
 }

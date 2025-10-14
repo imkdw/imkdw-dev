@@ -2,6 +2,7 @@ import { Layout, Card, CardHeader, CardTitle, CardContent } from '@imkdw-dev/ui'
 import { EditableProfile } from '@/components/member/editable-profile';
 import { getCurrentMember, getMember } from '@imkdw-dev/actions';
 import { forbidden } from 'next/navigation';
+import { formatDate } from '@imkdw-dev/utils';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -33,10 +34,6 @@ export default async function MemberDetail({ params }: Props) {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">북마크한 게시글</span>
-                  <span className="font-semibold">12개</span>
-                </div>
-                <div className="flex justify-between">
                   <span className="text-muted-foreground">작성한 댓글</span>
                   <span className="font-semibold">156개</span>
                 </div>
@@ -50,11 +47,11 @@ export default async function MemberDetail({ params }: Props) {
               <CardContent className="space-y-4 bg-card border-none">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">가입일</span>
-                  <span className="text-sm">2024.01.01</span>
+                  <span className="text-sm">{formatDate(member.createdAt)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">계정 권한</span>
-                  <span className="text-sm text-primary">사용자</span>
+                  <span className="text-sm text-primary">{member.role}</span>
                 </div>
               </CardContent>
             </Card>

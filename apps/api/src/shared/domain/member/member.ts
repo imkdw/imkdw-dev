@@ -8,6 +8,7 @@ export class Member implements IMember {
   providerId: string;
   provider: string;
   role: string;
+  createdAt: Date;
 
   private constructor(props: Member) {
     this.id = props.id;
@@ -17,6 +18,7 @@ export class Member implements IMember {
     this.providerId = props.providerId;
     this.provider = props.provider;
     this.role = props.role;
+    this.createdAt = props.createdAt;
   }
 
   static create(props: Member): Member {
