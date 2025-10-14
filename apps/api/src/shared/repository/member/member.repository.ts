@@ -42,4 +42,15 @@ export class MemberRepository {
 
     return entity ? MemberMapper.toDomain(entity) : null;
   }
+
+  async findByNickname(nickname: string): Promise<Member | null> {
+    const entity = await this.prisma.member.findFirst({
+      where: {
+        nickname,
+        deletedAt: null,
+      },
+    });
+
+    return entity ? MemberMapper.toDomain(entity) : null;
+  }
 }

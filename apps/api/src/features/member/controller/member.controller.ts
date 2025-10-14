@@ -1,9 +1,11 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { GetCurrentMemberUseCase } from '@/features/member/use-case/get-current-member.use-case';
 import { FindMemberUseCase } from '@/features/member/use-case/find-member.use-case';
+import { UpdateMemberUseCase } from '@/features/member/use-case/update-member.use-case';
 import { GetMemberStatsQuery } from '@/features/member/query/get-member-stats.query';
 import { MemberDto } from '@/features/member/dto/member.dto';
+import { UpdateMemberDto } from '@/features/member/dto/update-member.dto';
 import { ResponseGetMemberStatsDto } from '@/features/member/dto/member-stats.dto';
 import { CurrentRequester } from '@/common/decorator/current-requester.decorator';
 import { Requester } from '@/common/types/requester.type';
@@ -11,7 +13,7 @@ import { MemberAccessGuard } from '@/common/guards/member-access.guard';
 import * as Swagger from '@/features/member/swagger/member.swagger';
 import { API_ENDPOINTS } from '@imkdw-dev/consts';
 
-const { GET_CURRENT_MEMBER, FIND_MEMBER, GET_MEMBER_STATS } = API_ENDPOINTS;
+const { GET_CURRENT_MEMBER, FIND_MEMBER, GET_MEMBER_STATS, UPDATE_MEMBER } = API_ENDPOINTS;
 
 @ApiTags('사용자')
 @Controller()
@@ -19,6 +21,7 @@ export class MemberController {
   constructor(
     private readonly getCurrentMemberUseCase: GetCurrentMemberUseCase,
     private readonly findMemberUseCase: FindMemberUseCase,
+    private readonly updateMemberUseCase: UpdateMemberUseCase,
     private readonly getMemberStatsQuery: GetMemberStatsQuery
   ) {}
 
@@ -42,5 +45,13 @@ export class MemberController {
   @Get(GET_MEMBER_STATS)
   async getMemberStats(@Param('memberId') memberId: string): Promise<ResponseGetMemberStatsDto> {
     return this.getMemberStatsQuery.execute(memberId);
+  }
+
+  @Swagger.updateMember('사용자 정보 수정')
+  @UseGuards(MemberAccessGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Put(UPDATE_MEMBER)
+  async updateMember(@Param('memberId') memberId: string, @Body() dto: UpdateMemberDto): Promise<void> {
+    await this.updateMemberUseCase.execute(memberId, dto);
   }
 }

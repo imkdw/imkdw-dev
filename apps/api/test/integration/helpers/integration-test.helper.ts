@@ -1,15 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { PrismaTestingHelper } from '@chax-at/transactional-prisma-testing';
-import { Type } from '@nestjs/common';
+import { Provider, Type } from '@nestjs/common';
 
 export class IntegrationTestHelper {
   private prismaTestingHelper: PrismaTestingHelper<PrismaService>;
   private module: TestingModule;
   private prisma: PrismaService;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  constructor(private readonly providers: Type<any>[]) {}
+  constructor(private readonly providers: Provider[]) {}
 
   async setup(): Promise<void> {
     const originalPrismaService = new PrismaService();

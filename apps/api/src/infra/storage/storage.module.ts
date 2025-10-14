@@ -11,5 +11,6 @@ import { Module } from '@nestjs/common';
       useClass: S3StorageService,
     },
   ],
+  exports: [STORAGE_SERVICE],
 })
 export class StorageModule {}
