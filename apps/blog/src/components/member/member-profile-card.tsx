@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, ChangeEvent } from 'react';
 import {
   Card,
   CardHeader,
@@ -15,32 +15,33 @@ import {
   Label,
   Separator,
 } from '@imkdw-dev/ui';
-import { Camera, Save, User } from 'lucide-react';
+import { Camera } from 'lucide-react';
 import { IMemberDto } from '@imkdw-dev/types';
+import { useMemberProfile } from '@imkdw-dev/hooks';
 
 interface Props {
   member: IMemberDto;
 }
 
 export function MemberProfileCard({ member }: Props) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    name: member.nickname,
-    bio: '안녕하세요!', // TODO: 실제 bio 필드가 추가되면 member.bio로 변경
-  });
-
-  const handleSave = () => {
-    // TODO: 실제 수정 API 호출 구현 예정
-    setIsEditing(false);
-  };
-
-  const handleCancel = () => {
-    setFormData({ name: member.nickname, bio: '안녕하세요!' });
-    setIsEditing(false);
-  };
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { formData, isEditing, setIsEditing, handlers } = useMemberProfile(member);
 
   const handleAvatarChange = () => {
-    // TODO: 이미지 변경 로직 구현 예정
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    await handlers.handleImageUpload(file);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   return (
@@ -53,17 +54,18 @@ export function MemberProfileCard({ member }: Props) {
         {/* 프로필 이미지 */}
         <div className="flex items-center space-x-4">
           <Avatar className="h-20 w-20">
-            <AvatarImage src={member.profileImage} alt={member.nickname} />
+            <AvatarImage src={formData.profileImage} alt={member.nickname} />
             <AvatarFallback className="bg-primary text-primary-foreground text-lg">
               {member.nickname.charAt(0).toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <div className="space-y-2">
+            <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
             <Button onClick={handleAvatarChange} variant="outline" size="sm">
               <Camera className="mr-2 h-4 w-4" />
               이미지 변경
             </Button>
-            <p className="text-sm text-muted-foreground">JPG, PNG 파일만 업로드 가능합니다 (최대 2MB)</p>
+            <p className="text-sm text-muted-foreground">이미지는 최대 2MB 까지 업로드 가능합니다</p>
           </div>
         </div>
 
@@ -82,20 +84,9 @@ export function MemberProfileCard({ member }: Props) {
             <Input
               id="name"
               value={formData.name}
-              onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
+              onChange={e => handlers.setNickname(e.target.value)}
               disabled={!isEditing}
               placeholder="닉네임을 입력하세요"
-            />
-          </div>
-
-          <div className="grid gap-2">
-            <Label htmlFor="bio">소개</Label>
-            <Input
-              id="bio"
-              value={formData.bio}
-              onChange={e => setFormData(prev => ({ ...prev, bio: e.target.value }))}
-              disabled={!isEditing}
-              placeholder="간단한 자기소개를 입력하세요"
             />
           </div>
         </div>
@@ -104,19 +95,13 @@ export function MemberProfileCard({ member }: Props) {
         <div className="flex justify-end space-x-2">
           {isEditing ? (
             <>
-              <Button variant="outline" onClick={handleCancel}>
+              <Button variant="outline" onClick={handlers.handleCancel}>
                 취소
               </Button>
-              <Button onClick={handleSave}>
-                <Save className="mr-2 h-4 w-4" />
-                저장
-              </Button>
+              <Button onClick={handlers.handleSave}>저장</Button>
             </>
           ) : (
-            <Button onClick={() => setIsEditing(true)}>
-              <User className="mr-2 h-4 w-4" />
-              프로필 수정
-            </Button>
+            <Button onClick={() => setIsEditing(true)}>프로필 수정</Button>
           )}
         </div>
       </CardContent>

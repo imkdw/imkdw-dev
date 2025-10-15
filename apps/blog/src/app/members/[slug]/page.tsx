@@ -28,7 +28,6 @@ export default async function MemberDetail({ params }: Props) {
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           <MemberProfileCard member={member} />
-
           <div className="space-y-6">
             <Card className="bg-card border-none">
               <CardHeader>

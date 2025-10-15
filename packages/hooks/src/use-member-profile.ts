@@ -1,0 +1,97 @@
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { IMemberDto } from '@imkdw-dev/types';
+import { updateMember, getUploadUrl } from '@imkdw-dev/actions';
+import { MAX_IMAGE_SIZE } from '@imkdw-dev/consts';
+
+interface MemberProfileFormData {
+  name: string;
+  profileImage: string;
+}
+
+interface UseMemberProfileReturn {
+  formData: MemberProfileFormData;
+  isEditing: boolean;
+  setIsEditing: (value: boolean) => void;
+  handlers: {
+    handleSave: () => Promise<void>;
+    handleCancel: () => void;
+    handleImageUpload: (file: File) => Promise<void>;
+    setNickname: (nickname: string) => void;
+  };
+}
+
+export const useMemberProfile = (member: IMemberDto): UseMemberProfileReturn => {
+  const router = useRouter();
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState<MemberProfileFormData>({
+    name: member.nickname,
+    profileImage: member.profileImage,
+  });
+
+  const handleSave = async () => {
+    await updateMember(member.id, {
+      nickname: formData.name,
+      profileImage: formData.profileImage,
+    });
+    setIsEditing(false);
+    router.refresh();
+  };
+
+  const handleCancel = () => {
+    setFormData({ name: member.nickname, profileImage: member.profileImage });
+    setIsEditing(false);
+  };
+
+  const handleImageUpload = async (file: File) => {
+    if (file.size > MAX_IMAGE_SIZE) {
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      return;
+    }
+
+    const extension = file.name.split('.').pop() ?? '';
+    const { url, pathPrefix } = await getUploadUrl(file.name, extension);
+
+    const uploadResponse = await fetch(url, {
+      method: 'PUT',
+      body: file,
+      headers: {
+        'Content-Type': file.type,
+      },
+    });
+
+    if (!uploadResponse.ok) {
+      return;
+    }
+
+    const fileName = file.name.split('.')[0] ?? 'image';
+    const fileUrl = `${pathPrefix}/${fileName}.${extension}`;
+
+    await updateMember(member.id, {
+      nickname: formData.name,
+      profileImage: fileUrl,
+    });
+
+    setFormData(prev => ({ ...prev, profileImage: fileUrl }));
+    router.refresh();
+  };
+
+  const setNickname = (nickname: string) => {
+    setFormData(prev => ({ ...prev, name: nickname }));
+  };
+
+  return {
+    formData,
+    isEditing,
+    setIsEditing,
+    handlers: {
+      handleSave,
+      handleCancel,
+      handleImageUpload,
+      setNickname,
+    },
+  };
+};
