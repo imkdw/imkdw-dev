@@ -1,5 +1,5 @@
 import { Layout, Card, CardHeader, CardTitle, CardContent } from '@imkdw-dev/ui';
-import { EditableProfile } from '@/components/member/editable-profile';
+import { MemberProfileCard } from '@/components/member/member-profile-card';
 import { getCurrentMember, getMember, getMemberStats } from '@imkdw-dev/actions';
 import { forbidden } from 'next/navigation';
 import { formatDate } from '@imkdw-dev/utils';
@@ -27,7 +27,7 @@ export default async function MemberDetail({ params }: Props) {
           <h1 className="text-3xl font-bold">마이페이지</h1>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
-          <EditableProfile member={member} />
+          <MemberProfileCard member={member} />
 
           <div className="space-y-6">
             <Card className="bg-card border-none">
