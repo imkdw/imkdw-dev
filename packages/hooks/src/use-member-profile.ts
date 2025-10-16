@@ -68,7 +68,7 @@ export const useMemberProfile = (member: IMemberDto): UseMemberProfileReturn => 
 
     await updateMember(member.id, {
       nickname: formData.name,
-      profileImage: fileUrl,
+      profileImage: `${fileName}.${extension}`,
     });
 
     setFormData(prev => ({ ...prev, profileImage: fileUrl }));
