@@ -21,7 +21,7 @@ export function ArticleTagManager({ tags, onAddTag, onRemoveTag }: Props) {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
       e.preventDefault();
       handleAddTag();
     }
