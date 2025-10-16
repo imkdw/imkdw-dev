@@ -27,7 +27,6 @@ export default async function Home() {
           stats={statsData}
           tags={['Node.js', 'TypeScript', 'Nest.js', 'Prisma', 'Next.js']}
         />
-
         <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10 space-y-8 md:space-y-10">
           <RecentSeries seriesList={series.items} />
           <RecentArticles articles={articles.items} />
