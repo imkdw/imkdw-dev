@@ -8,7 +8,6 @@ import { LoginModal } from '../../auth/login-modal';
 import { MacOSControls } from '../../../primitives/macos-controls';
 import { FileTabs } from './file-tabs';
 import { DesktopNavigation } from './desktop-navigation';
-import { SearchInput } from './search-input';
 import { MobileNavigation } from './mobile-navigation';
 import { cn } from '../../../lib';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
@@ -71,7 +70,7 @@ export function Header({ currentMember, onSearch }: Props) {
         {/* 데스크탑 환경 - 네비게이터, 검색창 */}
         <div className="hidden md:flex items-center space-x-2 lg:space-x-4 px-2 lg:px-4">
           <DesktopNavigation />
-          <SearchInput onSearch={onSearch} />
+          {/* <SearchInput onSearch={onSearch} /> */}
         </div>
       </div>
       <MobileNavigation isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} onSearch={onSearch} />

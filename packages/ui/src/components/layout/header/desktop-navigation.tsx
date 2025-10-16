@@ -1,4 +1,4 @@
-import { FileText, Hash, Terminal } from 'lucide-react';
+import { FileText, Hash } from 'lucide-react';
 import { Button } from '../../../primitives/button';
 import Link from 'next/link';
 
@@ -6,7 +6,7 @@ export function DesktopNavigation() {
   const navigation = [
     { name: 'Articles', icon: FileText, path: '/articles' },
     { name: 'Series', icon: Hash, path: '/series' },
-    { name: 'Terminal', icon: Terminal, path: '/terminal' },
+    // { name: 'Terminal', icon: Terminal, path: '/terminal' },
   ];
 
   return (
