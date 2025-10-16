@@ -1,7 +1,7 @@
 import type { PrismaClient, Article as PrismaArticle } from '@prisma/client';
 import type { Prisma } from '@prisma/client';
 import { generateUUID } from '@imkdw-dev/utils';
-import { Article } from '@/shared/domain/article/article';
+import { ArticleContent } from '@/shared/domain/article/article-content';
 
 export const createTestArticle = async (
   prisma: PrismaClient | Prisma.TransactionClient,
@@ -16,15 +16,14 @@ export const createTestArticle = async (
     deletedAt?: Date | null;
   }
 ): Promise<PrismaArticle> => {
-  const content = data.content ?? 'Test article content for integration testing';
-  const plainContent = Article.stripHtmlTags(content);
+  const content = new ArticleContent(data.content ?? 'Test article content for integration testing');
   return prisma.article.create({
     data: {
       id: generateUUID(),
       title: data.title ?? `Test Article ${Date.now()}`,
       slug: data.slug ?? `test-article-${Date.now()}`,
-      content: content,
-      plainContent: plainContent,
+      content: content.value,
+      plainContent: content.toPlainText(),
       viewCount: data.viewCount ?? 0,
       readMinute: data.readMinute ?? 1,
       seriesId: data.seriesId,

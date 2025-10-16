@@ -1,4 +1,6 @@
-export class Article {
+import { ArticleContent } from '@/shared/domain/article/article-content';
+
+interface Params {
   id: string;
   title: string;
   slug: string;
@@ -9,13 +11,26 @@ export class Article {
   readMinute: number;
   createdAt: Date;
   tagIds: string[];
+}
 
-  private constructor(props: Article) {
+export class Article {
+  id: string;
+  title: string;
+  slug: string;
+  content: ArticleContent;
+  plainContent: string;
+  seriesId: string;
+  viewCount: number;
+  readMinute: number;
+  createdAt: Date;
+  tagIds: string[];
+
+  private constructor(props: Params) {
     this.id = props.id;
     this.title = props.title;
     this.slug = props.slug;
-    this.content = props.content;
-    this.plainContent = props.plainContent;
+    this.content = new ArticleContent(props.content);
+    this.plainContent = this.content.toPlainText();
     this.seriesId = props.seriesId;
     this.viewCount = props.viewCount;
     this.readMinute = props.readMinute;
@@ -23,7 +38,7 @@ export class Article {
     this.tagIds = props.tagIds;
   }
 
-  static create(props: Article): Article {
+  static create(props: Params): Article {
     return new Article(props);
   }
 
@@ -41,12 +56,5 @@ export class Article {
 
     const totalReadTime = Math.ceil(koreanReadTime + englishReadTime);
     return Math.max(totalReadTime, MINIMUM_READ_MINUTE);
-  }
-
-  static stripHtmlTags(content: string): string {
-    return content
-      .replace(/<[^>]*>/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
   }
 }

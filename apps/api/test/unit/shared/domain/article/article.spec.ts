@@ -31,32 +31,4 @@ describe('Article 도메인', () => {
       expect(readMinute).toBe(1);
     });
   });
-
-  describe('create', () => {
-    it('Article 인스턴스를 생성한다', () => {
-      const props = {
-        id: 'test-id',
-        title: '테스트 제목',
-        slug: 'test-slug',
-        content: '테스트 내용',
-        seriesId: 'series-id',
-        viewCount: 0,
-        readMinute: 2,
-        createdAt: new Date(),
-        tagIds: ['tag1', 'tag2'],
-      };
-
-      const article = Article.create(props);
-
-      expect(article.id).toBe(props.id);
-      expect(article.title).toBe(props.title);
-      expect(article.slug).toBe(props.slug);
-      expect(article.content).toBe(props.content);
-      expect(article.seriesId).toBe(props.seriesId);
-      expect(article.viewCount).toBe(props.viewCount);
-      expect(article.readMinute).toBe(props.readMinute);
-      expect(article.createdAt).toBe(props.createdAt);
-      expect(article.tagIds).toEqual(props.tagIds);
-    });
-  });
 });

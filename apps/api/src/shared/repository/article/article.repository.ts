@@ -12,7 +12,7 @@ export class ArticleRepository {
     const entity = await tx.article.update({
       where: { id: article.id },
       data: {
-        content: article.content,
+        content: article.content.value,
         plainContent: article.plainContent,
         readMinute: article.readMinute,
         seriesId: article.seriesId,
@@ -29,7 +29,7 @@ export class ArticleRepository {
     const entity = await tx.article.create({
       data: {
         id: article.id,
-        content: article.content,
+        content: article.content.value,
         plainContent: article.plainContent,
         readMinute: article.readMinute,
         slug: article.slug,
