@@ -76,9 +76,11 @@ export function MemberProfileCard({ member }: Props) {
           <div className="grid gap-2">
             <Label htmlFor="email">이메일</Label>
             <Input id="email" value={member.email} disabled className="bg-muted" />
-            <p className="text-sm text-muted-foreground">이메일은 변경할 수 없습니다</p>
           </div>
-
+          <div className="grid gap-2">
+            <Label htmlFor="email">소셜로그인 공급자</Label>
+            <Input id="provider" value={member.provider} disabled className="bg-muted" />
+          </div>
           <div className="grid gap-2">
             <Label htmlFor="name">닉네임</Label>
             <Input

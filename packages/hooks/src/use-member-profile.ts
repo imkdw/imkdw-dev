@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { IMemberDto } from '@imkdw-dev/types';
 import { updateMember, getUploadUrl } from '@imkdw-dev/actions';
 import { MAX_IMAGE_SIZE } from '@imkdw-dev/consts';
+import { generateUUID } from '@imkdw-dev/utils';
 
 interface MemberProfileFormData {
   name: string;
@@ -53,21 +54,16 @@ export const useMemberProfile = (member: IMemberDto): UseMemberProfileReturn => 
     }
 
     const extension = file.name.split('.').pop() ?? '';
-    const { url, pathPrefix } = await getUploadUrl(file.name, extension);
 
-    const uploadResponse = await fetch(url, {
-      method: 'PUT',
-      body: file,
-      headers: {
-        'Content-Type': file.type,
-      },
-    });
+    const fileName = generateUUID();
+    const { url, pathPrefix } = await getUploadUrl(fileName, extension);
+
+    const uploadResponse = await fetch(url, { method: 'PUT', body: file });
 
     if (!uploadResponse.ok) {
       return;
     }
 
-    const fileName = file.name.split('.')[0] ?? 'image';
     const fileUrl = `${pathPrefix}/${fileName}.${extension}`;
 
     await updateMember(member.id, {
