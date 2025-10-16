@@ -9,7 +9,6 @@ export function ArticlesHeader({ totalArticles, totalTags }: Props) {
   return (
     <div className="mb-6 md:mb-8">
       <div className="flex items-center gap-2 mb-3 md:mb-4">
-        <FileText className="h-6 w-6 md:h-8 md:w-8 text-primary flex-shrink-0" />
         <h1 className="text-2xl md:text-3xl font-bold">게시글</h1>
       </div>
 

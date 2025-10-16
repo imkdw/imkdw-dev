@@ -2,8 +2,7 @@ import { Layout } from '@imkdw-dev/ui';
 import { getSeriesList, getStats } from '@imkdw-dev/actions';
 import { SERIES_PER_PAGE } from '@/consts/series.const';
 import { CommonPagination } from '@/components/common/common-pagination';
-import { SeriesListHeader } from '@/components/series/series-list-header';
-import { SeriesListStats } from '@/components/series/series-list-stats';
+import { ListHeader } from '@/components/common/list-header';
 import { SeriesListGrid } from '@/components/series/series-list-grid';
 import { SeriesListEmpty } from '@/components/series/series-list-empty';
 import { createMetadata } from '@/utils/metadata-creator';
@@ -29,10 +28,13 @@ export default async function Series({ searchParams }: Props) {
   return (
     <Layout>
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10">
-        <div className="pb-6 md:pb-8">
-          <SeriesListHeader />
-          <SeriesListStats totalSeriesCount={stats.series.count} totalArticleCount={stats.article.count} />
-        </div>
+        <ListHeader
+          title="시리즈 목록"
+          stats={[
+            { label: '전체 시리즈', value: stats.series.count },
+            { label: '총 글 수', value: stats.article.count },
+          ]}
+        />
 
         <div className="flex flex-col gap-6">
           {seriesData.items.length > 0 ? (
