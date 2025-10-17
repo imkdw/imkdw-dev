@@ -29,4 +29,12 @@ export class UpdateArticleDto implements IUpdateArticleDto {
   @IsArray()
   @IsString({ each: true })
   readonly tags: string[];
+
+  @ApiProperty({
+    description: '업로드한 이미지 주소 목록',
+    example: ['https://example.com/image1.png', 'https://example.com/image2.png'],
+  })
+  @IsArray()
+  @IsString({ each: true })
+  readonly uploadedImageUrls: string[];
 }
