@@ -17,7 +17,10 @@ export class UpdateMemberUseCase {
     const existingMember = await this.memberValidator.checkExist(memberId);
     await this.memberValidator.checkExistNickname(dto.nickname, memberId);
 
-    const profileImageUrl = await this.copyImageService.copySingle(dto.profileImage, `members/${memberId}`);
+    const profileImageUrl =
+      existingMember.profileImage === dto.profileImage
+        ? existingMember.profileImage
+        : await this.copyImageService.copySingle(dto.profileImage, `members/${memberId}`);
 
     const updatedMember = Member.create({
       id: existingMember.id,
