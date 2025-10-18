@@ -11,12 +11,12 @@ import { CreateArticleReplyUseCase } from '@/features/article/use-case/create-ar
 import { GetArticlesQuery } from '@/features/article/query/get-articles.query';
 import { GetArticleQuery } from '@/features/article/query/get-article.query';
 import { GetArticleCommentsQuery } from '@/features/article/query/get-article-comments.query';
-import { SeriesStatsModule } from '@/shared/services/series/series-stats.module';
+import { SharedSeriesModule } from '@/shared/services/series/shared-series.module';
 import { Module } from '@nestjs/common';
 import { StorageModule } from '@/infra/storage/storage.module';
 
 @Module({
-  imports: [SeriesStatsModule, StorageModule],
+  imports: [SharedSeriesModule, StorageModule],
   controllers: [ArticleController, ArticleCommentController],
   providers: [
     CreateArticleUseCase,

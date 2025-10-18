@@ -8,4 +8,4 @@ import { RepositoryModule } from '@/shared/repository/repository.module';
   providers: [SeriesStatsService],
   exports: [SeriesStatsService],
 })
-export class SeriesStatsModule {}
+export class SharedSeriesModule {}
