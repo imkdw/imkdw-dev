@@ -6,26 +6,29 @@ import { ArticleRepository } from '@/shared/repository/article/article.repositor
 import { TagRepository } from '@/shared/repository/tag/tag.repository';
 import { SeriesStatsService } from '@/shared/services/series/series-stats.service';
 import { PrismaService } from '@/infra/database/prisma.service';
-import { Inject, Injectable } from '@nestjs/common';
-import { STORAGE_SERVICE, StorageService } from '@/infra/storage/storage.service';
-import { getStoragePath } from '@/infra/storage/function/storage.function';
+import { Injectable } from '@nestjs/common';
+import { CopyImageService } from '@/shared/services/image/copy-image.service';
 
 @Injectable()
 export class UpdateArticleUseCase {
   constructor(
-    @Inject(STORAGE_SERVICE) private readonly storageService: StorageService,
     private readonly articleValidator: ArticleValidator,
     private readonly seriesValidator: SeriesValidator,
     private readonly articleRepository: ArticleRepository,
     private readonly tagRepository: TagRepository,
     private readonly seriesStatsService: SeriesStatsService,
-    private readonly prisma: PrismaService
+    private readonly prisma: PrismaService,
+    private readonly copyImageService: CopyImageService
   ) {}
 
   async execute(slug: string, dto: UpdateArticleDto): Promise<void> {
     const existingArticle = await this.articleValidator.checkExistBySlug(slug);
 
-    await this.copyImages(existingArticle.id, dto.uploadedImageUrls);
+    const urlMapping = await this.copyImageService.copyMultiple(dto.uploadedImageUrls, [
+      { id: existingArticle.id, prefix: 'article' },
+    ]);
+
+    const updatedContent = this.copyImageService.replaceImagesInContent(dto.content, urlMapping);
 
     await this.prisma.$transaction(async tx => {
       await this.articleValidator.checkExistTitle(dto.title, existingArticle.id, tx);
@@ -37,11 +40,11 @@ export class UpdateArticleUseCase {
         id: existingArticle.id,
         title: dto.title,
         slug: existingArticle.slug,
-        content: dto.content,
-        plainContent: dto.content,
+        content: updatedContent,
+        plainContent: updatedContent,
         seriesId: dto.seriesId,
         viewCount: existingArticle.viewCount,
-        readMinute: Article.calculateReadMinute(dto.content),
+        readMinute: Article.calculateReadMinute(updatedContent),
         tagIds: tags.map(tag => tag.id),
         createdAt: existingArticle.createdAt,
       });
@@ -55,16 +58,5 @@ export class UpdateArticleUseCase {
         await this.seriesStatsService.recalculateSeries(dto.seriesId, tx);
       }
     });
-  }
-
-  async copyImages(articleId: string, uploadedImageUrls: string[]) {
-    return Promise.all(
-      uploadedImageUrls.map(url => {
-        const path = getStoragePath([{ id: articleId, prefix: 'article' }]);
-        const fileName = url.split('/').pop() ?? '';
-        const destinationPath = `${path}/${fileName}`;
-        return this.storageService.copyTempFile(fileName, destinationPath);
-      })
-    );
   }
 }

@@ -5,13 +5,13 @@ import { updateMember, getUploadUrl } from '@imkdw-dev/actions';
 import { MAX_IMAGE_SIZE } from '@imkdw-dev/consts';
 import { generateUUID } from '@imkdw-dev/utils';
 
-interface MemberProfileFormData {
+interface FormData {
   name: string;
   profileImage: string;
 }
 
-interface UseMemberProfileReturn {
-  formData: MemberProfileFormData;
+interface Result {
+  formData: FormData;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
   handlers: {
@@ -22,10 +22,10 @@ interface UseMemberProfileReturn {
   };
 }
 
-export const useMemberProfile = (member: IMemberDto): UseMemberProfileReturn => {
+export const useMemberProfile = (member: IMemberDto): Result => {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState<MemberProfileFormData>({
+  const [formData, setFormData] = useState<FormData>({
     name: member.nickname,
     profileImage: member.profileImage,
   });
@@ -68,7 +68,7 @@ export const useMemberProfile = (member: IMemberDto): UseMemberProfileReturn => 
 
     await updateMember(member.id, {
       nickname: formData.name,
-      profileImage: `${fileName}.${extension}`,
+      profileImage: fileUrl,
     });
 
     setFormData(prev => ({ ...prev, profileImage: fileUrl }));

@@ -7,30 +7,35 @@ import { ArticleRepository } from '@/shared/repository/article/article.repositor
 import { TagRepository } from '@/shared/repository/tag/tag.repository';
 import { SeriesStatsService } from '@/shared/services/series/series-stats.service';
 import { PrismaService } from '@/infra/database/prisma.service';
-import { Inject, Injectable } from '@nestjs/common';
-import { STORAGE_SERVICE, StorageService } from '@/infra/storage/storage.service';
-import { getStoragePath } from '@/infra/storage/function/storage.function';
+import { Injectable } from '@nestjs/common';
+import { CopyImageService } from '@/shared/services/image/copy-image.service';
 
 @Injectable()
 export class CreateArticleUseCase {
   constructor(
-    @Inject(STORAGE_SERVICE) private readonly storageService: StorageService,
     private readonly articleValidator: ArticleValidator,
     private readonly seriesValidator: SeriesValidator,
     private readonly articleRepository: ArticleRepository,
     private readonly tagRepository: TagRepository,
     private readonly seriesStatsService: SeriesStatsService,
-    private readonly prisma: PrismaService
+    private readonly prisma: PrismaService,
+    private readonly copyImageService: CopyImageService
   ) {}
 
   async execute(dto: CreateArticleDto): Promise<Article> {
+    const { content, seriesId, slug, title, uploadedImageUrls } = dto;
+
     const articleId = generateUUID();
-    const uploadedImageUrls = await this.copyImages(articleId, dto.uploadedImageUrls);
+
+    const urlMapping = await this.copyImageService.copyMultiple(uploadedImageUrls, [
+      { id: articleId, prefix: 'article' },
+    ]);
+    const updatedContent = this.copyImageService.replaceImagesInContent(content, urlMapping);
 
     return this.prisma.$transaction(async tx => {
-      await this.articleValidator.checkExistTitle(dto.title, undefined, tx);
-      await this.articleValidator.checkExistSlug(dto.slug, tx);
-      await this.seriesValidator.checkExist(dto.seriesId, tx);
+      await this.articleValidator.checkExistTitle(title, undefined, tx);
+      await this.articleValidator.checkExistSlug(slug, tx);
+      await this.seriesValidator.checkExist(seriesId, tx);
 
       const tags = await this.tagRepository.findOrCreateMany(dto.tags, tx);
 
@@ -38,31 +43,20 @@ export class CreateArticleUseCase {
         id: articleId,
         title: dto.title,
         slug: dto.slug,
-        content: dto.content,
-        plainContent: dto.content,
-        seriesId: dto.seriesId,
+        content: updatedContent,
+        plainContent: updatedContent,
+        seriesId,
         viewCount: 0,
-        readMinute: Article.calculateReadMinute(dto.content),
+        readMinute: Article.calculateReadMinute(updatedContent),
         tagIds: tags.map(tag => tag.id),
         createdAt: new Date(),
       });
 
       const createdArticle = await this.articleRepository.create(article, tx);
 
-      await this.seriesStatsService.recalculateSeries(dto.seriesId, tx);
+      await this.seriesStatsService.recalculateSeries(seriesId, tx);
 
       return createdArticle;
     });
-  }
-
-  async copyImages(articleId: string, uploadedImageUrls: string[]) {
-    return Promise.all(
-      uploadedImageUrls.map(url => {
-        const path = getStoragePath([{ id: articleId, prefix: 'article' }]);
-        const fileName = url.split('/').pop() ?? '';
-        const destinationPath = `${path}/${fileName}`;
-        return this.storageService.copyTempFile(fileName, destinationPath);
-      })
-    );
   }
 }

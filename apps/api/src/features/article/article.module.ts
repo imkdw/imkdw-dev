@@ -14,9 +14,10 @@ import { GetArticleCommentsQuery } from '@/features/article/query/get-article-co
 import { SharedSeriesModule } from '@/shared/services/series/shared-series.module';
 import { Module } from '@nestjs/common';
 import { StorageModule } from '@/infra/storage/storage.module';
+import { SharedImageModule } from '@/shared/services/image/shared-image.module';
 
 @Module({
-  imports: [SharedSeriesModule, StorageModule],
+  imports: [SharedSeriesModule, StorageModule, SharedImageModule],
   controllers: [ArticleController, ArticleCommentController],
   providers: [
     CreateArticleUseCase,
