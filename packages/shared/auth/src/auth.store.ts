@@ -3,21 +3,21 @@ import { getCurrentMember } from '@imkdw-dev/actions';
 import type { AuthState } from './auth.type';
 
 export const useAuthStore = create<AuthState>(set => ({
-  user: null,
+  member: null,
   isLoading: true,
   isAuthenticated: false,
   initializeAuth: async () => {
     set({ isLoading: true });
     try {
-      const user = await getCurrentMember();
+      const member = await getCurrentMember();
       set({
-        user,
-        isAuthenticated: !!user,
+        member,
+        isAuthenticated: !!member,
         isLoading: false,
       });
     } catch {
       set({
-        user: null,
+        member: null,
         isAuthenticated: false,
         isLoading: false,
       });
@@ -26,15 +26,15 @@ export const useAuthStore = create<AuthState>(set => ({
   refreshUser: async () => {
     set({ isLoading: true });
     try {
-      const user = await getCurrentMember();
+      const member = await getCurrentMember();
       set({
-        user,
-        isAuthenticated: !!user,
+        member,
+        isAuthenticated: !!member,
         isLoading: false,
       });
     } catch {
       set({
-        user: null,
+        member: null,
         isAuthenticated: false,
         isLoading: false,
       });
@@ -42,7 +42,7 @@ export const useAuthStore = create<AuthState>(set => ({
   },
   logout: () => {
     set({
-      user: null,
+      member: null,
       isAuthenticated: false,
       isLoading: false,
     });

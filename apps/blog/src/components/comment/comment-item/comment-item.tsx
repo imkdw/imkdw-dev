@@ -15,7 +15,7 @@ export interface Props {
 export function CommentItem({ comment, articleSlug, onDelete }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
-  const { user } = useAuth();
+  const { member: user } = useAuth();
 
   const isOwner = comment.author.nickname === user?.nickname;
 

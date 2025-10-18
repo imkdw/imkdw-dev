@@ -13,7 +13,7 @@ interface Props {
 }
 
 export function CommentForm({ newComment, onCommentChange, onSubmit, onKeyPress, isSubmitting }: Props) {
-  const { user } = useAuth();
+  const { member: user } = useAuth();
   return (
     <div className="mb-8 bg-muted/30 rounded-xl p-4">
       <div className="flex space-x-3">

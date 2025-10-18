@@ -19,7 +19,7 @@ interface Props {
   onLogout: () => void;
 }
 
-export function currentMemberMenu({ currentMember, onLogin, onLogout }: Props) {
+export function MemberMenu({ currentMember, onLogin, onLogout }: Props) {
   if (!currentMember) {
     return <Button onClick={onLogin}>로그인</Button>;
   }

@@ -1,7 +1,7 @@
 import { IMemberDto } from '@imkdw-dev/types';
 
 export interface AuthState {
-  user: IMemberDto | null;
+  member: IMemberDto | null;
   isLoading: boolean;
   isAuthenticated: boolean;
   initializeAuth: () => Promise<void>;

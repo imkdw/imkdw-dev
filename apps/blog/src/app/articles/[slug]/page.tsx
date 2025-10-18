@@ -49,7 +49,7 @@ export default async function Page({ params }: Props) {
   return (
     <Layout enableOverflow={false}>
       <div className="max-w-7xl mx-auto p-6 lg:flex lg:gap-8">
-        <main className="flex-1 max-w-4xl flex flex-col">
+        <div className="flex-1 max-w-4xl flex flex-col">
           <ArticleHeader article={article}>
             <ArticleInteractions slug={slug} />
           </ArticleHeader>
@@ -60,7 +60,7 @@ export default async function Page({ params }: Props) {
             nextArticle={navigationArticles.nextArticle}
           />
           <CommentSection articleSlug={slug} initialComments={commentsResponse.comments} />
-        </main>
+        </div>
         <aside className="hidden lg:block sticky top-4 self-start">
           <TableOfContents content={article.content} />
         </aside>

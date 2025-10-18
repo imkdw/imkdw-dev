@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Terminal } from 'lucide-react';
 import { SidebarTrigger } from '../../../primitives/sidebar';
-import { UserMenu } from '../../auth/user-menu';
+import { MemberMenu } from '../../auth/user-menu';
 import { LoginModal } from '../../auth/login-modal';
 import { MacOSControls } from '../../../primitives/macos-controls';
 import { FileTabs } from './file-tabs';
@@ -49,7 +49,7 @@ export function Header({ currentMember, onSearch }: Props) {
         </div>
 
         <div className="flex items-center space-x-1 gap-2">
-          <UserMenu
+          <MemberMenu
             currentMember={currentMember}
             onLogin={handleLogin}
             // TODO: 로그아웃 기능 추가
