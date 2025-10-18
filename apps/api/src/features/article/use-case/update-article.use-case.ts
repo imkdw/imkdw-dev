@@ -6,11 +6,14 @@ import { ArticleRepository } from '@/shared/repository/article/article.repositor
 import { TagRepository } from '@/shared/repository/tag/tag.repository';
 import { SeriesStatsService } from '@/shared/services/series/series-stats.service';
 import { PrismaService } from '@/infra/database/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { STORAGE_SERVICE, StorageService } from '@/infra/storage/storage.service';
+import { getStoragePath } from '@/infra/storage/function/storage.function';
 
 @Injectable()
 export class UpdateArticleUseCase {
   constructor(
+    @Inject(STORAGE_SERVICE) private readonly storageService: StorageService,
     private readonly articleValidator: ArticleValidator,
     private readonly seriesValidator: SeriesValidator,
     private readonly articleRepository: ArticleRepository,
@@ -20,9 +23,11 @@ export class UpdateArticleUseCase {
   ) {}
 
   async execute(slug: string, dto: UpdateArticleDto): Promise<void> {
-    await this.prisma.$transaction(async tx => {
-      const existingArticle = await this.articleValidator.checkExistBySlug(slug, tx);
+    const existingArticle = await this.articleValidator.checkExistBySlug(slug);
 
+    await this.copyImages(existingArticle.id, dto.uploadedImageUrls);
+
+    await this.prisma.$transaction(async tx => {
       await this.articleValidator.checkExistTitle(dto.title, existingArticle.id, tx);
       await this.seriesValidator.checkExist(dto.seriesId, tx);
 
@@ -50,5 +55,16 @@ export class UpdateArticleUseCase {
         await this.seriesStatsService.recalculateSeries(dto.seriesId, tx);
       }
     });
+  }
+
+  async copyImages(articleId: string, uploadedImageUrls: string[]) {
+    return Promise.all(
+      uploadedImageUrls.map(url => {
+        const path = getStoragePath([{ id: articleId, prefix: 'article' }]);
+        const fileName = url.split('/').pop() ?? '';
+        const destinationPath = `${path}/${fileName}`;
+        return this.storageService.copyTempFile(fileName, destinationPath);
+      })
+    );
   }
 }

@@ -7,11 +7,14 @@ import { ArticleRepository } from '@/shared/repository/article/article.repositor
 import { TagRepository } from '@/shared/repository/tag/tag.repository';
 import { SeriesStatsService } from '@/shared/services/series/series-stats.service';
 import { PrismaService } from '@/infra/database/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { STORAGE_SERVICE, StorageService } from '@/infra/storage/storage.service';
+import { getStoragePath } from '@/infra/storage/function/storage.function';
 
 @Injectable()
 export class CreateArticleUseCase {
   constructor(
+    @Inject(STORAGE_SERVICE) private readonly storageService: StorageService,
     private readonly articleValidator: ArticleValidator,
     private readonly seriesValidator: SeriesValidator,
     private readonly articleRepository: ArticleRepository,
@@ -21,6 +24,9 @@ export class CreateArticleUseCase {
   ) {}
 
   async execute(dto: CreateArticleDto): Promise<Article> {
+    const articleId = generateUUID();
+    const uploadedImageUrls = await this.copyImages(articleId, dto.uploadedImageUrls);
+
     return this.prisma.$transaction(async tx => {
       await this.articleValidator.checkExistTitle(dto.title, undefined, tx);
       await this.articleValidator.checkExistSlug(dto.slug, tx);
@@ -29,7 +35,7 @@ export class CreateArticleUseCase {
       const tags = await this.tagRepository.findOrCreateMany(dto.tags, tx);
 
       const article = Article.create({
-        id: generateUUID(),
+        id: articleId,
         title: dto.title,
         slug: dto.slug,
         content: dto.content,
@@ -47,5 +53,16 @@ export class CreateArticleUseCase {
 
       return createdArticle;
     });
+  }
+
+  async copyImages(articleId: string, uploadedImageUrls: string[]) {
+    return Promise.all(
+      uploadedImageUrls.map(url => {
+        const path = getStoragePath([{ id: articleId, prefix: 'article' }]);
+        const fileName = url.split('/').pop() ?? '';
+        const destinationPath = `${path}/${fileName}`;
+        return this.storageService.copyTempFile(fileName, destinationPath);
+      })
+    );
   }
 }

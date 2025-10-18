@@ -13,9 +13,10 @@ import { GetArticleQuery } from '@/features/article/query/get-article.query';
 import { GetArticleCommentsQuery } from '@/features/article/query/get-article-comments.query';
 import { SeriesStatsModule } from '@/shared/services/series/series-stats.module';
 import { Module } from '@nestjs/common';
+import { StorageModule } from '@/infra/storage/storage.module';
 
 @Module({
-  imports: [SeriesStatsModule],
+  imports: [SeriesStatsModule, StorageModule],
   controllers: [ArticleController, ArticleCommentController],
   providers: [
     CreateArticleUseCase,

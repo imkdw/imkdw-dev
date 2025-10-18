@@ -7,9 +7,18 @@ interface Props {
   onTitleChange: (value: string) => void;
   onSlugChange: (value: string) => void;
   onChangeContent: (value: string) => void;
+  onUploadImage: (imageUrl: string) => void;
 }
 
-export function ArticleFormFields({ title, slug, content, onTitleChange, onSlugChange, onChangeContent }: Props) {
+export function ArticleFormFields({
+  title,
+  slug,
+  content,
+  onTitleChange,
+  onSlugChange,
+  onChangeContent,
+  onUploadImage,
+}: Props) {
   return (
     <div className="flex flex-col gap-4 flex-1">
       <div className="border-b border-border/50 py-2">
@@ -35,7 +44,7 @@ export function ArticleFormFields({ title, slug, content, onTitleChange, onSlugC
           content={content}
           isEditable={true}
           onChangeContent={onChangeContent}
-          onUploadImage={() => {}}
+          onUploadImage={onUploadImage}
         />
       </div>
     </div>

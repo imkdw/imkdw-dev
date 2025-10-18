@@ -15,6 +15,7 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
   const [content, setContent] = useState(initialData?.content ?? '');
   const [tags, setTags] = useState<string[]>(initialData?.tags.map(tag => tag.name) ?? []);
   const [seriesId, setSeriesId] = useState(initialData?.series?.id ?? '');
+  const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
   const [isPublishing, setIsPublishing] = useState(false);
 
   const handleAddTag = (tag: string) => {
@@ -24,6 +25,10 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
   };
 
   const handleRemoveTag = (tagToRemove: string) => setTags(tags.filter(tag => tag !== tagToRemove));
+
+  const handleImageUpload = (imageUrl: string) => {
+    setUploadedImageUrls(prev => [...prev, imageUrl]);
+  };
 
   const handleSaveDraft = () => {};
 
@@ -36,10 +41,10 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
 
     try {
       if (mode === 'create') {
-        const result = await createArticle({ title, slug, content, tags, seriesId });
+        const result = await createArticle({ title, slug, content, tags, seriesId, uploadedImageUrls });
         router.push(`/articles/${result.slug}`);
       } else {
-        await updateArticle(slug, { title, content, tags, seriesId });
+        await updateArticle(slug, { title, content, tags, seriesId, uploadedImageUrls });
         router.push(`/articles/${slug}`);
       }
     } finally {
@@ -62,6 +67,7 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
       setSeriesId,
       handleAddTag,
       handleRemoveTag,
+      handleImageUpload,
       handlePublish,
       handleSaveDraft,
     },
