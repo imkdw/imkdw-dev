@@ -18,6 +18,9 @@ import { TagModule } from '@/features/tag/tag.module';
 import { StorageModule } from '@/infra/storage/storage.module';
 import { CustomExceptionFilter } from '@/common/filter/custom-exception.filter';
 import { SeoModule } from '@/features/seo/seo.module';
+import { WinstonModule } from 'nest-winston';
+import { LoggingInterceptor } from '@/common/interceptor/logging.interceptor';
+import { loggerConfig } from '@/config/logger.config';
 
 @Module({
   imports: [
@@ -32,6 +35,7 @@ import { SeoModule } from '@/features/seo/seo.module';
     TagModule,
     StorageModule,
     SeoModule,
+    WinstonModule.forRoot(loggerConfig),
   ],
   controllers: [AppController],
   providers: [
@@ -50,6 +54,10 @@ import { SeoModule } from '@/features/seo/seo.module';
     {
       provide: APP_FILTER,
       useClass: CustomExceptionFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
     },
   ],
 })

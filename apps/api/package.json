@@ -22,12 +22,12 @@
     "prisma:seed": "dotenv -e ../../.env -- npx ts-node prisma/seed.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.901.0",
+    "@aws-sdk/s3-request-presigner": "^3.901.0",
     "@imkdw-dev/consts": "workspace:*",
     "@imkdw-dev/exception": "workspace:*",
     "@imkdw-dev/types": "workspace:*",
     "@imkdw-dev/utils": "workspace:*",
-    "@aws-sdk/client-s3": "^3.901.0",
-    "@aws-sdk/s3-request-presigner": "^3.901.0",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
@@ -38,10 +38,12 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
     "jsonwebtoken": "^9.0.2",
+    "nest-winston": "^1.10.2",
     "prisma": "^6.15.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "uuid": "^11.1.0",
+    "winston": "^3.18.3",
     "zod": "^4.1.5"
   },
   "devDependencies": {
