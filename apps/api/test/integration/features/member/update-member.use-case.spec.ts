@@ -4,10 +4,13 @@ import { MemberRepository } from '@/shared/repository/member/member.repository';
 import { STORAGE_SERVICE, StorageService } from '@/infra/storage/storage.service';
 import { UpdateMemberDto } from '@/features/member/dto/update-member.dto';
 import { ExistMemberNicknameException } from '@/features/member/exception/exist-member-nickname.exception';
+import { MemberNotFoundException } from '@/features/member/exception/member-not-found.exception';
+import { CopyImageService } from '@/shared/services/image/copy-image.service';
 import { createTestMember } from '@test/integration/helpers/member.helper';
 import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
 import { PrismaService } from '@/infra/database/prisma.service';
 import type { Member } from '@prisma/client';
+import { randomUUID } from 'crypto';
 
 const WEB_IMAGE_URL = 'https://example.com/profile.jpg';
 const mockStorageService: jest.Mocked<StorageService> = {
@@ -27,6 +30,7 @@ describe('유저 정보 수정 유스케이스', () => {
       UpdateMemberUseCase,
       MemberValidator,
       MemberRepository,
+      CopyImageService,
       {
         provide: STORAGE_SERVICE,
         useValue: mockStorageService,
@@ -47,42 +51,15 @@ describe('유저 정보 수정 유스케이스', () => {
     testHelper.rollbackTransaction();
   });
 
-  describe('프로필 이미지가 https:// URL로 전달되면', () => {
-    it('스토리지에서 이미지를 이동시키지 않는다', async () => {
+  describe('존재하지 않는 멤버를 수정하려는 경우', () => {
+    it('예외가 발생한다', async () => {
+      const nonExistentMemberId = randomUUID();
       const updateMemberDto: UpdateMemberDto = {
         nickname: '새로운닉네임',
         profileImage: WEB_IMAGE_URL,
       };
 
-      await sut.execute(testMember.id, updateMemberDto);
-
-      expect(mockStorageService.copyTempFile).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('프로필 이미지가 파일명으로 전달되면', () => {
-    it('스토리지에서 이미지를 이동시킨다', async () => {
-      const fileName = 'profile.jpg';
-      const updateMemberDto: UpdateMemberDto = {
-        nickname: '새로운닉네임',
-        profileImage: fileName,
-      };
-
-      await sut.execute(testMember.id, updateMemberDto);
-
-      expect(mockStorageService.copyTempFile).toHaveBeenCalled();
-    });
-
-    it('올바른 파라미터로 호출된다', async () => {
-      const fileName = 'profile.jpg';
-      const updateMemberDto: UpdateMemberDto = {
-        nickname: '새로운닉네임',
-        profileImage: fileName,
-      };
-
-      await sut.execute(testMember.id, updateMemberDto);
-
-      expect(mockStorageService.copyTempFile).toHaveBeenCalledWith(fileName, `members/${testMember.id}/${fileName}`);
+      await expect(sut.execute(nonExistentMemberId, updateMemberDto)).rejects.toThrow(MemberNotFoundException);
     });
   });
 
@@ -94,7 +71,7 @@ describe('유저 정보 수정 유스케이스', () => {
 
       const updateMemberDto: UpdateMemberDto = {
         nickname: anotherMember.nickname,
-        profileImage: 'https://example.com/profile.jpg',
+        profileImage: WEB_IMAGE_URL,
       };
 
       await expect(sut.execute(testMember.id, updateMemberDto)).rejects.toThrow(ExistMemberNicknameException);
@@ -106,13 +83,30 @@ describe('유저 정보 수정 유스케이스', () => {
       const newNickname = '새로운고유닉네임';
       const updateMemberDto: UpdateMemberDto = {
         nickname: newNickname,
-        profileImage: 'https://example.com/profile.jpg',
+        profileImage: WEB_IMAGE_URL,
       };
 
       await expect(sut.execute(testMember.id, updateMemberDto)).resolves.not.toThrow();
 
       const updatedMember = await prisma.member.findUnique({ where: { id: testMember.id } });
       expect(updatedMember?.nickname).toBe(newNickname);
+    });
+  });
+
+  describe('새로운 이미지를 업로드하는 경우', () => {
+    const newImage = 'https://new.image.com';
+
+    it('주소가 변경되어서 저장된다', async () => {
+      const updateMemberDto: UpdateMemberDto = {
+        nickname: '새로운닉네임',
+        profileImage: newImage,
+      };
+
+      await sut.execute(testMember.id, updateMemberDto);
+
+      const updatedMember = await prisma.member.findUnique({ where: { id: testMember.id } });
+
+      expect(updatedMember?.profileImage).toBe(WEB_IMAGE_URL);
     });
   });
 });

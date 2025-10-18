@@ -13,6 +13,8 @@ import { createTestSeries } from '@test/integration/helpers/series.helper';
 import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
 import { PrismaService } from '@/infra/database/prisma.service';
 import type { Series } from '@prisma/client';
+import { CopyImageService } from '@/shared/services/image/copy-image.service';
+import { STORAGE_SERVICE } from '@/infra/storage/storage.service';
 
 describe('게시글 생성 유스케이스', () => {
   let testHelper: IntegrationTestHelper;
@@ -29,6 +31,11 @@ describe('게시글 생성 유스케이스', () => {
       SeriesRepository,
       TagRepository,
       SeriesStatsService,
+      CopyImageService,
+      {
+        provide: STORAGE_SERVICE,
+        useValue: {},
+      },
     ]);
     await testHelper.setup();
   });
@@ -55,6 +62,7 @@ describe('게시글 생성 유스케이스', () => {
         content: '새로운 게시글 내용입니다.',
         seriesId: testSeries.id,
         tags: ['JavaScript', 'React'],
+        uploadedImageUrls: [],
       };
 
       await expect(sut.execute(createArticleDto)).rejects.toThrow(ExistArticleException);
@@ -69,6 +77,7 @@ describe('게시글 생성 유스케이스', () => {
         content: '테스트 게시글 내용입니다.',
         seriesId: '123e4567-e89b-12d3-a456-426614174000', // 존재하지 않는 ID
         tags: ['JavaScript'],
+        uploadedImageUrls: [],
       };
 
       await expect(sut.execute(createArticleDto)).rejects.toThrow(SeriesNotFoundException);
@@ -83,6 +92,7 @@ describe('게시글 생성 유스케이스', () => {
         content: '테스트 게시글 내용입니다.',
         seriesId: testSeries.id,
         tags: [],
+        uploadedImageUrls: [],
       };
 
       const result = await sut.execute(createArticleDto);
@@ -104,6 +114,7 @@ describe('게시글 생성 유스케이스', () => {
         content: '테스트 게시글 내용입니다.',
         seriesId: testSeries.id,
         tags: ['JavaScript', 'React', 'TypeScript'],
+        uploadedImageUrls: [],
       };
 
       const result = await sut.execute(createArticleDto);
@@ -133,6 +144,7 @@ describe('게시글 생성 유스케이스', () => {
         content: '테스트 게시글 내용입니다.',
         seriesId: testSeries.id,
         tags: ['JavaScript', 'React', 'Vue'],
+        uploadedImageUrls: [],
       };
 
       const result = await sut.execute(createArticleDto);
@@ -160,6 +172,7 @@ describe('게시글 생성 유스케이스', () => {
         content: '테스트 게시글 내용입니다.',
         seriesId: testSeries.id,
         tags: [],
+        uploadedImageUrls: [],
       };
 
       const result = await sut.execute(createArticleDto);
@@ -177,6 +190,7 @@ describe('게시글 생성 유스케이스', () => {
         content: '테스트 게시글 내용입니다.',
         seriesId: testSeries.id,
         tags: ['JavaScript', 'React', 'TypeScript', 'NestJS'],
+        uploadedImageUrls: [],
       };
 
       const result = await sut.execute(createArticleDto);
@@ -205,6 +219,7 @@ describe('게시글 생성 유스케이스', () => {
         content: '이것은 게시글 내용입니다. '.repeat(100),
         seriesId: testSeries.id,
         tags: ['JavaScript'],
+        uploadedImageUrls: [],
       };
 
       const result = await sut.execute(createArticleDto);
@@ -222,6 +237,7 @@ describe('게시글 생성 유스케이스', () => {
         content: '첫 번째 게시글 내용. '.repeat(50),
         seriesId: testSeries.id,
         tags: [],
+        uploadedImageUrls: [],
       };
 
       const secondArticleDto: CreateArticleDto = {
@@ -230,6 +246,7 @@ describe('게시글 생성 유스케이스', () => {
         content: '두 번째 게시글 내용. '.repeat(75),
         seriesId: testSeries.id,
         tags: [],
+        uploadedImageUrls: [],
       };
 
       const firstArticle = await sut.execute(firstArticleDto);
@@ -253,6 +270,7 @@ describe('게시글 생성 유스케이스', () => {
         content: '<p>안녕하세요</p>\n<div>테스트 내용입니다</div>',
         seriesId: testSeries.id,
         tags: [],
+        uploadedImageUrls: [],
       };
 
       const result = await sut.execute(createArticleDto);
@@ -283,6 +301,7 @@ describe('게시글 생성 유스케이스', () => {
         `,
         seriesId: testSeries.id,
         tags: ['HTML'],
+        uploadedImageUrls: [],
       };
 
       const result = await sut.execute(createArticleDto);
@@ -303,6 +322,7 @@ describe('게시글 생성 유스케이스', () => {
         content: '이것은 HTML 태그가 없는 순수 텍스트입니다.',
         seriesId: testSeries.id,
         tags: [],
+        uploadedImageUrls: [],
       };
 
       const result = await sut.execute(createArticleDto);

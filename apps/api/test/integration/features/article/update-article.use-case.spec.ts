@@ -13,7 +13,9 @@ import { createTestArticle } from '@test/integration/helpers/article.helper';
 import { createTestSeries } from '@test/integration/helpers/series.helper';
 import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
 import { PrismaService } from '@/infra/database/prisma.service';
-import type { Series } from '@prisma/client';
+import { Series } from '@prisma/client';
+import { CopyImageService } from '@/shared/services/image/copy-image.service';
+import { STORAGE_SERVICE } from '@/infra/storage/storage.service';
 
 describe('게시글 수정 유스케이스', () => {
   let testHelper: IntegrationTestHelper;
@@ -31,6 +33,11 @@ describe('게시글 수정 유스케이스', () => {
       SeriesRepository,
       TagRepository,
       SeriesStatsService,
+      CopyImageService,
+      {
+        provide: STORAGE_SERVICE,
+        useValue: {},
+      },
     ]);
     await testHelper.setup();
   });
@@ -55,6 +62,7 @@ describe('게시글 수정 유스케이스', () => {
         content: '수정된 게시글 내용입니다.',
         seriesId: testSeries.id,
         tags: ['JavaScript'],
+        uploadedImageUrls: [],
       };
 
       await expect(sut.execute(nonExistentSlug, updateArticleDto)).rejects.toThrow(ArticleNotFoundException);
@@ -73,6 +81,7 @@ describe('게시글 수정 유스케이스', () => {
         content: '수정된 게시글 내용입니다.',
         seriesId: '123e4567-e89b-12d3-a456-426614174000', // 존재하지 않는 ID
         tags: ['JavaScript'],
+        uploadedImageUrls: [],
       };
 
       await expect(sut.execute(existingArticle.slug, updateArticleDto)).rejects.toThrow(SeriesNotFoundException);
@@ -97,6 +106,7 @@ describe('게시글 수정 유스케이스', () => {
         content: '수정된 게시글 내용입니다.',
         seriesId: testSeries.id,
         tags: ['React'],
+        uploadedImageUrls: [],
       };
 
       await expect(sut.execute(existingArticle.slug, updateArticleDto)).rejects.toThrow(ExistArticleException);
@@ -116,6 +126,7 @@ describe('게시글 수정 유스케이스', () => {
         content: '수정된 게시글 내용입니다.',
         seriesId: testSeries.id,
         tags: ['Vue'],
+        uploadedImageUrls: [],
       };
 
       await expect(sut.execute(existingArticle.slug, updateArticleDto)).resolves.not.toThrow();
@@ -137,6 +148,7 @@ describe('게시글 수정 유스케이스', () => {
         content: '수정된 게시글 내용입니다.',
         seriesId: anotherSeries.id,
         tags: ['Node.js'],
+        uploadedImageUrls: [],
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -175,6 +187,7 @@ describe('게시글 수정 유스케이스', () => {
         content: '수정된 게시글 내용입니다.',
         seriesId: testSeries.id,
         tags: ['JavaScript', 'React', 'TypeScript'],
+        uploadedImageUrls: [],
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -216,6 +229,7 @@ describe('게시글 수정 유스케이스', () => {
         content: '수정된 게시글 내용입니다.',
         seriesId: testSeries.id,
         tags: ['JavaScript', 'React', 'Vue'],
+        uploadedImageUrls: [],
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -261,6 +275,7 @@ describe('게시글 수정 유스케이스', () => {
         content: '수정된 게시글 내용입니다.',
         seriesId: testSeries.id,
         tags: [],
+        uploadedImageUrls: [],
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -296,6 +311,7 @@ describe('게시글 수정 유스케이스', () => {
         content: existingArticle.content,
         seriesId: testSeries.id,
         tags: ['NewTag1', 'NewTag2', 'NewTag3'],
+        uploadedImageUrls: [],
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -365,6 +381,7 @@ describe('게시글 수정 유스케이스', () => {
         content: '매우 긴 내용으로 수정됩니다. '.repeat(200),
         seriesId: testSeries.id,
         tags: [],
+        uploadedImageUrls: [],
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -424,6 +441,7 @@ describe('게시글 수정 유스케이스', () => {
         content: '이동된 게시글 내용. '.repeat(60),
         seriesId: anotherSeries.id,
         tags: [],
+        uploadedImageUrls: [],
       };
 
       await sut.execute(firstArticle.slug, updateArticleDto);
@@ -469,6 +487,7 @@ describe('게시글 수정 유스케이스', () => {
         content: '이동된 게시글 내용',
         seriesId: anotherSeries.id,
         tags: [],
+        uploadedImageUrls: [],
       };
 
       await sut.execute(secondArticle.slug, updateArticleDto);
@@ -509,6 +528,7 @@ describe('게시글 수정 유스케이스', () => {
         content: '이동된 유일한 게시글 내용. '.repeat(60),
         seriesId: anotherSeries.id,
         tags: [],
+        uploadedImageUrls: [],
       };
 
       await sut.execute(onlyArticle.slug, updateArticleDto);
@@ -539,6 +559,7 @@ describe('게시글 수정 유스케이스', () => {
         content: '<p>수정된 내용입니다</p>\n<div>추가 내용입니다</div>',
         seriesId: testSeries.id,
         tags: [],
+        uploadedImageUrls: [],
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -563,6 +584,7 @@ describe('게시글 수정 유스케이스', () => {
         content: '이제는 HTML 태그가 없는 순수 텍스트입니다.',
         seriesId: testSeries.id,
         tags: [],
+        uploadedImageUrls: [],
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -595,6 +617,7 @@ describe('게시글 수정 유스케이스', () => {
         `,
         seriesId: testSeries.id,
         tags: ['HTML', 'Test'],
+        uploadedImageUrls: [],
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
