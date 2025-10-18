@@ -1,4 +1,4 @@
-import { FileText, Hash, Terminal } from 'lucide-react';
+import { FileText, Hash } from 'lucide-react';
 import { Button } from '../../../primitives/button';
 import { SearchInput } from './search-input';
 import Link from 'next/link';
