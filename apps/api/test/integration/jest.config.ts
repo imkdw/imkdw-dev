@@ -1,5 +1,5 @@
 import type { Config } from 'jest';
-import { baseConfig } from '../../jest.config';
+import baseConfig from '../../jest.config';
 
 const integrationConfig: Config = {
   ...baseConfig,
