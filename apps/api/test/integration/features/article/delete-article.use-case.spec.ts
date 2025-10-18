@@ -42,9 +42,9 @@ describe('게시글 삭제 유스케이스', () => {
 
   describe('존재하지 않는 게시글을 삭제하면', () => {
     it('에러가 발생한다', async () => {
-      const nonExistentId = 'non-existent-id';
+      const nonExistentSlug = 'non-existent-slug';
 
-      await expect(sut.execute(nonExistentId)).rejects.toThrow(ArticleNotFoundException);
+      await expect(sut.execute(nonExistentSlug)).rejects.toThrow(ArticleNotFoundException);
     });
   });
 
@@ -60,7 +60,7 @@ describe('게시글 삭제 유스케이스', () => {
     });
 
     it('soft delete로 게시글이 삭제된다', async () => {
-      await sut.execute(existingArticle.id);
+      await sut.execute(existingArticle.slug);
 
       const deletedArticle = await prisma.article.findUnique({
         where: { id: existingArticle.id },
@@ -72,7 +72,7 @@ describe('게시글 삭제 유스케이스', () => {
     });
 
     it('삭제된 게시글은 일반 조회시 나타나지 않는다', async () => {
-      await sut.execute(existingArticle.id);
+      await sut.execute(existingArticle.slug);
 
       const foundArticle = await prisma.article.findFirst({
         where: {
@@ -98,7 +98,7 @@ describe('게시글 삭제 유스케이스', () => {
         ],
       });
 
-      await sut.execute(existingArticle.id);
+      await sut.execute(existingArticle.slug);
 
       const articleTags = await prisma.articleTag.findMany({
         where: { articleId: existingArticle.id },
@@ -121,7 +121,7 @@ describe('게시글 삭제 유스케이스', () => {
         data: { deletedAt: new Date() },
       });
 
-      await expect(sut.execute(existingArticle.id)).rejects.toThrow(ArticleNotFoundException);
+      await expect(sut.execute(existingArticle.slug)).rejects.toThrow(ArticleNotFoundException);
     });
   });
 
@@ -147,7 +147,7 @@ describe('게시글 삭제 유스케이스', () => {
         },
       });
 
-      await sut.execute(article1.id);
+      await sut.execute(article1.slug);
 
       const updatedSeries = await prisma.series.findUnique({
         where: { id: testSeries.id },
@@ -159,7 +159,7 @@ describe('게시글 삭제 유스케이스', () => {
     it('시리즈의 총 읽기 시간이 재계산된다', async () => {
       const article1 = await createTestArticle(prisma, {
         title: '첫 번째 게시글',
-        content: '첫 번째 게시글 내용. '.repeat(100), // 긴 내용
+        content: '첫 번째 게시글 내용. '.repeat(100),
         seriesId: testSeries.id,
         readMinute: 5,
       });
@@ -179,7 +179,7 @@ describe('게시글 삭제 유스케이스', () => {
         },
       });
 
-      await sut.execute(article1.id);
+      await sut.execute(article1.slug);
 
       const updatedSeries = await prisma.series.findUnique({
         where: { id: testSeries.id },
@@ -212,7 +212,7 @@ describe('게시글 삭제 유스케이스', () => {
         },
       });
 
-      await sut.execute(article2.id);
+      await sut.execute(article2.slug);
 
       const updatedSeries = await prisma.series.findUnique({
         where: { id: testSeries.id },
@@ -239,7 +239,7 @@ describe('게시글 삭제 유스케이스', () => {
         },
       });
 
-      await sut.execute(onlyArticle.id);
+      await sut.execute(onlyArticle.slug);
 
       const updatedSeries = await prisma.series.findUnique({
         where: { id: testSeries.id },
@@ -279,7 +279,7 @@ describe('게시글 삭제 유스케이스', () => {
         },
       });
 
-      await sut.execute(article2.id);
+      await sut.execute(article2.slug);
 
       const updatedSeries = await prisma.series.findUnique({
         where: { id: testSeries.id },
@@ -299,7 +299,7 @@ describe('게시글 삭제 유스케이스', () => {
         seriesId: testSeries.id,
       });
 
-      await sut.execute(existingArticle.id);
+      await sut.execute(existingArticle.slug);
 
       const deletedArticle = await prisma.article.findUnique({
         where: { id: existingArticle.id },
@@ -345,7 +345,7 @@ describe('게시글 삭제 유스케이스', () => {
       });
       expect(initialSeries?.articleCount).toBe(2);
 
-      await sut.execute(article1.id);
+      await sut.execute(article1.slug);
 
       const updatedSeries = await prisma.series.findUnique({
         where: { id: testSeries.id },

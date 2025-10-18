@@ -70,7 +70,7 @@ export class ArticleController {
   @Swagger.deleteArticle('게시글 삭제')
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(DELETE_ARTICLE)
-  async deleteArticle(@Param('id') id: string): Promise<void> {
-    await this.deleteArticleUseCase.execute(id);
+  async deleteArticle(@Param('slug') slug: string): Promise<void> {
+    await this.deleteArticleUseCase.execute(slug);
   }
 }

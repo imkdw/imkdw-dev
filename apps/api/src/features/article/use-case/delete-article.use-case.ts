@@ -13,11 +13,11 @@ export class DeleteArticleUseCase {
     private readonly prisma: PrismaService
   ) {}
 
-  async execute(id: string): Promise<void> {
+  async execute(slug: string): Promise<void> {
     await this.prisma.$transaction(async tx => {
-      const existingArticle = await this.articleValidator.checkExist(id, tx);
+      const existingArticle = await this.articleValidator.checkExistBySlug(slug, tx);
 
-      await this.articleRepository.delete(id, tx);
+      await this.articleRepository.delete(existingArticle.id, tx);
 
       await this.seriesStatsService.recalculateSeries(existingArticle.seriesId, tx);
     });
