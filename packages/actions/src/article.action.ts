@@ -31,3 +31,7 @@ export const createArticle = withErrorHandling(async (data: ICreateArticleDto) =
 export const updateArticle = withErrorHandling(async (slug: string, data: IUpdateArticleDto): Promise<void> => {
   await apiClient.put<IUpdateArticleDto, void>(buildEndpoint('UPDATE_ARTICLE', { slug }), data);
 });
+
+export const deleteArticle = withErrorHandling(async (slug: string): Promise<void> => {
+  await apiClient.delete<void>(buildEndpoint('DELETE_ARTICLE', { slug }));
+});

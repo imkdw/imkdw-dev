@@ -4,5 +4,5 @@ export const ARTICLE_ENDPOINTS = {
   CREATE_ARTICLE: 'articles',
   UPDATE_ARTICLE: 'articles/:slug',
   INCREMENT_VIEW_COUNT: 'articles/:id/view-count',
-  DELETE_ARTICLE: 'articles/:id',
+  DELETE_ARTICLE: 'articles/:slug',
 } as const;
