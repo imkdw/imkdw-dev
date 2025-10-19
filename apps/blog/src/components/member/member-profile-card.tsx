@@ -45,7 +45,7 @@ export function MemberProfileCard({ member }: Props) {
   };
 
   return (
-    <Card className="md:col-span-2 bg-card border-none">
+    <Card className="bg-card border-none">
       <CardHeader>
         <CardTitle>프로필 정보</CardTitle>
         <CardDescription>공개 프로필 정보를 수정할 수 있습니다</CardDescription>
@@ -53,9 +53,9 @@ export function MemberProfileCard({ member }: Props) {
       <CardContent className="space-y-6">
         {/* 프로필 이미지 */}
         <div className="flex items-center space-x-4">
-          <Avatar className="h-20 w-20">
+          <Avatar className="h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24">
             <AvatarImage src={formData.profileImage} alt={member.nickname} />
-            <AvatarFallback className="bg-primary text-primary-foreground text-lg">
+            <AvatarFallback className="bg-primary text-primary-foreground text-base sm:text-lg md:text-xl">
               {member.nickname.charAt(0).toUpperCase()}
             </AvatarFallback>
           </Avatar>
@@ -94,16 +94,20 @@ export function MemberProfileCard({ member }: Props) {
         </div>
 
         {/* 액션 버튼 */}
-        <div className="flex justify-end space-x-2">
+        <div className="flex flex-col sm:flex-row justify-end gap-2">
           {isEditing ? (
             <>
-              <Button variant="outline" onClick={handlers.handleCancel}>
+              <Button variant="outline" onClick={handlers.handleCancel} className="w-full sm:w-auto">
                 취소
               </Button>
-              <Button onClick={handlers.handleSave}>저장</Button>
+              <Button onClick={handlers.handleSave} className="w-full sm:w-auto">
+                저장
+              </Button>
             </>
           ) : (
-            <Button onClick={() => setIsEditing(true)}>프로필 수정</Button>
+            <Button onClick={() => setIsEditing(true)} className="w-full sm:w-auto">
+              프로필 수정
+            </Button>
           )}
         </div>
       </CardContent>
