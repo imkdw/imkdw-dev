@@ -1,6 +1,6 @@
 import { ApiClient } from './api-client';
 
-const getBaseURL = (): string => {
+function getBaseURL(): string {
   const API_URL = process.env.API_URL;
 
   if (!API_URL) {
@@ -8,7 +8,7 @@ const getBaseURL = (): string => {
   }
 
   return API_URL;
-};
+}
 
 export const apiClient = new ApiClient({
   baseURL: getBaseURL(),

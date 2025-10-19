@@ -8,8 +8,10 @@ export const useAuthStore = create<AuthState>(set => ({
   isAuthenticated: false,
   initializeAuth: async () => {
     set({ isLoading: true });
+
     try {
       const member = await getCurrentMember();
+
       set({
         member,
         isAuthenticated: !!member,
@@ -29,7 +31,7 @@ export const useAuthStore = create<AuthState>(set => ({
       const member = await getCurrentMember();
       set({
         member,
-        isAuthenticated: !!member,
+        isAuthenticated: member === null,
         isLoading: false,
       });
     } catch {
