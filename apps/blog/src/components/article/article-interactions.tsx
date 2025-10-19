@@ -7,7 +7,7 @@ import { useToast } from '@imkdw-dev/toast';
 import { Share2, Edit, Trash2 } from 'lucide-react';
 import { useAuth } from '@imkdw-dev/auth';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { deleteArticle } from '@imkdw-dev/actions';
 import { DeleteArticleDialog } from './delete-article-dialog';
 import { MouseEvent } from 'react';
@@ -22,8 +22,11 @@ export function ArticleInteractions({ slug }: Props) {
   const router = useRouter();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [url, setUrl] = useState('');
 
-  const url = useMemo(() => `${window.location.origin}/articles/${slug}`, [slug]);
+  useEffect(() => {
+    setUrl(`${window.location.origin}/articles/${slug}`);
+  }, [slug]);
 
   const handleCopyLink = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
