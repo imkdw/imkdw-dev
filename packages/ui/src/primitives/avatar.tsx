@@ -24,7 +24,6 @@ export function AvatarImage({ className, src, alt, ...props }: AvatarImageProps)
   }
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
     <img
       className={cn('aspect-square h-full w-full object-cover', className)}
       src={src}
