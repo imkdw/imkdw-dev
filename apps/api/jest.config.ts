@@ -8,6 +8,7 @@ const baseConfig: Config = {
   },
   testEnvironment: 'node',
   bail: 1,
+  maxWorkers: 1,
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@shared/(.*)$': '<rootDir>/src/shared/$1',
