@@ -5,12 +5,12 @@ import { terminalCommands } from '../data/mock-data';
 import { getSeriesList, getArticles, getStats } from '@imkdw-dev/actions';
 import { RECENT_SERIES_CARD_COUNT } from '@/consts/series.const';
 import { RECENT_ARTICLES_COUNT } from '@/consts/article.const';
+import { createMetadata } from '@/utils/metadata-creator';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createMetadata({
   title: '@imkdw-dev/blog',
-  description: '직접 개발하고 운영하는 기술블로그',
-  authors: [{ name: 'imkdw', url: 'https://github.com/imkdw' }],
-};
+  description: '직접 개발하고 운영하는 IT 기술블로그',
+});
 
 export default async function Home() {
   const series = await getSeriesList({ limit: RECENT_SERIES_CARD_COUNT, page: 1 });
