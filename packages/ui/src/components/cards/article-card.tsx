@@ -3,6 +3,7 @@ import { TagList } from './tag-list';
 import { MetaInfoItem } from './meta-info-item';
 import Link from 'next/link';
 import { IArticleListItemDto } from '@imkdw-dev/types';
+import { formatReadTime } from '@imkdw-dev/utils';
 
 interface Props {
   article: IArticleListItemDto;
@@ -10,7 +11,6 @@ interface Props {
 
 export function ArticleCard({ article }: Props) {
   const publishedAt = new Date(article.createdAt).toLocaleDateString('ko-KR');
-  const readTime = `${article.readMinute}분`;
   const tags = article.tags.map(tag => tag.name);
   const { title, plainContent, series, slug } = article;
 
@@ -32,7 +32,7 @@ export function ArticleCard({ article }: Props) {
             <TagList tags={tags} maxVisible={3} variant="custom" className="mb-2 md:mb-3" />
             <div className="flex gap-4 text-muted-foreground">
               <MetaInfoItem icon={<Calendar className="h-3 w-3" />} text={publishedAt} />
-              <MetaInfoItem icon={<Clock className="h-3 w-3" />} text={readTime} />
+              <MetaInfoItem icon={<Clock className="h-3 w-3" />} text={formatReadTime(article.readMinute)} />
             </div>
           </div>
         </div>

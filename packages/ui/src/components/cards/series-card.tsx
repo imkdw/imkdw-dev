@@ -4,6 +4,7 @@ import { MetaInfoItem } from './meta-info-item';
 import { BookOpen, Clock } from 'lucide-react';
 import { LastUpdated } from './last-updated';
 import { TagList } from './tag-list';
+import { formatReadTime } from '@imkdw-dev/utils';
 
 interface Props {
   series: ISeriesListItemDto;
@@ -24,7 +25,7 @@ export function SeriesCard({ series }: Props) {
                 </div>
                 <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground mb-2 md:mb-3">
                   <MetaInfoItem icon={<BookOpen className="h-4 w-4" />} text={`${series.articleCount} 개`} />
-                  <MetaInfoItem icon={<Clock className="h-4 w-4" />} text={`${series.totalReadMinute} 분`} />
+                  <MetaInfoItem icon={<Clock className="h-4 w-4" />} text={formatReadTime(series.totalReadMinute)} />
                 </div>
               </div>
             </div>
