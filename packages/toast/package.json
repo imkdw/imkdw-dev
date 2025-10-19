@@ -20,13 +20,13 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^2.1.0"
+    "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
     "@imkdw-dev/eslint-config": "workspace:*",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "eslint": "^9.18.0",
-    "typescript": "^5"
+    "typescript": "5.9.2"
   }
 }

@@ -12,16 +12,16 @@
   },
   "devDependencies": {
     "@imkdw-dev/eslint-config": "workspace:*",
-    "@imkdw-dev/types": "workspace:*",
     "eslint": "^9.18.0",
-    "typescript": "^5.9.2"
+    "typescript": "5.9.2"
   },
   "dependencies": {
-    "@types/node": "^24.4.0",
+    "@types/node": "^22.13.0",
     "@imkdw-dev/api-client": "workspace:*",
     "@imkdw-dev/consts": "workspace:*",
     "@imkdw-dev/exception": "workspace:*",
     "@imkdw-dev/toast": "workspace:*",
-    "next": "^15.1.6"
+    "@imkdw-dev/types": "workspace:*",
+    "next": "15.5.0"
   }
 }

@@ -18,7 +18,7 @@
     "@types/react-dom": "^19"
   },
   "dependencies": {
-    "@types/node": "^24.4.0",
+    "@types/node": "^22.13.0",
     "@imkdw-dev/consts": "workspace:*",
     "@imkdw-dev/exception": "workspace:*",
     "@imkdw-dev/types": "workspace:*",

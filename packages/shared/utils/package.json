@@ -16,12 +16,12 @@
   },
   "devDependencies": {
     "@imkdw-dev/typescript-config": "workspace:*",
-    "typescript": "^5.0.0"
+    "typescript": "5.9.2"
   },
   "dependencies": {
     "@types/jsdom": "^27.0.0",
     "highlight.js": "^11.11.1",
     "jsdom": "^27.0.0",
-    "uuid": "^11.0.5"
+    "uuid": "^11.1.0"
   }
 }
