@@ -19,6 +19,7 @@
     "@imkdw-dev/ui": "workspace:*",
     "@imkdw-dev/utils": "workspace:*",
     "@mdxeditor/editor": "^3.46.1",
+    "@next/third-parties": "^15.5.6",
     "@radix-ui/react-slot": "^1.2.3",
     "@tailwindcss/typography": "^0.5.16",
     "@types/jsdom": "^27.0.0",

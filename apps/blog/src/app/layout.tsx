@@ -9,6 +9,7 @@ import 'highlight.js/styles/atom-one-dark.css';
 import { Providers } from '../components/providers';
 import { MobileSidebar } from '../components/sidebar/mobile-sidebar';
 import { createMetadata } from '@/utils/metadata-creator';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 export const metadata: Metadata = createMetadata({
   title: '@imkdw-dev/blog',
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <MobileSidebar />
         </Providers>
       </body>
+      <GoogleAnalytics gaId="G-DXRR1KZDDN" />
     </html>
   );
 }
