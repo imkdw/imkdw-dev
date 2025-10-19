@@ -21,7 +21,7 @@ export function SeriesMainCard({ seriesData }: Props) {
               <p className="text-sm font-medium text-muted-foreground">시리즈</p>
             </div>
           </div>
-          <SeriesActions />
+          <SeriesActions slug={seriesData.slug} />
         </div>
 
         {/* 시리즈 정보 */}
