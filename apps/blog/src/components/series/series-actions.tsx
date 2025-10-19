@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Button } from '@imkdw-dev/ui';
 import { useToast } from '@imkdw-dev/toast';
 import { useAuth } from '@imkdw-dev/auth';
-import { Bookmark, Share2, Edit, Trash2 } from 'lucide-react';
+import { Share2, Edit, Trash2 } from 'lucide-react';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
 import { deleteSeries } from '@imkdw-dev/actions';
 import { DeleteConfirmDialog } from '../common/delete-confirm-dialog';
@@ -19,7 +19,6 @@ export function SeriesActions({ slug }: Props) {
   const { toast } = useToast();
   const { member } = useAuth();
   const router = useRouter();
-  const [isBookmarked, setIsBookmarked] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -67,15 +66,6 @@ export function SeriesActions({ slug }: Props) {
   return (
     <>
       <div className="flex gap-2">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setIsBookmarked(!isBookmarked)}
-          className="hover:bg-primary/10 hover:text-primary"
-        >
-          <Bookmark className={`h-4 w-4 ${isBookmarked ? 'fill-current text-primary' : ''}`} />
-          <span className="hidden sm:inline ml-2">북마크</span>
-        </Button>
         <Button variant="ghost" size="sm" onClick={handleCopyLink} className="hover:bg-primary/10 hover:text-primary">
           <Share2 className="h-4 w-4" />
           <span className="hidden sm:inline ml-2">공유</span>
