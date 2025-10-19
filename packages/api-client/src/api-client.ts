@@ -1,7 +1,8 @@
-import { cookies, ReadonlyRequestCookies } from 'next/headers';
+import { cookies } from 'next/headers';
 import { ApiClientConfig, ApiError, ApiResponse, HttpMethod, RequestOptions } from './types';
 import { ErrorResponse } from '@imkdw-dev/types';
 import { API_ENDPOINTS } from '@imkdw-dev/consts';
+import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
 export class ApiClient {
   private readonly baseURL: string;
@@ -70,13 +71,7 @@ export class ApiClient {
         if (contentType?.includes('application/json')) {
           const errorData = await response.json();
           const errorResponse: ErrorResponse = errorData.error;
-          throw new ApiError(
-            response.status,
-            response.statusText,
-            url,
-            errorResponse.errorCode,
-            errorResponse.message
-          );
+          throw new ApiError(response.status, response.statusText, url, errorResponse.errorCode, errorResponse.message);
         }
 
         throw new ApiError(response.status, response.statusText, url);
@@ -223,6 +218,8 @@ export class ApiClient {
       }
     });
 
-    cookieStore.set(name, value, options);
+    if (name && value) {
+      cookieStore.set(name, value, options);
+    }
   }
 }

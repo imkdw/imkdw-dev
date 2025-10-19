@@ -4,14 +4,11 @@ type ExtractParams<T extends string> = T extends `${string}:${infer Param}/${inf
   ? { [K in Param]: string } & ExtractParams<Rest>
   : T extends `${string}:${infer Param}`
     ? { [K in Param]: string }
-    : Record<string, never>;
+    : unknown;
 
-type HasParams<T extends keyof typeof API_ENDPOINTS> =
-  ExtractParams<(typeof API_ENDPOINTS)[T]> extends Record<string, never>
-    ? keyof ExtractParams<(typeof API_ENDPOINTS)[T]> extends never
-      ? false
-      : true
-    : false;
+type HasParams<T extends keyof typeof API_ENDPOINTS> = [keyof ExtractParams<(typeof API_ENDPOINTS)[T]>] extends [never]
+  ? false
+  : true;
 
 export function buildEndpoint<T extends keyof typeof API_ENDPOINTS>(
   endpoint: T,
