@@ -13,7 +13,7 @@ export function ArticleNavigation({ previousArticle, nextArticle }: Props) {
         <Link href={`/articles/${previousArticle.slug}`}>
           <div className="p-6 border rounded-lg hover:bg-card/50 transition-colors border-border text-left">
             <p className="text-sm text-muted-foreground mb-2">Previous Article</p>
-            <h3 className="font-medium">{previousArticle.title}</h3>
+            <h3 className="font-medium truncate">{previousArticle.title}</h3>
           </div>
         </Link>
       ) : (
@@ -24,7 +24,7 @@ export function ArticleNavigation({ previousArticle, nextArticle }: Props) {
         <Link href={`/articles/${nextArticle.slug}`}>
           <div className="p-6 border rounded-lg hover:bg-card/50 transition-colors border-border text-right">
             <p className="text-sm text-muted-foreground mb-2">Next Article</p>
-            <h3 className="font-medium">{nextArticle.title}</h3>
+            <h3 className="font-medium truncate">{nextArticle.title}</h3>
           </div>
         </Link>
       ) : (
