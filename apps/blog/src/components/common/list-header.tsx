@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { LucideIcon } from 'lucide-react';
 
 export interface ListHeaderStat {
@@ -9,16 +10,20 @@ export interface ListHeaderStat {
 interface Props {
   title: string;
   stats?: ListHeaderStat[];
+  action?: ReactNode;
 }
 
-export function ListHeader({ title, stats }: Props) {
+export function ListHeader({ title, stats, action }: Props) {
   return (
-    <div>
-      <h1 className="text-2xl md:text-3xl font-bold m-0">{title}</h1>
+    <div className="flex flex-col gap-4 mb-6">
+      <div className="flex sm:items-center justify-between gap-4">
+        <h1 className="text-2xl md:text-3xl font-bold m-0">{title}</h1>
+        {action}
+      </div>
       {stats && stats.length > 0 && (
-        <div className="flex gap-4 py-4">
+        <div className="flex gap-4">
           {stats.map((stat, index) => (
-            <div key={index} className="bg-card rounded-lg p-4 w-full">
+            <div key={index} className="bg-card rounded-lg p-4 flex-1">
               <div className="flex items-center justify-between">
                 <div className="min-w-0 flex-1">
                   <p className="text-xs md:text-sm text-muted-foreground truncate">{stat.label}</p>

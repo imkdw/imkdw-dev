@@ -1,4 +1,4 @@
-import { Layout } from '@imkdw-dev/ui';
+import { Layout, Button } from '@imkdw-dev/ui';
 import { getSeriesList, getStats } from '@imkdw-dev/actions';
 import { SERIES_PER_PAGE } from '@/consts/series.const';
 import { CommonPagination } from '@/components/common/common-pagination';
@@ -6,7 +6,10 @@ import { ListHeader } from '@/components/common/list-header';
 import { SeriesListGrid } from '@/components/series/series-list-grid';
 import { SeriesListEmpty } from '@/components/series/series-list-empty';
 import { createMetadata } from '@/utils/metadata-creator';
-import { BookOpen, FileText } from 'lucide-react';
+import { BookOpen, FileText, Plus } from 'lucide-react';
+import Link from 'next/link';
+import { getCurrentMember } from '@imkdw-dev/actions/src/member.action';
+import { MEMBER_ROLE } from '@imkdw-dev/consts';
 
 export const metadata = createMetadata({
   title: '시리즈 목록',
@@ -20,6 +23,7 @@ interface Props {
 export default async function Series({ searchParams }: Props) {
   const { page } = await searchParams;
   const currentPage = Number(page) || 1;
+  const currentMember = await getCurrentMember();
 
   const [seriesData, stats] = await Promise.all([
     getSeriesList({ limit: SERIES_PER_PAGE, page: currentPage }),
@@ -35,6 +39,16 @@ export default async function Series({ searchParams }: Props) {
             { label: '전체 시리즈', value: stats.series.count, icon: BookOpen },
             { label: '총 글 수', value: stats.article.count, icon: FileText },
           ]}
+          action={
+            currentMember?.role === MEMBER_ROLE.ADMIN && (
+              <Link href="/series/create">
+                <Button className="flex items-center gap-2 whitespace-nowrap">
+                  <Plus className="w-4 h-4" />
+                  시리즈 만들기
+                </Button>
+              </Link>
+            )
+          }
         />
 
         <div className="flex flex-col gap-4">

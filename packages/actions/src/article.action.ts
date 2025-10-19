@@ -14,9 +14,7 @@ import {
 
 export const getArticles = withErrorHandling(async (params: IRequestGetArticlesDto) => {
   return apiClient.get<IResponseGetArticlesDto>(buildEndpoint('GET_ARTICLES'), {
-    query: {
-      ...params,
-    },
+    query: { ...params },
   });
 });
 

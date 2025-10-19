@@ -3,7 +3,14 @@
 import { buildEndpoint } from '@imkdw-dev/consts';
 import { withErrorHandling } from './lib';
 import { apiClient } from '@imkdw-dev/api-client';
-import { IRequestGetSeriesListDto, IResponseGetSeriesListDto, ISeriesDetailDto } from '@imkdw-dev/types';
+import {
+  IRequestGetSeriesListDto,
+  IResponseGetSeriesListDto,
+  ISeriesDetailDto,
+  ICreateSeriesDto,
+  IResponseCreateSeriesDto,
+  IUpdateSeriesDto,
+} from '@imkdw-dev/types';
 
 export const getSeriesList = withErrorHandling(async (params: IRequestGetSeriesListDto) => {
   return apiClient.get<IResponseGetSeriesListDto>(buildEndpoint('GET_SERIES_LIST'), {
@@ -15,4 +22,12 @@ export const getSeriesList = withErrorHandling(async (params: IRequestGetSeriesL
 
 export const getSeriesDetail = withErrorHandling(async (slug: string) => {
   return apiClient.get<ISeriesDetailDto>(buildEndpoint('GET_SERIES_DETAIL', { slug }));
+});
+
+export const createSeries = withErrorHandling(async (data: ICreateSeriesDto) => {
+  return apiClient.post<ICreateSeriesDto, IResponseCreateSeriesDto>(buildEndpoint('CREATE_SERIES'), data);
+});
+
+export const updateSeries = withErrorHandling(async (id: string, data: IUpdateSeriesDto) => {
+  return apiClient.patch<IUpdateSeriesDto, void>(buildEndpoint('UPDATE_SERIES', { id }), data);
 });
