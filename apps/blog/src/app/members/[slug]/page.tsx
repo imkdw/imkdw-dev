@@ -22,13 +22,15 @@ export default async function MemberDetail({ params }: Props) {
 
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto py-6 md:py-8 lg:py-10 flex flex-col gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-6 md:py-8 lg:py-10 flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold">마이페이지</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">마이페이지</h1>
         </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          <MemberProfileCard member={member} />
-          <div className="space-y-6">
+        <div className="grid gap-4 sm:gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+          <div className="md:col-span-1 lg:col-span-2">
+            <MemberProfileCard member={member} />
+          </div>
+          <div className="space-y-4 sm:space-y-5 md:space-y-6">
             <Card className="bg-card border-none">
               <CardHeader>
                 <CardTitle>활동 통계</CardTitle>

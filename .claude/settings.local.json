@@ -90,7 +90,8 @@
       "mcp__serena__think_about_collected_information",
       "mcp__serena__get_symbols_overview",
       "mcp__serena__find_referencing_symbols",
-      "Read(//Users/imkdw/.config/superpowers/skills/skills/using-skills/**)"
+      "Read(//Users/imkdw/.config/superpowers/skills/skills/using-skills/**)",
+      "Bash(/Users/imkdw/.config/superpowers/skills/skills/using-skills/find-skills implementation feature)"
     ],
     "deny": [],
     "ask": []
