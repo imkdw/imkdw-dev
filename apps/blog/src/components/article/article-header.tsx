@@ -1,11 +1,13 @@
 import { Badge } from '@imkdw-dev/ui';
 import { BookOpen, Calendar, Clock } from 'lucide-react';
+import { ReactNode } from 'react';
 import { IArticleDto } from '@imkdw-dev/types';
 import { formatDate, formatReadTime } from '@imkdw-dev/utils/client';
+import Link from 'next/link';
 
 interface ArticleHeaderProps {
   article: IArticleDto;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export function ArticleHeader({ article, children }: ArticleHeaderProps) {
@@ -13,14 +15,12 @@ export function ArticleHeader({ article, children }: ArticleHeaderProps) {
 
   return (
     <div>
-      {series !== null && (
-        <div className="flex items-center gap-2 mb-4">
-          <Badge variant="secondary" className="bg-accent/20 text-accent p-2 px-4">
-            <BookOpen className="w-3 h-3 mr-1" />
-            {series.title}
-          </Badge>
-        </div>
-      )}
+      <Link href={`/series/${series.slug}`} className="flex items-center gap-2 mb-4">
+        <Badge variant="secondary" className="bg-accent/20 text-accent p-2 px-4">
+          <BookOpen className="w-3 h-3 mr-1" />
+          {series.title}
+        </Badge>
+      </Link>
 
       <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 leading-tight">{title}</h1>
 

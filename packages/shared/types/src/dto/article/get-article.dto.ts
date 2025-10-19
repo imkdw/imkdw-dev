@@ -9,7 +9,7 @@ export interface IArticleDto {
   viewCount: number;
   readMinute: number;
   createdAt: Date;
-  series: IArticleSeriesDto | null;
+  series: IArticleSeriesDto;
   tags: IArticleTagDto[];
 }
 
