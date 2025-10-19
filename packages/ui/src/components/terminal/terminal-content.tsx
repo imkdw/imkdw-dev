@@ -1,4 +1,4 @@
-import { TerminalCommand } from './types';
+import { TerminalCommand } from './type';
 
 interface Props {
   commands: TerminalCommand[];

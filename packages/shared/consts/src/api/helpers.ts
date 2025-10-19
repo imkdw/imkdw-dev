@@ -1,13 +1,13 @@
 import { API_ENDPOINTS } from './endpoints';
 
-type ExtractParams<T extends string> = T extends `${infer _Start}:${infer Param}/${infer Rest}`
+type ExtractParams<T extends string> = T extends `${string}:${infer Param}/${infer Rest}`
   ? { [K in Param]: string } & ExtractParams<Rest>
-  : T extends `${infer _Start}:${infer Param}`
+  : T extends `${string}:${infer Param}`
     ? { [K in Param]: string }
-    : {};
+    : Record<string, never>;
 
 type HasParams<T extends keyof typeof API_ENDPOINTS> =
-  ExtractParams<(typeof API_ENDPOINTS)[T]> extends {}
+  ExtractParams<(typeof API_ENDPOINTS)[T]> extends Record<string, never>
     ? keyof ExtractParams<(typeof API_ENDPOINTS)[T]> extends never
       ? false
       : true

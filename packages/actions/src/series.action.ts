@@ -29,9 +29,9 @@ export const createSeries = withErrorHandling(async (data: ICreateSeriesDto) => 
 });
 
 export const updateSeries = withErrorHandling(async (slug: string, data: IUpdateSeriesDto) => {
-  return apiClient.patch<IUpdateSeriesDto, void>(buildEndpoint('UPDATE_SERIES', { slug }), data);
+  return apiClient.patch<IUpdateSeriesDto>(buildEndpoint('UPDATE_SERIES', { slug }), data);
 });
 
 export const deleteSeries = withErrorHandling(async (slug: string) => {
-  return apiClient.delete<void>(buildEndpoint('DELETE_SERIES', { slug }));
+  return apiClient.delete(buildEndpoint('DELETE_SERIES', { slug }));
 });

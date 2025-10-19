@@ -19,7 +19,7 @@ export class ApiError extends Error {
     public readonly errorCode?: string,
     message?: string
   ) {
-    super(message || `HTTP ${status}: ${statusText}`);
+    super(message ?? `HTTP ${status}: ${statusText}`);
     this.name = 'ApiError';
   }
 }

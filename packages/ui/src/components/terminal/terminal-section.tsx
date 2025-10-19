@@ -4,13 +4,11 @@ import { useState, useEffect } from 'react';
 import { TerminalHeader } from './terminal-header';
 import { TerminalContent } from './terminal-content';
 import { StatsGrid } from './stats-grid';
-import { TerminalCommand } from './types';
 import type { IResponseGetStatsDto } from '@imkdw-dev/types';
 import { cn } from '../../lib';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
 
 interface Props {
-  commands: TerminalCommand[];
   title: string;
   description: string;
   stats: IResponseGetStatsDto;
@@ -18,7 +16,14 @@ interface Props {
   className?: string;
 }
 
-export const TerminalSection = ({ commands, title, description, stats, tags, className = '' }: Props) => {
+export const terminalCommands = [
+  { command: 'git clone https://github.com/imkdw/imkdw-dev.git' },
+  { command: 'cd imkdw-dev && pnpm install' },
+  { command: 'pnpm dev' },
+  { command: 'echo "Welcome to my blog!"' },
+];
+
+export const TerminalSection = ({ title, description, stats, tags, className = '' }: Props) => {
   const [currentCommand, setCurrentCommand] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const [isClient, setIsClient] = useState(false);
@@ -45,8 +50,8 @@ export const TerminalSection = ({ commands, title, description, stats, tags, cla
     let charIndex = 0;
 
     const typeCommand = () => {
-      if (commandIndex < commands.length) {
-        const currentCmd = commands[commandIndex];
+      if (commandIndex < terminalCommands.length) {
+        const currentCmd = terminalCommands[commandIndex];
         if (!currentCmd) return;
 
         const command = currentCmd.command;
@@ -58,14 +63,13 @@ export const TerminalSection = ({ commands, title, description, stats, tags, cla
           setTimeout(() => {
             commandIndex++;
             charIndex = 0;
-            if (commandIndex < commands.length) {
+            if (commandIndex < terminalCommands.length) {
               setCurrentCommand('');
               setTimeout(typeCommand, 500);
             }
-          }, currentCmd.delay ?? 2000);
+          }, 2000);
         }
       } else {
-        // 애니메이션 재시작
         setTimeout(() => {
           commandIndex = 0;
           charIndex = 0;
@@ -76,7 +80,7 @@ export const TerminalSection = ({ commands, title, description, stats, tags, cla
     };
 
     setTimeout(typeCommand, 1000);
-  }, [commands, isClient]);
+  }, [isClient]);
 
   return (
     <section
@@ -88,7 +92,7 @@ export const TerminalSection = ({ commands, title, description, stats, tags, cla
           <div className="terminal-window h-full flex flex-col min-h-[300px] md:min-h-[350px]">
             <TerminalHeader />
             <TerminalContent
-              commands={commands}
+              commands={terminalCommands}
               currentCommand={currentCommand}
               showCursor={showCursor}
               isClient={isClient}

@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers';
+import { cookies, ReadonlyRequestCookies } from 'next/headers';
 import { ApiClientConfig, ApiError, ApiResponse, HttpMethod, RequestOptions } from './types';
 import { ErrorResponse } from '@imkdw-dev/types';
 import { API_ENDPOINTS } from '@imkdw-dev/consts';
@@ -17,7 +17,7 @@ export class ApiClient {
       Accept: 'application/json',
       ...config.headers,
     };
-    this.timeout = config.timeout || 10000;
+    this.timeout = config.timeout ?? 10000;
     this.version = config.version;
   }
 
@@ -33,9 +33,7 @@ export class ApiClient {
     if (options?.query) {
       const searchParams = new URLSearchParams();
       Object.entries(options.query).forEach(([key, value]) => {
-        if (value !== null && value !== undefined) {
-          searchParams.append(key, String(value));
-        }
+        searchParams.append(key, String(value));
       });
 
       const queryString = searchParams.toString();
@@ -54,7 +52,7 @@ export class ApiClient {
     }
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), options?.timeout || this.timeout);
+    const timeoutId = setTimeout(() => controller.abort(), options?.timeout ?? this.timeout);
 
     try {
       const response = await fetch(url, {
@@ -69,18 +67,16 @@ export class ApiClient {
       if (!response.ok) {
         const contentType = response.headers.get('content-type');
 
-        if (contentType && contentType.includes('application/json')) {
+        if (contentType?.includes('application/json')) {
           const errorData = await response.json();
           const errorResponse: ErrorResponse = errorData.error;
-          if (errorResponse) {
-            throw new ApiError(
-              response.status,
-              response.statusText,
-              url,
-              errorResponse.errorCode,
-              errorResponse.message
-            );
-          }
+          throw new ApiError(
+            response.status,
+            response.statusText,
+            url,
+            errorResponse.errorCode,
+            errorResponse.message
+          );
         }
 
         throw new ApiError(response.status, response.statusText, url);
@@ -88,7 +84,7 @@ export class ApiClient {
 
       const contentType = response.headers.get('content-type');
 
-      if (contentType && contentType.includes('application/json')) {
+      if (contentType?.includes('application/json')) {
         const apiResponse: ApiResponse<T> = await response.json();
         return apiResponse.data;
       }
@@ -195,7 +191,7 @@ export class ApiClient {
     }
   }
 
-  private applySetCookie(setCookie: string, cookieStore: any): void {
+  private applySetCookie(setCookie: string, cookieStore: ReadonlyRequestCookies): void {
     // "accessToken=value; Max-Age=3600; Path=/; HttpOnly; Secure; SameSite=Lax"
     const parts = setCookie.split(';').map(p => p.trim());
     const [nameValue, ...attrs] = parts;

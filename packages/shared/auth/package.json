@@ -8,7 +8,8 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src/ --fix"
   },
   "dependencies": {
     "@imkdw-dev/actions": "workspace:*",
@@ -17,7 +18,9 @@
     "react": "19.1.0"
   },
   "devDependencies": {
+    "@imkdw-dev/eslint-config": "workspace:*",
     "@types/react": "^19",
+    "eslint": "^9.18.0",
     "typescript": "^5.9.2"
   }
 }

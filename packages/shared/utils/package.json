@@ -12,10 +12,13 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "lint": "eslint src/ --fix"
   },
   "devDependencies": {
+    "@imkdw-dev/eslint-config": "workspace:*",
     "@imkdw-dev/typescript-config": "workspace:*",
+    "eslint": "^9.18.0",
     "typescript": "5.9.2"
   },
   "dependencies": {

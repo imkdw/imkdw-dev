@@ -7,10 +7,13 @@ function handleServerError(error: ApiError): never {
   switch (error.status) {
     case 404:
       notFound();
+      break;
     case 403:
       forbidden();
+      break;
     case 401:
       unauthorized();
+      break;
     default:
       throw error;
   }
@@ -31,7 +34,7 @@ function handleClientError(error: ApiError): never {
   throw error;
 }
 
-export const withErrorHandling = <T extends any[], R>(
+export const withErrorHandling = <T extends unknown[], R>(
   actionFn: (...args: T) => Promise<R>
 ): ((...args: T) => Promise<R>) => {
   return async (...args: T): Promise<R> => {

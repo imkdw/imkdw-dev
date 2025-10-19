@@ -7,7 +7,7 @@ import { withErrorHandling } from './lib';
 
 export const createArticleComment = withErrorHandling(
   async (articleSlug: string, data: ICreateArticleCommentDto): Promise<void> => {
-    await apiClient.post<ICreateArticleCommentDto, void>(
+    await apiClient.post<ICreateArticleCommentDto>(
       buildEndpoint('CREATE_ARTICLE_COMMENT', { articleSlug }),
       data
     );
@@ -16,7 +16,7 @@ export const createArticleComment = withErrorHandling(
 
 export const updateArticleComment = withErrorHandling(
   async (articleSlug: string, commentId: string, data: IUpdateArticleCommentDto): Promise<void> => {
-    await apiClient.put<IUpdateArticleCommentDto, void>(
+    await apiClient.put<IUpdateArticleCommentDto>(
       buildEndpoint('UPDATE_ARTICLE_COMMENT', { articleSlug, commentId }),
       data
     );
@@ -24,7 +24,7 @@ export const updateArticleComment = withErrorHandling(
 );
 
 export const deleteArticleComment = withErrorHandling(async (articleSlug: string, commentId: string): Promise<void> => {
-  await apiClient.delete<void>(buildEndpoint('DELETE_ARTICLE_COMMENT', { articleSlug, commentId }));
+  await apiClient.delete(buildEndpoint('DELETE_ARTICLE_COMMENT', { articleSlug, commentId }));
 });
 
 export const getArticleComments = withErrorHandling(

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Layout, TerminalSection } from '@imkdw-dev/ui';
-import { RecentSeries, RecentArticles } from '../components';
-import { terminalCommands } from '../data/mock-data';
+import { RecentSeries } from '../components/sections/recent-series-section';
+import { RecentArticles } from '../components/sections/recent-articles-section';
 import { getSeriesList, getArticles, getStats } from '@imkdw-dev/actions';
 import { RECENT_SERIES_CARD_COUNT } from '@/consts/series.const';
 import { RECENT_ARTICLES_COUNT } from '@/consts/article.const';
@@ -21,7 +21,6 @@ export default async function Home() {
     <Layout>
       <div>
         <TerminalSection
-          commands={terminalCommands}
           title="Tech Blog"
           description="학습하고 경험한 내용들을 공유하는 기술블로그 입니다"
           stats={statsData}

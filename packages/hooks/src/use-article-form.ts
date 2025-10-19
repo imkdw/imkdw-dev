@@ -14,7 +14,7 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
   const [slug, setSlug] = useState(initialData?.slug ?? '');
   const [content, setContent] = useState(initialData?.content ?? '');
   const [tags, setTags] = useState<string[]>(initialData?.tags.map(tag => tag.name) ?? []);
-  const [seriesId, setSeriesId] = useState(initialData?.series?.id ?? '');
+  const [seriesId, setSeriesId] = useState(initialData?.series.id ?? '');
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
   const [isPublishing, setIsPublishing] = useState(false);
 

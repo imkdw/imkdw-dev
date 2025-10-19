@@ -8,7 +8,7 @@ import { withErrorHandling } from './lib';
 export const getCurrentMember = withErrorHandling(async (): Promise<IMemberDto | null> => {
   try {
     return await apiClient.get<IMemberDto | null>(buildEndpoint('GET_CURRENT_MEMBER'));
-  } catch (err) {
+  } catch {
     return null;
   }
 });
@@ -22,5 +22,5 @@ export const getMemberStats = withErrorHandling(async (memberId: string): Promis
 });
 
 export const updateMember = withErrorHandling(async (memberId: string, data: IUpdateMemberDto): Promise<void> => {
-  await apiClient.put<IUpdateMemberDto, void>(buildEndpoint('UPDATE_MEMBER', { memberId }), data);
+  await apiClient.put<IUpdateMemberDto>(buildEndpoint('UPDATE_MEMBER', { memberId }), data);
 });

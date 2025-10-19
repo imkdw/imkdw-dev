@@ -37,8 +37,8 @@ export function useSeriesForm({ mode, initialData }: UseSeriesFormParams) {
       if (mode === 'create') {
         const result = await createSeries({ title, slug, description, tags });
         router.push(`/series/${result.slug}`);
-      } else {
-        await updateSeries(initialData!.id, { title, description, tags });
+      } else if (initialData?.slug) {
+        await updateSeries(initialData.slug, { title, description, tags });
         router.push(`/series/${slug}`);
       }
     } finally {

@@ -92,7 +92,12 @@
       "mcp__serena__find_referencing_symbols",
       "Read(//Users/imkdw/.config/superpowers/skills/skills/using-skills/**)",
       "Bash(/Users/imkdw/.config/superpowers/skills/skills/using-skills/find-skills implementation feature)",
-      "mcp__playwright__browser_navigate_back"
+      "mcp__playwright__browser_navigate_back",
+      "Bash(for dir in /Users/imkdw/imkdw-dev/packages/shared/* /Users/imkdw/imkdw-dev/packages/api-client /Users/imkdw/imkdw-dev/packages/actions)",
+      "Bash(do echo \"=== $dir ===\")",
+      "Bash(if [ -f \"$dir/package.json\" ])",
+      "Bash([ -d \"$dir/src\" ])",
+      "Bash(fi)"
     ],
     "deny": [],
     "ask": []
