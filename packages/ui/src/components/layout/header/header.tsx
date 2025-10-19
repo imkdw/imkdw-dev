@@ -14,6 +14,9 @@ import { jetBrainsMono } from '@imkdw-dev/fonts';
 import { useOAuth } from '@imkdw-dev/hooks';
 import Link from 'next/link';
 import { IMemberDto } from '@imkdw-dev/types';
+import { logout } from '@imkdw-dev/actions';
+import { useAuth } from '@imkdw-dev/auth';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   currentMember: IMemberDto | null;
@@ -25,9 +28,17 @@ export function Header({ currentMember, onSearch }: Props) {
   const [activeTab, setActiveTab] = useState('blog.tsx');
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const { handleSocialLogin } = useOAuth();
+  const { logout: logoutStore } = useAuth();
+  const router = useRouter();
 
   const handleLogin = () => {
     setIsLoginOpen(true);
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    logoutStore();
+    router.refresh();
   };
 
   const tabs = [
@@ -49,12 +60,7 @@ export function Header({ currentMember, onSearch }: Props) {
         </div>
 
         <div className="flex items-center space-x-1 gap-2">
-          <MemberMenu
-            currentMember={currentMember}
-            onLogin={handleLogin}
-            // TODO: 로그아웃 기능 추가
-            onLogout={() => {}}
-          />
+          <MemberMenu currentMember={currentMember} onLogin={handleLogin} onLogout={handleLogout} />
         </div>
       </div>
 

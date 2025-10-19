@@ -26,6 +26,7 @@
     "@codemirror/view": "^6.38.4",
     "@headlessui/react": "^2.1.9",
     "@imkdw-dev/actions": "workspace:*",
+    "@imkdw-dev/auth": "workspace:*",
     "@imkdw-dev/consts": "workspace:*",
     "@imkdw-dev/fonts": "workspace:*",
     "@imkdw-dev/hooks": "workspace:*",
