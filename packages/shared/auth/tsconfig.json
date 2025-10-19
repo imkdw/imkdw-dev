@@ -6,9 +6,10 @@
     "declaration": true,
     "declarationMap": true,
     "composite": true,
+    "module": "CommonJS",
     "moduleResolution": "node",
     "jsx": "react-jsx",
-    "lib": ["ES2020", "DOM"]
+    "lib": ["ES2022", "DOM"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

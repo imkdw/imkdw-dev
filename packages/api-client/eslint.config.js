@@ -1,11 +1,14 @@
-import { nextJsConfig } from '@imkdw-dev/eslint-config/next-js';
+import { config } from '@imkdw-dev/eslint-config/base';
 
 export default [
-  ...nextJsConfig,
+  ...config,
+  {
+    ignores: ['eslint.config.js', 'dist/**'],
+  },
   {
     languageOptions: {
       parserOptions: {
-        project: './tsconfig.json',
+        projectService: true,
         tsconfigRootDir: import.meta.dirname,
       },
     },

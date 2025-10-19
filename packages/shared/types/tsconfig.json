@@ -6,6 +6,7 @@
     "declaration": true,
     "declarationMap": true,
     "composite": true,
+    "module": "CommonJS",
     "moduleResolution": "node"
   },
   "include": ["src/**/*"],
