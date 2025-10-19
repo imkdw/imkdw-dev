@@ -1,5 +1,4 @@
 import {
-  Button,
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
@@ -22,14 +21,8 @@ export function CommentActions({ isOwner, isEditing, onEdit, onDelete }: Props) 
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="h-auto p-1 text-xs text-muted-foreground hover:bg-transparent hover:text-foreground"
-        >
-          <MoreHorizontal className="w-4 h-4" />
-        </Button>
+      <DropdownMenuTrigger className="inline-flex items-center justify-center h-auto p-1 text-xs text-muted-foreground hover:bg-transparent hover:text-foreground transition-colors rounded-md">
+        <MoreHorizontal className="w-4 h-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem onClick={onEdit} disabled={isEditing}>

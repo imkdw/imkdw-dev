@@ -91,7 +91,8 @@
       "mcp__serena__get_symbols_overview",
       "mcp__serena__find_referencing_symbols",
       "Read(//Users/imkdw/.config/superpowers/skills/skills/using-skills/**)",
-      "Bash(/Users/imkdw/.config/superpowers/skills/skills/using-skills/find-skills implementation feature)"
+      "Bash(/Users/imkdw/.config/superpowers/skills/skills/using-skills/find-skills implementation feature)",
+      "mcp__playwright__browser_navigate_back"
     ],
     "deny": [],
     "ask": []
