@@ -28,6 +28,10 @@ export const createSeries = withErrorHandling(async (data: ICreateSeriesDto) => 
   return apiClient.post<ICreateSeriesDto, IResponseCreateSeriesDto>(buildEndpoint('CREATE_SERIES'), data);
 });
 
-export const updateSeries = withErrorHandling(async (id: string, data: IUpdateSeriesDto) => {
-  return apiClient.patch<IUpdateSeriesDto, void>(buildEndpoint('UPDATE_SERIES', { id }), data);
+export const updateSeries = withErrorHandling(async (slug: string, data: IUpdateSeriesDto) => {
+  return apiClient.patch<IUpdateSeriesDto, void>(buildEndpoint('UPDATE_SERIES', { slug }), data);
+});
+
+export const deleteSeries = withErrorHandling(async (slug: string) => {
+  return apiClient.delete<void>(buildEndpoint('DELETE_SERIES', { slug }));
 });

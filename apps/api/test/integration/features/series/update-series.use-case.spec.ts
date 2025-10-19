@@ -31,14 +31,14 @@ describe('시리즈 수정 유스케이스', () => {
 
   describe('존재하지 않는 시리즈를 수정하면', () => {
     it('에러가 발생한다', async () => {
-      const nonExistentId = 'non-existent-id';
+      const nonExistentSlug = 'non-existent-slug';
       const updateSeriesDto: UpdateSeriesDto = {
         title: '수정된 시리즈 제목',
         description: '수정된 시리즈 설명',
         tags: [],
       };
 
-      await expect(sut.execute(nonExistentId, updateSeriesDto)).rejects.toThrow(SeriesNotFoundException);
+      await expect(sut.execute(nonExistentSlug, updateSeriesDto)).rejects.toThrow(SeriesNotFoundException);
     });
   });
 
@@ -55,7 +55,7 @@ describe('시리즈 수정 유스케이스', () => {
         tags: [],
       };
 
-      await expect(sut.execute(existingSeries.id, updateSeriesDto)).rejects.toThrow(ExistSeriesTitleException);
+      await expect(sut.execute(existingSeries.slug, updateSeriesDto)).rejects.toThrow(ExistSeriesTitleException);
     });
   });
 
@@ -72,7 +72,7 @@ describe('시리즈 수정 유스케이스', () => {
         tags: [],
       };
 
-      await expect(sut.execute(existingSeries.id, updateSeriesDto)).resolves.not.toThrow();
+      await expect(sut.execute(existingSeries.slug, updateSeriesDto)).resolves.not.toThrow();
 
       const updatedSeries = await prisma.series.findUnique({ where: { id: existingSeries.id } });
       expect(updatedSeries?.slug).toBe(existingSeries.slug);
@@ -90,7 +90,7 @@ describe('시리즈 수정 유스케이스', () => {
         tags: [],
       };
 
-      await sut.execute(existingSeries.id, updateSeriesDto);
+      await sut.execute(existingSeries.slug, updateSeriesDto);
 
       const updatedSeries = await prisma.series.findUnique({ where: { id: existingSeries.id } });
       expect(updatedSeries?.title).toBe(updateSeriesDto.title);
@@ -122,7 +122,7 @@ describe('시리즈 수정 유스케이스', () => {
         tags: ['새태그1', '새태그2'],
       };
 
-      await sut.execute(existingSeries.id, updateSeriesDto);
+      await sut.execute(existingSeries.slug, updateSeriesDto);
 
       const oldSeriesTags = await prisma.seriesTag.findMany({
         where: { seriesId: existingSeries.id, deletedAt: null },
@@ -161,7 +161,7 @@ describe('시리즈 수정 유스케이스', () => {
         tags: [],
       };
 
-      await sut.execute(existingSeries.id, updateSeriesDto);
+      await sut.execute(existingSeries.slug, updateSeriesDto);
 
       const activeSeriesTags = await prisma.seriesTag.findMany({
         where: { seriesId: existingSeries.id, deletedAt: null },
@@ -197,7 +197,7 @@ describe('시리즈 수정 유스케이스', () => {
         tags: [sharedTag.name],
       };
 
-      await sut.execute(existingSeries.id, updateSeriesDto);
+      await sut.execute(existingSeries.slug, updateSeriesDto);
 
       const allSharedTags = await prisma.tag.findMany({
         where: { name: sharedTag.name },

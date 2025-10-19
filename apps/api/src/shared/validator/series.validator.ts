@@ -34,4 +34,14 @@ export class SeriesValidator {
 
     return series;
   }
+
+  async checkExistBySlug(slug: string, tx?: Prisma.TransactionClient) {
+    const series = await this.seriesRepository.findBySlug(slug, tx);
+
+    if (!series) {
+      throw new SeriesNotFoundException(`시리즈를 찾을 수 없습니다`);
+    }
+
+    return series;
+  }
 }

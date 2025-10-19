@@ -34,3 +34,10 @@ export function updateSeries(summary: string) {
     ApiNoContentResponse({ description: '시리즈가 성공적으로 수정되었습니다' })
   );
 }
+
+export function deleteSeries(summary: string) {
+  return applyDecorators(
+    ApiOperation({ summary }),
+    ApiNoContentResponse({ description: '시리즈가 성공적으로 삭제되었습니다' })
+  );
+}

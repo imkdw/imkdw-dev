@@ -15,10 +15,10 @@ export class UpdateSeriesUseCase {
     private readonly prisma: PrismaService
   ) {}
 
-  async execute(id: string, dto: UpdateSeriesDto): Promise<void> {
+  async execute(slug: string, dto: UpdateSeriesDto): Promise<void> {
     return this.prisma.$transaction(async tx => {
-      const existingSeries = await this.seriesValidator.checkExist(id, tx);
-      await this.seriesValidator.checkExistTitle(dto.title, id, tx);
+      const existingSeries = await this.seriesValidator.checkExistBySlug(slug, tx);
+      await this.seriesValidator.checkExistTitle(dto.title, existingSeries.id, tx);
 
       const tags = await this.tagRepository.findOrCreateMany(dto.tags, tx);
 
@@ -34,7 +34,7 @@ export class UpdateSeriesUseCase {
         createdAt: existingSeries.createdAt,
       });
 
-      await this.seriesRepository.update(id, updatedSeries, tx);
+      await this.seriesRepository.update(existingSeries.id, updatedSeries, tx);
     });
   }
 }
