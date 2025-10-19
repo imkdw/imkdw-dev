@@ -6,6 +6,7 @@ import { ListHeader } from '@/components/common/list-header';
 import { SeriesListGrid } from '@/components/series/series-list-grid';
 import { SeriesListEmpty } from '@/components/series/series-list-empty';
 import { createMetadata } from '@/utils/metadata-creator';
+import { BookOpen, FileText } from 'lucide-react';
 
 export const metadata = createMetadata({
   title: '시리즈 목록',
@@ -31,12 +32,12 @@ export default async function Series({ searchParams }: Props) {
         <ListHeader
           title="시리즈 목록"
           stats={[
-            { label: '전체 시리즈', value: stats.series.count },
-            { label: '총 글 수', value: stats.article.count },
+            { label: '전체 시리즈', value: stats.series.count, icon: BookOpen },
+            { label: '총 글 수', value: stats.article.count, icon: FileText },
           ]}
         />
 
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
           {seriesData.items.length > 0 ? (
             <>
               <SeriesListGrid items={seriesData.items} />
