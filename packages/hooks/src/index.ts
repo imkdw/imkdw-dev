@@ -1,4 +1,4 @@
-export * from './useAuth';
+export * from './use-oauth';
 export * from './use-article-form';
 export * from './use-series-form';
 export * from './use-upload-image';
