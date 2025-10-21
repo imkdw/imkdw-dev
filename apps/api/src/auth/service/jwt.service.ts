@@ -26,7 +26,6 @@ export class JwtService {
   private isValidJwtPayload(payload: string | JwtPayload): payload is VerifiedJwtPayload {
     return (
       typeof payload === 'object' &&
-      payload !== null &&
       'id' in payload &&
       'role' in payload &&
       typeof payload.id === 'string' &&

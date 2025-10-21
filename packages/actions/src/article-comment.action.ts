@@ -7,10 +7,7 @@ import { withErrorHandling } from './lib';
 
 export const createArticleComment = withErrorHandling(
   async (articleSlug: string, data: ICreateArticleCommentDto): Promise<void> => {
-    await apiClient.post<ICreateArticleCommentDto>(
-      buildEndpoint('CREATE_ARTICLE_COMMENT', { articleSlug }),
-      data
-    );
+    await apiClient.post<ICreateArticleCommentDto>(buildEndpoint('CREATE_ARTICLE_COMMENT', { articleSlug }), data);
   }
 );
 
