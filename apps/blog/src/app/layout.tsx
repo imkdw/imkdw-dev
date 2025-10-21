@@ -10,6 +10,7 @@ import { Providers } from '../components/providers';
 import { MobileSidebar } from '../components/sidebar/mobile-sidebar';
 import { createMetadata } from '@/utils/metadata-creator';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { APP_ENV } from '@imkdw-dev/consts';
 
 export const metadata: Metadata = createMetadata({
   title: '@imkdw-dev/blog',
@@ -25,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <MobileSidebar />
         </Providers>
       </body>
-      <GoogleAnalytics gaId="G-DXRR1KZDDN" />
+      {process.env.APP_ENV === APP_ENV.PRODUCTION && <GoogleAnalytics gaId="G-DXRR1KZDDN" />}
     </html>
   );
 }
