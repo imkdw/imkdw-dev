@@ -1,3 +1,5 @@
+'use server';
+
 import { ApiClient } from './api-client';
 
 function getBaseURL(): string {
@@ -10,8 +12,14 @@ function getBaseURL(): string {
   return API_URL;
 }
 
-export const apiClient = new ApiClient({
-  baseURL: getBaseURL(),
-  timeout: 30000,
-  version: 1,
-});
+let _apiClient: ApiClient | null = null;
+
+export function getApiClient() {
+  _apiClient ??= new ApiClient({
+    baseURL: getBaseURL(),
+    timeout: 30000,
+    version: 1,
+  });
+
+  return _apiClient;
+}

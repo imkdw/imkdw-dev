@@ -2,13 +2,13 @@
 
 import { buildEndpoint } from '@imkdw-dev/consts';
 import { withErrorHandling } from './lib';
-import { apiClient } from '@imkdw-dev/api-client';
+import { getApiClient } from '@imkdw-dev/api-client';
 import { ISeoSeriesDto, ISeoArticleDto } from '@imkdw-dev/types';
 
 export const getSeoSeriesList = withErrorHandling(async () => {
-  return apiClient.get<ISeoSeriesDto[]>(buildEndpoint('GET_SEO_SERIES_LIST'));
+  return getApiClient().get<ISeoSeriesDto[]>(buildEndpoint('GET_SEO_SERIES_LIST'));
 });
 
 export const getSeoArticlesList = withErrorHandling(async () => {
-  return apiClient.get<ISeoArticleDto[]>(buildEndpoint('GET_SEO_ARTICLES_LIST'));
+  return getApiClient().get<ISeoArticleDto[]>(buildEndpoint('GET_SEO_ARTICLES_LIST'));
 });

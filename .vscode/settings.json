@@ -29,7 +29,8 @@
     "SEO",
     "Timestamptz",
     "Turbopack",
-    "Turborepo"
+    "Turborepo",
+    "zustand"
   ],
   "discord.enabled": true
 }

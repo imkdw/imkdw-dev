@@ -97,7 +97,9 @@
       "Bash(do echo \"=== $dir ===\")",
       "Bash(if [ -f \"$dir/package.json\" ])",
       "Bash([ -d \"$dir/src\" ])",
-      "Bash(fi)"
+      "Bash(fi)",
+      "WebFetch(domain:stackoverflow.com)",
+      "Bash(ANALYZE=true pnpm blog build:*)"
     ],
     "deny": [],
     "ask": []
