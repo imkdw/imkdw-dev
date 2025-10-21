@@ -3,17 +3,14 @@ import { ApiError } from '@imkdw-dev/api-client';
 import { EXCEPTION_MESSAGES } from '@imkdw-dev/exception';
 import { toast } from '@imkdw-dev/toast';
 
-function handleServerError(error: ApiError): never {
+function handleServerError(error: ApiError) {
   switch (error.status) {
     case 404:
-      notFound();
-      break;
+      return notFound();
     case 403:
-      forbidden();
-      break;
+      return forbidden();
     case 401:
-      unauthorized();
-      break;
+      return unauthorized();
     default:
       throw error;
   }
