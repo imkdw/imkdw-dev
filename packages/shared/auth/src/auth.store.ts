@@ -1,47 +1,19 @@
 import { create } from 'zustand';
-import { getCurrentMember } from '@imkdw-dev/actions';
-import type { AuthState } from './auth.type';
+import { IMemberDto } from '@imkdw-dev/types';
+
+export interface AuthState {
+  member: IMemberDto | null;
+  isLoading: boolean;
+  isAuthenticated: boolean;
+  setMember: (member: IMemberDto | null) => void;
+  logout: () => void;
+}
 
 export const useAuthStore = create<AuthState>(set => ({
   member: null,
   isLoading: true,
   isAuthenticated: false,
-  initializeAuth: async () => {
-    set({ isLoading: true });
-
-    try {
-      const member = await getCurrentMember();
-
-      set({
-        member,
-        isAuthenticated: !!member,
-        isLoading: false,
-      });
-    } catch {
-      set({
-        member: null,
-        isAuthenticated: false,
-        isLoading: false,
-      });
-    }
-  },
-  refreshUser: async () => {
-    set({ isLoading: true });
-    try {
-      const member = await getCurrentMember();
-      set({
-        member,
-        isAuthenticated: member === null,
-        isLoading: false,
-      });
-    } catch {
-      set({
-        member: null,
-        isAuthenticated: false,
-        isLoading: false,
-      });
-    }
-  },
+  setMember: (member: IMemberDto | null) => set({ member }),
   logout: () => {
     set({
       member: null,

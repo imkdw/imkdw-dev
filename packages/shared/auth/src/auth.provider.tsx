@@ -2,17 +2,23 @@
 
 import { ReactNode, useEffect } from 'react';
 import { useAuthStore } from './auth.store';
+import { getCurrentMember } from '@imkdw-dev/actions';
 
 interface Props {
   children: ReactNode;
 }
 
 export function AuthProvider({ children }: Props) {
-  const initializeAuth = useAuthStore(state => state.initializeAuth);
+  const setMember = useAuthStore(state => state.setMember);
 
   useEffect(() => {
-    initializeAuth();
-  }, [initializeAuth]);
+    const syncMember = async () => {
+      const member = await getCurrentMember();
+      setMember(member);
+    };
+
+    syncMember();
+  }, [setMember]);
 
   return <>{children}</>;
 }
