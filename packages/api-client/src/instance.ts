@@ -3,7 +3,7 @@
 import { ApiClient } from './api-client';
 
 function getBaseURL(): string {
-  const API_URL = process.env.API_URL;
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   if (!API_URL) {
     throw new Error('API_URL is not set');
@@ -14,11 +14,11 @@ function getBaseURL(): string {
 
 let _apiClient: ApiClient | null = null;
 
-export function getApiClient() {
+export function getApiClient(version?: number) {
   _apiClient ??= new ApiClient({
     baseURL: getBaseURL(),
     timeout: 30000,
-    version: 1,
+    version: version ?? 1,
   });
 
   return _apiClient;
