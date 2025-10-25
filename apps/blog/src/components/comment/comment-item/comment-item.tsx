@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { IArticleCommentDto } from '@imkdw-dev/types';
-import { deleteArticleComment, updateArticleComment } from '@imkdw-dev/actions';
+import { deleteArticleComment, updateArticleComment } from '@imkdw-dev/api-client';
 import { CommentContent } from './comment-content';
 import { useAuth } from '@imkdw-dev/auth';
 

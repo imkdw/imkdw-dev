@@ -25,7 +25,7 @@
     "@codemirror/theme-one-dark": "^6.1.3",
     "@codemirror/view": "^6.38.4",
     "@headlessui/react": "^2.1.9",
-    "@imkdw-dev/actions": "workspace:*",
+    "@imkdw-dev/api-client": "workspace:*",
     "@imkdw-dev/auth": "workspace:*",
     "@imkdw-dev/consts": "workspace:*",
     "@imkdw-dev/fonts": "workspace:*",

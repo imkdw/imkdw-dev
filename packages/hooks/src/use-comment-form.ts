@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createArticleComment } from '@imkdw-dev/actions';
+import { createArticleComment } from '@imkdw-dev/api-client';
 
 interface Props {
   onSuccess: () => void;

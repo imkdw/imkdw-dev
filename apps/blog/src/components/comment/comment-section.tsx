@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useCommentForm } from '@imkdw-dev/hooks';
 import { IArticleCommentDto } from '@imkdw-dev/types';
-import { getArticleComments } from '@imkdw-dev/actions';
+import { getArticleComments } from '@imkdw-dev/api-client';
 import { CommentForm } from './comment-form';
 import { CommentList } from './comment-list';
 

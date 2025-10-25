@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { IMemberDto } from '@imkdw-dev/types';
-import { updateMember, getUploadUrl } from '@imkdw-dev/actions';
+import { updateMember, getUploadUrl } from '@imkdw-dev/api-client';
 import { MAX_IMAGE_SIZE } from '@imkdw-dev/consts';
 import { generateUUID } from '@imkdw-dev/utils';
 

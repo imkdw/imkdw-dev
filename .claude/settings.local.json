@@ -99,7 +99,13 @@
       "Bash([ -d \"$dir/src\" ])",
       "Bash(fi)",
       "WebFetch(domain:stackoverflow.com)",
-      "Bash(ANALYZE=true pnpm blog build:*)"
+      "Bash(ANALYZE=true pnpm blog build:*)",
+      "Bash(while read file)",
+      "Bash(do sed -i '' 's/@imkdw-dev\\/actions/@imkdw-dev\\/api-client/g' \"$file\" done)",
+      "Bash(xargs:*)",
+      "Bash(do sed -i '' 's/import { Layout } from ''''@imkdw-dev\\/ui'''';/import { Layout } from ''''@\\/components\\/layout'''';/g' \"$file\" sed -i '' 's/import { Layout, /import { /g' \"$file\" done)",
+      "Bash(for:*)",
+      "Bash(do sed -i '' \"s/import { Layout } from ''@imkdw-dev\\/ui''/import { Layout } from ''@\\/components\\/layout''/g\" \"$file\")"
     ],
     "deny": [],
     "ask": []

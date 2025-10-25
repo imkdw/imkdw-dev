@@ -1,7 +1,5 @@
-'use server';
-
 import { buildEndpoint } from '@imkdw-dev/consts';
-import { withErrorHandling } from './lib';
+import { withErrorHandling } from '../lib/error-handler';
 import {
   IRequestGetSeriesListDto,
   IResponseGetSeriesListDto,
@@ -10,7 +8,7 @@ import {
   IResponseCreateSeriesDto,
   IUpdateSeriesDto,
 } from '@imkdw-dev/types';
-import { getApiClient } from '@imkdw-dev/api-client';
+import { getApiClient } from '../instance';
 
 export const getSeriesList = withErrorHandling(async (params: IRequestGetSeriesListDto) => {
   return getApiClient().get<IResponseGetSeriesListDto>(buildEndpoint('GET_SERIES_LIST'), {

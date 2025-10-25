@@ -1,7 +1,6 @@
 import { notFound, forbidden, unauthorized } from 'next/navigation';
-import { ApiError } from '@imkdw-dev/api-client';
+import { ApiError } from '../types';
 import { EXCEPTION_MESSAGES } from '@imkdw-dev/exception';
-import { toast } from '@imkdw-dev/toast';
 
 function handleServerError(error: ApiError) {
   switch (error.status) {
@@ -16,14 +15,15 @@ function handleServerError(error: ApiError) {
   }
 }
 
-function handleClientError(error: ApiError): never {
+async function handleClientError(error: ApiError): Promise<never> {
   const errorMessage =
     error.errorCode && error.errorCode in EXCEPTION_MESSAGES
       ? EXCEPTION_MESSAGES[error.errorCode as keyof typeof EXCEPTION_MESSAGES]
       : '서버와의 통신에 실패했습니다.';
 
+  const { toast } = await import('@imkdw-dev/toast');
   toast({
-    title: '오류',
+    title: '',
     description: errorMessage,
     variant: 'destructive',
   });

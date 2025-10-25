@@ -1,6 +1,5 @@
-'use server';
-
 import { ApiClient } from './api-client';
+import { ApiClientBrowser } from './api-client-browser';
 
 function getBaseURL(): string {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -12,14 +11,35 @@ function getBaseURL(): string {
   return API_URL;
 }
 
-let _apiClient: ApiClient | null = null;
+const serverClients = new Map<number, ApiClient>();
+const browserClients = new Map<number, ApiClientBrowser>();
 
-export function getApiClient(version?: number) {
-  _apiClient ??= new ApiClient({
-    baseURL: getBaseURL(),
-    timeout: 30000,
-    version: version ?? 1,
-  });
+export function getApiClient(version = 1): ApiClient | ApiClientBrowser {
+  const isServer = typeof window === 'undefined';
 
-  return _apiClient;
+  if (isServer) {
+    if (!serverClients.has(version)) {
+      serverClients.set(
+        version,
+        new ApiClient({
+          baseURL: getBaseURL(),
+          timeout: 30000,
+          version,
+        })
+      );
+    }
+    return serverClients.get(version)!;
+  } else {
+    if (!browserClients.has(version)) {
+      browserClients.set(
+        version,
+        new ApiClientBrowser({
+          baseURL: getBaseURL(),
+          timeout: 30000,
+          version,
+        })
+      );
+    }
+    return browserClients.get(version)!;
+  }
 }

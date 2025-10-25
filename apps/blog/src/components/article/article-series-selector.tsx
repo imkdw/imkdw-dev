@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Card, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@imkdw-dev/ui';
-import { getSeriesList } from '@imkdw-dev/actions';
+import { getSeriesList } from '@imkdw-dev/api-client';
 import { ISeriesListItemDto } from '@imkdw-dev/types';
 
 interface Props {

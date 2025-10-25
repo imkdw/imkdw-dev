@@ -1,9 +1,7 @@
-'use server';
-
-import { getApiClient } from '@imkdw-dev/api-client';
+import { getApiClient } from '../instance';
 import { buildEndpoint } from '@imkdw-dev/consts';
 import { ICreateArticleCommentDto, IResponseGetArticleCommentsDto, IUpdateArticleCommentDto } from '@imkdw-dev/types';
-import { withErrorHandling } from './lib';
+import { withErrorHandling } from '../lib/error-handler';
 
 export const createArticleComment = withErrorHandling(
   async (articleSlug: string, data: ICreateArticleCommentDto): Promise<void> => {

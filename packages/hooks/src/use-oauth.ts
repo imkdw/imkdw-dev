@@ -1,4 +1,4 @@
-import { getOAuthUrl, getCurrentMember } from '@imkdw-dev/actions';
+import { getOAuthUrl, getCurrentMember } from '@imkdw-dev/api-client';
 import { OAuthProvider } from '@imkdw-dev/consts';
 
 export function useOAuth() {

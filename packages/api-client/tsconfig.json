@@ -8,6 +8,7 @@
     "composite": true,
     "module": "CommonJS",
     "moduleResolution": "node",
+    "jsx": "react-jsx",
     "lib": ["ES2022", "DOM"]
   },
   "include": ["src/**/*"],

@@ -1,5 +1,5 @@
 import { Layout, Button } from '@imkdw-dev/ui';
-import { getSeriesList, getStats } from '@imkdw-dev/actions';
+import { getCurrentMember, getSeriesList, getStats } from '@imkdw-dev/api-client';
 import { SERIES_PER_PAGE } from '@/consts/series.const';
 import { CommonPagination } from '@/components/common/common-pagination';
 import { ListHeader } from '@/components/common/list-header';
@@ -8,7 +8,6 @@ import { SeriesListEmpty } from '@/components/series/series-list-empty';
 import { createMetadata } from '@/utils/metadata-creator';
 import { BookOpen, FileText, Plus } from 'lucide-react';
 import Link from 'next/link';
-import { getCurrentMember } from '@imkdw-dev/actions/src/member.action';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
 
 export const metadata = createMetadata({

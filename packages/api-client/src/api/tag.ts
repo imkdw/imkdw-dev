@@ -1,8 +1,6 @@
-'use server';
-
 import { buildEndpoint } from '@imkdw-dev/consts';
-import { withErrorHandling } from './lib';
-import { getApiClient } from '@imkdw-dev/api-client';
+import { withErrorHandling } from '../lib/error-handler';
+import { getApiClient } from '../instance';
 import { ITagDto } from '@imkdw-dev/types';
 
 export const getTagList = withErrorHandling(async () => {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createSeries, updateSeries } from '@imkdw-dev/actions';
+import { createSeries, updateSeries } from '@imkdw-dev/api-client';
 import { ISeriesDetailDto } from '@imkdw-dev/types';
 
 interface UseSeriesFormParams {

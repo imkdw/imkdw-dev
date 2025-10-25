@@ -8,7 +8,7 @@ import { useToast } from '@imkdw-dev/toast';
 import { useAuth } from '@imkdw-dev/auth';
 import { Share2, Edit, Trash2 } from 'lucide-react';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
-import { deleteSeries } from '@imkdw-dev/actions';
+import { deleteSeries } from '@imkdw-dev/api-client';
 import { DeleteConfirmDialog } from '../common/delete-confirm-dialog';
 
 interface Props {

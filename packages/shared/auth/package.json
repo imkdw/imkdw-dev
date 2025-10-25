@@ -12,7 +12,7 @@
     "lint": "eslint src/ --fix"
   },
   "dependencies": {
-    "@imkdw-dev/actions": "workspace:*",
+    "@imkdw-dev/api-client": "workspace:*",
     "@imkdw-dev/types": "workspace:*",
     "zustand": "5.0.8",
     "react": "19.1.0"

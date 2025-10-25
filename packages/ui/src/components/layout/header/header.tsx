@@ -14,16 +14,16 @@ import { jetBrainsMono } from '@imkdw-dev/fonts';
 import { useOAuth } from '@imkdw-dev/hooks';
 import Link from 'next/link';
 import { IMemberDto } from '@imkdw-dev/types';
-import { logout } from '@imkdw-dev/actions';
 import { useAuth } from '@imkdw-dev/auth';
 import { useRouter } from 'next/navigation';
 
 interface Props {
   currentMember: IMemberDto | null;
   onSearch?: (query: string) => void;
+  onLogout?: () => Promise<void>;
 }
 
-export function Header({ currentMember, onSearch }: Props) {
+export function Header({ currentMember, onSearch, onLogout }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('blog.tsx');
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -36,9 +36,11 @@ export function Header({ currentMember, onSearch }: Props) {
   };
 
   const handleLogout = async () => {
-    await logout();
+    if (onLogout) {
+      await onLogout();
+    }
     logoutStore();
-    router.refresh();
+    router.push('/');
   };
 
   const tabs = [

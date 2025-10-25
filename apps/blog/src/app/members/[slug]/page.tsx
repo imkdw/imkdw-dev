@@ -1,6 +1,6 @@
 import { Layout, Card, CardHeader, CardTitle, CardContent } from '@imkdw-dev/ui';
 import { MemberProfileCard } from '@/components/member/member-profile-card';
-import { getCurrentMember, getMember, getMemberStats } from '@imkdw-dev/actions';
+import { getCurrentMember, getMember, getMemberStats } from '@imkdw-dev/api-client';
 import { forbidden } from 'next/navigation';
 import { formatDate } from '@imkdw-dev/utils';
 

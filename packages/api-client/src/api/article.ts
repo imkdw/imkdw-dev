@@ -1,8 +1,5 @@
-'use server';
-
 import { buildEndpoint } from '@imkdw-dev/consts';
-
-import { withErrorHandling } from './lib';
+import { withErrorHandling } from '../lib/error-handler';
 import {
   IRequestGetArticlesDto,
   IResponseGetArticlesDto,
@@ -11,7 +8,7 @@ import {
   IResponseGetArticleDto,
   IUpdateArticleDto,
 } from '@imkdw-dev/types';
-import { getApiClient } from '@imkdw-dev/api-client';
+import { getApiClient } from '../instance';
 
 export const getArticles = withErrorHandling(async (params: IRequestGetArticlesDto) => {
   return getApiClient().get<IResponseGetArticlesDto>(buildEndpoint('GET_ARTICLES'), {

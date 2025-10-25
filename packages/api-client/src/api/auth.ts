@@ -1,10 +1,7 @@
-'use server';
-
-import { cookies } from 'next/headers';
-import { getApiClient } from '@imkdw-dev/api-client';
+import { getApiClient } from '../instance';
 import { buildEndpoint, OAuthProvider } from '@imkdw-dev/consts';
 import { IResponseGetOAuthUrlDto } from '@imkdw-dev/types';
-import { withErrorHandling } from './lib';
+import { withErrorHandling } from '../lib/error-handler';
 
 export const getOAuthUrl = withErrorHandling(async (provider: OAuthProvider, redirectUrl: string) => {
   return getApiClient().get<IResponseGetOAuthUrlDto>(buildEndpoint('GET_OAUTH_URL', { provider }), {
@@ -12,10 +9,4 @@ export const getOAuthUrl = withErrorHandling(async (provider: OAuthProvider, red
       redirectUrl,
     },
   });
-});
-
-export const logout = withErrorHandling(async () => {
-  const cookieStore = await cookies();
-  cookieStore.delete('accessToken');
-  cookieStore.delete('refreshToken');
 });

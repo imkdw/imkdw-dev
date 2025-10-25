@@ -1,9 +1,7 @@
-'use server';
-
-import { getApiClient } from '@imkdw-dev/api-client';
+import { getApiClient } from '../instance';
 import { buildEndpoint } from '@imkdw-dev/consts';
 import { IMemberDto, IMemberStatsDto, IUpdateMemberDto } from '@imkdw-dev/types';
-import { withErrorHandling } from './lib';
+import { withErrorHandling } from '../lib/error-handler';
 
 export const getCurrentMember = withErrorHandling(async (): Promise<IMemberDto | null> => {
   try {

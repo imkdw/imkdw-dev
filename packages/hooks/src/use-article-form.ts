@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createArticle, updateArticle } from '@imkdw-dev/actions';
+import { createArticle, updateArticle } from '@imkdw-dev/api-client';
 import { IArticleDto } from '@imkdw-dev/types';
 
 interface UseArticleFormParams {

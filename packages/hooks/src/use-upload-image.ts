@@ -1,7 +1,7 @@
 import { SUPPORTED_IMAGE_EXTENSIONS } from '@imkdw-dev/consts';
 import { ImageUploadError, ImageUploadResult } from './types/image-upload.type';
 import { generateUUID } from '@imkdw-dev/utils';
-import { getUploadUrl } from '@imkdw-dev/actions';
+import { getUploadUrl } from '@imkdw-dev/api-client';
 
 export const useImageUpload = () => {
   const createError = (code: ImageUploadError['code'], message: string, originalError?: unknown): ImageUploadError => {

@@ -8,7 +8,7 @@ import { Share2, Edit, Trash2 } from 'lucide-react';
 import { useAuth } from '@imkdw-dev/auth';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
 import { useEffect, useState } from 'react';
-import { deleteArticle } from '@imkdw-dev/actions';
+import { deleteArticle } from '@imkdw-dev/api-client';
 import { DeleteArticleDialog } from './delete-article-dialog';
 import { MouseEvent } from 'react';
 

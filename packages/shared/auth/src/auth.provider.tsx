@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect } from 'react';
 import { useAuthStore } from './auth.store';
-import { getCurrentMember } from '@imkdw-dev/actions';
+import { getCurrentMember } from '@imkdw-dev/api-client';
 
 interface Props {
   children: ReactNode;

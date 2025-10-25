@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { getSeoSeriesList, getSeoArticlesList } from '@imkdw-dev/actions';
+import { getSeoSeriesList, getSeoArticlesList } from '@imkdw-dev/api-client';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_BLOG_URL;

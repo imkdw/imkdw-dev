@@ -9,7 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@imkdw-dev/actions": "workspace:*",
+    "@imkdw-dev/api-client": "workspace:*",
     "@imkdw-dev/auth": "workspace:*",
     "@imkdw-dev/consts": "workspace:*",
     "@imkdw-dev/fonts": "workspace:*",

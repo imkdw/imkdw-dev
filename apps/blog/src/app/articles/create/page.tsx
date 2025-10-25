@@ -1,6 +1,6 @@
-import { Layout } from '@imkdw-dev/ui';
+import { Layout } from '@/components/layout';
 import { ArticleForm } from '@/components/article/article-form';
-import { getCurrentMember } from '@imkdw-dev/actions';
+import { getCurrentMember } from '@imkdw-dev/api-client';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
 import { forbidden } from 'next/navigation';
 
