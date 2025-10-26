@@ -191,7 +191,7 @@ importers:
         version: link:../../packages/api-client
       '@imkdw-dev/auth':
         specifier: workspace:*
-        version: link:../../packages/shared/auth
+        version: link:../../packages/auth
       '@imkdw-dev/consts':
         specifier: workspace:*
         version: link:../../packages/shared/consts
@@ -336,6 +336,34 @@ importers:
         specifier: ^5.9.2
         version: 5.9.2
 
+  packages/auth:
+    dependencies:
+      '@imkdw-dev/api-client':
+        specifier: workspace:*
+        version: link:../api-client
+      '@imkdw-dev/types':
+        specifier: workspace:*
+        version: link:../shared/types
+      react:
+        specifier: 19.1.0
+        version: 19.1.0
+      zustand:
+        specifier: 5.0.8
+        version: 5.0.8(@types/react@19.0.8)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0))
+    devDependencies:
+      '@imkdw-dev/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@types/react':
+        specifier: ^19
+        version: 19.0.8
+      eslint:
+        specifier: ^9.18.0
+        version: 9.33.0(jiti@2.5.1)
+      typescript:
+        specifier: ^5.9.2
+        version: 5.9.2
+
   packages/eslint-config:
     devDependencies:
       '@eslint/js':
@@ -441,34 +469,6 @@ importers:
         version: 9.33.0(jiti@2.5.1)
       typescript:
         specifier: 5.9.2
-        version: 5.9.2
-
-  packages/shared/auth:
-    dependencies:
-      '@imkdw-dev/api-client':
-        specifier: workspace:*
-        version: link:../../api-client
-      '@imkdw-dev/types':
-        specifier: workspace:*
-        version: link:../types
-      react:
-        specifier: 19.1.0
-        version: 19.1.0
-      zustand:
-        specifier: 5.0.8
-        version: 5.0.8(@types/react@19.0.8)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0))
-    devDependencies:
-      '@imkdw-dev/eslint-config':
-        specifier: workspace:*
-        version: link:../../eslint-config
-      '@types/react':
-        specifier: ^19
-        version: 19.0.8
-      eslint:
-        specifier: ^9.18.0
-        version: 9.33.0(jiti@2.5.1)
-      typescript:
-        specifier: ^5.9.2
         version: 5.9.2
 
   packages/shared/consts:
@@ -603,7 +603,7 @@ importers:
         version: link:../api-client
       '@imkdw-dev/auth':
         specifier: workspace:*
-        version: link:../shared/auth
+        version: link:../auth
       '@imkdw-dev/consts':
         specifier: workspace:*
         version: link:../shared/consts
