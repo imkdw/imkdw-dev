@@ -13,33 +13,33 @@ function getBaseURL(): string {
 
 const serverClients = new Map<number, ApiClient>();
 const browserClients = new Map<number, ApiClientBrowser>();
+const DEFAULT_TIMEOUT = 30000;
+const DEFAULT_VERSION = 1;
 
-export function getApiClient(version = 1): ApiClient | ApiClientBrowser {
+export function getApiClient(version = DEFAULT_VERSION): ApiClient | ApiClientBrowser {
   const isServer = typeof window === 'undefined';
 
   if (isServer) {
-    if (!serverClients.has(version)) {
-      serverClients.set(
-        version,
-        new ApiClient({
-          baseURL: getBaseURL(),
-          timeout: 30000,
-          version,
-        })
-      );
-    }
-    return serverClients.get(version)!;
+    const existing = serverClients.get(version);
+    if (existing) return existing;
+
+    const client = new ApiClient({
+      baseURL: getBaseURL(),
+      timeout: DEFAULT_TIMEOUT,
+      version,
+    });
+    serverClients.set(version, client);
+    return client;
   } else {
-    if (!browserClients.has(version)) {
-      browserClients.set(
-        version,
-        new ApiClientBrowser({
-          baseURL: getBaseURL(),
-          timeout: 30000,
-          version,
-        })
-      );
-    }
-    return browserClients.get(version)!;
+    const existing = browserClients.get(version);
+    if (existing) return existing;
+
+    const client = new ApiClientBrowser({
+      baseURL: getBaseURL(),
+      timeout: DEFAULT_TIMEOUT,
+      version,
+    });
+    browserClients.set(version, client);
+    return client;
   }
 }
