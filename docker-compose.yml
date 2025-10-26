@@ -3,14 +3,14 @@ services:
     image: postgres:16.4
     container_name: imkdw-dev-postgres
     ports:
-      - '6432:5432'
+      - "6432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: imkdw-dev
-      POSTGRES_INITDB_ARGS: '--auth-host=scram-sha-256 --auth-local=scram-sha-256'
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=scram-sha-256"
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U postgres -d imkdw-dev']
+      test: ["CMD-SHELL", "pg_isready -U postgres -d imkdw-dev"]
       interval: 2s
       timeout: 5s
       retries: 10
@@ -19,17 +19,15 @@ services:
         docker-entrypoint.sh postgres &
         PG_PID=$$!
         
-        echo 'PostgreSQL 시작 대기 중...'
         until pg_isready -h localhost -p 6432 -U postgres; do
           sleep 1
         done
         
-        echo '테스트 스키마 생성 중...'
+        # 테스트 스키마 생성
         psql -U postgres -d imkdw-dev -c 'CREATE SCHEMA IF NOT EXISTS test;'
         psql -U postgres -d imkdw-dev -c 'GRANT ALL PRIVILEGES ON SCHEMA test TO postgres;'
         psql -U postgres -d imkdw-dev -c 'GRANT USAGE ON SCHEMA test TO postgres;'
         psql -U postgres -d imkdw-dev -c 'GRANT CREATE ON SCHEMA test TO postgres;'
         
-        echo '스키마 초기화 완료!'
         wait $$PG_PID
       "
