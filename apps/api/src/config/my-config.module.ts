@@ -11,8 +11,8 @@ import { myConfig } from '@/config/my-config.schema';
     ConfigModule.forRoot({
       cache: true,
       isGlobal: true,
-      envFilePath: '../../.env',
       validate: config => myConfig.parse(config),
+      ignoreEnvFile: true,
     }),
   ],
   providers: [MyConfigService],

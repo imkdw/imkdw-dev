@@ -1,0 +1,3 @@
+setup:
+  - project: imkdw-dev
+    config: local
