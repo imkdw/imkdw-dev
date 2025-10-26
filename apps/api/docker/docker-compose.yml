@@ -1,0 +1,62 @@
+services:
+  api-blue:
+    image: ${AWS_API_ECR}:latest
+    container_name: api-blue
+    ports:
+      - '4001:4000'
+    environment:
+      - DOPPLER_TOKEN=${DOPPLER_TOKEN}
+    networks:
+      - imkdw-dev_default
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:4000/v1']
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  api-green:
+    image: ${AWS_API_ECR}:latest
+    container_name: api-green
+    ports:
+      - '4002:4000'
+    environment:
+      - DOPPLER_TOKEN=${DOPPLER_TOKEN}
+    networks:
+      - imkdw-dev_default
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:4000/v1']
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    profiles:
+      - green
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      - ACTIVE_ENV=${ACTIVE_ENV:-blue}
+      - DOMAIN=${DOMAIN}
+    networks:
+      - imkdw-dev_default
+    restart: unless-stopped
+    depends_on:
+      - api-blue
+
+networks:
+  imkdw-dev_default:
+
+volumes:
+  caddy_data:
+  caddy_config:

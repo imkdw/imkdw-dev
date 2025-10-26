@@ -18,6 +18,8 @@
     "hooks": "pnpm -F hooks",
     "toast": "pnpm -F toast",
     "utils": "pnpm -F utils",
+    "consts": "pnpm -F consts",
+    "exception": "pnpm -F exception",
     "setup:local": "docker-compose up -d --wait && npx dotenv-cli -e .env -- pnpm api prisma db push",
     "setup:test": "docker-compose up -d --wait && npx dotenv-cli -e .env.test -- pnpm api prisma db push --force-reset",
     "reset:test": "npx dotenv-cli -e .env.test -- pnpm api prisma db push --force-reset"

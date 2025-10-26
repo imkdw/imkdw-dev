@@ -1,0 +1,17 @@
+{$DOMAIN} {
+    reverse_proxy api-{$ACTIVE_ENV}:4000 {
+        health_uri /v1
+        health_interval 10s
+        health_timeout 5s
+        health_status 2xx
+    }
+
+    encode gzip
+
+    header {
+        X-Frame-Options "SAMEORIGIN"
+        X-Content-Type-Options "nosniff"
+        X-XSS-Protection "1; mode=block"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+}
