@@ -1,3 +1,5 @@
+'use client';
+
 import { Edit, LogOut, User } from 'lucide-react';
 import { Button, buttonVariants } from '../../primitives/button';
 import { Avatar, AvatarImage, AvatarFallback } from '../../primitives/avatar';
@@ -12,17 +14,31 @@ import { IMemberDto } from '@imkdw-dev/types';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
 import Link from 'next/link';
 import { cn } from '../../lib/utils';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@imkdw-dev/auth';
 
 interface Props {
   currentMember: IMemberDto | null;
   onLogin: () => void;
-  onLogout: () => void;
+  onLogout?: () => Promise<void>;
 }
 
 export function MemberMenu({ currentMember, onLogin, onLogout }: Props) {
+  const router = useRouter();
+  const { logout } = useAuth();
+
   if (!currentMember) {
     return <Button onClick={onLogin}>로그인</Button>;
   }
+
+  const handleLogout = async () => {
+    if (onLogout) {
+      await onLogout();
+    }
+
+    logout();
+    router.refresh();
+  };
 
   return (
     <DropdownMenu>
@@ -59,7 +75,7 @@ export function MemberMenu({ currentMember, onLogin, onLogout }: Props) {
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <LogOut className="mr-2 h-4 w-4" />
-          <span className="cursor-pointer" onClick={onLogout}>
+          <span className="cursor-pointer" onClick={handleLogout}>
             로그아웃
           </span>
         </DropdownMenuItem>
