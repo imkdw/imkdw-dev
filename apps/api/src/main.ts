@@ -48,4 +48,6 @@ async function bootstrap() {
 
   await app.listen(port);
 }
-bootstrap();
+
+// eslint-disable-next-line no-console
+bootstrap().catch(err => console.error(err));

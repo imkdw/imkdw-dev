@@ -3,6 +3,8 @@
 # ========================================
 FROM node:22-alpine AS base
 
+RUN apk add curl
+
 # ========================================
 # BUILD STAGE
 # ========================================
@@ -43,7 +45,7 @@ RUN pnpm consts build && \
     pnpm exception build && \
     pnpm types build && \
     pnpm utils build && \
-    pnpm api prisma generate && \
+    pnpm api prisma:generate && \
     pnpm api build
 
 # ========================================
@@ -53,21 +55,31 @@ FROM base AS run
 
 WORKDIR /app
 
-RUN wget -q -t3 'https://packages.doppler.com/public/cli/rsa.8004D9FF50437357.key' -O /etc/apk/keys/cli@doppler-8004D9FF50437357.rsa.pub && \
+RUN npm i -g pnpm@10.0.0 && \
+    wget -q -t3 'https://packages.doppler.com/public/cli/rsa.8004D9FF50437357.key' -O /etc/apk/keys/cli@doppler-8004D9FF50437357.rsa.pub && \
     echo 'https://packages.doppler.com/public/cli/alpine/any-version/main' | tee -a /etc/apk/repositories && \
     apk add doppler
 
-COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/package.json ./
+COPY --from=build /app/pnpm-lock.yaml ./
+COPY --from=build /app/pnpm-workspace.yaml ./
+
+COPY --from=build /app/apps/api/prisma ./apps/api/prisma
+COPY --from=build /app/apps/api/package.json ./apps/api/
+COPY --from=build /app/packages/shared/consts/package.json ./packages/shared/consts/
+COPY --from=build /app/packages/shared/exception/package.json ./packages/shared/exception/
+COPY --from=build /app/packages/shared/types/package.json ./packages/shared/types/
+COPY --from=build /app/packages/shared/utils/package.json ./packages/shared/utils/
+
+RUN pnpm install --prod --frozen-lockfile
+
+RUN pnpm api prisma:generate
+
 COPY --from=build /app/apps/api/dist ./apps/api/dist
 COPY --from=build /app/packages/shared/consts/dist ./packages/shared/consts/dist
 COPY --from=build /app/packages/shared/exception/dist ./packages/shared/exception/dist
 COPY --from=build /app/packages/shared/types/dist ./packages/shared/types/dist
 COPY --from=build /app/packages/shared/utils/dist ./packages/shared/utils/dist
-COPY --from=build /app/package.json ./
-COPY --from=build /app/packages/shared/consts/package.json ./packages/shared/consts/
-COPY --from=build /app/packages/shared/exception/package.json ./packages/shared/exception/
-COPY --from=build /app/packages/shared/types/package.json ./packages/shared/types/
-COPY --from=build /app/packages/shared/utils/package.json ./packages/shared/utils/
 
 EXPOSE 4000
 

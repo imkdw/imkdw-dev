@@ -13,9 +13,10 @@
     "test": "pnpm test:unit && pnpm test:integration",
     "test:unit": "jest --config test/unit/jest.config.ts",
     "test:cov": "jest --coverage",
-    "test:integration": "dotenv -e ../../.env.test -- jest --config test/integration/jest.config.ts",
-    "prisma": "dotenv -e ../../.env -- prisma",
-    "prisma:seed": "dotenv -e ../../.env -- npx ts-node prisma/seed.ts"
+    "test:integration": "doppler run --config test -- jest --config test/integration/jest.config.ts",
+    "prisma": "doppler run -- prisma",
+    "prisma:seed": "doppler run -- npx ts-node prisma/seed.ts",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
     "@imkdw-dev/consts": "workspace:*",
@@ -58,7 +59,6 @@
     "@types/node": "^22.13.0",
     "@types/supertest": "^6.0.2",
     "dotenv": "^17.2.1",
-    "dotenv-cli": "^10.0.0",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",

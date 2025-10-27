@@ -45,6 +45,20 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+log_info "Ensuring Caddy is running..."
+if ! docker ps --format '{{.Names}}' | grep -q "^caddy$"; then
+    log_warn "Caddy is not running. Starting Caddy..."
+    doppler run -- docker compose up -d caddy
+    if [ $? -ne 0 ]; then
+        log_error "Failed to start Caddy"
+        exit 1
+    fi
+    log_info "Waiting for Caddy to initialize..."
+    sleep 5
+else
+    log_info "Caddy is already running"
+fi
+
 log_info "Starting $NEW_ENV environment..."
 if [ "$NEW_ENV" = "green" ]; then
     doppler run -- docker compose --profile green up -d api-green
@@ -61,7 +75,7 @@ log_info "Waiting for $NEW_ENV environment to be healthy..."
 HEALTH_CHECK_PASSED=false
 
 for i in {1..30}; do
-    if docker exec api-$NEW_ENV curl -sf http://localhost:8000/v1 > /dev/null 2>&1; then
+    if docker exec api-$NEW_ENV curl -sf http://localhost:4000/v1 > /dev/null 2>&1; then
         log_info "Health check passed on attempt $i"
         HEALTH_CHECK_PASSED=true
         break

@@ -20,12 +20,11 @@
     "utils": "pnpm -F utils",
     "consts": "pnpm -F consts",
     "exception": "pnpm -F exception",
-    "setup:local": "docker-compose up -d --wait && npx dotenv-cli -e .env -- pnpm api prisma db push",
-    "setup:test": "docker-compose up -d --wait && npx dotenv-cli -e .env.test -- pnpm api prisma db push --force-reset",
-    "reset:test": "npx dotenv-cli -e .env.test -- pnpm api prisma db push --force-reset"
+    "setup:local": "docker-compose up -d --wait && doppler run -- pnpm api prisma db push",
+    "setup:test": "docker-compose up -d --wait && doppler run --config test -- pnpm api prisma db push --force-reset",
+    "reset:test": "doppler run --config test -- pnpm api prisma db push --force-reset"
   },
   "devDependencies": {
-    "dotenv-cli": "^10.0.0",
     "prettier": "^3.6.2",
     "turbo": "^2.5.6",
     "typescript": "5.9.2"
