@@ -145,8 +145,7 @@ export class MemberFactory {
       profileImage,
       providerId,
       provider,
-      // TODO: 기본 권한 USER로 변경필요
-      role: MEMBER_ROLE.ADMIN,
+      role: MEMBER_ROLE.USER,
       createdAt: new Date(),
     });
   }
