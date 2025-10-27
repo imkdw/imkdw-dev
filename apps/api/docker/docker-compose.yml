@@ -6,6 +6,8 @@ services:
       - "4001:4000"
     environment:
       - DOPPLER_TOKEN=${DOPPLER_TOKEN}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - imkdw-dev_default
     healthcheck:
