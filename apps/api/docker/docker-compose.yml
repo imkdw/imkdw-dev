@@ -50,15 +50,12 @@ services:
       - caddy_data:/data
       - caddy_config:/config
     environment:
-      - ACTIVE_ENV=${ACTIVE_ENV:-blue}
       - DOMAIN=${DOMAIN}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
       - imkdw-dev_default
     restart: unless-stopped
-    depends_on:
-      - api-blue
 
 networks:
   imkdw-dev_default:

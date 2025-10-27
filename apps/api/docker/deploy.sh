@@ -24,8 +24,6 @@ NEW_ENV=$([ "$CURRENT_ENV" = "blue" ] && echo "green" || echo "blue")
 log_info "Current environment: $CURRENT_ENV"
 log_info "Deploying to: $NEW_ENV"
 
-export ACTIVE_ENV=$CURRENT_ENV
-
 log_info "Loading environment variables from Doppler..."
 eval $(doppler secrets download --no-file --format env)
 
@@ -93,15 +91,8 @@ if [ "$HEALTH_CHECK_PASSED" = false ]; then
     exit 1
 fi
 
-log_info "Switching traffic to $NEW_ENV environment..."
-export ACTIVE_ENV=$NEW_ENV
-doppler run -- docker exec caddy caddy reload --config /etc/caddy/Caddyfile
-
-if [ $? -ne 0 ]; then
-    log_error "Failed to reload Caddy configuration"
-    log_warn "New environment is running but traffic was not switched"
-    exit 1
-fi
+log_info "Traffic will automatically switch to $NEW_ENV after stopping $CURRENT_ENV"
+log_info "Caddy health checks will detect the change automatically"
 
 echo $NEW_ENV > .current_env
 log_info "Updated current environment to $NEW_ENV"
