@@ -13,7 +13,12 @@ export const useAuthStore = create<AuthState>(set => ({
   member: null,
   isLoading: true,
   isAuthenticated: false,
-  setMember: (member: IMemberDto | null) => set({ member }),
+  setMember: (member: IMemberDto | null) =>
+    set({
+      member,
+      isAuthenticated: member !== null,
+      isLoading: false,
+    }),
   logout: () => {
     set({
       member: null,

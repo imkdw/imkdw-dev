@@ -13,15 +13,13 @@ import { cn } from '../../../lib';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
 import { useOAuth } from '@imkdw-dev/hooks';
 import Link from 'next/link';
-import { IMemberDto } from '@imkdw-dev/types';
 
 interface Props {
-  currentMember: IMemberDto | null;
   onSearch?: (query: string) => void;
   onLogout?: () => Promise<void>;
 }
 
-export function Header({ currentMember, onSearch, onLogout }: Props) {
+export function Header({ onSearch, onLogout }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('blog.tsx');
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -50,7 +48,7 @@ export function Header({ currentMember, onSearch, onLogout }: Props) {
         </div>
 
         <div className="flex items-center space-x-1 gap-2">
-          <MemberMenu currentMember={currentMember} onLogin={handleLogin} onLogout={onLogout} />
+          <MemberMenu onLogin={handleLogin} onLogout={onLogout} />
         </div>
       </div>
 

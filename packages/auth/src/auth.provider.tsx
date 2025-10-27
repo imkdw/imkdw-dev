@@ -13,8 +13,12 @@ export function AuthProvider({ children }: Props) {
 
   useEffect(() => {
     const syncMember = async () => {
-      const member = await getCurrentMember();
-      setMember(member);
+      try {
+        const member = await getCurrentMember();
+        setMember(member);
+      } catch {
+        setMember(null);
+      }
     };
 
     syncMember();
