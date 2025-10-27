@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "doppler run -- next dev --turbopack",
-    "build": "doppler run --config production -- next build --turbopack",
+    "build": "next build --turbopack",
+    "build:local": "doppler run --config production -- next build --turbopack",
     "lint": "eslint"
   },
   "dependencies": {
