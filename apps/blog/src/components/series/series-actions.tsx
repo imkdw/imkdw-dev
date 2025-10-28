@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, MouseEvent, useMemo } from 'react';
+import { useState, MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@imkdw-dev/ui';
@@ -22,7 +22,7 @@ export function SeriesActions({ slug }: Props) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const url = useMemo(() => `${window.location.origin}/series/${slug}`, [slug]);
+  const url = `${process.env.NEXT_PUBLIC_BLOG_URL}/series/${slug}`;
 
   const handleCopyLink = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
