@@ -3,6 +3,17 @@ import { ApiError } from '../types';
 import { EXCEPTION_MESSAGES } from '@imkdw-dev/exception';
 
 function handleServerError(error: ApiError) {
+  // eslint-disable-next-line no-console
+  console.error('[API Error - Server Side]', {
+    message: error.message,
+    status: error.status,
+    statusText: error.statusText,
+    url: error.url,
+    errorCode: error.errorCode,
+    cause: error.cause,
+    timestamp: new Date().toISOString(),
+  });
+
   switch (error.status) {
     case 404:
       return notFound();

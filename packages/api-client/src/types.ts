@@ -17,9 +17,10 @@ export class ApiError extends Error {
     public readonly statusText: string,
     public readonly url: string,
     public readonly errorCode?: string,
-    message?: string
+    message?: string,
+    options?: { cause?: unknown }
   ) {
-    super(message ?? `HTTP ${status}: ${statusText}`);
+    super(message ?? `HTTP ${status}: ${statusText}`, { cause: options?.cause });
     this.name = 'ApiError';
   }
 }

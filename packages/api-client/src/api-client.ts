@@ -71,7 +71,14 @@ export class ApiClient {
         if (contentType?.includes('application/json')) {
           const errorData = await response.json();
           const errorResponse: ErrorResponse = errorData.error;
-          throw new ApiError(response.status, response.statusText, url, errorResponse.errorCode, errorResponse.message);
+          throw new ApiError(
+            response.status,
+            response.statusText,
+            url,
+            errorResponse.errorCode,
+            errorResponse.message,
+            { cause: errorResponse }
+          );
         }
 
         throw new ApiError(response.status, response.statusText, url);
@@ -102,12 +109,15 @@ export class ApiClient {
 
       if (error instanceof Error) {
         if (error.name === 'AbortError') {
-          throw new ApiError(408, 'Request Timeout', url, undefined, 'Request timed out');
+          const timeoutValue = options?.timeout ?? this.timeout;
+          throw new ApiError(408, 'Request Timeout', url, undefined, `Request timed out after ${timeoutValue}ms`, {
+            cause: error,
+          });
         }
-        throw new ApiError(500, 'Network Error', url, undefined, error.message);
+        throw new ApiError(500, 'Network Error', url, undefined, error.message, { cause: error });
       }
 
-      throw new ApiError(500, 'Unknown Error', url, undefined, 'An unknown error occurred');
+      throw new ApiError(500, 'Unknown Error', url, undefined, 'An unknown error occurred', { cause: error });
     }
   }
 
