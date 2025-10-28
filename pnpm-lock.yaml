@@ -430,6 +430,9 @@ importers:
       '@imkdw-dev/api-client':
         specifier: workspace:*
         version: link:../api-client
+      '@imkdw-dev/auth':
+        specifier: workspace:*
+        version: link:../auth
       '@imkdw-dev/consts':
         specifier: workspace:*
         version: link:../shared/consts

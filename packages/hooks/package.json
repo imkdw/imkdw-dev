@@ -21,7 +21,8 @@
     "@imkdw-dev/api-client": "workspace:*",
     "@imkdw-dev/consts": "workspace:*",
     "@imkdw-dev/types": "workspace:*",
-    "@imkdw-dev/utils": "workspace:*"
+    "@imkdw-dev/utils": "workspace:*",
+    "@imkdw-dev/auth": "workspace:*"
   },
   "devDependencies": {
     "@imkdw-dev/eslint-config": "workspace:*",

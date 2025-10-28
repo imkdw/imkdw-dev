@@ -4,6 +4,7 @@ import { IMemberDto } from '@imkdw-dev/types';
 import { updateMember, getUploadUrl } from '@imkdw-dev/api-client';
 import { MAX_IMAGE_SIZE } from '@imkdw-dev/consts';
 import { generateUUID } from '@imkdw-dev/utils';
+import { useAuth } from '@imkdw-dev/auth';
 
 interface FormData {
   name: string;
@@ -29,6 +30,7 @@ export const useMemberProfile = (member: IMemberDto): Result => {
     name: member.nickname,
     profileImage: member.profileImage,
   });
+  const { setMember } = useAuth();
 
   const handleSave = async () => {
     await updateMember(member.id, {
@@ -66,13 +68,9 @@ export const useMemberProfile = (member: IMemberDto): Result => {
 
     const fileUrl = `${pathPrefix}/${fileName}.${extension}`;
 
-    await updateMember(member.id, {
-      nickname: formData.name,
-      profileImage: fileUrl,
-    });
-
+    await updateMember(member.id, { nickname: formData.name, profileImage: fileUrl });
+    setMember({ ...member, profileImage: fileUrl });
     setFormData(prev => ({ ...prev, profileImage: fileUrl }));
-    router.refresh();
   };
 
   const setNickname = (nickname: string) => {
