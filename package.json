@@ -22,9 +22,12 @@
     "exception": "pnpm -F exception",
     "setup:local": "docker-compose up -d --wait && doppler run -- pnpm api prisma db push",
     "setup:test": "docker-compose up -d --wait && doppler run --config test -- pnpm api prisma db push --force-reset",
-    "reset:test": "doppler run --config test -- pnpm api prisma db push --force-reset"
+    "reset:test": "doppler run --config test -- pnpm api prisma db push --force-reset",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.6.2",
     "turbo": "^2.5.6",
     "typescript": "5.9.2"
