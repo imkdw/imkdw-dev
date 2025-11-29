@@ -14,6 +14,7 @@
     "strict": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
-    "target": "ES2022"
+    "target": "ES2022",
+    "noImplicitAny": true
   }
 }
