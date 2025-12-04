@@ -1,0 +1,247 @@
+language: 'ko-KR'
+
+tone_instructions: |
+  리뷰는 한국어로 작성합니다. 기술 용어는 영어 원문을 유지하되 설명은 한국어로 합니다.
+  엄격하게 코드 품질을 검토하고, 모든 패턴 위반을 지적합니다.
+
+early_access: true
+
+reviews:
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  sequence_diagrams: true
+  changed_files_summary: true
+  labeling_instructions: []
+
+  path_instructions:
+    - path: 'apps/api/src/**/*.ts'
+      instructions: |
+        ### 아키텍처 규칙
+        - 단방향 의존성 준수: Features -> Shared -> Infra
+        - 순환 의존성 금지
+        - Feature 모듈은 명확한 경계를 가져야 함
+
+        ### 보안 검토 (Security)
+        - 모든 엔드포인트에 적절한 Guard 적용 확인 (@Public() 또는 JWT Guard)
+        - Role 기반 접근 제어 확인 (@MemberRoles())
+        - 민감한 정보 로깅 금지
+        - 하드코딩된 비밀키/토큰 금지
+
+        ### 성능 검토 (Performance)
+        - N+1 쿼리 패턴 감지
+        - 불필요한 데이터베이스 호출 지적
+        - 트랜잭션 범위 최적화 확인
+        - 대량 데이터 처리 시 페이지네이션 확인
+
+        ### 코드 품질
+        - console.log 사용 금지 (Logger 사용)
+        - any 타입 사용 금지
+        - 적절한 에러 핸들링 확인
+        - 매직 넘버/문자열 상수화 확인
+
+    - path: 'apps/api/src/**/use-case/**/*.ts'
+      instructions: |
+        ### 필수 규칙
+        - 단일 `execute()` 메서드만 허용
+        - 파일명 규칙: `{action}-{entity}.use-case.ts`
+        - Validator 호출이 DB 작업 이전에 수행되어야 함
+        - 트랜잭션 사용 시 모든 repository/validator 호출에 `tx` 전달
+        - 도메인 객체 생성은 `Entity.create()` 팩토리 메서드 사용
+
+        ### 안티패턴 감지
+        - execute() 외의 public 메서드 존재
+        - 직접적인 Prisma 호출 (repository 패턴 위반)
+        - Validator 없이 바로 DB 작업 수행
+        - 트랜잭션 내에서 tx 미전달
+
+    - path: 'apps/api/src/**/dto/**/*.ts'
+      instructions: |
+        ## DTO 패턴 검토
+
+        ### 필수 규칙
+        - 모든 DTO는 @imkdw-dev/types의 공유 인터페이스 구현
+        - PickType/OmitType 사용 금지 - 독립적으로 정의
+        - Response DTO는 private constructor + static `from()` 팩토리 메서드
+        - 모든 필드에 @ApiProperty() 데코레이터 (description, example 포함)
+        - class-validator 데코레이터로 유효성 검증
+        - @imkdw-dev/consts의 상수 사용
+
+        ### 보안 검토
+        - 민감한 필드 노출 여부 확인
+        - 적절한 유효성 검증 데코레이터 적용 확인
+
+    - path: 'apps/api/src/**/exception/**/*.ts'
+      instructions: |
+        ## Exception 패턴 검토
+
+        ### 필수 규칙
+        - CustomException 상속 필수
+        - 파일명 규칙: `{entity}-{error-type}.exception.ts`
+        - EXCEPTION_CODES 상수 사용 (@imkdw-dev/exception)
+        - HttpStatus enum 사용 (하드코딩된 상태코드 금지)
+        - 의미있는 에러 메시지 포함
+
+        ### 코드 형식
+        - errorCode: EXCEPTION_CODES.XXX 형태
+        - statusCode: HttpStatus.XXX 형태
+
+    - path: 'apps/api/src/**/repository/**/*.ts'
+      instructions: |
+        ## Repository 패턴 검토
+
+        ### 필수 규칙
+        - 모든 메서드에 optional `tx?: Prisma.TransactionClient` 파라미터
+        - soft delete 쿼리에 `deletedAt: null` 조건 포함
+        - Mapper를 통한 도메인 객체 변환
+        - PrismaService 주입 확인
+
+        ### 성능 검토
+        - select 절 최적화 (필요한 필드만 조회)
+        - include 사용 시 필요한 관계만 로드
+        - 대량 조회 시 페이지네이션 적용
+
+    - path: 'apps/api/src/**/controller/**/*.ts'
+      instructions: |
+        ## Controller 패턴 검토
+
+        ### 필수 규칙
+        - 비즈니스 로직 금지 (Use Case로 위임)
+        - Swagger 데코레이터 적용 확인
+        - 적절한 HTTP 상태코드 사용
+        - @Public() 또는 Guard 적용 확인
+
+        ### 보안 검토
+        - 인증이 필요한 엔드포인트에 Guard 적용 확인
+        - Role 기반 접근 제어 확인
+        - 입력값 유효성 검증 (DTO + ValidationPipe)
+
+    - path: 'apps/api/test/**/*.ts'
+      instructions: |
+        ## 테스트 코드 검토
+
+        ### 통합 테스트 규칙
+        - IntegrationTestHelper 사용
+        - beforeEach에서 트랜잭션 시작
+        - afterEach에서 트랜잭션 롤백
+        - 실제 Prisma 클라이언트 사용
+
+        ### 테스트 커버리지
+        - 에러 케이스 테스트 (특정 Exception 단언)
+        - 엣지 케이스 테스트 (빈 배열, 중복 등)
+        - 비즈니스 로직 영향 테스트
+
+        ### 테스트 품질
+        - 테스트 이름은 의도를 명확히 전달
+        - Given-When-Then 구조 권장
+        - 하드코딩된 테스트 데이터 지양
+
+    - path: 'apps/blog/src/**/*.tsx'
+      instructions: |
+        ### 컴포넌트 패턴
+        - Server Component가 기본값 (Client Component는 필요시에만)
+        - 'use client' 지시어는 인터랙션이 필요한 경우만
+        - @imkdw-dev/ui 컴포넌트 우선 사용
+        - @imkdw-dev/types에서 타입 import
+
+        ### 성능 검토
+        - 불필요한 Client Component 변환 감지
+        - 무거운 연산에 useMemo/useCallback 고려
+        - 이미지 최적화 (next/image 사용)
+        - 코드 스플리팅 기회 확인
+
+        ### 스타일링
+        - Tailwind CSS 반응형 브레이크포인트 활용
+        - 커스텀 CSS 대신 Tailwind 유틸리티 사용
+        - 일관된 spacing scale 사용
+
+    - path: 'apps/blog/src/app/**/page.tsx'
+      instructions: |
+        ### 필수 규칙
+        - createMetadata() 유틸리티로 메타데이터 생성
+        - Server Component로 데이터 페칭
+        - 병렬 데이터 페칭에 Promise.all() 사용
+        - 적절한 에러 바운더리 설정
+
+        ### SEO 검토
+        - metadata export 존재 확인
+        - Open Graph 이미지 설정 확인
+        - 적절한 title, description 설정
+
+    - path: 'apps/blog/src/components/**/*.tsx'
+      instructions: |
+        ### 패턴 규칙
+        - Props 인터페이스 명확히 정의
+        - Client Component는 'use client' 지시어 필수
+        - @imkdw-dev/hooks의 커스텀 훅 활용
+        - 상태 관리는 Provider 패턴 사용
+
+        ### 접근성
+        - 시맨틱 HTML 요소 사용
+        - 필요한 경우 ARIA 속성 추가
+        - 키보드 네비게이션 지원
+
+    - path: 'apps/blog/src/actions/**/*.ts'
+      instructions: |
+        ### 필수 규칙
+        - 'use server' 지시어 필수
+        - 적절한 에러 핸들링
+        - 민감한 작업에 대한 인증 확인
+        - 쿠키/세션 조작 시 보안 고려
+
+    - path: 'packages/shared/**/*.ts'
+      instructions: |
+        ### 패키지 규칙
+        - 모든 패키지는 @imkdw-dev/{name} 스코프
+        - index.ts를 통한 barrel export 필수
+        - 패키지 간 의존성 방향 확인 (core -> feature)
+
+        ### 타입 정의 (types 패키지)
+        - DTO 인터페이스는 'I' 접두사 사용
+        - JSDoc 주석 (한국어)
+        - Request/Response 타입 명확히 구분
+
+        ### Exception 정의 (exception 패키지)
+        - 코드 형식: 'DOMAIN-NNNN'
+        - 한국어 에러 메시지
+        - as const로 타입 추론
+
+        ### 상수 정의 (consts 패키지)
+        - as const 사용 필수
+        - 도메인별 파일 분리
+        - SCREAMING_SNAKE_CASE 네이밍
+
+    - path: 'packages/ui/**/*.tsx'
+      instructions: |
+        ### 컴포넌트 규칙
+        - cn() 유틸리티로 클래스 병합
+        - 디자인 토큰 (CSS 변수) 활용
+        - 반응형 디자인 지원
+        - 접근성 고려
+
+        ### Export 규칙
+        - primitives/: 기본 UI 컴포넌트
+        - components/: 비즈니스 로직 포함 컴포넌트
+        - 모든 컴포넌트 index.ts에서 export
+
+    - path: 'packages/eslint-config/**/*.js'
+      instructions: |
+        - 새로운 규칙 추가 시 기존 규칙과 충돌 확인
+        - 엄격한 TypeScript 규칙 유지
+        - no-console, no-any 규칙 비활성화 금지
+
+    - path: 'packages/typescript-config/**/*.json'
+      instructions: |
+        - strict 모드 유지 필수
+        - noImplicitAny, strictNullChecks 비활성화 금지
+        - 새 설정은 모든 의존 프로젝트에 영향 고려
+
+  tools:
+    ast-grep:
+      essential_rules: true
+      rule_dirs:
+        - '.coderabbit/rules'
+
+chat:
+  auto_reply: true
