@@ -15,7 +15,7 @@
     "@imkdw-dev/api-client": "workspace:*",
     "@imkdw-dev/types": "workspace:*",
     "zustand": "5.0.8",
-    "react": "19.1.0"
+    "react": "19.1.2"
   },
   "devDependencies": {
     "@imkdw-dev/eslint-config": "workspace:*",
