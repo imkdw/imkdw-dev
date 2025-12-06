@@ -71,7 +71,7 @@ COPY --from=build /app/packages/shared/exception/package.json ./packages/shared/
 COPY --from=build /app/packages/shared/types/package.json ./packages/shared/types/
 COPY --from=build /app/packages/shared/utils/package.json ./packages/shared/utils/
 
-RUN pnpm install --prod --frozen-lockfile
+RUN pnpm install --prod --frozen-lockfile --ignore-scripts
 
 RUN pnpm api prisma:generate
 
