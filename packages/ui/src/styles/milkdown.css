@@ -75,6 +75,7 @@ div[data-milkdown-root='true'] {
   margin-top: 1rem;
   margin-bottom: 1rem;
   line-height: 1.75;
+  min-height: 1.75em;
 }
 
 .milkdown p:first-child {
