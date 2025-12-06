@@ -16,7 +16,8 @@
     "test:integration": "doppler run --config test -- jest --config test/integration/jest.config.ts",
     "prisma": "doppler run -- prisma",
     "prisma:seed": "doppler run -- npx ts-node prisma/seed.ts",
-    "prisma:generate": "prisma generate"
+    "prisma:generate": "prisma generate",
+    "db:copy": "./scripts/db-copy.sh"
   },
   "dependencies": {
     "@imkdw-dev/consts": "workspace:*",

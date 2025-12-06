@@ -16,6 +16,8 @@
     "DTO",
     "DXRR",
     "healthcheck",
+    "hostport",
+    "hostportdb",
     "httponly",
     "imkdw",
     "INITDB",
@@ -26,6 +28,7 @@
     "Milkdown",
     "nord",
     "nosniff",
+    "PGPASSWORD",
     "presigner",
     "pretendard",
     "psql",
@@ -35,6 +38,7 @@
     "Timestamptz",
     "Turbopack",
     "Turborepo",
+    "userpass",
     "zustand"
   ],
   "discord.enabled": true
