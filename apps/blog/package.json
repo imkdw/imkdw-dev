@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "doppler run -- next dev --turbopack",
-    "build": "doppler run -- next build --turbopack",
+    "build": "[ -n \"$VERCEL\" ] && next build --turbopack || doppler run -- next build --turbopack",
     "build:local": "doppler run --config production -- next build --turbopack",
     "lint": "eslint"
   },
