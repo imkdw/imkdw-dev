@@ -5,20 +5,22 @@ import { ArticleFormFields } from './article-form-fields';
 import { ArticleTagManager } from './article-tag-manager';
 import { ArticleSeriesSelector } from './article-series-selector';
 import { ArticleWritingStats } from './article-writing-stats';
-import { useArticleForm } from '@imkdw-dev/hooks';
+import { DraftRestoreDialog } from '../common/draft-restore-dialog';
+import { useArticleForm } from '@/hooks';
 import { IArticleDto } from '@imkdw-dev/types';
+import { ArticleFormMode } from '@/types/article';
 
 interface Props {
-  mode: 'create' | 'edit';
+  mode: ArticleFormMode;
   initialData?: IArticleDto;
 }
 
 export function ArticleForm({ mode, initialData }: Props) {
-  const { formData, handlers } = useArticleForm({ mode, initialData });
+  const { formData, handlers, state } = useArticleForm({ mode, initialData });
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col">
-      <ArticleFormHeader mode={mode} onSaveDraft={handlers.handleSaveDraft} onPublish={handlers.handlePublish} />
+      <ArticleFormHeader mode={mode} onPublish={handlers.handlePublish} />
       <div className="flex gap-4 flex-1">
         <div className="flex flex-1">
           <ArticleFormFields
@@ -41,6 +43,12 @@ export function ArticleForm({ mode, initialData }: Props) {
           <ArticleWritingStats content={formData.content} />
         </div>
       </div>
+
+      <DraftRestoreDialog
+        open={state.showRestoreDialog}
+        onRestore={handlers.handleRestoreDraft}
+        onDiscard={handlers.handleDiscardDraft}
+      />
     </div>
   );
 }
