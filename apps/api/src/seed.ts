@@ -107,7 +107,6 @@ async function main() {
         await tx.articleTag.deleteMany();
         await tx.seriesTag.deleteMany();
         await tx.article.deleteMany();
-        await tx.articleHistory.deleteMany();
         await tx.series.deleteMany();
         await tx.tag.deleteMany();
         await tx.member.deleteMany();

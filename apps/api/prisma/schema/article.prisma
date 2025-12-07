@@ -34,22 +34,3 @@ model Article {
   @@index([slug])
   @@map("article")
 }
-
-/// 게시글 수정 이력을 저장하는 테이블
-model ArticleHistory {
-  id String @id @default(uuid())
-
-  /// 원본 게시글 ID
-  articleId String
-
-  /// 수정 시점의 게시글 제목
-  title String
-
-  /// 수정 시점의 게시글 본문 내용
-  content   String
-  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz
-  deletedAt DateTime? @map("deleted_at") @db.Timestamptz
-
-  @@map("article_history")
-}
