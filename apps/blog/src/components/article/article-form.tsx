@@ -31,6 +31,7 @@ export function ArticleForm({ mode, initialData }: Props) {
             onSlugChange={handlers.setSlug}
             onChangeContent={handlers.setContent}
             onUploadImage={handlers.handleImageUpload}
+            onEditorReady={handlers.handleEditorReady}
           />
         </div>
         <div className="flex flex-col gap-4 p-2">

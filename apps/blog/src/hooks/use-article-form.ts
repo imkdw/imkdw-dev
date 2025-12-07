@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { createArticle, updateArticle } from '@imkdw-dev/api-client';
 import { IArticleDto } from '@imkdw-dev/types';
@@ -56,6 +56,7 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
   const [showRestoreDialog, setShowRestoreDialog] = useState(false);
 
   const draftDetectionRan = useRef(false);
+  const replaceEditorContentRef = useRef<((content: string) => void) | null>(null);
 
   const storageKey = useMemo(() => getStorageKey(mode, initialData?.slug), [mode, initialData?.slug]);
 
@@ -120,6 +121,10 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
     setUploadedImageUrls(prev => [...prev, imageUrl]);
   };
 
+  const handleEditorReady = useCallback((replaceContent: (content: string) => void) => {
+    replaceEditorContentRef.current = replaceContent;
+  }, []);
+
   const handleRestoreDraft = () => {
     const draft = loadDraft(storageKey);
     if (draft) {
@@ -129,6 +134,9 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
       setTags(draft.tags);
       setSeriesId(draft.seriesId);
       setUploadedImageUrls(draft.uploadedImageUrls);
+      if (replaceEditorContentRef.current) {
+        replaceEditorContentRef.current(draft.content);
+      }
     }
     setShowRestoreDialog(false);
   };
@@ -179,6 +187,7 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
       handlePublish,
       handleRestoreDraft,
       handleDiscardDraft,
+      handleEditorReady,
     },
     state: {
       isPublishing,
