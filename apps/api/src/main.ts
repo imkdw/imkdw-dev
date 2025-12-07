@@ -5,6 +5,7 @@ import { MyConfigService } from '@/config/my-config.service';
 import { INestApplication, ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { APP_ENV } from '@imkdw-dev/consts';
+import helmet from 'helmet';
 
 function getCorsConfig(env: string) {
   const corsOrigins = [/^https?:\/\/imkdw\.dev$/, /^https?:\/\/.*\.imkdw\.dev$/];
@@ -43,6 +44,7 @@ async function bootstrap() {
   app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   app.enableCors(getCorsConfig(env));
+  app.use(helmet());
 
   setSwagger(app, myConfigService);
 
