@@ -3,7 +3,7 @@
 import { SeriesFormHeader } from './series-form-header';
 import { SeriesFormFields } from './series-form-fields';
 import { ArticleTagManager } from '../article/article-tag-manager';
-import { useSeriesForm } from '@imkdw-dev/hooks';
+import { useSeriesForm } from '@/hooks';
 import { ISeriesDetailDto } from '@imkdw-dev/types';
 
 interface Props {
