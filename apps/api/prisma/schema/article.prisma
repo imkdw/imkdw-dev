@@ -32,5 +32,6 @@ model Article {
   comments ArticleComment[]
 
   @@index([slug])
+  @@index([seriesId])
   @@map("article")
 }

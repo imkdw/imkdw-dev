@@ -30,5 +30,6 @@ model Series {
   updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz
   deletedAt DateTime? @map("deleted_at") @db.Timestamptz
 
+  @@index([slug])
   @@map("series")
 }

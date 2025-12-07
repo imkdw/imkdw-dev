@@ -23,5 +23,6 @@ model ArticleComment {
   parent  ArticleComment?  @relation("ArticleCommentReplies", fields: [parentId], references: [id])
   replies ArticleComment[] @relation("ArticleCommentReplies")
 
+  @@index([articleId])
   @@map("article_comment")
 }
