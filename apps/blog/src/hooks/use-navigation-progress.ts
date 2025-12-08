@@ -14,6 +14,7 @@ interface NavigationProgressActions {
 
 const TRICKLE_INTERVAL_MS = 50;
 const DONE_DELAY_MS = 300;
+const MIN_DISPLAY_TIME_MS = 300;
 
 function getIncrement(current: number): number {
   if (current < 20) return 3;
@@ -29,6 +30,8 @@ export function useNavigationProgress(): NavigationProgressState & NavigationPro
   const [progress, setProgress] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const startTimeRef = useRef<number>(0);
+  const minDisplayTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clearProgressInterval = useCallback(() => {
     if (intervalRef.current) {
@@ -44,9 +47,28 @@ export function useNavigationProgress(): NavigationProgressState & NavigationPro
     }
   }, []);
 
+  const clearMinDisplayTimeout = useCallback(() => {
+    if (minDisplayTimeoutRef.current) {
+      clearTimeout(minDisplayTimeoutRef.current);
+      minDisplayTimeoutRef.current = null;
+    }
+  }, []);
+
+  const completeProgress = useCallback(() => {
+    clearProgressInterval();
+    setProgress(100);
+
+    timeoutRef.current = setTimeout(() => {
+      setIsLoading(false);
+      setProgress(0);
+    }, DONE_DELAY_MS);
+  }, [clearProgressInterval]);
+
   const start = useCallback(() => {
     clearProgressInterval();
     clearDoneTimeout();
+    clearMinDisplayTimeout();
+    startTimeRef.current = Date.now();
     setIsLoading(true);
     setProgress(0);
 
@@ -60,24 +82,35 @@ export function useNavigationProgress(): NavigationProgressState & NavigationPro
         return Math.min(prev + increment, 90);
       });
     }, TRICKLE_INTERVAL_MS);
-  }, [clearProgressInterval, clearDoneTimeout]);
+  }, [clearProgressInterval, clearDoneTimeout, clearMinDisplayTimeout]);
 
   const done = useCallback(() => {
-    clearProgressInterval();
-    setProgress(100);
+    clearMinDisplayTimeout();
 
-    timeoutRef.current = setTimeout(() => {
-      setIsLoading(false);
-      setProgress(0);
-    }, DONE_DELAY_MS);
-  }, [clearProgressInterval]);
+    if (startTimeRef.current === 0) {
+      completeProgress();
+      return;
+    }
+
+    const elapsed = Date.now() - startTimeRef.current;
+    const remainingTime = MIN_DISPLAY_TIME_MS - elapsed;
+
+    if (remainingTime > 0) {
+      minDisplayTimeoutRef.current = setTimeout(() => {
+        completeProgress();
+      }, remainingTime);
+    } else {
+      completeProgress();
+    }
+  }, [clearMinDisplayTimeout, completeProgress]);
 
   useEffect(() => {
     return () => {
       clearProgressInterval();
       clearDoneTimeout();
+      clearMinDisplayTimeout();
     };
-  }, [clearProgressInterval, clearDoneTimeout]);
+  }, [clearProgressInterval, clearDoneTimeout, clearMinDisplayTimeout]);
 
   return {
     isLoading,
