@@ -40,6 +40,7 @@ export class SeriesRepository {
         tags: {
           createMany: {
             data: tagIds.map(tagId => ({ tagId })),
+            skipDuplicates: true,
           },
         },
       },

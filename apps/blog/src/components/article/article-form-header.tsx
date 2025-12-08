@@ -1,13 +1,12 @@
 import { Button } from '@imkdw-dev/ui';
-import { Save, Send } from 'lucide-react';
+import { Send } from 'lucide-react';
 
 interface Props {
   mode: 'create' | 'edit';
-  onSaveDraft: () => void;
   onPublish: () => void;
 }
 
-export function ArticleFormHeader({ mode, onSaveDraft, onPublish }: Props) {
+export function ArticleFormHeader({ mode, onPublish }: Props) {
   const title = mode === 'create' ? '게시글 작성' : '게시글 수정';
 
   return (
@@ -16,11 +15,6 @@ export function ArticleFormHeader({ mode, onSaveDraft, onPublish }: Props) {
         {title}
       </h1>
       <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
-        <Button variant="outline" className="flex items-center gap-2 flex-1 sm:flex-initial" onClick={onSaveDraft}>
-          <Save className="w-4 h-4" />
-          <span className="hidden sm:inline">Save Draft</span>
-          <span className="sm:hidden">Draft</span>
-        </Button>
         <Button className="flex items-center gap-2 flex-1 sm:flex-initial" onClick={onPublish}>
           <Send className="w-4 h-4" />
           Publish

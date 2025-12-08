@@ -1,129 +1,146 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working with this repository.
 
-If anything changes or if you have any new advice and requests, please update the convention and structure in that file
+## Essential Commands
 
-## Project Structure
-
-This is a Turborepo monorepo using pnpm as the package manager. The project contains:
-
-- `apps/api/` - NestJS API server with PostgreSQL via Prisma
-- `apps/blog/` - Next.js blog application with Tailwind CSS v3 and Turbopack
-- `packages/eslint-config/` - Shared ESLint configurations
-- `packages/typescript-config/` - Shared TypeScript configurations  
-- `packages/shared/` - Shared utility packages:
-  - `consts/` - Application constants
-  - `exception/` - Error handling utilities
-  - `types/` - Shared TypeScript types
-  - `ui/` - Shared UI
-
-## Common Commands
-
-### Development
-- `pnpm dev` - Start all development servers (API + Blog)
-- `pnpm api dev` - Start only the API server (port 8000)
-- `pnpm blog dev` - Start only the blog app (port 3000)
-
-### Building
-- `pnpm build` - Build all applications and packages
-- `pnpm api build` - Build only the API server
-- `pnpm blog build` - Build only the blog application
-
-### Package Management
-- `pnpm api add {package}` - Add dependency to API
-- `pnpm blog add {package}` - Add dependency to Blog
-- `pnpm api remove {package}` - Remove dependency from API
-- `pnpm blog remove {package}` - Remove dependency from Blog
-
-### Code Quality
-- `pnpm lint` - Run ESLint across all packages
-- `pnpm api lint` - Run ESLint on API only
-- `pnpm blog lint` - Run ESLint on Blog only
-- `pnpm check-types` - Run TypeScript type checking across all packages
-- `pnpm format` - Format code using Prettier (printWidth: 120)
-
-### Testing (API only)
-- `pnpm api test` - Run all tests (unit + integration)  
-- `pnpm api test:unit` - Run unit tests only
-- `pnpm api test:integration` - Run integration tests only (requires `.env.test`)
-- `pnpm api test:cov` - Run tests with coverage
-
-### Database Management (API)
+- `pnpm dev` - Start all dev servers (API:8000 + Blog:3000)
+- `pnpm build` - Build all packages and apps
+- `pnpm lint` - Fix linting issues
+- `pnpm check-types` - TypeScript validation
+- `pnpm format` - Format with Prettier (120 char width)
+- `pnpm api test` - Run API tests (unit + integration)
 - `pnpm api prisma generate` - Generate Prisma client
-- `pnpm api prisma migrate dev` - Run migrations in development
-- `pnpm api prisma studio` - Open Prisma Studio GUI
 
-## Port Configuration
+### Package Shortcuts
 
-- **API Server**: Port 8000 (configured in `apps/api/src/main.ts`)
-- **Blog App**: Port 3000 (Next.js default, auto-adjusts if occupied)
+- `pnpm api {cmd}` - Run command in API package
+- `pnpm blog {cmd}` - Run command in Blog package
+- `pnpm ui {cmd}` - Run command in UI package
 
-## Shared Configurations
+## Project Overview
 
-### TypeScript Configuration
-- **Base config**: `packages/typescript-config/base.json` - Common settings for all projects
-- **NestJS config**: `packages/typescript-config/nestjs.json` - Server-side specific settings
-- **Next.js config**: `packages/typescript-config/nextjs.json` - Client-side specific settings
-- Each app extends the appropriate config via relative paths
+Turborepo monorepo with pnpm package manager.
 
-### ESLint Configuration
-- **Base config**: `packages/eslint-config/base.js` - Strict rules for all projects
-  - `no-console: "error"` - Console logs are errors
-  - `@typescript-eslint/no-explicit-any: "error"` - Any type forbidden
-  - Import sorting with alphabetical order and proper grouping
-  - Strict TypeScript rules (prefer-optional-chain, prefer-nullish-coalescing)
-- **NestJS config**: `packages/eslint-config/nestjs.js` - Server-specific rules
-- **Next.js config**: `packages/eslint-config/next.js` - Client-specific rules with React hooks validation
-- Each app imports configs via relative paths
+### Applications
 
-### Prettier Configuration
-- **Global config**: `.prettierrc` in root
-- `printWidth: 120` - Line width as requested
-- `singleQuote: true`, `trailingComma: "es5"`, `arrowParens: "avoid"`
-- Formats: TypeScript, JavaScript, JSON, Markdown, YAML
+| App         | Stack                             | Port | Purpose         |
+| ----------- | --------------------------------- | ---- | --------------- |
+| `apps/api`  | NestJS 11, PostgreSQL, Prisma     | 8000 | REST API server |
+| `apps/blog` | Next.js 16, React 19, Tailwind v3 | 3000 | Blog frontend   |
 
-## Architecture Notes
+### Shared Packages (@imkdw-dev/*)
 
-### API Application (NestJS)
-- Port 8000, NestJS server with PostgreSQL via Prisma
-- Feature-based modular architecture
-- Swagger documentation available at `/api` in non-production environments
-- Shared workspace packages for types, constants, and exceptions
-- **세부사항은 `/apps/api/CLAUDE.md` 참고**
+| Package      | Purpose                                          |
+| ------------ | ------------------------------------------------ |
+| `ui`         | Design system (Tailwind v3, Radix UI primitives) |
+| `api-client` | Typed API client library                         |
+| `types`      | Shared TypeScript interfaces and DTOs            |
+| `consts`     | Application constants                            |
+| `exception`  | Error codes and exception handlers               |
+| `auth`       | Authentication utilities                         |
+| `hooks`      | Custom React hooks                               |
+| `toast`      | Toast notification system                        |
+| `fonts`      | Font configurations                              |
+| `utils`      | Utility functions                                |
 
-### Blog Application (Next.js)
-- Port 3000, Next.js 15 with App Router and Turbopack
-- **Tailwind CSS v3** for styling (fixed version for stability)
-  - Standard v3 configuration with `tailwind.config.ts`
-  - PostCSS integration with autoprefixer
-  - Traditional `@tailwind` directives in CSS
-- Font configurations removed to avoid Turbopack compatibility issues
-- Strict React Hooks dependency array checking
-- Next.js image optimization enforced
+### Build Dependencies
 
-### Monorepo Structure  
-- Turborepo manages task orchestration and caching
-- Output directories: `.next/**`, `dist/**` for proper caching
-- Development tasks are not cached and run persistently
-- Uses pnpm workspaces with convenient shortcuts (`pnpm api`, `pnpm blog`)
-- Workspace packages prefixed with `@imkdw-dev/` scope
-- Shared packages must be built before dependent applications
+Shared packages must build before apps. Run `pnpm build` to build everything in correct order.
 
-## Requirements
+## Development Setup
+
+### Prerequisites
 
 - Node.js >= 22
-- pnpm 10.0.0 (specified as package manager)
+- pnpm 10.0.0
+- Docker (for PostgreSQL)
+- Doppler CLI (for secrets management)
 
-## Development Guidelines
+### First-Time Setup
 
-## CLAUDE.md 구조
+1. `pnpm install` - Install all dependencies
+2. `docker-compose up -d --wait` - Start PostgreSQL (port 6432)
+3. `doppler run -- pnpm api prisma db push` - Apply database schema
+4. `pnpm dev` - Start development servers
 
-이 프로젝트는 LLM 컨텍스트 최적화를 위해 폴더별로 CLAUDE.md 파일을 관리합니다:
+### Environment Variables
 
-- `/CLAUDE.md` - 프로젝트 전체 개요 및 monorepo 구조
-- `/apps/api/CLAUDE.md` - API 서버 개발 가이드라인
-- `/apps/blog/CLAUDE.md` - Blog 애플리케이션 가이드라인  
-- `/packages/*/CLAUDE.md` - 각 패키지별 상세 가이드
+- Development secrets managed via Doppler
+- Testing requires `.env.test` file for integration tests
+- IMPORTANT: Never commit `.env` files to repository
 
-각 폴더에서 작업할 때는 해당 폴더의 CLAUDE.md를 참고하세요.
+## Code Quality Rules
+
+IMPORTANT: These rules are enforced by ESLint and CI:
+
+- **NO `any` type** - Use proper TypeScript types always
+- **NO `console.log`** - Use proper logging utilities
+- **NO `import * as`** - Import specific items only
+- **120 character line width** - Enforced by Prettier
+- **Strict null checks** - Handle all nullable values explicitly
+
+## Testing
+
+### API Tests
+
+- `pnpm api test` - All tests (unit + integration)
+- `pnpm api test:unit` - Unit tests only
+- `pnpm api test:integration` - Integration tests (requires `.env.test`)
+
+### Blog Tests
+
+- Use Playwright MCP for E2E validation
+- Test against `http://localhost:3000`
+- Do not start web server from terminal in test scripts
+
+## Common Workflows
+
+### Adding a New API Feature
+
+1. Create feature module in `apps/api/src/features/{name}/`
+2. Add exception codes to `packages/shared/exception/`
+3. Add shared DTOs to `packages/shared/types/`
+4. Reference `/apps/api/CLAUDE.md` for patterns
+
+### Adding a New UI Component
+
+1. Primitives go in `packages/ui/src/primitives/`
+2. Complex components go in `packages/ui/src/components/`
+3. Export from `packages/ui/src/index.ts`
+4. Reference `/packages/ui/CLAUDE.md` for patterns
+
+### Database Changes
+
+1. Modify schema files in `apps/api/prisma/schema/`
+2. Run `pnpm api prisma generate`
+
+## Project Quirks
+
+IMPORTANT: Read before making changes:
+
+1. **Tailwind CSS v3 Fixed** - Do NOT upgrade to v4 (stability issues with current setup)
+2. **Turbopack Limitations** - Some font configurations disabled for compatibility
+3. **Split Prisma Schema** - Schema files in `prisma/schema/` are imported by main schema file
+4. **Build Order Matters** - If shared types change, run `pnpm build` before testing
+5. **Port Auto-Adjustment** - Blog app auto-selects different port if 3000 is occupied
+6. **Doppler Required** - Most environment variables managed via Doppler, not local `.env`
+
+## Detailed Guides
+
+Context-specific guidelines in sub-CLAUDE.md files:
+
+| Path                     | Focus Area                                               |
+| ------------------------ | -------------------------------------------------------- |
+| `/apps/api/CLAUDE.md`    | NestJS patterns, DTOs, Use Cases, Testing                |
+| `/apps/blog/CLAUDE.md`   | React/Next patterns, component usage, Playwright testing |
+| `/packages/ui/CLAUDE.md` | Design system, Tailwind preset, theming                  |
+
+IMPORTANT: Always check the relevant sub-CLAUDE.md before working in that directory.
+
+## Questions
+
+Use the Claude Question feature to ask the user for clarification when needed.
+
+## Edit CLAUDE.md
+- If some change with Claude Code, Update CLAUDE.md of that directory.
