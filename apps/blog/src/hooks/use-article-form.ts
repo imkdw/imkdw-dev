@@ -14,7 +14,7 @@ interface ArticleDraftData {
   savedAt: number;
 }
 
-const AUTO_SAVE_INTERVAL = 5000;
+const AUTO_SAVE_INTERVAL = 5_000;
 
 function getStorageKey(mode: ArticleFormMode, slug?: string): string {
   return mode === 'create' ? 'article-draft-new' : `article-draft-edit-${slug}`;
@@ -30,6 +30,7 @@ function loadDraft(key: string): ArticleDraftData | null {
     if (!stored) return null;
     return JSON.parse(stored) as ArticleDraftData;
   } catch {
+    localStorage.removeItem(key);
     return null;
   }
 }

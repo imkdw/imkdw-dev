@@ -80,12 +80,6 @@ IMPORTANT: These rules are enforced by ESLint and CI:
 - **120 character line width** - Enforced by Prettier
 - **Strict null checks** - Handle all nullable values explicitly
 
-### Pre-commit Hooks
-
-Husky + lint-staged runs automatically:
-- ESLint fixes applied to staged `.ts` and `.tsx` files
-- Prettier formatting applied
-
 ## Testing
 
 ### API Tests
