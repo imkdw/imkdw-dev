@@ -25,10 +25,9 @@ export function ProgressBar({ progress, isVisible, className }: Props) {
       <div
         className={cn(
           'h-full bg-primary',
-          'transition-[width] duration-200 ease-out',
-          'transition-opacity',
+          'transition-all duration-100 ease-linear',
           isVisible && !isComplete && 'opacity-100',
-          isComplete && 'opacity-0 duration-300',
+          isComplete && 'opacity-0 duration-300 ease-out',
           !isVisible && 'opacity-0'
         )}
         style={{
