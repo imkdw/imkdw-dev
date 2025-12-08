@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useCommentForm } from '@imkdw-dev/hooks';
+import { useCommentForm } from '@/hooks';
 import { IArticleCommentDto } from '@imkdw-dev/types';
 import { getArticleComments } from '@imkdw-dev/api-client';
 import { CommentForm } from './comment-form';

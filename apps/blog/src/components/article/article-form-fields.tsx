@@ -8,6 +8,7 @@ interface Props {
   onSlugChange: (value: string) => void;
   onChangeContent: (value: string) => void;
   onUploadImage: (imageUrl: string) => void;
+  onEditorReady?: (replaceContent: (content: string) => void) => void;
 }
 
 export function ArticleFormFields({
@@ -18,6 +19,7 @@ export function ArticleFormFields({
   onSlugChange,
   onChangeContent,
   onUploadImage,
+  onEditorReady,
 }: Props) {
   return (
     <div className="flex flex-col gap-4 flex-1">
@@ -45,6 +47,7 @@ export function ArticleFormFields({
           isEditable={true}
           onChangeContent={onChangeContent}
           onUploadImage={onUploadImage}
+          onEditorReady={onEditorReady}
         />
       </div>
     </div>

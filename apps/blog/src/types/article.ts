@@ -17,3 +17,5 @@ export interface NavigationArticle {
   title: string;
   slug: string;
 }
+
+export type ArticleFormMode = 'create' | 'edit';
