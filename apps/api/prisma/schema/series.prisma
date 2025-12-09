@@ -18,7 +18,7 @@ model Series {
   totalReadMinute Int @default(0) @map("total_read_minute")
 
   /// 마지막 게시글 추가시간
-  lastArticleCreatedAt DateTime? @map("last_article_created_at")
+  lastArticleCreatedAt DateTime? @map("last_article_created_at") @db.Timestamptz
 
   /// 시리즈에 속한 게시글들
   articles Article[]

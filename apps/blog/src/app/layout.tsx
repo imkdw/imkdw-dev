@@ -8,6 +8,7 @@ import 'highlight.js/styles/atom-one-dark.css';
 
 import { Providers } from '../components/providers';
 import { MobileSidebar } from '../components/sidebar/mobile-sidebar';
+import { NavigationProgress } from '../components/navigation-progress';
 import { createMetadata } from '@/utils/metadata-creator';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { APP_ENV } from '@imkdw-dev/consts';
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko" suppressHydrationWarning>
       <body className={pretendard.className}>
         <Providers>
+          <NavigationProgress />
           {children}
           <MobileSidebar />
         </Providers>
