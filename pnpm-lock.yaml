@@ -448,6 +448,15 @@ importers:
       '@imkdw-dev/utils':
         specifier: workspace:*
         version: link:../shared/utils
+      next:
+        specifier: 16.0.7
+        version: 16.0.7(@babel/core@7.28.3)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+      react:
+        specifier: 19.1.2
+        version: 19.1.2
+      react-dom:
+        specifier: 19.1.2
+        version: 19.1.2(react@19.1.2)
     devDependencies:
       '@imkdw-dev/eslint-config':
         specifier: workspace:*
