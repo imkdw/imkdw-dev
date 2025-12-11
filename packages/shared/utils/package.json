@@ -18,7 +18,12 @@
   "devDependencies": {
     "@imkdw-dev/eslint-config": "workspace:*",
     "@imkdw-dev/typescript-config": "workspace:*",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "eslint": "^9.18.0",
+    "lucide-react": "^0.462.0",
+    "react": "19.1.2",
+    "react-dom": "19.1.2",
     "typescript": "5.9.2"
   },
   "dependencies": {
