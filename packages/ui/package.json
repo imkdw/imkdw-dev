@@ -15,10 +15,6 @@
     "lint": "eslint src/ --fix",
     "check-types": "tsc --noEmit"
   },
-  "peerDependencies": {
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
-  },
   "dependencies": {
     "@codemirror/commands": "^6.9.0",
     "@codemirror/language-data": "^6.5.1",

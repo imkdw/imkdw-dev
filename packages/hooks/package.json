@@ -12,17 +12,15 @@
     "lint": "eslint src/ --fix",
     "check-types": "tsc --noEmit"
   },
-  "peerDependencies": {
-    "next": ">=16.0.0",
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
-  },
   "dependencies": {
     "@imkdw-dev/api-client": "workspace:*",
     "@imkdw-dev/consts": "workspace:*",
     "@imkdw-dev/types": "workspace:*",
     "@imkdw-dev/utils": "workspace:*",
-    "@imkdw-dev/auth": "workspace:*"
+    "@imkdw-dev/auth": "workspace:*",
+    "react": "19.1.2",
+    "react-dom": "19.1.2",
+    "next": "16.0.7"
   },
   "devDependencies": {
     "@imkdw-dev/eslint-config": "workspace:*",
