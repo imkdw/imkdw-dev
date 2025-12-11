@@ -102,7 +102,7 @@ export function CodeBlockHydrator({
 
       if (success) {
         updateButtonState(button, true);
-        announceToScreenReader('Code copied to clipboard');
+        announceToScreenReader('코드가 복사되었습니다.');
 
         const timeoutId = setTimeout(() => {
           updateButtonState(button, false);
@@ -111,13 +111,9 @@ export function CodeBlockHydrator({
 
         timeoutIdsRef.current.set(codeIndex, timeoutId);
       } else {
-        announceToScreenReader('Failed to copy code');
+        announceToScreenReader('코드 복사에 실패했습니다');
         if (showToastOnError) {
-          toast({
-            title: 'Failed to copy code',
-            description: 'Please try selecting and copying manually',
-            variant: 'destructive',
-          });
+          toast({ title: '코드 복사에 실패했습니다.', variant: 'destructive' });
         }
       }
     },
@@ -140,7 +136,6 @@ export function CodeBlockHydrator({
 
     const timeoutIds = timeoutIdsRef.current;
     const cleanupFunctions = cleanupFunctionsRef.current;
-    const announcementElement = announcementElementRef.current;
 
     const copyButtons = container.querySelectorAll<HTMLButtonElement>('.code-block-copy');
 
@@ -164,8 +159,8 @@ export function CodeBlockHydrator({
       cleanupFunctions.forEach(cleanup => cleanup());
       cleanupFunctionsRef.current = [];
 
-      if (announcementElement) {
-        announcementElement.remove();
+      if (announcementElementRef.current) {
+        announcementElementRef.current.remove();
         announcementElementRef.current = null;
       }
     };
