@@ -4,6 +4,7 @@ import { createTestSeries } from '@test/integration/helpers/series.helper';
 import { createTestTag } from '@test/integration/helpers/tag.helper';
 import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
 import { PrismaService } from '@/infra/database/prisma.service';
+import { ARTICLE_STATE } from '@imkdw-dev/consts';
 
 describe('GetStatsQuery', () => {
   let testHelper: IntegrationTestHelper;
@@ -89,6 +90,7 @@ describe('GetStatsQuery', () => {
           plainContent: '삭제된 글 내용',
           viewCount: 999,
           readMinute: 1,
+          state: ARTICLE_STATE.NORMAL,
           seriesId: series.id,
           deletedAt: new Date(),
         },

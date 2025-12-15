@@ -15,6 +15,7 @@ import { PrismaService } from '@/infra/database/prisma.service';
 import type { Series } from '@prisma/client';
 import { CopyImageService } from '@/shared/services/image/copy-image.service';
 import { STORAGE_SERVICE } from '@/infra/storage/storage.service';
+import { ARTICLE_STATE } from '@imkdw-dev/consts';
 
 describe('게시글 생성 유스케이스', () => {
   let testHelper: IntegrationTestHelper;
@@ -63,6 +64,7 @@ describe('게시글 생성 유스케이스', () => {
         seriesId: testSeries.id,
         tags: ['JavaScript', 'React'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await expect(sut.execute(createArticleDto)).rejects.toThrow(ExistArticleException);
@@ -78,6 +80,7 @@ describe('게시글 생성 유스케이스', () => {
         seriesId: '123e4567-e89b-12d3-a456-426614174000', // 존재하지 않는 ID
         tags: ['JavaScript'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await expect(sut.execute(createArticleDto)).rejects.toThrow(SeriesNotFoundException);
@@ -93,6 +96,7 @@ describe('게시글 생성 유스케이스', () => {
         seriesId: testSeries.id,
         tags: [],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       const result = await sut.execute(createArticleDto);
@@ -115,6 +119,7 @@ describe('게시글 생성 유스케이스', () => {
         seriesId: testSeries.id,
         tags: ['JavaScript', 'React', 'TypeScript'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       const result = await sut.execute(createArticleDto);
@@ -145,6 +150,7 @@ describe('게시글 생성 유스케이스', () => {
         seriesId: testSeries.id,
         tags: ['JavaScript', 'React', 'Vue'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       const result = await sut.execute(createArticleDto);
@@ -173,6 +179,7 @@ describe('게시글 생성 유스케이스', () => {
         seriesId: testSeries.id,
         tags: [],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       const result = await sut.execute(createArticleDto);
@@ -191,6 +198,7 @@ describe('게시글 생성 유스케이스', () => {
         seriesId: testSeries.id,
         tags: ['JavaScript', 'React', 'TypeScript', 'NestJS'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       const result = await sut.execute(createArticleDto);
@@ -220,6 +228,7 @@ describe('게시글 생성 유스케이스', () => {
         seriesId: testSeries.id,
         tags: ['JavaScript'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       const result = await sut.execute(createArticleDto);
@@ -238,6 +247,7 @@ describe('게시글 생성 유스케이스', () => {
         seriesId: testSeries.id,
         tags: [],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       const secondArticleDto: CreateArticleDto = {
@@ -247,6 +257,7 @@ describe('게시글 생성 유스케이스', () => {
         seriesId: testSeries.id,
         tags: [],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       const firstArticle = await sut.execute(firstArticleDto);
@@ -262,6 +273,44 @@ describe('게시글 생성 유스케이스', () => {
     });
   });
 
+  describe('게시글 상태와 함께 생성하면', () => {
+    it('NORMAL 상태로 게시글이 생성된다', async () => {
+      const createArticleDto: CreateArticleDto = {
+        title: '공개 게시글',
+        slug: 'public-article',
+        content: '공개 게시글 내용입니다.',
+        seriesId: testSeries.id,
+        tags: [],
+        uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
+      };
+
+      const result = await sut.execute(createArticleDto);
+
+      const savedArticle = await prisma.article.findUnique({ where: { id: result.id } });
+      expect(savedArticle).not.toBeNull();
+      expect(savedArticle?.state).toBe(ARTICLE_STATE.NORMAL);
+    });
+
+    it('HIDDEN 상태로 게시글이 생성된다', async () => {
+      const createArticleDto: CreateArticleDto = {
+        title: '비공개 게시글',
+        slug: 'hidden-article',
+        content: '비공개 게시글 내용입니다.',
+        seriesId: testSeries.id,
+        tags: [],
+        uploadedImageUrls: [],
+        state: ARTICLE_STATE.HIDDEN,
+      };
+
+      const result = await sut.execute(createArticleDto);
+
+      const savedArticle = await prisma.article.findUnique({ where: { id: result.id } });
+      expect(savedArticle).not.toBeNull();
+      expect(savedArticle?.state).toBe(ARTICLE_STATE.HIDDEN);
+    });
+  });
+
   describe('HTML 태그가 포함된 게시글을 생성하면', () => {
     it('HTML 태그가 제거되어 저장된다', async () => {
       const createArticleDto: CreateArticleDto = {
@@ -271,6 +320,7 @@ describe('게시글 생성 유스케이스', () => {
         seriesId: testSeries.id,
         tags: [],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       const result = await sut.execute(createArticleDto);
@@ -302,6 +352,7 @@ describe('게시글 생성 유스케이스', () => {
         seriesId: testSeries.id,
         tags: ['HTML'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       const result = await sut.execute(createArticleDto);
@@ -323,6 +374,7 @@ describe('게시글 생성 유스케이스', () => {
         seriesId: testSeries.id,
         tags: [],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       const result = await sut.execute(createArticleDto);
