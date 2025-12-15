@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { createArticle, updateArticle } from '@imkdw-dev/api-client';
 import { IArticleDto } from '@imkdw-dev/types';
+import { ARTICLE_STATE } from '@imkdw-dev/consts';
 import { ArticleFormMode } from '@/types/article';
 
 interface ArticleDraftData {
@@ -10,6 +11,7 @@ interface ArticleDraftData {
   content: string;
   tags: string[];
   seriesId: string;
+  state: string;
   uploadedImageUrls: string[];
   savedAt: number;
 }
@@ -51,6 +53,7 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
   const [content, setContent] = useState(initialData?.content ?? '');
   const [tags, setTags] = useState<string[]>(initialData?.tags.map(tag => tag.name) ?? []);
   const [seriesId, setSeriesId] = useState(initialData?.series.id ?? '');
+  const [state, setState] = useState(initialData?.state ?? ARTICLE_STATE.NORMAL);
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
   const [isPublishing, setIsPublishing] = useState(false);
 
@@ -74,7 +77,8 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
         draft.slug !== initialData.slug ||
         draft.content !== initialData.content ||
         JSON.stringify(draft.tags) !== JSON.stringify(initialData.tags.map(t => t.name)) ||
-        draft.seriesId !== initialData.series.id;
+        draft.seriesId !== initialData.series.id ||
+        draft.state !== initialData.state;
 
       if (hasDifferences) {
         setShowRestoreDialog(true);
@@ -85,7 +89,8 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
         draft.slug.trim() !== '' ||
         draft.content.trim() !== '' ||
         draft.tags.length > 0 ||
-        draft.seriesId.trim() !== '';
+        draft.seriesId.trim() !== '' ||
+        draft.state !== ARTICLE_STATE.NORMAL;
 
       if (hasContent) {
         setShowRestoreDialog(true);
@@ -101,6 +106,7 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
         content,
         tags,
         seriesId,
+        state,
         uploadedImageUrls,
         savedAt: Date.now(),
       };
@@ -108,7 +114,7 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
     }, AUTO_SAVE_INTERVAL);
 
     return () => clearTimeout(timer);
-  }, [title, slug, content, tags, seriesId, uploadedImageUrls, storageKey]);
+  }, [title, slug, content, tags, seriesId, state, uploadedImageUrls, storageKey]);
 
   const handleAddTag = (tag: string) => {
     if (!tags.includes(tag)) {
@@ -134,6 +140,7 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
       setContent(draft.content);
       setTags(draft.tags);
       setSeriesId(draft.seriesId);
+      setState(draft.state);
       setUploadedImageUrls(draft.uploadedImageUrls);
       if (replaceEditorContentRef.current) {
         replaceEditorContentRef.current(draft.content);
@@ -156,11 +163,11 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
 
     try {
       if (mode === 'create') {
-        const result = await createArticle({ title, slug, content, tags, seriesId, uploadedImageUrls });
+        const result = await createArticle({ title, slug, content, tags, seriesId, state, uploadedImageUrls });
         clearDraft(storageKey);
         router.push(`/articles/${result.slug}`);
       } else {
-        await updateArticle(slug, { title, content, tags, seriesId, uploadedImageUrls });
+        await updateArticle(slug, { title, content, tags, seriesId, state, uploadedImageUrls });
         clearDraft(storageKey);
         router.push(`/articles/${slug}`);
       }
@@ -176,12 +183,14 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
       content,
       tags,
       seriesId,
+      state,
     },
     handlers: {
       setTitle,
       setSlug,
       setContent,
       setSeriesId,
+      setState,
       handleAddTag,
       handleRemoveTag,
       handleImageUpload,
