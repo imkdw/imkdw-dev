@@ -9,6 +9,7 @@ export interface IArticleDto {
   viewCount: number;
   readMinute: number;
   createdAt: Date;
+  state: string;
   series: IArticleSeriesDto;
   tags: IArticleTagDto[];
 }

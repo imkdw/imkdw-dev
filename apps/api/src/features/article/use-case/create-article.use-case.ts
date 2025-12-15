@@ -23,7 +23,7 @@ export class CreateArticleUseCase {
   ) {}
 
   async execute(dto: CreateArticleDto): Promise<Article> {
-    const { content, seriesId, slug, title, uploadedImageUrls } = dto;
+    const { content, seriesId, slug, title, uploadedImageUrls, state } = dto;
 
     const articleId = generateUUID();
 
@@ -48,6 +48,7 @@ export class CreateArticleUseCase {
         seriesId,
         viewCount: 0,
         readMinute: Article.calculateReadMinute(updatedContent),
+        state,
         tagIds: tags.map(tag => tag.id),
         createdAt: new Date(),
       });

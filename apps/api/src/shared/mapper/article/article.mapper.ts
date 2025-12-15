@@ -12,6 +12,7 @@ export class ArticleMapper {
       seriesId: entity.seriesId,
       viewCount: entity.viewCount,
       readMinute: entity.readMinute,
+      state: entity.state,
       createdAt: entity.createdAt,
       tagIds: [],
     });

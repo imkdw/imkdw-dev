@@ -9,6 +9,7 @@ interface Params {
   seriesId: string;
   viewCount: number;
   readMinute: number;
+  state: string;
   createdAt: Date;
   tagIds: string[];
 }
@@ -22,6 +23,7 @@ export class Article {
   seriesId: string;
   viewCount: number;
   readMinute: number;
+  state: string;
   createdAt: Date;
   tagIds: string[];
 
@@ -34,6 +36,7 @@ export class Article {
     this.seriesId = props.seriesId;
     this.viewCount = props.viewCount;
     this.readMinute = props.readMinute;
+    this.state = props.state;
     this.createdAt = props.createdAt;
     this.tagIds = props.tagIds;
   }

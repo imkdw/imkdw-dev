@@ -45,6 +45,7 @@ export class UpdateArticleUseCase {
         seriesId: dto.seriesId,
         viewCount: existingArticle.viewCount,
         readMinute: Article.calculateReadMinute(updatedContent),
+        state: dto.state,
         tagIds: tags.map(tag => tag.id),
         createdAt: existingArticle.createdAt,
       });
