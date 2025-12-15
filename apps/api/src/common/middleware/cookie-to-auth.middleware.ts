@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 
 @Injectable()
 export class CookieToAuthMiddleware implements NestMiddleware {
-  use(req: Request, res: Response, next: NextFunction) {
+  use(req: Request, _res: Response, next: NextFunction) {
     const { accessToken } = this.parseJwtFromCookie(req.headers.cookie ?? '');
 
     req.headers.authorization = `Bearer ${accessToken}`;
