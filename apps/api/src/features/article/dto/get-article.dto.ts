@@ -7,6 +7,7 @@ import {
   IResponseGetArticleDto,
 } from '@imkdw-dev/types';
 import { ArticleSeriesDto, ArticleTagDto } from '@/features/article/dto/get-articles.dto';
+import { ARTICLE_STATE } from '@imkdw-dev/consts';
 
 export class ArticleDto implements IArticleDto {
   @ApiProperty({ description: '게시글 ID', example: '123e4567-e89b-12d3-a456-426614174000' })
@@ -38,6 +39,9 @@ export class ArticleDto implements IArticleDto {
 
   @ApiProperty({ description: '생성 일시', example: '2024-01-15T00:00:00.000Z' })
   createdAt: Date;
+
+  @ApiProperty({ description: '게시글 상태', enum: Object.values(ARTICLE_STATE) })
+  state: string;
 
   @ApiProperty({ type: ArticleSeriesDto, description: '시리즈 정보' })
   series: IArticleSeriesDto;
