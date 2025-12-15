@@ -18,24 +18,20 @@ export class JwtGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
 
+    const authorization: string = request.headers['authorization'] ?? '';
+
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
 
-    if (isPublic) {
-      return true;
-    }
-
-    const authorization: string = request.headers['authorization'] ?? '';
-
     const parsedAccessToken = authorization.split(' ')[1];
-    if (!parsedAccessToken) {
+    if (!isPublic && !parsedAccessToken) {
       throw new UnauthorizedException();
     }
 
     try {
-      const { id, role } = this.jwtService.verifyJwt(parsedAccessToken);
+      const { id, role } = this.jwtService.verifyJwt(parsedAccessToken ?? '');
 
       if (!id) {
         return false;
@@ -48,6 +44,10 @@ export class JwtGuard implements CanActivate {
 
       return true;
     } catch (error) {
+      if (isPublic) {
+        return true;
+      }
+
       if (error instanceof CustomException) {
         throw error;
       }

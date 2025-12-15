@@ -1,3 +1,5 @@
+import { ExceptionCode } from '@imkdw-dev/exception';
+
 export interface ApiClientConfig {
   baseURL: string;
   version: number;
@@ -16,7 +18,7 @@ export class ApiError extends Error {
     public readonly status: number,
     public readonly statusText: string,
     public readonly url: string,
-    public readonly errorCode?: string,
+    public readonly errorCode?: ExceptionCode,
     message?: string,
     options?: { cause?: unknown }
   ) {

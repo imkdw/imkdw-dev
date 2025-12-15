@@ -70,7 +70,7 @@ export class ApiClient {
 
         if (contentType?.includes('application/json')) {
           const errorData = await response.json();
-          const errorResponse: ErrorResponse = errorData.error;
+          const errorResponse: ErrorResponse = errorData.error ?? errorData;
           throw new ApiError(
             response.status,
             response.statusText,
@@ -114,6 +114,7 @@ export class ApiClient {
             cause: error,
           });
         }
+
         throw new ApiError(500, 'Network Error', url, undefined, error.message, { cause: error });
       }
 
