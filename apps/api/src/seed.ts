@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { MEMBER_ROLE } from '@imkdw-dev/consts';
+import { ARTICLE_STATE, MEMBER_ROLE } from '@imkdw-dev/consts';
 import { Article, ArticleComment, Member, PrismaClient, Series, Tag } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -226,6 +226,7 @@ async function main() {
               seriesId: randomSeries.id,
               viewCount: faker.number.int({ min: 0, max: 1000 }),
               readMinute,
+              state: ARTICLE_STATE.NORMAL,
             },
           });
 

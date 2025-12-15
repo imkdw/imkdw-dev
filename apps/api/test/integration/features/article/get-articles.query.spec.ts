@@ -1,9 +1,12 @@
 import { GetArticlesQuery } from '@/features/article/query/get-articles.query';
 import { createTestArticle } from '@test/integration/helpers/article.helper';
 import { createTestSeries } from '@test/integration/helpers/series.helper';
+import { createTestMember } from '@test/integration/helpers/member.helper';
 import { IntegrationTestHelper } from '@test/integration/helpers/integration-test.helper';
 import { PrismaService } from '@/infra/database/prisma.service';
-import type { Series } from '@prisma/client';
+import { ARTICLE_STATE, MEMBER_ROLE } from '@imkdw-dev/consts';
+import type { Series, Member } from '@prisma/client';
+import type { Requester } from '@/common/types/requester.type';
 
 describe('GetArticlesQuery', () => {
   let testHelper: IntegrationTestHelper;
@@ -239,9 +242,7 @@ describe('GetArticlesQuery', () => {
       it('각 게시글마다 동일한 시리즈 정보가 반환되어야 한다', async () => {
         const result = await sut.execute({ limit: 10, page: 1 });
 
-        const articlesFromSeriesA = result.items.filter(item =>
-          ['게시글 1', '게시글 2'].includes(item.title)
-        );
+        const articlesFromSeriesA = result.items.filter(item => ['게시글 1', '게시글 2'].includes(item.title));
 
         expect(articlesFromSeriesA).toHaveLength(2);
 
@@ -406,6 +407,104 @@ describe('GetArticlesQuery', () => {
         expect(result.items).toEqual([]);
         expect(result.totalCount).toBe(0);
         expect(result.totalPage).toBe(0);
+      });
+    });
+  });
+
+  describe('게시글 상태에 따른 권한 기반 필터링', () => {
+    let testSeries: Series;
+    let adminMember: Member;
+    let normalMember: Member;
+    let adminRequester: Requester;
+    let userRequester: Requester;
+
+    beforeEach(async () => {
+      testSeries = await createTestSeries(prisma, { title: 'Test Series' });
+
+      [adminMember, normalMember] = await Promise.all([
+        createTestMember(prisma, { role: MEMBER_ROLE.ADMIN }),
+        createTestMember(prisma, { role: MEMBER_ROLE.USER }),
+      ]);
+
+      adminRequester = { id: adminMember.id, role: adminMember.role, isAdmin: true };
+      userRequester = { id: normalMember.id, role: normalMember.role, isAdmin: false };
+
+      await Promise.all([
+        createTestArticle(prisma, {
+          seriesId: testSeries.id,
+          title: 'NORMAL 게시글 1',
+          slug: 'normal-article-1',
+        }),
+        createTestArticle(prisma, {
+          seriesId: testSeries.id,
+          title: 'NORMAL 게시글 2',
+          slug: 'normal-article-2',
+        }),
+        prisma.article.create({
+          data: {
+            id: '00000000-0000-0000-0000-000000000001',
+            title: 'HIDDEN 게시글 1',
+            slug: 'hidden-article-1',
+            content: 'Hidden content',
+            plainContent: 'Hidden content',
+            state: ARTICLE_STATE.HIDDEN,
+            viewCount: 0,
+            readMinute: 1,
+            seriesId: testSeries.id,
+          },
+        }),
+        prisma.article.create({
+          data: {
+            id: '00000000-0000-0000-0000-000000000002',
+            title: 'HIDDEN 게시글 2',
+            slug: 'hidden-article-2',
+            content: 'Hidden content',
+            plainContent: 'Hidden content',
+            state: ARTICLE_STATE.HIDDEN,
+            viewCount: 0,
+            readMinute: 1,
+            seriesId: testSeries.id,
+          },
+        }),
+      ]);
+    });
+
+    describe('비로그인 사용자가 조회하면', () => {
+      it('NORMAL 상태의 게시글만 반환되어야 한다', async () => {
+        const result = await sut.execute({ limit: 10, page: 1 });
+
+        expect(result.items).toHaveLength(2);
+        expect(result.totalCount).toBe(2);
+        result.items.forEach(item => {
+          expect(item.state).toBe(ARTICLE_STATE.NORMAL);
+        });
+      });
+    });
+
+    describe('일반 사용자가 조회하면', () => {
+      it('NORMAL 상태의 게시글만 반환되어야 한다', async () => {
+        const result = await sut.execute({ limit: 10, page: 1 }, userRequester);
+
+        expect(result.items).toHaveLength(2);
+        expect(result.totalCount).toBe(2);
+        result.items.forEach(item => {
+          expect(item.state).toBe(ARTICLE_STATE.NORMAL);
+        });
+      });
+    });
+
+    describe('관리자가 조회하면', () => {
+      it('모든 상태의 게시글이 반환되어야 한다', async () => {
+        const result = await sut.execute({ limit: 10, page: 1 }, adminRequester);
+
+        expect(result.items).toHaveLength(4);
+        expect(result.totalCount).toBe(4);
+
+        const normalArticles = result.items.filter(item => item.state === ARTICLE_STATE.NORMAL);
+        const hiddenArticles = result.items.filter(item => item.state === ARTICLE_STATE.HIDDEN);
+
+        expect(normalArticles).toHaveLength(2);
+        expect(hiddenArticles).toHaveLength(2);
       });
     });
   });

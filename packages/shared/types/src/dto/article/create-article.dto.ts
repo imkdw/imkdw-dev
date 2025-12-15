@@ -28,6 +28,11 @@ export interface ICreateArticleDto {
    * 업로드한 이미지 주소 목록
    */
   uploadedImageUrls: string[];
+
+  /**
+   * 게시글 상태
+   */
+  state: string;
 }
 
 export interface IResponseCreateArticleDto {

@@ -4,10 +4,11 @@ import {
   ARTICLE_MAX_SLUG_LENGTH,
   ARTICLE_MAX_TITLE_LENGTH,
   ARTICLE_MAX_TAGS,
+  ARTICLE_STATE,
 } from '@imkdw-dev/consts';
 import { ICreateArticleDto, IResponseCreateArticleDto } from '@imkdw-dev/types';
 import { ApiProperty } from '@nestjs/swagger';
-import { ArrayMaxSize, IsArray, IsString, MaxLength } from 'class-validator';
+import { ArrayMaxSize, IsArray, IsIn, IsString, MaxLength } from 'class-validator';
 import { Article } from '@/shared/domain/article/article';
 
 export class CreateArticleDto implements ICreateArticleDto {
@@ -51,6 +52,15 @@ export class CreateArticleDto implements ICreateArticleDto {
   @IsArray()
   @IsString({ each: true })
   readonly uploadedImageUrls: string[];
+
+  @ApiProperty({
+    description: '게시글 상태',
+    example: ARTICLE_STATE.NORMAL,
+    enum: Object.values(ARTICLE_STATE),
+  })
+  @IsIn(Object.values(ARTICLE_STATE))
+  @IsNotEmptyString()
+  readonly state: string;
 }
 
 export class ResponseCreateArticleDto implements IResponseCreateArticleDto {

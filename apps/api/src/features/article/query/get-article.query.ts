@@ -3,15 +3,24 @@ import { PrismaService } from '@/infra/database/prisma.service';
 import { ArticleDto, ArticleNavigationDto, ResponseGetArticleDto } from '@/features/article/dto/get-article.dto';
 import { ArticleTagDto } from '@/features/article/dto/get-articles.dto';
 import { ArticleNotFoundException } from '@/features/article/exception/article-not-found.exception';
-import { ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST } from '@imkdw-dev/consts';
+import { ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST, ARTICLE_STATE } from '@imkdw-dev/consts';
+import { Requester } from '@/common/types/requester.type';
 
 @Injectable()
 export class GetArticleQuery {
   constructor(private readonly prisma: PrismaService) {}
 
-  async execute(slug: string): Promise<ResponseGetArticleDto> {
+  async execute(slug: string, requester?: Requester): Promise<ResponseGetArticleDto> {
+    const isAdmin = requester?.isAdmin ?? false;
+
+    const whereCondition = {
+      slug,
+      deletedAt: null,
+      ...(!isAdmin && { state: ARTICLE_STATE.NORMAL }),
+    };
+
     const article = await this.prisma.article.findFirst({
-      where: { slug, deletedAt: null },
+      where: whereCondition,
       include: {
         series: true,
         tags: {
@@ -25,8 +34,8 @@ export class GetArticleQuery {
     }
 
     const [prevArticle, nextArticle] = await Promise.all([
-      this.findPrevArticle(article.seriesId, article.createdAt),
-      this.findNextArticle(article.seriesId, article.createdAt),
+      this.findPrevArticle(article.seriesId, article.createdAt, isAdmin),
+      this.findNextArticle(article.seriesId, article.createdAt, isAdmin),
     ]);
 
     const articleDetail: ArticleDto = {
@@ -37,6 +46,7 @@ export class GetArticleQuery {
       plainContent: article.plainContent.slice(0, ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST),
       viewCount: article.viewCount,
       readMinute: article.readMinute,
+      state: article.state,
       createdAt: article.createdAt,
       series: {
         id: article.series.id,
@@ -58,12 +68,17 @@ export class GetArticleQuery {
     };
   }
 
-  private async findPrevArticle(seriesId: string, createdAt: Date): Promise<ArticleNavigationDto | null> {
+  private async findPrevArticle(
+    seriesId: string,
+    createdAt: Date,
+    isAdmin: boolean
+  ): Promise<ArticleNavigationDto | null> {
     const prevArticle = await this.prisma.article.findFirst({
       where: {
         seriesId,
         deletedAt: null,
         createdAt: { lt: createdAt },
+        ...(!isAdmin && { state: ARTICLE_STATE.NORMAL }),
       },
       orderBy: { createdAt: 'desc' },
       select: { id: true, title: true, slug: true },
@@ -72,12 +87,17 @@ export class GetArticleQuery {
     return prevArticle;
   }
 
-  private async findNextArticle(seriesId: string, createdAt: Date): Promise<ArticleNavigationDto | null> {
+  private async findNextArticle(
+    seriesId: string,
+    createdAt: Date,
+    isAdmin: boolean
+  ): Promise<ArticleNavigationDto | null> {
     const nextArticle = await this.prisma.article.findFirst({
       where: {
         seriesId,
         deletedAt: null,
         createdAt: { gt: createdAt },
+        ...(!isAdmin && { state: ARTICLE_STATE.NORMAL }),
       },
       orderBy: { createdAt: 'asc' },
       select: { id: true, title: true, slug: true },

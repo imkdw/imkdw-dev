@@ -1,8 +1,13 @@
 import { IsNotEmptyString } from '@/common/decorator/is-not-empty-string.decorator';
-import { ARTICLE_MAX_CONTENT_LENGTH, ARTICLE_MAX_TAGS, ARTICLE_MAX_TITLE_LENGTH } from '@imkdw-dev/consts';
+import {
+  ARTICLE_MAX_CONTENT_LENGTH,
+  ARTICLE_MAX_TAGS,
+  ARTICLE_MAX_TITLE_LENGTH,
+  ARTICLE_STATE,
+} from '@imkdw-dev/consts';
 import { IUpdateArticleDto } from '@imkdw-dev/types';
 import { ApiProperty } from '@nestjs/swagger';
-import { ArrayMaxSize, IsArray, IsString, IsUUID, MaxLength } from 'class-validator';
+import { ArrayMaxSize, IsArray, IsIn, IsString, IsUUID, MaxLength } from 'class-validator';
 
 export class UpdateArticleDto implements IUpdateArticleDto {
   @ApiProperty({ description: '제목', example: '게시글 제목입니다', maxLength: ARTICLE_MAX_TITLE_LENGTH })
@@ -37,4 +42,13 @@ export class UpdateArticleDto implements IUpdateArticleDto {
   @IsArray()
   @IsString({ each: true })
   readonly uploadedImageUrls: string[];
+
+  @ApiProperty({
+    description: '게시글 상태',
+    example: ARTICLE_STATE.NORMAL,
+    enum: Object.values(ARTICLE_STATE),
+  })
+  @IsIn(Object.values(ARTICLE_STATE))
+  @IsNotEmptyString()
+  readonly state: string;
 }

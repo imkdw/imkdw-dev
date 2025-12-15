@@ -19,6 +19,7 @@ export class ArticleRepository {
         slug: article.slug,
         title: article.title,
         viewCount: article.viewCount,
+        state: article.state,
       },
     });
     await this.createArticleTags(article.id, article.tagIds, tx);
@@ -36,6 +37,7 @@ export class ArticleRepository {
         title: article.title,
         viewCount: article.viewCount,
         seriesId: article.seriesId,
+        state: article.state,
       },
     });
     await this.createArticleTags(article.id, article.tagIds, tx);

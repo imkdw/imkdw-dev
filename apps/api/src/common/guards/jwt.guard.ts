@@ -5,6 +5,7 @@ import { MemberValidator } from '@/shared/validator/member.validator';
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
+import { MEMBER_ROLE } from '@imkdw-dev/consts';
 
 @Injectable()
 export class JwtGuard implements CanActivate {
@@ -42,7 +43,8 @@ export class JwtGuard implements CanActivate {
 
       await this.memberValidator.checkExist(id);
 
-      request.requester = { ...request.requester, id, role };
+      const isAdmin = role === MEMBER_ROLE.ADMIN;
+      request.requester = { id, role, isAdmin };
 
       return true;
     } catch (error) {

@@ -14,6 +14,8 @@ import * as Swagger from '@/features/article/swagger/article.swagger';
 import { MemberRoles } from '@/common/decorator/member-role.decorator';
 import { MEMBER_ROLE, API_ENDPOINTS } from '@imkdw-dev/consts';
 import { Public } from '@/common/decorator/public.decorator';
+import { CurrentRequester } from '@/common/decorator/current-requester.decorator';
+import { Requester } from '@/common/types/requester.type';
 
 const { GET_ARTICLES, GET_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE, INCREMENT_VIEW_COUNT, DELETE_ARTICLE } =
   API_ENDPOINTS;
@@ -34,15 +36,21 @@ export class ArticleController {
   @Swagger.getArticles('게시글 목록 조회')
   @Public()
   @Get(GET_ARTICLES)
-  async getArticles(@Query() query: RequestGetArticlesDto): Promise<ResponseGetArticlesDto> {
-    return this.getArticlesQuery.execute(query);
+  async getArticles(
+    @Query() query: RequestGetArticlesDto,
+    @CurrentRequester() requester?: Requester
+  ): Promise<ResponseGetArticlesDto> {
+    return this.getArticlesQuery.execute(query, requester);
   }
 
   @Swagger.getArticle('게시글 상세 조회')
   @Public()
   @Get(GET_ARTICLE)
-  async getArticle(@Param('slug') slug: string): Promise<ResponseGetArticleDto> {
-    return this.getArticleQuery.execute(slug);
+  async getArticle(
+    @Param('slug') slug: string,
+    @CurrentRequester() requester?: Requester
+  ): Promise<ResponseGetArticleDto> {
+    return this.getArticleQuery.execute(slug, requester);
   }
 
   @Swagger.createArticle('게시글 생성')

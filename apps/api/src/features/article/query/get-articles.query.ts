@@ -7,19 +7,23 @@ import {
   RequestGetArticlesDto,
   ResponseGetArticlesDto,
 } from '@/features/article/dto/get-articles.dto';
-import { ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST } from '@imkdw-dev/consts';
+import { ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST, ARTICLE_STATE } from '@imkdw-dev/consts';
+import { Requester } from '@/common/types/requester.type';
 
 @Injectable()
 export class GetArticlesQuery {
   constructor(private readonly prisma: PrismaService) {}
 
-  async execute(params: RequestGetArticlesDto): Promise<ResponseGetArticlesDto> {
+  async execute(params: RequestGetArticlesDto, requester?: Requester): Promise<ResponseGetArticlesDto> {
     const { limit, page, seriesId } = params;
     const { offset } = createOffset(limit, page);
+
+    const isAdmin = requester?.isAdmin ?? false;
 
     const whereCondition = {
       deletedAt: null,
       ...(seriesId && { seriesId }),
+      ...(!isAdmin && { state: ARTICLE_STATE.NORMAL }),
     };
 
     const [items, totalCount] = await Promise.all([
@@ -46,6 +50,7 @@ export class GetArticlesQuery {
         plainContent: item.plainContent.slice(0, ARTICLE_MAX_CONTENT_LENGTH_FOR_LIST),
         viewCount: item.viewCount,
         readMinute: item.readMinute,
+        state: item.state,
         createdAt: item.createdAt,
         series: {
           id: item.series.id,

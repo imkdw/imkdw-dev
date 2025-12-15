@@ -16,6 +16,7 @@ import { PrismaService } from '@/infra/database/prisma.service';
 import { Series } from '@prisma/client';
 import { CopyImageService } from '@/shared/services/image/copy-image.service';
 import { STORAGE_SERVICE } from '@/infra/storage/storage.service';
+import { ARTICLE_STATE } from '@imkdw-dev/consts';
 
 describe('게시글 수정 유스케이스', () => {
   let testHelper: IntegrationTestHelper;
@@ -63,6 +64,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: testSeries.id,
         tags: ['JavaScript'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await expect(sut.execute(nonExistentSlug, updateArticleDto)).rejects.toThrow(ArticleNotFoundException);
@@ -82,6 +84,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: '123e4567-e89b-12d3-a456-426614174000', // 존재하지 않는 ID
         tags: ['JavaScript'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await expect(sut.execute(existingArticle.slug, updateArticleDto)).rejects.toThrow(SeriesNotFoundException);
@@ -107,6 +110,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: testSeries.id,
         tags: ['React'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await expect(sut.execute(existingArticle.slug, updateArticleDto)).rejects.toThrow(ExistArticleException);
@@ -127,6 +131,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: testSeries.id,
         tags: ['Vue'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await expect(sut.execute(existingArticle.slug, updateArticleDto)).resolves.not.toThrow();
@@ -149,6 +154,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: anotherSeries.id,
         tags: ['Node.js'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -188,6 +194,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: testSeries.id,
         tags: ['JavaScript', 'React', 'TypeScript'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -230,6 +237,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: testSeries.id,
         tags: ['JavaScript', 'React', 'Vue'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -276,6 +284,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: testSeries.id,
         tags: [],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -312,6 +321,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: testSeries.id,
         tags: ['NewTag1', 'NewTag2', 'NewTag3'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -382,6 +392,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: testSeries.id,
         tags: [],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -442,6 +453,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: anotherSeries.id,
         tags: [],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await sut.execute(firstArticle.slug, updateArticleDto);
@@ -488,6 +500,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: anotherSeries.id,
         tags: [],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await sut.execute(secondArticle.slug, updateArticleDto);
@@ -529,6 +542,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: anotherSeries.id,
         tags: [],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await sut.execute(onlyArticle.slug, updateArticleDto);
@@ -546,6 +560,62 @@ describe('게시글 수정 유스케이스', () => {
     });
   });
 
+  describe('게시글 상태를 변경하면', () => {
+    it('NORMAL 상태에서 HIDDEN 상태로 변경된다', async () => {
+      const existingArticle = await createTestArticle(prisma, {
+        title: '기존 공개 게시글',
+        content: '공개 상태입니다',
+        seriesId: testSeries.id,
+      });
+
+      await prisma.article.update({
+        where: { id: existingArticle.id },
+        data: { state: ARTICLE_STATE.NORMAL },
+      });
+
+      const updateArticleDto: UpdateArticleDto = {
+        title: '비공개로 변경',
+        content: '비공개 상태로 변경합니다',
+        seriesId: testSeries.id,
+        tags: [],
+        uploadedImageUrls: [],
+        state: ARTICLE_STATE.HIDDEN,
+      };
+
+      await sut.execute(existingArticle.slug, updateArticleDto);
+
+      const updatedArticle = await prisma.article.findUnique({ where: { id: existingArticle.id } });
+      expect(updatedArticle?.state).toBe(ARTICLE_STATE.HIDDEN);
+    });
+
+    it('HIDDEN 상태에서 NORMAL 상태로 변경된다', async () => {
+      const existingArticle = await createTestArticle(prisma, {
+        title: '기존 비공개 게시글',
+        content: '비공개 상태입니다',
+        seriesId: testSeries.id,
+      });
+
+      await prisma.article.update({
+        where: { id: existingArticle.id },
+        data: { state: ARTICLE_STATE.HIDDEN },
+      });
+
+      const updateArticleDto: UpdateArticleDto = {
+        title: '공개로 변경',
+        content: '공개 상태로 변경합니다',
+        seriesId: testSeries.id,
+        tags: [],
+        uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
+      };
+
+      await sut.execute(existingArticle.slug, updateArticleDto);
+
+      const updatedArticle = await prisma.article.findUnique({ where: { id: existingArticle.id } });
+      expect(updatedArticle?.state).toBe(ARTICLE_STATE.NORMAL);
+    });
+  });
+
   describe('HTML 태그가 포함된 내용으로 게시글을 수정하면', () => {
     it('HTML 태그가 제거된채로 저장된다', async () => {
       const existingArticle = await createTestArticle(prisma, {
@@ -560,6 +630,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: testSeries.id,
         tags: [],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -585,6 +656,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: testSeries.id,
         tags: [],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);
@@ -618,6 +690,7 @@ describe('게시글 수정 유스케이스', () => {
         seriesId: testSeries.id,
         tags: ['HTML', 'Test'],
         uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
       };
 
       await sut.execute(existingArticle.slug, updateArticleDto);

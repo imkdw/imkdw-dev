@@ -4,6 +4,7 @@ import { ArticleFormHeader } from './article-form-header';
 import { ArticleFormFields } from './article-form-fields';
 import { ArticleTagManager } from './article-tag-manager';
 import { ArticleSeriesSelector } from './article-series-selector';
+import { ArticleVisibilitySelector } from './article-visibility-selector';
 import { ArticleWritingStats } from './article-writing-stats';
 import { DraftRestoreDialog } from '../common/draft-restore-dialog';
 import { useArticleForm } from '@/hooks';
@@ -36,6 +37,7 @@ export function ArticleForm({ mode, initialData }: Props) {
         </div>
         <div className="flex flex-col gap-4 p-2">
           <ArticleSeriesSelector value={formData.seriesId} onValueChange={handlers.setSeriesId} />
+          <ArticleVisibilitySelector value={formData.state} onValueChange={handlers.setState} />
           <ArticleTagManager
             tags={formData.tags}
             onAddTag={handlers.handleAddTag}

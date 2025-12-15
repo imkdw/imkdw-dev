@@ -61,6 +61,7 @@ describe('게시글 댓글 삭제 유스케이스', () => {
         sut.execute('123e4567-e89b-12d3-a456-426614174000', {
           id: testMember.id,
           role: testMember.role,
+          isAdmin: false,
         })
       ).rejects.toThrow(ArticleCommentNotFoundException);
     });
@@ -72,6 +73,7 @@ describe('게시글 댓글 삭제 유스케이스', () => {
         sut.execute(testComment.id, {
           id: otherMember.id,
           role: otherMember.role,
+          isAdmin: false,
         })
       ).rejects.toThrow(CannotDeleteArticleCommentException);
     });
@@ -82,6 +84,7 @@ describe('게시글 댓글 삭제 유스케이스', () => {
       await sut.execute(testComment.id, {
         id: adminMember.id,
         role: adminMember.role,
+        isAdmin: true,
       });
 
       const deletedComment = await prisma.articleComment.findUnique({
@@ -102,6 +105,7 @@ describe('게시글 댓글 삭제 유스케이스', () => {
       await sut.execute(testComment.id, {
         id: testMember.id,
         role: testMember.role,
+        isAdmin: false,
       });
 
       const deletedComment = await prisma.articleComment.findUnique({
@@ -123,6 +127,7 @@ describe('게시글 댓글 삭제 유스케이스', () => {
       await sut.execute(commentId, {
         id: testMember.id,
         role: testMember.role,
+        isAdmin: false,
       });
 
       const deletedComment = await prisma.articleComment.findUnique({

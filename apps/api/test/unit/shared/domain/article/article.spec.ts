@@ -1,7 +1,7 @@
 import { Article } from '@/shared/domain/article/article';
 
-describe('Article 도메인', () => {
-  describe('calculateReadMinute', () => {
+describe('게시글', () => {
+  describe('읽기 시간 계산', () => {
     it('한글 300자로 1분 계산', () => {
       const content = '안녕하세요'.repeat(60); // 300자
       const readMinute = Article.calculateReadMinute(content);

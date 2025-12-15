@@ -6,6 +6,7 @@ import {
   ARTICLE_MAX_SLUG_LENGTH,
   ARTICLE_MAX_TITLE_LENGTH,
   ARTICLE_MAX_TAGS,
+  ARTICLE_STATE,
 } from '@imkdw-dev/consts';
 
 describe('게시글 생성 DTO', () => {
@@ -182,6 +183,70 @@ describe('게시글 생성 DTO', () => {
       const errors = await validate(dto);
 
       expect(errors.some(error => error.property === 'tags')).toBe(false);
+    });
+  });
+
+  describe('상태', () => {
+    it('NORMAL 값을 받으면 유효하다', async () => {
+      const dto = plainToClass(CreateArticleDto, {
+        title: '제목',
+        slug: 'test-slug',
+        content: '내용',
+        seriesId: '123e4567-e89b-12d3-a456-426614174000',
+        tags: ['JavaScript'],
+        uploadedImageUrls: [],
+        state: ARTICLE_STATE.NORMAL,
+      });
+      const errors = await validate(dto);
+
+      expect(errors.some(error => error.property === 'state')).toBe(false);
+    });
+
+    it('HIDDEN 값을 받으면 유효하다', async () => {
+      const dto = plainToClass(CreateArticleDto, {
+        title: '제목',
+        slug: 'test-slug',
+        content: '내용',
+        seriesId: '123e4567-e89b-12d3-a456-426614174000',
+        tags: ['JavaScript'],
+        uploadedImageUrls: [],
+        state: ARTICLE_STATE.HIDDEN,
+      });
+      const errors = await validate(dto);
+
+      expect(errors.some(error => error.property === 'state')).toBe(false);
+    });
+
+    it('유효하지 않은 값이면 예외가 발생한다', async () => {
+      const dto = plainToClass(CreateArticleDto, {
+        title: '제목',
+        slug: 'test-slug',
+        content: '내용',
+        seriesId: '123e4567-e89b-12d3-a456-426614174000',
+        tags: ['JavaScript'],
+        uploadedImageUrls: [],
+        state: 'INVALID_STATE',
+      });
+      const errors = await validate(dto);
+
+      expect(errors.length).toBeGreaterThan(0);
+      expect(errors.some(error => error.property === 'state')).toBe(true);
+    });
+
+    it('비어있다면 예외가 발생한다', async () => {
+      const dto = plainToClass(CreateArticleDto, {
+        title: '제목',
+        slug: 'test-slug',
+        content: '내용',
+        seriesId: '123e4567-e89b-12d3-a456-426614174000',
+        tags: ['JavaScript'],
+        uploadedImageUrls: [],
+        state: '',
+      });
+      const errors = await validate(dto);
+
+      expect(errors.length).toBeGreaterThan(0);
+      expect(errors.some(error => error.property === 'state')).toBe(true);
     });
   });
 });

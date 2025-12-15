@@ -9,6 +9,7 @@ export * from './label';
 export * from './macos-controls';
 export * from './pagination';
 export * from './progress-bar';
+export * from './radio-group';
 export * from './select';
 export * from './separator';
 export * from './sidebar';

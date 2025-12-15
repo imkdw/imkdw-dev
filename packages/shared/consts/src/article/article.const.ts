@@ -1,3 +1,8 @@
+export const ARTICLE_STATE = {
+  NORMAL: 'NORMAL',
+  HIDDEN: 'HIDDEN',
+} as const;
+
 export const ARTICLE_MAX_TITLE_LENGTH = 150;
 
 export const ARTICLE_MAX_SLUG_LENGTH = 100;
