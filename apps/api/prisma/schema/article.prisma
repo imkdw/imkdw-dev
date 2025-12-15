@@ -2,6 +2,9 @@
 model Article {
   id String @id
 
+  /// 게시글 상태
+  state String
+
   /// 게시글 제목
   title String
 
