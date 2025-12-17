@@ -6,6 +6,7 @@ import { ArticleHeader } from '../../../components/article/article-header';
 import { ArticleContent } from '../../../components/article/article-content';
 import { ArticleNavigation } from '../../../components/article/article-navigation';
 import { TableOfContents } from '../../../components/article/table-of-contents';
+import { ReadingProgressBar } from '../../../components/article/reading-progress-bar';
 import { getArticle, getArticleComments } from '@imkdw-dev/api-client';
 import { createMetadata } from '@/utils/metadata-creator';
 
@@ -48,6 +49,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <Layout enableOverflow={false}>
+      <ReadingProgressBar />
       <div className="max-w-7xl mx-auto p-6 lg:flex lg:gap-8">
         <div className="flex-1 max-w-4xl flex flex-col">
           <ArticleHeader article={article}>
