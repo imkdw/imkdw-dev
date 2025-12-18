@@ -107,7 +107,10 @@
       "Bash(for:*)",
       "Bash(do sed -i '' \"s/import { Layout } from ''@imkdw-dev\\/ui''/import { Layout } from ''@\\/components\\/layout''/g\" \"$file\")",
       "mcp__tavily-mcp__tavily-search",
-      "Bash(doppler run:*)"
+      "Bash(doppler run:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)",
+      "mcp__serena__initial_instructions"
     ],
     "deny": [],
     "ask": []

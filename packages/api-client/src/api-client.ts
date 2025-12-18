@@ -46,6 +46,17 @@ export class ApiClient {
 
     const headers = { ...this.defaultHeaders, ...options?.headers };
 
+    if (typeof window === 'undefined') {
+      const { getBrowserContext } = await import('./browser-context');
+      const context = await getBrowserContext();
+      if (context.ip) {
+        headers['X-Forwarded-For'] = context.ip;
+      }
+      if (context.userAgent) {
+        headers['User-Agent'] = context.userAgent;
+      }
+    }
+
     const cookieStore = await cookies();
     const cookieString = cookieStore.toString();
     if (cookieString) {

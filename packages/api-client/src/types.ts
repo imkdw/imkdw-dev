@@ -7,6 +7,11 @@ export interface ApiClientConfig {
   timeout?: number;
 }
 
+export interface BrowserContext {
+  ip?: string;
+  userAgent?: string;
+}
+
 export interface RequestOptions {
   headers?: Record<string, string>;
   timeout?: number;
