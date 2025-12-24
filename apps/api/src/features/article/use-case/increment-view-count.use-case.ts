@@ -9,8 +9,8 @@ export class IncrementViewCountUseCase {
     private readonly articleRepository: ArticleRepository
   ) {}
 
-  async execute(id: string): Promise<void> {
-    await this.articleValidator.checkExist(id);
-    await this.articleRepository.incrementViewCount(id);
+  async execute(slug: string): Promise<void> {
+    const article = await this.articleValidator.checkExistBySlug(slug);
+    await this.articleRepository.incrementViewCount(article);
   }
 }

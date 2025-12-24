@@ -71,8 +71,8 @@ export class ArticleController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @Public()
   @Patch(INCREMENT_VIEW_COUNT)
-  async incrementViewCount(@Param('id') id: string): Promise<void> {
-    await this.incrementViewCountUseCase.execute(id);
+  async incrementViewCount(@Param('slug') slug: string): Promise<void> {
+    await this.incrementViewCountUseCase.execute(slug);
   }
 
   @Swagger.deleteArticle('게시글 삭제')

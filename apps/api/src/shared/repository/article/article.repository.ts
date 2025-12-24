@@ -85,9 +85,9 @@ export class ArticleRepository {
     return entities.map(entity => ArticleMapper.toDomain(entity));
   }
 
-  async incrementViewCount(id: string): Promise<void> {
+  async incrementViewCount(article: Article): Promise<void> {
     await this.prisma.article.update({
-      where: { id },
+      where: { id: article.id },
       data: { viewCount: { increment: 1 } },
     });
   }
