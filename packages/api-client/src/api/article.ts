@@ -31,3 +31,7 @@ export const updateArticle = withErrorHandling(async (slug: string, data: IUpdat
 export const deleteArticle = withErrorHandling(async (slug: string): Promise<void> => {
   await getApiClient().delete(buildEndpoint('DELETE_ARTICLE', { slug }));
 });
+
+export const incrementViewCount = withErrorHandling(async (slug: string): Promise<void> => {
+  await getApiClient().patch(buildEndpoint('INCREMENT_VIEW_COUNT', { slug }));
+});
