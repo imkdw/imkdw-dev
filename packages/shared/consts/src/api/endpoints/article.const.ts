@@ -3,6 +3,6 @@ export const ARTICLE_ENDPOINTS = {
   GET_ARTICLE: 'articles/:slug',
   CREATE_ARTICLE: 'articles',
   UPDATE_ARTICLE: 'articles/:slug',
-  INCREMENT_VIEW_COUNT: 'articles/:id/view-count',
+  INCREMENT_VIEW_COUNT: 'articles/:slug/view-count',
   DELETE_ARTICLE: 'articles/:slug',
 } as const;

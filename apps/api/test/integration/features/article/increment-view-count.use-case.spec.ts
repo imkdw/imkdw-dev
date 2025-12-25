@@ -38,10 +38,10 @@ describe('게시글 조회수 증가 유스케이스', () => {
     testHelper.rollbackTransaction();
   });
 
-  describe('존재하지 않는 게시글 ID로 조회수를 증가시키면', () => {
+  describe('존재하지 않는 slug로 조회수를 증가시키면', () => {
     it('에러가 발생한다', async () => {
-      const nonExistentId = 'nonExistentId';
-      await expect(sut.execute(nonExistentId)).rejects.toThrow(ArticleNotFoundException);
+      const nonExistentSlug = 'non-existent-slug';
+      await expect(sut.execute(nonExistentSlug)).rejects.toThrow(ArticleNotFoundException);
     });
   });
 
@@ -49,7 +49,7 @@ describe('게시글 조회수 증가 유스케이스', () => {
     it('조회수가 1 증가한다', async () => {
       const initialViewCount = testArticle.viewCount;
 
-      await sut.execute(testArticle.id);
+      await sut.execute(testArticle.slug);
 
       const updatedArticle = await prisma.article.findUnique({
         where: { id: testArticle.id },
@@ -63,7 +63,7 @@ describe('게시글 조회수 증가 유스케이스', () => {
       const incrementCount = 3;
 
       for (let i = 0; i < incrementCount; i++) {
-        await sut.execute(testArticle.id);
+        await sut.execute(testArticle.slug);
       }
 
       const updatedArticle = await prisma.article.findUnique({
@@ -82,7 +82,7 @@ describe('게시글 조회수 증가 유스케이스', () => {
         slug: 'new-test-article',
       });
 
-      await sut.execute(newArticle.id);
+      await sut.execute(newArticle.slug);
 
       const updatedArticle = await prisma.article.findUnique({
         where: { id: newArticle.id },

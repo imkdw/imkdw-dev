@@ -1,5 +1,5 @@
 import { Badge } from '@imkdw-dev/ui';
-import { BookOpen, Calendar, Clock } from 'lucide-react';
+import { BookOpen, Calendar, Clock, Eye } from 'lucide-react';
 import { ReactNode } from 'react';
 import { IArticleDto } from '@imkdw-dev/types';
 import { formatDate, formatReadTime } from '@imkdw-dev/utils/client';
@@ -33,6 +33,10 @@ export function ArticleHeader({ article, children }: ArticleHeaderProps) {
           <span className="flex items-center gap-1">
             <Clock className="w-4 h-4" />
             {formatReadTime(readMinute)}
+          </span>
+          <span className="flex items-center gap-1">
+            <Eye className="w-4 h-4" />
+            {article.viewCount.toLocaleString()}
           </span>
         </div>
 

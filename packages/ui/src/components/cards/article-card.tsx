@@ -1,4 +1,4 @@
-import { GitBranch, Calendar, Clock } from 'lucide-react';
+import { GitBranch, Calendar, Clock, Eye } from 'lucide-react';
 import { TagList } from './tag-list';
 import { MetaInfoItem } from './meta-info-item';
 import Link from 'next/link';
@@ -33,6 +33,7 @@ export function ArticleCard({ article }: Props) {
             <div className="flex gap-4 text-muted-foreground">
               <MetaInfoItem icon={<Calendar className="h-3 w-3" />} text={publishedAt} />
               <MetaInfoItem icon={<Clock className="h-3 w-3" />} text={formatReadTime(article.readMinute)} />
+              <MetaInfoItem icon={<Eye className="h-3 w-3" />} text={article.viewCount.toLocaleString()} />
             </div>
           </div>
         </div>
