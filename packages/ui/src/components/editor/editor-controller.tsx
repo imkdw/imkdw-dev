@@ -3,7 +3,7 @@
 import { useInstance } from '@milkdown/react';
 import { replaceAll } from '@milkdown/kit/utils';
 import { useEffect, useRef } from 'react';
-import TurndownService from 'turndown';
+import { createTurndownService } from './turndown-config';
 
 interface Props {
   onReady: (replaceContent: (content: string) => void) => void;
@@ -11,12 +11,7 @@ interface Props {
 
 export function EditorController({ onReady }: Props) {
   const [isLoading, getInstance] = useInstance();
-  const turndownRef = useRef(
-    new TurndownService({
-      headingStyle: 'atx',
-      codeBlockStyle: 'fenced',
-    })
-  );
+  const turndownRef = useRef(createTurndownService());
   const onReadyRef = useRef(onReady);
 
   useEffect(() => {
