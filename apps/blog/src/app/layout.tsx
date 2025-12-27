@@ -12,10 +12,17 @@ import { createMetadata } from '@/utils/metadata-creator';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { APP_ENV } from '@imkdw-dev/consts';
 
-export const metadata: Metadata = createMetadata({
-  title: '@imkdw-dev/blog',
-  description: '직접 개발하고 운영하는 IT 기술블로그',
-});
+export const metadata: Metadata = {
+  ...createMetadata({
+    title: '@imkdw-dev/blog',
+    description: '직접 개발하고 운영하는 IT 기술블로그',
+  }),
+  alternates: {
+    types: {
+      'application/rss+xml': '/feed.xml',
+    },
+  },
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
