@@ -668,3 +668,511 @@ div[data-milkdown-root='true'] {
 .milkdown-code-block .tools {
   display: none;
 }
+
+/* ================================================
+   Table Block Controls
+   ================================================ */
+
+/* Main table block wrapper */
+.milkdown .milkdown-table-block {
+  position: relative;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Table wrapper - positions controls correctly around the table */
+.milkdown .milkdown-table-block .table-wrapper {
+  position: relative;
+  overflow-x: auto;
+}
+
+/* Override default table styles inside table-block */
+.milkdown .milkdown-table-block table {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Content DOM tbody styling */
+.milkdown .milkdown-table-block .content-dom {
+  display: table-row-group;
+}
+
+/* Base handle styles - shared by cell and line handles */
+.milkdown .milkdown-table-block .handle {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.25rem;
+  padding: 0.125rem;
+  z-index: 10;
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    background-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+/* Show handles on table block hover */
+.milkdown .milkdown-table-block:hover .handle[data-show='true'],
+.milkdown .milkdown-table-block .handle[data-show='true'] {
+  opacity: 1;
+}
+
+/* ================================================
+   Drag Handle Controls
+   ================================================ */
+
+/* Cell handles - for row and column drag/select */
+.milkdown .milkdown-table-block .cell-handle {
+  cursor: grab;
+  width: 24px;
+  height: 24px;
+  color: hsl(var(--muted-foreground));
+}
+
+.milkdown .milkdown-table-block .cell-handle:hover {
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+.milkdown .milkdown-table-block .cell-handle:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+/* Column drag handle - positioned at top of columns */
+.milkdown .milkdown-table-block [data-role='col-drag-handle'] {
+  top: -28px;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Row drag handle - positioned at left of rows */
+.milkdown .milkdown-table-block [data-role='row-drag-handle'] {
+  left: -28px;
+  flex-direction: row;
+  gap: 0.25rem;
+}
+
+/* SVG icons inside handles */
+.milkdown .milkdown-table-block .handle svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ================================================
+   Button Group (Alignment & Delete Controls)
+   ================================================ */
+
+/* Button group container - shown on handle click */
+.milkdown .milkdown-table-block .button-group {
+  display: none;
+  align-items: center;
+  gap: 0.125rem;
+  padding: 0.25rem;
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.375rem;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  z-index: 20;
+}
+
+/* Show button group when data-show is true */
+.milkdown .milkdown-table-block .button-group[data-show='true'] {
+  display: flex;
+}
+
+/* Column handle button group - appears below the handle */
+.milkdown .milkdown-table-block [data-role='col-drag-handle'] .button-group {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.25rem;
+  flex-direction: row;
+}
+
+/* Row handle button group - appears to the right of the handle */
+.milkdown .milkdown-table-block [data-role='row-drag-handle'] .button-group {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 0.25rem;
+  flex-direction: row;
+}
+
+/* Individual buttons inside button group */
+.milkdown .milkdown-table-block .button-group button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 0.25rem;
+  border: none;
+  background: transparent;
+  color: hsl(var(--muted-foreground));
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.milkdown .milkdown-table-block .button-group button:hover {
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+.milkdown .milkdown-table-block .button-group button:focus {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+.milkdown .milkdown-table-block .button-group button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.milkdown .milkdown-table-block .button-group button:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* ================================================
+   Alignment Control Buttons
+   ================================================ */
+
+/* Alignment buttons - visual grouping with separator before delete */
+.milkdown .milkdown-table-block .button-group button:nth-child(3) {
+  margin-right: 0.25rem;
+}
+
+/* Delete button in column group - separated and styled red */
+.milkdown .milkdown-table-block .button-group button:last-child {
+  color: hsl(0 84% 60%);
+  border-left: 1px solid hsl(var(--border));
+  padding-left: 0.25rem;
+  margin-left: 0.125rem;
+}
+
+.milkdown .milkdown-table-block .button-group button:last-child:hover {
+  background: hsl(0 84% 60% / 0.15);
+  color: hsl(0 84% 50%);
+}
+
+/* ================================================
+   Line Handles (Add Row/Column)
+   ================================================ */
+
+/* Line handles - for adding rows and columns */
+.milkdown .milkdown-table-block .line-handle {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* X-line handle - add row button (positioned at bottom between rows) */
+.milkdown .milkdown-table-block [data-role='x-line-drag-handle'] {
+  left: 0;
+  right: 0;
+  height: 20px;
+  justify-content: center;
+}
+
+/* Y-line handle - add column button (positioned at right between columns) */
+.milkdown .milkdown-table-block [data-role='y-line-drag-handle'] {
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* ================================================
+   Add Button Controls (Green Color Scheme)
+   ================================================ */
+
+/* Add buttons - green color scheme for positive action */
+.milkdown .milkdown-table-block .add-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px dashed hsl(142 76% 36%);
+  background: hsl(142 76% 36% / 0.1);
+  color: hsl(142 76% 36%);
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+/* Show add buttons on line handle hover/show */
+.milkdown .milkdown-table-block .line-handle[data-show='true'] .add-button,
+.milkdown .milkdown-table-block:hover .line-handle .add-button {
+  opacity: 0.7;
+}
+
+.milkdown .milkdown-table-block .add-button:hover {
+  opacity: 1 !important;
+  background: hsl(142 76% 36% / 0.2);
+  border-color: hsl(142 76% 36%);
+  border-style: solid;
+  transform: scale(1.1);
+}
+
+.milkdown .milkdown-table-block .add-button:focus {
+  outline: 2px solid hsl(142 76% 36% / 0.5);
+  outline-offset: 2px;
+  opacity: 1 !important;
+}
+
+.milkdown .milkdown-table-block .add-button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.milkdown .milkdown-table-block .add-button:focus-visible {
+  outline: 2px solid hsl(142 76% 36% / 0.5);
+  outline-offset: 2px;
+  opacity: 1 !important;
+}
+
+.milkdown .milkdown-table-block .add-button svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ================================================
+   Drag Preview
+   ================================================ */
+
+/* Drag preview - visual feedback during drag operations */
+.milkdown .milkdown-table-block .drag-preview {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 30;
+  background: hsl(var(--background) / 0.9);
+  border: 2px solid hsl(var(--primary));
+  border-radius: 0.25rem;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.15s ease;
+}
+
+.milkdown .milkdown-table-block .drag-preview[data-show='true'] {
+  opacity: 0.8;
+}
+
+.milkdown .milkdown-table-block .drag-preview table {
+  margin: 0;
+  border: none;
+}
+
+/* ================================================
+   Dark Mode Styles for Table Block Controls
+   ================================================ */
+
+/* Dark mode - base handle styles */
+.dark .milkdown .milkdown-table-block .handle {
+  background: hsl(var(--background));
+  border-color: hsl(var(--border));
+}
+
+.dark .milkdown .milkdown-table-block .cell-handle {
+  color: hsl(var(--muted-foreground));
+}
+
+.dark .milkdown .milkdown-table-block .cell-handle:hover {
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+/* Dark mode - button group */
+.dark .milkdown .milkdown-table-block .button-group {
+  background: hsl(var(--background));
+  border-color: hsl(var(--border));
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 2px 4px -2px rgba(0, 0, 0, 0.3);
+}
+
+.dark .milkdown .milkdown-table-block .button-group button {
+  color: hsl(var(--muted-foreground));
+}
+
+.dark .milkdown .milkdown-table-block .button-group button:hover {
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+/* Dark mode - delete button (red) */
+.dark .milkdown .milkdown-table-block .button-group button:last-child {
+  color: hsl(0 84% 65%);
+  border-left-color: hsl(var(--border));
+}
+
+.dark .milkdown .milkdown-table-block .button-group button:last-child:hover {
+  background: hsl(0 84% 60% / 0.2);
+  color: hsl(0 84% 70%);
+}
+
+/* Dark mode - add buttons (green) */
+.dark .milkdown .milkdown-table-block .add-button {
+  border-color: hsl(142 76% 46%);
+  background: hsl(142 76% 46% / 0.1);
+  color: hsl(142 76% 46%);
+}
+
+.dark .milkdown .milkdown-table-block .add-button:hover {
+  background: hsl(142 76% 46% / 0.25);
+  border-color: hsl(142 76% 50%);
+}
+
+.dark .milkdown .milkdown-table-block .add-button:focus,
+.dark .milkdown .milkdown-table-block .add-button:focus-visible {
+  outline-color: hsl(142 76% 46% / 0.5);
+}
+
+/* Dark mode - drag preview */
+.dark .milkdown .milkdown-table-block .drag-preview {
+  background: hsl(var(--background) / 0.95);
+  border-color: hsl(var(--primary));
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.3),
+    0 4px 6px -4px rgba(0, 0, 0, 0.3);
+}
+
+/* ================================================
+   Keyboard Accessibility - Focus Styles
+   ================================================ */
+
+/* Cell handle (drag handle) focus styles */
+.milkdown .milkdown-table-block .cell-handle:focus {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+.milkdown .milkdown-table-block .cell-handle:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.milkdown .milkdown-table-block .cell-handle:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  opacity: 1;
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+/* Handle container focus styles */
+.milkdown .milkdown-table-block .handle:focus {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+.milkdown .milkdown-table-block .handle:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.milkdown .milkdown-table-block .handle:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+/* ================================================
+   Mobile Responsive Adjustments
+   ================================================ */
+
+@media (max-width: 640px) {
+  /* Ensure cell handles meet minimum touch target size (44x44px) */
+  .milkdown .milkdown-table-block .cell-handle {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Adjust handle positioning for larger touch targets */
+  .milkdown .milkdown-table-block [data-role='col-drag-handle'] {
+    top: -48px;
+  }
+
+  .milkdown .milkdown-table-block [data-role='row-drag-handle'] {
+    left: -48px;
+  }
+
+  /* Larger SVG icons for mobile touch targets */
+  .milkdown .milkdown-table-block .cell-handle svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Button group buttons - ensure minimum touch target size */
+  .milkdown .milkdown-table-block .button-group button {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .milkdown .milkdown-table-block .button-group button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Add buttons - ensure minimum touch target size */
+  .milkdown .milkdown-table-block .add-button {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .milkdown .milkdown-table-block .add-button svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Adjust line handle sizes for larger add buttons */
+  .milkdown .milkdown-table-block [data-role='x-line-drag-handle'] {
+    height: 44px;
+  }
+
+  .milkdown .milkdown-table-block [data-role='y-line-drag-handle'] {
+    width: 44px;
+  }
+
+  /* Button group padding adjustment for mobile */
+  .milkdown .milkdown-table-block .button-group {
+    padding: 0.375rem;
+    gap: 0.25rem;
+  }
+
+  /* Always show controls on mobile (no hover state) */
+  .milkdown .milkdown-table-block .handle[data-show='true'] {
+    opacity: 1;
+  }
+
+  .milkdown .milkdown-table-block .add-button {
+    opacity: 0.8;
+  }
+}
+
+/* ================================================
+   End Table Block Controls
+   ================================================ */

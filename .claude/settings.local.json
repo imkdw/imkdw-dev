@@ -109,7 +109,10 @@
       "mcp__tavily-mcp__tavily-search",
       "Bash(doppler run:*)",
       "WebFetch(domain:marketplace.visualstudio.com)",
-      "WebFetch(domain:localhost)"
+      "WebFetch(domain:localhost)",
+      "Bash(ls:*)",
+      "Bash(npm show:*)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []
