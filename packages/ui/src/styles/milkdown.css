@@ -229,8 +229,8 @@ div[data-milkdown-root='true'] {
   margin-bottom: 1rem;
   border-radius: 0.5rem;
   overflow: hidden;
-  border: 1px solid hsl(var(--border));
-  background: hsl(var(--secondary));
+  border: 1px solid #3c3c3c;
+  background: #242424;
 }
 
 /* Header bar */
@@ -239,8 +239,8 @@ div[data-milkdown-root='true'] {
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 0.75rem;
-  background: hsl(var(--terminal-bg));
-  border-bottom: 1px solid hsl(var(--border));
+  background: #2b2b2b;
+  border-bottom: 1px solid #3c3c3c;
 }
 
 /* Traffic light dots container */
@@ -254,7 +254,7 @@ div[data-milkdown-root='true'] {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  border: 1px solid hsl(var(--border) / 0.3);
+  border: 1px solid rgba(60, 60, 60, 0.3);
 }
 
 .milkdown .code-block-traffic-lights .dot.red {
@@ -324,6 +324,30 @@ div[data-milkdown-root='true'] {
   margin: 0;
   border: 0;
   border-radius: 0;
+  background: transparent;
+}
+
+/* Apply JetBrains Mono font to code blocks */
+.milkdown .code-block-wrapper code {
+  font-family: var(--font-code, monospace);
+}
+
+/* Scrollbar styling for code block wrapper */
+.milkdown .code-block-wrapper pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+.milkdown .code-block-wrapper pre::-webkit-scrollbar-track {
+  background: #242424;
+}
+
+.milkdown .code-block-wrapper pre::-webkit-scrollbar-thumb {
+  background: #4a4a4a;
+  border-radius: 4px;
+}
+
+.milkdown .code-block-wrapper pre::-webkit-scrollbar-thumb:hover {
+  background: #5a5a5a;
 }
 
 /* Responsive adjustments */
@@ -343,17 +367,180 @@ div[data-milkdown-root='true'] {
   }
 }
 
-/* Dark mode adjustments */
+/* Dark mode adjustments - Darcula colors apply consistently */
 .dark .milkdown .code-block-wrapper {
-  background: hsl(var(--secondary) / 0.6);
+  background: #242424;
+  border-color: #3c3c3c;
 }
 
 .dark .milkdown .code-block-header {
-  background: hsl(var(--terminal-bg));
+  background: #2b2b2b;
+  border-bottom-color: #3c3c3c;
 }
 
 /* ================================================
    End Code Block Enhancement
+   ================================================ */
+
+/* ================================================
+   Darcula Syntax Highlighting Theme
+   ================================================ */
+
+/* Base highlight.js styles */
+.milkdown .code-block-wrapper .hljs {
+  background: #242424;
+  color: #cccccc;
+}
+
+/* Comments - muted gray, italic */
+.milkdown .code-block-wrapper .hljs-comment,
+.milkdown .code-block-wrapper .hljs-quote {
+  color: #707070;
+  font-style: italic;
+  background: transparent !important;
+}
+
+/* Strings - green */
+.milkdown .code-block-wrapper .hljs-string,
+.milkdown .code-block-wrapper .hljs-template-string {
+  color: #6a8759;
+  background: transparent !important;
+}
+
+/* Numbers and literals - light blue */
+.milkdown .code-block-wrapper .hljs-number,
+.milkdown .code-block-wrapper .hljs-literal {
+  color: #7a9ec2;
+  background: transparent !important;
+}
+
+/* Keywords - orange */
+.milkdown .code-block-wrapper .hljs-keyword,
+.milkdown .code-block-wrapper .hljs-selector-tag {
+  color: #cc8242;
+  background: transparent !important;
+}
+
+/* Functions - yellow */
+.milkdown .code-block-wrapper .hljs-function,
+.milkdown .code-block-wrapper .hljs-title.function_ {
+  color: #ffc66d;
+  background: transparent !important;
+}
+
+/* Variables, properties, attributes - purple */
+.milkdown .code-block-wrapper .hljs-variable,
+.milkdown .code-block-wrapper .hljs-property,
+.milkdown .code-block-wrapper .hljs-attr {
+  color: #9e7bb0;
+  background: transparent !important;
+}
+
+/* Types and classes - light blue */
+.milkdown .code-block-wrapper .hljs-type,
+.milkdown .code-block-wrapper .hljs-class,
+.milkdown .code-block-wrapper .hljs-title.class_ {
+  color: #7a9ec2;
+  background: transparent !important;
+}
+
+/* Built-in functions - orange */
+.milkdown .code-block-wrapper .hljs-built_in {
+  color: #cc8242;
+  background: transparent !important;
+}
+
+/* Parameters - default text color */
+.milkdown .code-block-wrapper .hljs-params {
+  color: #cccccc;
+  background: transparent !important;
+}
+
+/* Meta and preprocessor - yellow-green */
+.milkdown .code-block-wrapper .hljs-meta,
+.milkdown .code-block-wrapper .hljs-meta-keyword {
+  color: #bbb529;
+  background: transparent !important;
+}
+
+/* HTML/XML tags - warm yellow */
+.milkdown .code-block-wrapper .hljs-tag,
+.milkdown .code-block-wrapper .hljs-name {
+  color: #e8bf6a;
+  background: transparent !important;
+}
+
+/* Attributes - light gray */
+.milkdown .code-block-wrapper .hljs-attribute {
+  color: #bababa;
+  background: transparent !important;
+}
+
+/* Symbols and bullets - blue */
+.milkdown .code-block-wrapper .hljs-symbol,
+.milkdown .code-block-wrapper .hljs-bullet {
+  color: #6897bb;
+  background: transparent !important;
+}
+
+/* Regular expressions - green */
+.milkdown .code-block-wrapper .hljs-regexp {
+  color: #6a8759;
+  background: transparent !important;
+}
+
+/* Diff additions - green */
+.milkdown .code-block-wrapper .hljs-addition {
+  color: #6a8759;
+  background: transparent !important;
+}
+
+/* Diff deletions - orange */
+.milkdown .code-block-wrapper .hljs-deletion {
+  color: #cc7832;
+  background: transparent !important;
+}
+
+/* Section and title - yellow */
+.milkdown .code-block-wrapper .hljs-section,
+.milkdown .code-block-wrapper .hljs-title {
+  color: #ffc66d;
+  background: transparent !important;
+}
+
+/* Selector class, id, pseudo - purple */
+.milkdown .code-block-wrapper .hljs-selector-class,
+.milkdown .code-block-wrapper .hljs-selector-id,
+.milkdown .code-block-wrapper .hljs-selector-pseudo {
+  color: #9e7bb0;
+  background: transparent !important;
+}
+
+/* Emphasis - italic */
+.milkdown .code-block-wrapper .hljs-emphasis {
+  font-style: italic;
+  background: transparent !important;
+}
+
+/* Strong - bold */
+.milkdown .code-block-wrapper .hljs-strong {
+  font-weight: bold;
+  background: transparent !important;
+}
+
+/* Link - light blue */
+.milkdown .code-block-wrapper .hljs-link {
+  color: #7a9ec2;
+  background: transparent !important;
+}
+
+/* Ensure all token backgrounds are transparent */
+.milkdown .code-block-wrapper [class^='hljs-'] {
+  background: transparent !important;
+}
+
+/* ================================================
+   End Darcula Syntax Highlighting Theme
    ================================================ */
 
 /* Table Styles */
