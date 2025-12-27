@@ -6,6 +6,8 @@ export function createTurndownService(): TurndownService {
     codeBlockStyle: 'fenced',
   });
 
+  service.keep(['br']);
+
   service.addRule('fencedCodeBlockWithLanguage', {
     filter: (node: Node): boolean => {
       return node.nodeName === 'PRE' && !!node.firstChild && node.firstChild.nodeName === 'CODE';
