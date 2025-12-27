@@ -6,6 +6,7 @@ import { oneDark } from '@codemirror/theme-one-dark';
 import { keymap } from '@codemirror/view';
 import { Editor, defaultValueCtx, editorCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/kit/core';
 import { upload, uploadConfig } from '@milkdown/kit/plugin/upload';
+import { slashFactory } from '@milkdown/kit/plugin/slash';
 import { commonmark } from '@milkdown/kit/preset/commonmark';
 import { gfm } from '@milkdown/kit/preset/gfm';
 import { Milkdown, useEditor } from '@milkdown/react';
@@ -18,11 +19,15 @@ import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
 import { getHTML } from '@milkdown/kit/utils';
 import { basicSetup } from 'codemirror';
 import { history } from '@milkdown/kit/plugin/history';
+import { usePluginViewFactory } from '@prosemirror-adapter/react';
 import { createImageUploader } from './image-uploader';
 import { createTurndownService } from './turndown-config';
+import { SlashMenu } from './slash-menu';
 import { useImageUpload } from '@imkdw-dev/hooks';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Plus, Trash2, AlignLeft, AlignCenter, AlignRight, GripVertical, GripHorizontal } from 'lucide-react';
+
+const slash = slashFactory('slash-menu');
 
 const tableBlockIcons = {
   plus: renderToStaticMarkup(<Plus size={16} />),
@@ -66,6 +71,7 @@ interface Props {
 
 export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadImage }: Props) {
   const { uploadImage } = useImageUpload();
+  const pluginViewFactory = usePluginViewFactory();
 
   const uploader = createImageUploader({ uploadImage, onUploadImage });
 
@@ -126,6 +132,12 @@ export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadI
           }
         });
       })
+      .config(ctx => {
+        ctx.set(slash.key, {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          view: pluginViewFactory({ component: SlashMenu }) as any,
+        });
+      })
       .use(listener)
       .use(commonmark)
       .use(history)
@@ -135,6 +147,7 @@ export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadI
       .use(upload)
       .use(clipboard)
       .use(codeBlockComponent)
+      .use(slash)
   );
 
   return <Milkdown />;

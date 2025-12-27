@@ -636,16 +636,19 @@ importers:
         version: link:../shared/utils
       '@milkdown/crepe':
         specifier: ^7.16.0
-        version: 7.16.0(prosemirror-model@1.25.3)(prosemirror-state@1.4.3)(prosemirror-view@1.41.2)(typescript@5.9.2)
+        version: 7.16.0(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.4)(typescript@5.9.2)
       '@milkdown/kit':
         specifier: ^7.16.0
         version: 7.16.0(@codemirror/language@6.11.3)(@codemirror/state@6.5.2)(@codemirror/view@6.38.4)(typescript@5.9.2)
       '@milkdown/react':
         specifier: ^7.16.0
-        version: 7.16.0(@codemirror/language@6.11.3)(@codemirror/state@6.5.2)(@codemirror/view@6.38.4)(prosemirror-model@1.25.3)(prosemirror-state@1.4.3)(prosemirror-view@1.41.2)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(typescript@5.9.2)
+        version: 7.16.0(@codemirror/language@6.11.3)(@codemirror/state@6.5.2)(@codemirror/view@6.38.4)(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.4)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(typescript@5.9.2)
       '@milkdown/theme-nord':
         specifier: ^7.16.0
         version: 7.16.0
+      '@prosemirror-adapter/react':
+        specifier: ^0.5.1
+        version: 0.5.1(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
       '@radix-ui/colors':
         specifier: ^3.0.0
         version: 3.0.0
@@ -2313,6 +2316,20 @@ packages:
 
   '@prisma/get-platform@6.15.0':
     resolution: {integrity: sha512-Jbb+Xbxyp05NSR1x2epabetHiXvpO8tdN2YNoWoA/ZsbYyxxu/CO/ROBauIFuMXs3Ti+W7N7SJtWsHGaWte9Rg==}
+
+  '@prosemirror-adapter/core@0.4.6':
+    resolution: {integrity: sha512-qbqd4u9IyDXXolFFmX1tzE000IpF9JbCiiwuSvqIh7lT9ZqjeMcyDVR/vxyM4oVY1sVyQQQj+WxHMAIhj7egVg==}
+
+  '@prosemirror-adapter/react@0.5.1':
+    resolution: {integrity: sha512-kbFoBxQt8T1MW024uu/pLbUX7FK3oxFRQBxQDSwz58Hy5JfQuyEAjOxjtNlsrhE5Fl3OajYUW69YboiSdP4tjw==}
+    peerDependencies:
+      react: '*'
+      react-dom: '*'
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
 
   '@radix-ui/colors@3.0.0':
     resolution: {integrity: sha512-FUOsGBkHrYJwCSEtWRCIfQbZG7q1e6DgxCIOe1SUQzDe/7rXXeA47s8yCn6fuTNQAj1Zq4oTFi9Yjp3wzElcxg==}
@@ -6477,6 +6494,9 @@ packages:
   prosemirror-model@1.25.3:
     resolution: {integrity: sha512-dY2HdaNXlARknJbrManZ1WyUtos+AP97AmvqdOQtWtrrC5g4mohVX5DTi9rXNFSk09eczLq9GuNTtq3EfMeMGA==}
 
+  prosemirror-model@1.25.4:
+    resolution: {integrity: sha512-PIM7E43PBxKce8OQeezAs9j4TP+5yDpZVbuurd1h5phUxEKIu+G2a+EUZzIC5nS1mJktDJWzbqS23n1tsAf5QA==}
+
   prosemirror-safari-ime-span@1.0.2:
     resolution: {integrity: sha512-QJqD8s1zE/CuK56kDsUhndh5hiHh/gFnAuPOA9ytva2s85/ZEt2tNWeALTJN48DtWghSKOmiBsvVn2OlnJ5H2w==}
 
@@ -6486,14 +6506,23 @@ packages:
   prosemirror-state@1.4.3:
     resolution: {integrity: sha512-goFKORVbvPuAQaXhpbemJFRKJ2aixr+AZMGiquiqKxaucC6hlpHNZHWgz5R7dS4roHiwq9vDctE//CZ++o0W1Q==}
 
-  prosemirror-tables@1.8.1:
-    resolution: {integrity: sha512-DAgDoUYHCcc6tOGpLVPSU1k84kCUWTWnfWX3UDy2Delv4ryH0KqTD6RBI6k4yi9j9I8gl3j8MkPpRD/vWPZbug==}
+  prosemirror-state@1.4.4:
+    resolution: {integrity: sha512-6jiYHH2CIGbCfnxdHbXZ12gySFY/fz/ulZE333G6bPqIZ4F+TXo9ifiR86nAHpWnfoNjOb3o5ESi7J8Uz1jXHw==}
+
+  prosemirror-tables@1.8.5:
+    resolution: {integrity: sha512-V/0cDCsHKHe/tfWkeCmthNUcEp1IVO3p6vwN8XtwE9PZQLAZJigbw3QoraAdfJPir4NKJtNvOB8oYGKRl+t0Dw==}
 
   prosemirror-transform@1.10.4:
     resolution: {integrity: sha512-pwDy22nAnGqNR1feOQKHxoFkkUtepoFAd3r2hbEDsnf4wp57kKA36hXsB3njA9FtONBEwSDnDeCiJe+ItD+ykw==}
 
+  prosemirror-transform@1.10.5:
+    resolution: {integrity: sha512-RPDQCxIDhIBb1o36xxwsaeAvivO8VLJcgBtzmOwQ64bMtsVFh5SSuJ6dWSxO1UsHTiTXPCgQm3PDJt7p6IOLbw==}
+
   prosemirror-view@1.41.2:
     resolution: {integrity: sha512-PGS/jETmh+Qjmre/6vcG7SNHAKiGc4vKOJmHMPRmvcUl7ISuVtrtHmH06UDUwaim4NDJfZfVMl7U7JkMMETa6g==}
+
+  prosemirror-view@1.41.4:
+    resolution: {integrity: sha512-WkKgnyjNncri03Gjaz3IFWvCAE94XoiEgvtr0/r2Xw7R8/IjK3sKLSiDoCHWcsXSAinVaKlGRZDvMCsF1kbzjA==}
 
   prosemirror-virtual-cursor@0.4.2:
     resolution: {integrity: sha512-pUMKnIuOhhnMcgIJUjhIQTVJruBEGxfMBVQSrK0g2qhGPDm1i12KdsVaFw15dYk+29tZcxjMeR7P5VDKwmbwJg==}
@@ -9719,7 +9748,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@milkdown/crepe@7.16.0(prosemirror-model@1.25.3)(prosemirror-state@1.4.3)(prosemirror-view@1.41.2)(typescript@5.9.2)':
+  '@milkdown/crepe@7.16.0(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.4)(typescript@5.9.2)':
     dependencies:
       '@codemirror/commands': 6.9.0
       '@codemirror/language': 6.11.3
@@ -9733,7 +9762,7 @@ snapshots:
       codemirror: 6.0.2
       katex: 0.16.23
       lodash-es: 4.17.21
-      prosemirror-virtual-cursor: 0.4.2(prosemirror-model@1.25.3)(prosemirror-state@1.4.3)(prosemirror-view@1.41.2)
+      prosemirror-virtual-cursor: 0.4.2(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.4)
       remark-math: 6.0.0
       unist-util-visit: 5.0.0
       vue: 3.5.22(typescript@5.9.2)
@@ -9914,13 +9943,13 @@ snapshots:
       prosemirror-model: 1.25.3
       prosemirror-schema-list: 1.5.1
       prosemirror-state: 1.4.3
-      prosemirror-tables: 1.8.1
+      prosemirror-tables: 1.8.5
       prosemirror-transform: 1.10.4
       prosemirror-view: 1.41.2
 
-  '@milkdown/react@7.16.0(@codemirror/language@6.11.3)(@codemirror/state@6.5.2)(@codemirror/view@6.38.4)(prosemirror-model@1.25.3)(prosemirror-state@1.4.3)(prosemirror-view@1.41.2)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(typescript@5.9.2)':
+  '@milkdown/react@7.16.0(@codemirror/language@6.11.3)(@codemirror/state@6.5.2)(@codemirror/view@6.38.4)(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.4)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(typescript@5.9.2)':
     dependencies:
-      '@milkdown/crepe': 7.16.0(prosemirror-model@1.25.3)(prosemirror-state@1.4.3)(prosemirror-view@1.41.2)(typescript@5.9.2)
+      '@milkdown/crepe': 7.16.0(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.4)(typescript@5.9.2)
       '@milkdown/kit': 7.16.0(@codemirror/language@6.11.3)(@codemirror/state@6.5.2)(@codemirror/view@6.38.4)(typescript@5.9.2)
       react: 19.1.2
       react-dom: 19.1.2(react@19.1.2)
@@ -10283,6 +10312,23 @@ snapshots:
   '@prisma/get-platform@6.15.0':
     dependencies:
       '@prisma/debug': 6.15.0
+
+  '@prosemirror-adapter/core@0.4.6':
+    dependencies:
+      prosemirror-model: 1.25.4
+      prosemirror-state: 1.4.4
+      prosemirror-view: 1.41.4
+
+  '@prosemirror-adapter/react@0.5.1(react-dom@19.1.2(react@19.1.2))(react@19.1.2)':
+    dependencies:
+      '@prosemirror-adapter/core': 0.4.6
+      nanoid: 5.1.6
+      prosemirror-model: 1.25.4
+      prosemirror-state: 1.4.4
+      prosemirror-view: 1.41.4
+    optionalDependencies:
+      react: 19.1.2
+      react-dom: 19.1.2(react@19.1.2)
 
   '@radix-ui/colors@3.0.0': {}
 
@@ -15418,91 +15464,111 @@ snapshots:
 
   prosemirror-commands@1.7.1:
     dependencies:
-      prosemirror-model: 1.25.3
-      prosemirror-state: 1.4.3
+      prosemirror-model: 1.25.4
+      prosemirror-state: 1.4.4
       prosemirror-transform: 1.10.4
 
   prosemirror-drop-indicator@0.1.0:
     dependencies:
       '@ocavue/utils': 0.7.1
-      prosemirror-model: 1.25.3
-      prosemirror-state: 1.4.3
-      prosemirror-view: 1.41.2
+      prosemirror-model: 1.25.4
+      prosemirror-state: 1.4.4
+      prosemirror-view: 1.41.4
 
   prosemirror-dropcursor@1.8.2:
     dependencies:
-      prosemirror-state: 1.4.3
+      prosemirror-state: 1.4.4
       prosemirror-transform: 1.10.4
-      prosemirror-view: 1.41.2
+      prosemirror-view: 1.41.4
 
   prosemirror-gapcursor@1.3.2:
     dependencies:
       prosemirror-keymap: 1.2.3
-      prosemirror-model: 1.25.3
-      prosemirror-state: 1.4.3
-      prosemirror-view: 1.41.2
+      prosemirror-model: 1.25.4
+      prosemirror-state: 1.4.4
+      prosemirror-view: 1.41.4
 
   prosemirror-history@1.4.1:
     dependencies:
-      prosemirror-state: 1.4.3
+      prosemirror-state: 1.4.4
       prosemirror-transform: 1.10.4
-      prosemirror-view: 1.41.2
+      prosemirror-view: 1.41.4
       rope-sequence: 1.3.4
 
   prosemirror-inputrules@1.5.0:
     dependencies:
-      prosemirror-state: 1.4.3
+      prosemirror-state: 1.4.4
       prosemirror-transform: 1.10.4
 
   prosemirror-keymap@1.2.3:
     dependencies:
-      prosemirror-state: 1.4.3
+      prosemirror-state: 1.4.4
       w3c-keyname: 2.2.8
 
   prosemirror-model@1.25.3:
     dependencies:
       orderedmap: 2.1.1
 
+  prosemirror-model@1.25.4:
+    dependencies:
+      orderedmap: 2.1.1
+
   prosemirror-safari-ime-span@1.0.2:
     dependencies:
-      prosemirror-state: 1.4.3
-      prosemirror-view: 1.41.2
+      prosemirror-state: 1.4.4
+      prosemirror-view: 1.41.4
 
   prosemirror-schema-list@1.5.1:
     dependencies:
-      prosemirror-model: 1.25.3
-      prosemirror-state: 1.4.3
+      prosemirror-model: 1.25.4
+      prosemirror-state: 1.4.4
       prosemirror-transform: 1.10.4
 
   prosemirror-state@1.4.3:
     dependencies:
-      prosemirror-model: 1.25.3
+      prosemirror-model: 1.25.4
       prosemirror-transform: 1.10.4
-      prosemirror-view: 1.41.2
+      prosemirror-view: 1.41.4
 
-  prosemirror-tables@1.8.1:
+  prosemirror-state@1.4.4:
+    dependencies:
+      prosemirror-model: 1.25.4
+      prosemirror-transform: 1.10.4
+      prosemirror-view: 1.41.4
+
+  prosemirror-tables@1.8.5:
     dependencies:
       prosemirror-keymap: 1.2.3
-      prosemirror-model: 1.25.3
-      prosemirror-state: 1.4.3
-      prosemirror-transform: 1.10.4
-      prosemirror-view: 1.41.2
+      prosemirror-model: 1.25.4
+      prosemirror-state: 1.4.4
+      prosemirror-transform: 1.10.5
+      prosemirror-view: 1.41.4
 
   prosemirror-transform@1.10.4:
     dependencies:
-      prosemirror-model: 1.25.3
+      prosemirror-model: 1.25.4
+
+  prosemirror-transform@1.10.5:
+    dependencies:
+      prosemirror-model: 1.25.4
 
   prosemirror-view@1.41.2:
     dependencies:
-      prosemirror-model: 1.25.3
-      prosemirror-state: 1.4.3
+      prosemirror-model: 1.25.4
+      prosemirror-state: 1.4.4
       prosemirror-transform: 1.10.4
 
-  prosemirror-virtual-cursor@0.4.2(prosemirror-model@1.25.3)(prosemirror-state@1.4.3)(prosemirror-view@1.41.2):
+  prosemirror-view@1.41.4:
+    dependencies:
+      prosemirror-model: 1.25.4
+      prosemirror-state: 1.4.4
+      prosemirror-transform: 1.10.4
+
+  prosemirror-virtual-cursor@0.4.2(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.4):
     optionalDependencies:
-      prosemirror-model: 1.25.3
-      prosemirror-state: 1.4.3
-      prosemirror-view: 1.41.2
+      prosemirror-model: 1.25.4
+      prosemirror-state: 1.4.4
+      prosemirror-view: 1.41.4
 
   proxy-addr@2.0.7:
     dependencies:

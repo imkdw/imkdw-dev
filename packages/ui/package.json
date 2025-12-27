@@ -33,6 +33,7 @@
     "@milkdown/kit": "^7.16.0",
     "@milkdown/react": "^7.16.0",
     "@milkdown/theme-nord": "^7.16.0",
+    "@prosemirror-adapter/react": "^0.5.1",
     "@radix-ui/colors": "^3.0.0",
     "@tailwindcss/typography": "^0.5.16",
     "autoprefixer": "^10.4.21",

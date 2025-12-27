@@ -552,6 +552,12 @@ div[data-milkdown-root='true'] {
   border: 1px solid hsl(var(--border));
 }
 
+/* Cell styling when selected */
+.milkdown td.selectedCell,
+.milkdown th.selectedCell {
+  background: hsl(var(--primary) / 0.1);
+}
+
 .milkdown table th,
 .milkdown table td {
   padding-left: 1rem;
@@ -874,13 +880,20 @@ div[data-milkdown-root='true'] {
   background: transparent;
   border: none;
   padding: 0;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+/* Show line handles when table block is hovered */
+.milkdown .milkdown-table-block:hover .line-handle {
+  opacity: 1;
 }
 
 /* X-line handle - add row button (positioned at bottom between rows) */
 .milkdown .milkdown-table-block [data-role='x-line-drag-handle'] {
   left: 0;
   right: 0;
-  height: 20px;
+  height: 16px;
   justify-content: center;
 }
 
@@ -888,68 +901,50 @@ div[data-milkdown-root='true'] {
 .milkdown .milkdown-table-block [data-role='y-line-drag-handle'] {
   top: 0;
   bottom: 0;
-  width: 20px;
+  width: 16px;
   justify-content: center;
   flex-direction: column;
 }
 
 /* ================================================
-   Add Button Controls (Green Color Scheme)
+   Add Button Controls
    ================================================ */
 
-/* Add buttons - green color scheme for positive action */
+/* Add buttons - visible style */
 .milkdown .milkdown-table-block .add-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  border: 1px dashed hsl(142 76% 36%);
-  background: hsl(142 76% 36% / 0.1);
-  color: hsl(142 76% 36%);
+  border: 2px solid hsl(var(--primary) / 0.6);
+  background: hsl(var(--background));
+  color: hsl(var(--primary));
   cursor: pointer;
   opacity: 0;
-  transition:
-    opacity 0.15s ease,
-    background-color 0.15s ease,
-    border-color 0.15s ease,
-    transform 0.15s ease;
+  font-weight: bold;
+  transition: all 0.15s ease;
 }
 
-/* Show add buttons on line handle hover/show */
-.milkdown .milkdown-table-block .line-handle[data-show='true'] .add-button,
-.milkdown .milkdown-table-block:hover .line-handle .add-button {
-  opacity: 0.7;
+/* Show add buttons when table is hovered */
+.milkdown .milkdown-table-block:hover .add-button {
+  opacity: 0.8;
 }
 
+/* Add button hover state */
 .milkdown .milkdown-table-block .add-button:hover {
   opacity: 1 !important;
-  background: hsl(142 76% 36% / 0.2);
-  border-color: hsl(142 76% 36%);
-  border-style: solid;
-  transform: scale(1.1);
-}
-
-.milkdown .milkdown-table-block .add-button:focus {
-  outline: 2px solid hsl(142 76% 36% / 0.5);
-  outline-offset: 2px;
-  opacity: 1 !important;
-}
-
-.milkdown .milkdown-table-block .add-button:focus:not(:focus-visible) {
-  outline: none;
-}
-
-.milkdown .milkdown-table-block .add-button:focus-visible {
-  outline: 2px solid hsl(142 76% 36% / 0.5);
-  outline-offset: 2px;
-  opacity: 1 !important;
+  background: hsl(var(--primary));
+  color: white;
+  border-color: hsl(var(--primary));
+  transform: scale(1.15);
 }
 
 .milkdown .milkdown-table-block .add-button svg {
   width: 14px;
   height: 14px;
+  stroke-width: 3;
 }
 
 /* ================================================
@@ -1026,23 +1021,6 @@ div[data-milkdown-root='true'] {
 .dark .milkdown .milkdown-table-block .button-group button:last-child:hover {
   background: hsl(0 84% 60% / 0.2);
   color: hsl(0 84% 70%);
-}
-
-/* Dark mode - add buttons (green) */
-.dark .milkdown .milkdown-table-block .add-button {
-  border-color: hsl(142 76% 46%);
-  background: hsl(142 76% 46% / 0.1);
-  color: hsl(142 76% 46%);
-}
-
-.dark .milkdown .milkdown-table-block .add-button:hover {
-  background: hsl(142 76% 46% / 0.25);
-  border-color: hsl(142 76% 50%);
-}
-
-.dark .milkdown .milkdown-table-block .add-button:focus,
-.dark .milkdown .milkdown-table-block .add-button:focus-visible {
-  outline-color: hsl(142 76% 46% / 0.5);
 }
 
 /* Dark mode - drag preview */
@@ -1135,28 +1113,6 @@ div[data-milkdown-root='true'] {
     height: 20px;
   }
 
-  /* Add buttons - ensure minimum touch target size */
-  .milkdown .milkdown-table-block .add-button {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    min-height: 44px;
-  }
-
-  .milkdown .milkdown-table-block .add-button svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  /* Adjust line handle sizes for larger add buttons */
-  .milkdown .milkdown-table-block [data-role='x-line-drag-handle'] {
-    height: 44px;
-  }
-
-  .milkdown .milkdown-table-block [data-role='y-line-drag-handle'] {
-    width: 44px;
-  }
-
   /* Button group padding adjustment for mobile */
   .milkdown .milkdown-table-block .button-group {
     padding: 0.375rem;
@@ -1167,12 +1123,71 @@ div[data-milkdown-root='true'] {
   .milkdown .milkdown-table-block .handle[data-show='true'] {
     opacity: 1;
   }
-
-  .milkdown .milkdown-table-block .add-button {
-    opacity: 0.8;
-  }
 }
 
 /* ================================================
    End Table Block Controls
+   ================================================ */
+
+/* ================================================
+   Slash Menu
+   ================================================ */
+.slash-menu {
+  position: absolute;
+  z-index: 50;
+  min-width: 200px;
+  padding: 0.375rem;
+  background: hsl(220 13% 18%);
+  border: 1px solid hsl(220 13% 26%);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.slash-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: none;
+  border-radius: 0.375rem;
+  background: transparent;
+  color: hsl(220 14% 71%);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.slash-menu-item:hover,
+.slash-menu-item.selected {
+  background: hsl(220 13% 26%);
+  color: hsl(var(--foreground));
+}
+
+.slash-menu-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0.25rem;
+  background: hsl(220 13% 22%);
+  border-radius: 0.25rem;
+  color: hsl(220 14% 60%);
+}
+
+.slash-menu-item:hover .slash-menu-icon,
+.slash-menu-item.selected .slash-menu-icon {
+  background: hsl(var(--primary) / 0.15);
+  color: hsl(var(--primary));
+}
+
+.slash-menu-label {
+  flex: 1;
+  text-align: left;
+  font-weight: 500;
+}
+
+/* ================================================
+   End Slash Menu
    ================================================ */

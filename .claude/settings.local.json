@@ -112,7 +112,8 @@
       "WebFetch(domain:localhost)",
       "Bash(ls:*)",
       "Bash(npm show:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(do echo \"=== $file ===\" cat ./node_modules/.pnpm/@milkdown+preset-commonmark@7.16.0/node_modules/@milkdown/preset-commonmark/lib/node/$file.d.ts)"
     ],
     "deny": [],
     "ask": []

@@ -1,6 +1,7 @@
 'use client';
 
 import { MilkdownProvider } from '@milkdown/react';
+import { ProsemirrorAdapterProvider } from '@prosemirror-adapter/react';
 import { MilkdownEditor } from './milkdown-editor';
 import { EditorController } from './editor-controller';
 
@@ -15,13 +16,15 @@ interface Props {
 export function MilkdownWrapper({ content, isEditable, onChangeContent, onUploadImage, onEditorReady }: Props) {
   return (
     <MilkdownProvider>
-      <MilkdownEditor
-        content={content}
-        isEditable={isEditable}
-        onChangeContent={onChangeContent}
-        onUploadImage={onUploadImage}
-      />
-      {onEditorReady && <EditorController onReady={onEditorReady} />}
+      <ProsemirrorAdapterProvider>
+        <MilkdownEditor
+          content={content}
+          isEditable={isEditable}
+          onChangeContent={onChangeContent}
+          onUploadImage={onUploadImage}
+        />
+        {onEditorReady && <EditorController onReady={onEditorReady} />}
+      </ProsemirrorAdapterProvider>
     </MilkdownProvider>
   );
 }
