@@ -35,52 +35,39 @@ task_groups:
   # Repeat for each task group found in tasks.md
 ```
 
-### NEXT: Ask user to assign subagents to each task group
+### NEXT: Auto-assign subagents to each task group
 
-Next we must determine which subagents should be assigned to which task groups. Ask the user to provide this info using the following request to user and WAIT for user's response:
+Analyze each task group and automatically determine the most appropriate subagent based on:
+- Task group name and description
+- Required technical skills (frontend, backend, database, etc.)
+- Available subagents and their specializations
 
-```
-Please specify the name of each subagent to be assigned to each task group:
-
-1. [task-group-name]
-2. [task-group-name]
-3. [task-group-name]
-[repeat for each task-group you've added to orchestration.yml]
-
-Simply respond with the subagent names and corresponding task group number and I'll update orchestration.yml accordingly.
-```
-
-Using the user's responses, update `orchestration.yml` to specify those subagent names. `orchestration.yml` should end up looking like this:
+Read the available subagents from `.claude/agents/` directory or configuration, then update `orchestration.yml` with your assignments:
 
 ```yaml
 task_groups:
   - name: [task-group-name]
-    claude_code_subagent: [subagent-name]
+    claude_code_subagent: [auto-selected-subagent]
+    assignment_reason: [brief reason for this assignment]
   - name: [task-group-name]
-    claude_code_subagent: [subagent-name]
-  - name: [task-group-name]
-    claude_code_subagent: [subagent-name]
-  # Repeat for each task group found in tasks.md
+    claude_code_subagent: [auto-selected-subagent]
+    assignment_reason: [brief reason for this assignment]
 ```
 
-For example, after this step, the `orchestration.yml` file might look like this (exact names will vary):
+Assignment Rules:
+1. Match task keywords to subagent specializations (e.g., "api", "database" → backend-specialist)
+2. UI/UX related tasks → frontend-specialist
+3. Infrastructure/deployment tasks → devops-specialist
+4. If unclear, assign to the most general-purpose subagent available
 
-```yaml
-task_groups:
-  - name: authentication-system
-    claude_code_subagent: backend-specialist
-  - name: user-dashboard
-    claude_code_subagent: frontend-specialist
-  - name: api-endpoints
-    claude_code_subagent: backend-specialist
-```
+After updating `orchestration.yml`, briefly inform the user of your assignments before proceeding.
+
 
 ### NEXT: Delegate task groups implementations to assigned subagents
 
 Loop through each task group in `agent-os/specs/[this-spec]/tasks.md` and delegate its implementation to the assigned subagent specified in `orchestration.yml`.
 
 For each delegation, provide the subagent with:
-
 - The task group (including the parent task and all sub-tasks)
 - The spec file: `agent-os/specs/[this-spec]/spec.md`
 - Instruct subagent to:
