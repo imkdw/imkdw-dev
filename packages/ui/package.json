@@ -33,7 +33,6 @@
     "@milkdown/kit": "^7.16.0",
     "@milkdown/react": "^7.16.0",
     "@milkdown/theme-nord": "^7.16.0",
-    "@prosemirror-adapter/react": "^0.5.1",
     "@radix-ui/colors": "^3.0.0",
     "@tailwindcss/typography": "^0.5.16",
     "autoprefixer": "^10.4.21",
@@ -48,6 +47,7 @@
     "tailwind-merge": "^2.6.0",
     "tailwindcss": "3",
     "turndown": "^7.2.1",
+    "@prosemirror-adapter/react": "^0.5.1",
     "turndown-plugin-gfm": "^1.0.2"
   },
   "devDependencies": {
