@@ -31,6 +31,14 @@
     "turbo": "^2.5.6",
     "typescript": "5.9.2"
   },
+  "pnpm": {
+    "overrides": {
+      "prosemirror-model": "1.25.4",
+      "prosemirror-state": "1.4.4",
+      "prosemirror-view": "1.41.4",
+      "prosemirror-transform": "1.10.5"
+    }
+  },
   "packageManager": "pnpm@10.0.0",
   "engines": {
     "node": ">=22"

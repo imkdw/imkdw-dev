@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { pretendard, jetBrainsMono } from '@imkdw-dev/fonts';
 
-import '@mdxeditor/editor/style.css';
 import '@imkdw-dev/ui/globals.css';
 import '@imkdw-dev/ui/milkdown.css';
 
