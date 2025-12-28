@@ -39,10 +39,20 @@ export function createTurndownService(): TurndownService {
   const service = new TurndownService({
     headingStyle: 'atx',
     codeBlockStyle: 'fenced',
+    blankReplacement: (content, node) => {
+      if (node.nodeName === 'P') {
+        return '\n\n\u00A0\n\n';
+      }
+      return '';
+    },
   });
 
   service.use(gfm);
-  service.keep(['br']);
+
+  service.addRule('lineBreak', {
+    filter: 'br',
+    replacement: () => '  \n',
+  });
 
   service.addRule('tableCell', {
     filter: ['th', 'td'],
