@@ -13,7 +13,7 @@ export function FooterNavigation({ className }: Props) {
     ],
     resources: [
       // { name: 'About', href: '/about' },
-      // { name: 'RSS Feed', href: '/rss.xml' },
+      { name: 'RSS Feed', href: '/feed.xml' },
       { name: 'Sitemap', href: '/sitemap.xml' },
     ],
   };
