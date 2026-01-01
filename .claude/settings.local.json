@@ -113,7 +113,10 @@
       "Bash(ls:*)",
       "Bash(npm show:*)",
       "Bash(grep:*)",
-      "Bash(do echo \"=== $file ===\" cat ./node_modules/.pnpm/@milkdown+preset-commonmark@7.16.0/node_modules/@milkdown/preset-commonmark/lib/node/$file.d.ts)"
+      "Bash(do echo \"=== $file ===\" cat ./node_modules/.pnpm/@milkdown+preset-commonmark@7.16.0/node_modules/@milkdown/preset-commonmark/lib/node/$file.d.ts)",
+      "Bash(npm view:*)",
+      "WebFetch(domain:yet-another-react-lightbox.com)",
+      "WebFetch(domain:bundlephobia.com)"
     ],
     "deny": [],
     "ask": []

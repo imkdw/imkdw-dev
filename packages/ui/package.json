@@ -8,6 +8,7 @@
     ".": "./src/index.ts",
     "./globals.css": "./src/styles/globals.css",
     "./milkdown.css": "./src/styles/milkdown.css",
+    "./image-zoom.css": "./src/styles/image-zoom.css",
     "./tailwind-preset": "./src/tokens/tailwind-preset.ts"
   },
   "scripts": {
