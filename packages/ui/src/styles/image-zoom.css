@@ -1,0 +1,39 @@
+.yarl__root {
+  --yarl__color_backdrop: hsl(var(--background) / 0.95);
+}
+
+.yarl__button {
+  color: hsl(var(--foreground));
+  filter: none;
+}
+
+.yarl__button:hover {
+  color: hsl(var(--foreground) / 0.8);
+}
+
+.yarl__button {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.yarl__slide_image {
+  border-radius: 0.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.dark .yarl__slide_image {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.yarl__navigation_prev,
+.yarl__navigation_next {
+  display: none;
+}
+
+.yarl__toolbar {
+  background: transparent;
+}
+
+.yarl__icon {
+  color: hsl(var(--foreground));
+}

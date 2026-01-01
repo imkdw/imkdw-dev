@@ -35,14 +35,11 @@ async function copyToClipboard(text: string): Promise<boolean> {
 }
 
 interface CodeBlockHydratorProps {
-  containerSelector?: string;
+  containerSelector: string;
   showToastOnError?: boolean;
 }
 
-export function CodeBlockHydrator({
-  containerSelector = '.milkdown',
-  showToastOnError = true,
-}: CodeBlockHydratorProps) {
+export function CodeBlockHydrator({ containerSelector, showToastOnError = true }: CodeBlockHydratorProps) {
   const timeoutIdsRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
   const cleanupFunctionsRef = useRef<Array<() => void>>([]);
   const announcementElementRef = useRef<HTMLDivElement | null>(null);
