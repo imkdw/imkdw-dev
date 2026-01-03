@@ -4,7 +4,7 @@ import { editorViewCtx } from '@milkdown/kit/core';
 import { linkPreviewNode } from './link-preview-node';
 import type { LinkPreviewPluginOptions } from './link-preview-plugin';
 
-const URL_REGEX = /^(https?:\/\/[^\s]+)$/;
+const URL_REGEX = /(https?:\/\/[^\s]+)$/;
 
 export function createLinkPreviewInputRule(options: LinkPreviewPluginOptions) {
   return $inputRule(ctx => {
