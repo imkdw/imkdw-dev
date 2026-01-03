@@ -1,7 +1,9 @@
 'use server';
 
 import { parseLinkMetadata } from '@/lib/link-metadata-parser';
-import type { LinkPreviewResult } from '@/types/link-preview';
+import { LinkPreviewData, LinkPreviewResult } from '@/types/link-preview';
+
+const LINKPREVIEW_API_KEY = process.env.LINKPREVIEW_API_KEY;
 
 export async function getLinkPreviewAction(url: string): Promise<LinkPreviewResult> {
   if (!isValidUrl(url)) {
@@ -9,25 +11,21 @@ export async function getLinkPreviewAction(url: string): Promise<LinkPreviewResu
   }
 
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    const data = await fetchWithOwnParser(url);
 
-    const response = await fetch(url, {
-      signal: controller.signal,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; LinkPreviewBot/1.0)',
-        Accept: 'text/html,application/xhtml+xml',
-      },
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      return { success: false, error: 'URL을 가져오는데 실패했습니다' };
+    if (!data.description && LINKPREVIEW_API_KEY) {
+      const fallbackData = await fetchWithLinkPreviewAPI(url);
+      if (fallbackData) {
+        return {
+          success: true,
+          data: {
+            ...data,
+            description: fallbackData.description ?? data.description,
+            image: data.image ?? fallbackData.image,
+          },
+        };
+      }
     }
-
-    const html = await response.text();
-    const data = parseLinkMetadata(html, url);
 
     return { success: true, data };
   } catch (error) {
@@ -35,6 +33,54 @@ export async function getLinkPreviewAction(url: string): Promise<LinkPreviewResu
       return { success: false, error: '요청 시간이 초과되었습니다' };
     }
     return { success: false, error: '메타데이터를 파싱하는데 실패했습니다' };
+  }
+}
+
+async function fetchWithOwnParser(url: string): Promise<LinkPreviewData> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+  const response = await fetch(url, {
+    signal: controller.signal,
+    headers: {
+      'User-Agent':
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Accept-Language': 'en-US,en;q=0.9,ko;q=0.8',
+    },
+  });
+
+  clearTimeout(timeoutId);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch URL');
+  }
+
+  const html = await response.text();
+  return parseLinkMetadata(html, url);
+}
+
+async function fetchWithLinkPreviewAPI(url: string): Promise<LinkPreviewData | null> {
+  try {
+    const response = await fetch(
+      `https://api.linkpreview.net/?key=${LINKPREVIEW_API_KEY}&q=${encodeURIComponent(url)}`
+    );
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+    return {
+      url: data.url ?? url,
+      title: data.title ?? null,
+      description: data.description ?? null,
+      image: data.image ?? null,
+      siteName: null,
+      favicon: null,
+    };
+  } catch {
+    return null;
   }
 }
 
