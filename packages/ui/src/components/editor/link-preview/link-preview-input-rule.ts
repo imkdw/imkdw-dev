@@ -18,9 +18,9 @@ export function createLinkPreviewInputRule(options: LinkPreviewPluginOptions) {
       const node = nodeType.create({ url, loading: true });
       tr.replaceRangeWith(start, end, node);
 
-      options
-        .onFetchMetadata(url)
-        .then(metadata => {
+      (async () => {
+        try {
+          const metadata = await options.onFetchMetadata(url);
           const view = ctx.get(editorViewCtx);
           const pos = tr.mapping.map(start);
           view.dispatch(
@@ -30,8 +30,7 @@ export function createLinkPreviewInputRule(options: LinkPreviewPluginOptions) {
               loading: false,
             })
           );
-        })
-        .catch(() => {
+        } catch {
           const view = ctx.get(editorViewCtx);
           const pos = tr.mapping.map(start);
           view.dispatch(
@@ -41,7 +40,8 @@ export function createLinkPreviewInputRule(options: LinkPreviewPluginOptions) {
               loading: false,
             })
           );
-        });
+        }
+      })();
 
       return tr;
     });
