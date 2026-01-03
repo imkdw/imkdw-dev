@@ -15,7 +15,7 @@
 
 .link-preview:hover {
   border-color: hsl(var(--primary) / 0.5);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px hsl(var(--foreground) / 0.1);
 }
 
 .link-preview__image {
@@ -183,5 +183,5 @@
 
 .dark .link-preview:hover {
   border-color: hsl(var(--primary) / 0.5);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px hsl(var(--foreground) / 0.3);
 }

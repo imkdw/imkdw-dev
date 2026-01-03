@@ -43,7 +43,7 @@ export function LinkPreviewEditorComponent() {
     >
       {image && (
         <div className="w-24 h-24 flex-shrink-0 rounded-md overflow-hidden bg-muted">
-          <img src={image} alt={title ?? 'Preview'} className="w-full h-full object-cover" />
+          <img src={image} alt={title ?? 'Preview'} className="w-full h-full object-cover" loading="eager" />
         </div>
       )}
       <div className="flex-1 flex flex-col gap-1.5 min-w-0">

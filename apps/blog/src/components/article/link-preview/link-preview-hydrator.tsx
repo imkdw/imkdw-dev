@@ -14,6 +14,7 @@ export function LinkPreviewHydrator({ containerSelector }: Props) {
     if (!container) return;
 
     const linkPreviews = container.querySelectorAll<HTMLDivElement>('[data-type="link-preview"]');
+    const roots: ReturnType<typeof createRoot>[] = [];
 
     linkPreviews.forEach(element => {
       const url = element.getAttribute('data-url') ?? '';
@@ -24,6 +25,7 @@ export function LinkPreviewHydrator({ containerSelector }: Props) {
       const favicon = element.getAttribute('data-favicon');
 
       const root = createRoot(element);
+      roots.push(root);
       root.render(
         <LinkPreviewCard
           url={url}
@@ -35,6 +37,10 @@ export function LinkPreviewHydrator({ containerSelector }: Props) {
         />
       );
     });
+
+    return () => {
+      roots.forEach(root => root.unmount());
+    };
   }, [containerSelector]);
 
   return null;
