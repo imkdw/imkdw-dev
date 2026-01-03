@@ -1,6 +1,42 @@
 import TurndownService from 'turndown';
 import { gfm } from 'turndown-plugin-gfm';
 
+function escapeAttr(str: string | null): string {
+  if (!str) return '';
+  return str.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
+}
+
+function preprocessLinkPreviews(html: string): string {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const linkPreviews = doc.querySelectorAll('div[data-type="link-preview"]');
+
+  linkPreviews.forEach(element => {
+    const url = escapeAttr(element.getAttribute('data-url'));
+    const title = escapeAttr(element.getAttribute('data-title'));
+    const description = escapeAttr(element.getAttribute('data-description'));
+    const image = escapeAttr(element.getAttribute('data-image'));
+    const siteName = escapeAttr(element.getAttribute('data-site-name'));
+    const favicon = escapeAttr(element.getAttribute('data-favicon'));
+
+    const attrs = [
+      `url="${url}"`,
+      `title="${title}"`,
+      `description="${description}"`,
+      `image="${image}"`,
+      `siteName="${siteName}"`,
+      `favicon="${favicon}"`,
+    ].join(' ');
+
+    const placeholder = doc.createElement('p');
+    placeholder.setAttribute('data-link-preview-placeholder', 'true');
+    placeholder.textContent = `::linkpreview{${attrs}}`;
+    element.replaceWith(placeholder);
+  });
+
+  return doc.body.innerHTML;
+}
+
 function cleanCellContent(content: string): string {
   return content.replace(/\n+/g, ' ').replace(/\s+/g, ' ').trim();
 }
@@ -132,5 +168,20 @@ export function createTurndownService(): TurndownService {
     },
   });
 
+  service.addRule('linkPreviewPlaceholder', {
+    filter: (node: Node): boolean => {
+      return node.nodeName === 'P' && (node as HTMLElement).getAttribute('data-link-preview-placeholder') === 'true';
+    },
+    replacement: (_content: string, node: Node): string => {
+      const text = (node as HTMLElement).textContent;
+      if (!text) {
+        return '';
+      }
+      return `\n${text}\n`;
+    },
+  });
+
   return service;
 }
+
+export { preprocessLinkPreviews };

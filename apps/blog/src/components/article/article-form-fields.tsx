@@ -1,4 +1,5 @@
 import { Input, MilkdownWrapper } from '@imkdw-dev/ui';
+import { getLinkPreviewAction } from '@/actions/link-preview.action';
 
 interface Props {
   title: string;
@@ -21,6 +22,20 @@ export function ArticleFormFields({
   onUploadImage,
   onEditorReady,
 }: Props) {
+  const handleFetchMetadata = async (url: string) => {
+    const result = await getLinkPreviewAction(url);
+    if (result.success) {
+      return {
+        title: result.data.title,
+        description: result.data.description,
+        image: result.data.image,
+        siteName: result.data.siteName,
+        favicon: result.data.favicon,
+      };
+    }
+    return { title: null, description: null, image: null, siteName: null, favicon: null };
+  };
+
   return (
     <div className="flex flex-col gap-4 flex-1">
       <div className="border-b border-border/50 py-2">
@@ -48,6 +63,7 @@ export function ArticleFormFields({
           onChangeContent={onChangeContent}
           onUploadImage={onUploadImage}
           onEditorReady={onEditorReady}
+          onFetchMetadata={handleFetchMetadata}
         />
       </div>
     </div>

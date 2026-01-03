@@ -3,7 +3,7 @@
 import { useInstance } from '@milkdown/react';
 import { replaceAll } from '@milkdown/kit/utils';
 import { useEffect, useRef } from 'react';
-import { createTurndownService } from './turndown-config';
+import { createTurndownService, preprocessLinkPreviews } from './turndown-config';
 
 interface Props {
   onReady: (replaceContent: (content: string) => void) => void;
@@ -24,7 +24,7 @@ export function EditorController({ onReady }: Props) {
     const replaceContent = (htmlContent: string) => {
       const editor = getInstance();
       const isHTML = /<[^>]+>/.test(htmlContent);
-      const markdown = isHTML ? turndownRef.current.turndown(htmlContent) : htmlContent;
+      const markdown = isHTML ? turndownRef.current.turndown(preprocessLinkPreviews(htmlContent)) : htmlContent;
 
       editor.action(replaceAll(markdown));
     };

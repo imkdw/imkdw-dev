@@ -19,13 +19,17 @@ import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
 import { getHTML } from '@milkdown/kit/utils';
 import { basicSetup } from 'codemirror';
 import { history } from '@milkdown/kit/plugin/history';
-import { usePluginViewFactory } from '@prosemirror-adapter/react';
+import { usePluginViewFactory, useNodeViewFactory } from '@prosemirror-adapter/react';
 import { createImageUploader } from './image-uploader';
-import { createTurndownService } from './turndown-config';
+import { createTurndownService, preprocessLinkPreviews } from './turndown-config';
 import { SlashMenu } from './slash-menu';
 import { useImageUpload } from '@imkdw-dev/hooks';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Plus, Trash2, AlignLeft, AlignCenter, AlignRight, GripVertical, GripHorizontal } from 'lucide-react';
+import { createLinkPreviewPlugin } from './link-preview/link-preview-plugin';
+import { linkPreviewNode } from './link-preview/link-preview-node';
+import { LinkPreviewEditorComponent } from './link-preview/link-preview-component';
+import { $view } from '@milkdown/kit/utils';
 
 const slash = slashFactory('slash-menu');
 
@@ -42,9 +46,11 @@ const tableBlockIcons = {
 function renderTableButton(renderType: RenderType): string {
   switch (renderType) {
     case 'add_row':
+      return tableBlockIcons.plus;
     case 'add_col':
       return tableBlockIcons.plus;
     case 'delete_row':
+      return tableBlockIcons.trash2;
     case 'delete_col':
       return tableBlockIcons.trash2;
     case 'align_col_left':
@@ -67,11 +73,19 @@ interface Props {
   isEditable: boolean;
   onChangeContent(html: string): void;
   onUploadImage(imageName: string): void;
+  onFetchMetadata?: (url: string) => Promise<{
+    title: string | null;
+    description: string | null;
+    image: string | null;
+    siteName: string | null;
+    favicon: string | null;
+  }>;
 }
 
-export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadImage }: Props) {
+export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadImage, onFetchMetadata }: Props) {
   const { uploadImage } = useImageUpload();
   const pluginViewFactory = usePluginViewFactory();
+  const nodeViewFactory = useNodeViewFactory();
 
   const uploader = createImageUploader({ uploadImage, onUploadImage });
 
@@ -79,14 +93,21 @@ export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadI
     const isHTML = /<[^>]+>/.test(htmlContent);
 
     if (isHTML) {
+      const preprocessedHtml = preprocessLinkPreviews(htmlContent);
       const turndownService = createTurndownService();
-      return turndownService.turndown(htmlContent);
+      const markdown = turndownService.turndown(preprocessedHtml);
+      return markdown;
     }
 
     return htmlContent;
   };
 
   const markdownContent = convertToMarkdown(content);
+
+  const linkPreviewPlugin = createLinkPreviewPlugin({
+    onFetchMetadata:
+      onFetchMetadata ?? (async () => ({ title: null, description: null, image: null, siteName: null, favicon: null })),
+  });
 
   useEditor(root =>
     Editor.make()
@@ -134,7 +155,7 @@ export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadI
       })
       .config(ctx => {
         ctx.set(slash.key, {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Milkdown 타입 호환성 문제
           view: pluginViewFactory({ component: SlashMenu }) as any,
         });
       })
@@ -147,6 +168,14 @@ export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadI
       .use(upload)
       .use(clipboard)
       .use(codeBlockComponent)
+      .use(linkPreviewPlugin)
+      .use(
+        $view(linkPreviewNode, () =>
+          nodeViewFactory({
+            component: LinkPreviewEditorComponent,
+          })
+        )
+      )
       .use(slash)
   );
 
