@@ -28,6 +28,7 @@ function extractDescription($: cheerio.CheerioAPI): string | null {
     $('meta[property="og:description"]').attr('content') ??
     $('meta[name="twitter:description"]').attr('content') ??
     $('meta[name="description"]').attr('content') ??
+    $('meta[itemprop="description"]').attr('content') ??
     null
   );
 }

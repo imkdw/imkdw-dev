@@ -19,14 +19,17 @@ import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
 import { getHTML } from '@milkdown/kit/utils';
 import { basicSetup } from 'codemirror';
 import { history } from '@milkdown/kit/plugin/history';
-import { usePluginViewFactory } from '@prosemirror-adapter/react';
+import { usePluginViewFactory, useNodeViewFactory } from '@prosemirror-adapter/react';
 import { createImageUploader } from './image-uploader';
-import { createTurndownService } from './turndown-config';
+import { createTurndownService, preprocessLinkPreviews } from './turndown-config';
 import { SlashMenu } from './slash-menu';
 import { useImageUpload } from '@imkdw-dev/hooks';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Plus, Trash2, AlignLeft, AlignCenter, AlignRight, GripVertical, GripHorizontal } from 'lucide-react';
 import { createLinkPreviewPlugin } from './link-preview/link-preview-plugin';
+import { linkPreviewNode } from './link-preview/link-preview-node';
+import { LinkPreviewEditorComponent } from './link-preview/link-preview-component';
+import { $view } from '@milkdown/kit/utils';
 
 const slash = slashFactory('slash-menu');
 
@@ -82,6 +85,7 @@ interface Props {
 export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadImage, onFetchMetadata }: Props) {
   const { uploadImage } = useImageUpload();
   const pluginViewFactory = usePluginViewFactory();
+  const nodeViewFactory = useNodeViewFactory();
 
   const uploader = createImageUploader({ uploadImage, onUploadImage });
 
@@ -89,8 +93,10 @@ export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadI
     const isHTML = /<[^>]+>/.test(htmlContent);
 
     if (isHTML) {
+      const preprocessedHtml = preprocessLinkPreviews(htmlContent);
       const turndownService = createTurndownService();
-      return turndownService.turndown(htmlContent);
+      const markdown = turndownService.turndown(preprocessedHtml);
+      return markdown;
     }
 
     return htmlContent;
@@ -163,6 +169,13 @@ export function MilkdownEditor({ content, isEditable, onChangeContent, onUploadI
       .use(clipboard)
       .use(codeBlockComponent)
       .use(linkPreviewPlugin)
+      .use(
+        $view(linkPreviewNode, () =>
+          nodeViewFactory({
+            component: LinkPreviewEditorComponent,
+          })
+        )
+      )
       .use(slash)
   );
 

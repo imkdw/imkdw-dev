@@ -48,19 +48,24 @@ export const linkPreviewNode = $node('link_preview', () => ({
       'data-image': node.attrs.image,
       'data-site-name': node.attrs.siteName,
       'data-favicon': node.attrs.favicon,
+      contenteditable: 'false',
     },
   ],
   parseMarkdown: {
     match: node => node.type === 'leafDirective' && node.name === 'linkpreview',
     runner: (state, node, type) => {
       const attrs = node.attributes as Record<string, string>;
+      const unescape = (str: string | undefined): string | null => {
+        if (!str) return null;
+        return str.replace(/\\n/g, '\n').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+      };
       state.addNode(type, {
         url: attrs.url ?? '',
-        title: attrs.title ?? null,
-        description: attrs.description ?? null,
-        image: attrs.image ?? null,
-        siteName: attrs.siteName ?? null,
-        favicon: attrs.favicon ?? null,
+        title: unescape(attrs.title),
+        description: unescape(attrs.description),
+        image: unescape(attrs.image),
+        siteName: unescape(attrs.siteName),
+        favicon: unescape(attrs.favicon),
         loading: false,
       });
     },
