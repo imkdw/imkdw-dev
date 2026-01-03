@@ -173,7 +173,10 @@ export function createTurndownService(): TurndownService {
       return node.nodeName === 'P' && (node as HTMLElement).getAttribute('data-link-preview-placeholder') === 'true';
     },
     replacement: (_content: string, node: Node): string => {
-      const text = (node as HTMLElement).textContent ?? '';
+      const text = (node as HTMLElement).textContent;
+      if (!text) {
+        return '';
+      }
       return `\n${text}\n`;
     },
   });
