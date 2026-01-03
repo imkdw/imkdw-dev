@@ -1,6 +1,7 @@
 import { InputRule } from '@milkdown/kit/prose/inputrules';
 import { $inputRule } from '@milkdown/kit/utils';
-import { editorViewCtx } from '@milkdown/kit/core';
+import { editorViewCtx, schemaCtx } from '@milkdown/kit/core';
+import { TextSelection } from '@milkdown/kit/prose/state';
 import type { Node } from '@milkdown/kit/prose/model';
 import { linkPreviewNode } from './link-preview-node';
 import type { LinkPreviewPluginOptions } from './link-preview-plugin';
@@ -22,14 +23,31 @@ function findLinkPreviewNodePos(doc: Node, url: string): number | null {
 export function createLinkPreviewInputRule(options: LinkPreviewPluginOptions) {
   return $inputRule(ctx => {
     const nodeType = linkPreviewNode.type(ctx);
+    const schema = ctx.get(schemaCtx);
 
     return new InputRule(URL_REGEX, (state, match, start, end) => {
       const url = match[1];
       if (!url) return null;
 
       const { tr } = state;
-      const node = nodeType.create({ url, loading: true });
-      tr.replaceRangeWith(start, end, node);
+      const linkPreview = nodeType.create({ url, loading: true });
+      const paragraphType = schema.nodes.paragraph;
+      if (!paragraphType) return null;
+      const paragraph = paragraphType.create();
+
+      tr.replaceRangeWith(start, end, linkPreview);
+
+      let linkPreviewEndPos = 0;
+      tr.doc.descendants((node, pos) => {
+        if (node.type.name === 'link_preview' && node.attrs.url === url) {
+          linkPreviewEndPos = pos + node.nodeSize;
+          return false;
+        }
+        return true;
+      });
+
+      tr.insert(linkPreviewEndPos, paragraph);
+      tr.setSelection(TextSelection.create(tr.doc, linkPreviewEndPos + 1));
 
       (async () => {
         try {

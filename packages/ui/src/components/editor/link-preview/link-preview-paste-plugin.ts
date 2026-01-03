@@ -1,6 +1,7 @@
 import { $prose } from '@milkdown/kit/utils';
-import { Plugin, PluginKey } from '@milkdown/kit/prose/state';
+import { Plugin, PluginKey, TextSelection } from '@milkdown/kit/prose/state';
 import type { Node } from '@milkdown/kit/prose/model';
+import { schemaCtx } from '@milkdown/kit/core';
 import { linkPreviewNode } from './link-preview-node';
 import type { LinkPreviewPluginOptions } from './link-preview-plugin';
 
@@ -21,6 +22,7 @@ function findLinkPreviewNodePos(doc: Node, url: string): number | null {
 export function createLinkPreviewPastePlugin(options: LinkPreviewPluginOptions) {
   return $prose(ctx => {
     const nodeType = linkPreviewNode.type(ctx);
+    const schema = ctx.get(schemaCtx);
 
     return new Plugin({
       key: new PluginKey('link-preview-paste'),
@@ -31,9 +33,27 @@ export function createLinkPreviewPastePlugin(options: LinkPreviewPluginOptions) 
             return false;
           }
 
+          const paragraphType = schema.nodes.paragraph;
+          if (!paragraphType) return false;
+
           const { state, dispatch } = view;
-          const node = nodeType.create({ url: text, loading: true });
-          const tr = state.tr.replaceSelectionWith(node);
+          const linkPreview = nodeType.create({ url: text, loading: true });
+          const paragraph = paragraphType.create();
+
+          let tr = state.tr.replaceSelectionWith(linkPreview);
+
+          let linkPreviewEndPos = 0;
+          tr.doc.descendants((node, pos) => {
+            if (node.type.name === 'link_preview' && node.attrs.url === text) {
+              linkPreviewEndPos = pos + node.nodeSize;
+              return false;
+            }
+            return true;
+          });
+
+          tr = tr.insert(linkPreviewEndPos, paragraph);
+          tr = tr.setSelection(TextSelection.create(tr.doc, linkPreviewEndPos + 1));
+
           dispatch(tr);
 
           (async () => {
