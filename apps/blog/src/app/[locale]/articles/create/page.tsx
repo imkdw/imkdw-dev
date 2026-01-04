@@ -21,9 +21,37 @@ export default async function CreateArticlePage() {
     discard: t('common.dialog.draftDiscard'),
   };
 
+  const formHeaderTranslations = {
+    createTitle: t('articles.form.createTitle'),
+    editTitle: t('articles.form.editTitle'),
+    publish: t('articles.form.publish'),
+  };
+
+  const visibilityTranslations = {
+    title: t('articles.visibility.title'),
+    public: t('articles.visibility.public'),
+    publicDescription: t('articles.visibility.publicDescription'),
+    private: t('articles.visibility.private'),
+    privateDescription: t('articles.visibility.privateDescription'),
+    label: t('articles.visibility.label'),
+  };
+
+  const statsTranslations = {
+    characters: t('articles.stats.characters'),
+    words: t('articles.stats.words'),
+    readingTime: t('articles.stats.readingTime'),
+    minutes: t('articles.stats.minutes'),
+  };
+
   return (
     <Layout>
-      <ArticleForm mode="create" draftDialogTranslations={draftDialogTranslations} />
+      <ArticleForm
+        mode="create"
+        draftDialogTranslations={draftDialogTranslations}
+        formHeaderTranslations={formHeaderTranslations}
+        visibilityTranslations={visibilityTranslations}
+        statsTranslations={statsTranslations}
+      />
     </Layout>
   );
 }

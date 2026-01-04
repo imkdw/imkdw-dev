@@ -4,15 +4,17 @@ import { IArticleListItemDto } from '@imkdw-dev/types';
 
 interface Props {
   articles: IArticleListItemDto[];
+  translations: {
+    noResults: string;
+  };
 }
 
-export function ArticlesList({ articles }: Props) {
+export function ArticlesList({ articles, translations }: Props) {
   if (articles.length === 0) {
     return (
       <div className="text-center py-12">
         <FileText className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-        <h3 className="text-lg font-semibold mb-2">검색 결과가 없습니다</h3>
-        <p className="text-muted-foreground">다른 검색어나 필터를 시도해보세요</p>
+        <h3 className="text-lg font-semibold mb-2">{translations.noResults}</h3>
       </div>
     );
   }

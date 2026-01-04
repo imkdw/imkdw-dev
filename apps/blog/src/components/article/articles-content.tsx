@@ -9,9 +9,17 @@ interface Props {
   articlesData: IResponseGetArticlesDto;
   tags: ITagDto[];
   currentPage: number;
+  translations: {
+    title: string;
+    totalArticles: string;
+    tags: string;
+    searchPlaceholder: string;
+    noResults: string;
+    filterAll: string;
+  };
 }
 
-export function ArticlesContent({ articlesData, tags, currentPage }: Props) {
+export function ArticlesContent({ articlesData, tags, currentPage, translations }: Props) {
   // const [searchQuery, setSearchQuery] = useState('');
   // const [selectedTag, setSelectedTag] = useState('all');
   // const [sortBy, setSortBy] = useState('latest');
@@ -28,10 +36,10 @@ export function ArticlesContent({ articlesData, tags, currentPage }: Props) {
   return (
     <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10">
       <ListHeader
-        title="게시글"
+        title={translations.title}
         stats={[
-          { label: '전체 게시글', value: totalCount, icon: FileText },
-          { label: '태그', value: tags.length, icon: Tag },
+          { label: translations.totalArticles, value: totalCount, icon: FileText },
+          { label: translations.tags, value: tags.length, icon: Tag },
         ]}
       />
       {/* <ArticlesFilter
@@ -43,7 +51,7 @@ export function ArticlesContent({ articlesData, tags, currentPage }: Props) {
         onTagChange={setSelectedTag}
         onSortChange={setSortBy}
       /> */}
-      <ArticlesList articles={articles} />
+      <ArticlesList articles={articles} translations={{ noResults: translations.noResults }} />
       <CommonPagination totalPages={totalPage} currentPage={currentPage} createPageUrl={createPageUrl} />
     </div>
   );

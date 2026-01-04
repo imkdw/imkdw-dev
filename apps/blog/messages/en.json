@@ -118,5 +118,62 @@
       "viewAll": "View All Series",
       "viewAllShort": "All"
     }
+  },
+  "articles": {
+    "list": {
+      "title": "Articles",
+      "totalArticles": "Total Articles",
+      "tags": "Tags",
+      "searchPlaceholder": "Search by title or content...",
+      "noResults": "No results found",
+      "filterAll": "All"
+    },
+    "detail": {
+      "relatedArticles": "Related Articles",
+      "tableOfContents": "Table of Contents",
+      "share": "Share",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "form": {
+      "createTitle": "Write Article",
+      "editTitle": "Edit Article",
+      "titlePlaceholder": "Enter title",
+      "slugPlaceholder": "URL Slug",
+      "publish": "Publish",
+      "saveDraft": "Save Draft"
+    },
+    "visibility": {
+      "title": "Visibility",
+      "public": "Public",
+      "publicDescription": "Visible to everyone",
+      "private": "Private",
+      "privateDescription": "Only visible to admins",
+      "label": "Set the visibility of this article"
+    },
+    "series": {
+      "selectLabel": "Select a series for this article",
+      "noSeries": "No Series"
+    },
+    "tags": {
+      "placeholder": "Add tag",
+      "addHint": "Press Enter to add",
+      "empty": "Add some tags"
+    },
+    "stats": {
+      "characters": "Characters",
+      "words": "Words",
+      "readingTime": "Estimated Reading Time",
+      "minutes": "min"
+    },
+    "toast": {
+      "linkCopied": "Article link copied to clipboard.",
+      "deleted": "Article has been deleted.",
+      "deleteFailed": "Failed to delete article."
+    },
+    "deleteDialog": {
+      "title": "Delete Article",
+      "description": "Are you sure you want to delete this article?"
+    }
   }
 }

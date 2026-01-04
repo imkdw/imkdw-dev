@@ -118,5 +118,62 @@
       "viewAll": "모든 시리즈",
       "viewAllShort": "전체"
     }
+  },
+  "articles": {
+    "list": {
+      "title": "게시글",
+      "totalArticles": "전체 게시글",
+      "tags": "태그",
+      "searchPlaceholder": "게시글 제목이나 내용으로 검색...",
+      "noResults": "검색 결과가 없습니다",
+      "filterAll": "전체"
+    },
+    "detail": {
+      "relatedArticles": "관련 글",
+      "tableOfContents": "목차",
+      "share": "공유",
+      "edit": "수정",
+      "delete": "삭제"
+    },
+    "form": {
+      "createTitle": "게시글 작성",
+      "editTitle": "게시글 수정",
+      "titlePlaceholder": "제목을 입력하세요",
+      "slugPlaceholder": "URL Slug",
+      "publish": "발행",
+      "saveDraft": "임시저장"
+    },
+    "visibility": {
+      "title": "공개 설정",
+      "public": "공개",
+      "publicDescription": "모든 사용자가 볼 수 있습니다",
+      "private": "비공개",
+      "privateDescription": "관리자만 볼 수 있습니다",
+      "label": "게시글의 공개 상태를 설정하세요"
+    },
+    "series": {
+      "selectLabel": "게시글이 속할 시리즈를 선택하세요",
+      "noSeries": "시리즈 없음"
+    },
+    "tags": {
+      "placeholder": "태그 추가",
+      "addHint": "Enter 키로 빠르게 추가",
+      "empty": "태그를 추가해보세요"
+    },
+    "stats": {
+      "characters": "글자 수",
+      "words": "단어 수",
+      "readingTime": "예상 읽기 시간",
+      "minutes": "분"
+    },
+    "toast": {
+      "linkCopied": "클립보드에 글 링크가 저장되었습니다.",
+      "deleted": "게시글이 삭제되었습니다.",
+      "deleteFailed": "게시글 삭제에 실패했습니다."
+    },
+    "deleteDialog": {
+      "title": "게시글 삭제",
+      "description": "정말로 이 게시글을 삭제하시겠습니까?"
+    }
   }
 }
