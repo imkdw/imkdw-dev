@@ -10,6 +10,7 @@ import { ReadingProgressBar } from '@/components/article/reading-progress-bar';
 import { ViewCountTracker } from '@/components/article/view-count-tracker';
 import { getArticle, getArticleComments } from '@imkdw-dev/api-client';
 import { createMetadata } from '@/utils/metadata-creator';
+import { getTranslations } from 'next-intl/server';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -27,6 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
+  const t = await getTranslations();
 
   const response = await getArticle(slug);
   const { article, prevArticle, nextArticle } = response;
@@ -48,6 +50,27 @@ export default async function Page({ params }: Props) {
       : null,
   };
 
+  const articleInteractionsTranslations = {
+    deleteDialog: {
+      title: t('article.deleteDialog.title'),
+      description: t('article.deleteDialog.description'),
+      cancel: t('common.buttons.cancel'),
+      delete: t('common.buttons.delete'),
+      deleting: t('common.status.deleting'),
+    },
+    toast: {
+      copySuccess: t('article.toast.copySuccess'),
+      copyError: t('article.toast.copyError'),
+      deleteSuccess: t('article.toast.deleteSuccess'),
+      deleteError: t('article.toast.deleteError'),
+    },
+    buttons: {
+      share: t('article.buttons.share'),
+      edit: t('article.buttons.edit'),
+      delete: t('common.buttons.delete'),
+    },
+  };
+
   return (
     <Layout enableOverflow={false}>
       <ReadingProgressBar />
@@ -55,7 +78,7 @@ export default async function Page({ params }: Props) {
       <div className="max-w-7xl mx-auto p-6 lg:flex lg:gap-8">
         <div className="flex-1 max-w-4xl flex flex-col">
           <ArticleHeader article={article}>
-            <ArticleInteractions slug={slug} />
+            <ArticleInteractions slug={slug} translations={articleInteractionsTranslations} />
           </ArticleHeader>
           <ArticleContent article={article} />
           {/* <RelatedArticles articles={relatedArticles} /> */}

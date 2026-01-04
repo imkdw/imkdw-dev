@@ -11,12 +11,21 @@ import { useArticleForm } from '@/hooks';
 import { IArticleDto } from '@imkdw-dev/types';
 import { ArticleFormMode } from '@/types/article';
 
+interface DraftDialogTranslations {
+  title: string;
+  description: string;
+  subDescription: string;
+  restore: string;
+  discard: string;
+}
+
 interface Props {
   mode: ArticleFormMode;
   initialData?: IArticleDto;
+  draftDialogTranslations: DraftDialogTranslations;
 }
 
-export function ArticleForm({ mode, initialData }: Props) {
+export function ArticleForm({ mode, initialData, draftDialogTranslations }: Props) {
   const { formData, handlers, state } = useArticleForm({ mode, initialData });
 
   return (
@@ -51,6 +60,7 @@ export function ArticleForm({ mode, initialData }: Props) {
         open={state.showRestoreDialog}
         onRestore={handlers.handleRestoreDraft}
         onDiscard={handlers.handleDiscardDraft}
+        translations={draftDialogTranslations}
       />
     </div>
   );

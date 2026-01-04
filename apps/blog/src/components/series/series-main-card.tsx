@@ -3,28 +3,59 @@ import { BookOpen } from 'lucide-react';
 import { SeriesActions } from './series-actions';
 import type { ISeriesDetailDto } from '@imkdw-dev/types';
 
-interface Props {
-  seriesData: ISeriesDetailDto;
+interface DeleteDialogTranslations {
+  title: string;
+  description: string;
+  cancel: string;
+  delete: string;
+  deleting: string;
 }
 
-export function SeriesMainCard({ seriesData }: Props) {
+interface ToastTranslations {
+  copySuccess: string;
+  copyError: string;
+  deleteSuccess: string;
+  deleteError: string;
+}
+
+interface ButtonTranslations {
+  share: string;
+  edit: string;
+  delete: string;
+}
+
+interface SeriesActionsTranslations {
+  deleteDialog: DeleteDialogTranslations;
+  toast: ToastTranslations;
+  buttons: ButtonTranslations;
+}
+
+interface Translations {
+  seriesLabel: string;
+  seriesActions: SeriesActionsTranslations;
+}
+
+interface Props {
+  seriesData: ISeriesDetailDto;
+  translations: Translations;
+}
+
+export function SeriesMainCard({ seriesData, translations }: Props) {
   return (
     <Card className="overflow-hidden border-0 bg-gradient-to-br from-primary/10 via-background to-secondary/50 shadow-lg">
       <CardContent className="p-0">
-        {/* 상단 액션 바 */}
         <div className="flex justify-between items-center p-4 md:p-6 border-b border-border/50">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-primary/10 rounded-xl">
               <BookOpen className="h-5 w-5 text-primary" />
             </div>
             <div className="hidden sm:block">
-              <p className="text-sm font-medium text-muted-foreground">시리즈</p>
+              <p className="text-sm font-medium text-muted-foreground">{translations.seriesLabel}</p>
             </div>
           </div>
-          <SeriesActions slug={seriesData.slug} />
+          <SeriesActions slug={seriesData.slug} translations={translations.seriesActions} />
         </div>
 
-        {/* 시리즈 정보 */}
         <div className="p-6 md:p-8">
           <div className="text-center md:text-left mb-8">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent mb-4">
@@ -35,7 +66,6 @@ export function SeriesMainCard({ seriesData }: Props) {
             </p>
           </div>
 
-          {/* 태그 */}
           <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-8">
             {seriesData.tags.map(tag => (
               <Badge

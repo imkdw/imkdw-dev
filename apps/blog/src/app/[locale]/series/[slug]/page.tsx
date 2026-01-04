@@ -6,6 +6,7 @@ import { SeriesArticles } from '@/components/series/series-articles';
 import { getSeriesDetail, getArticles } from '@imkdw-dev/api-client';
 import { SERIES_ARTICLES_PER_PAGE } from '@/consts/article.const';
 import { createMetadata } from '@/utils/metadata-creator';
+import { getTranslations } from 'next-intl/server';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -25,6 +26,7 @@ export default async function Page({ params, searchParams }: Props) {
   const { slug } = await params;
   const { page } = await searchParams;
   const currentPage = Number(page) || 1;
+  const t = await getTranslations();
 
   const seriesData = await getSeriesDetail(slug);
   const articlesData = await getArticles({
@@ -33,11 +35,35 @@ export default async function Page({ params, searchParams }: Props) {
     page: currentPage,
   });
 
+  const seriesHeaderTranslations = {
+    seriesLabel: t('series.label'),
+    seriesActions: {
+      deleteDialog: {
+        title: t('series.deleteDialog.title'),
+        description: t('series.deleteDialog.description'),
+        cancel: t('common.buttons.cancel'),
+        delete: t('common.buttons.delete'),
+        deleting: t('common.status.deleting'),
+      },
+      toast: {
+        copySuccess: t('series.toast.copySuccess'),
+        copyError: t('series.toast.copyError'),
+        deleteSuccess: t('series.toast.deleteSuccess'),
+        deleteError: t('series.toast.deleteError'),
+      },
+      buttons: {
+        share: t('series.buttons.share'),
+        edit: t('series.buttons.edit'),
+        delete: t('common.buttons.delete'),
+      },
+    },
+  };
+
   return (
     <Layout>
       <div className="max-w-4xl mx-auto py-6 px-4">
         <SeriesBackButton />
-        <SeriesHeader seriesData={seriesData} />
+        <SeriesHeader seriesData={seriesData} translations={seriesHeaderTranslations} />
         <SeriesArticles
           articles={articlesData.items}
           totalPages={articlesData.totalPage}

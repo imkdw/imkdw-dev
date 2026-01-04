@@ -12,11 +12,39 @@ import { deleteArticle } from '@imkdw-dev/api-client';
 import { DeleteArticleDialog } from './delete-article-dialog';
 import { MouseEvent } from 'react';
 
-interface Props {
-  slug: string;
+interface DeleteDialogTranslations {
+  title: string;
+  description: string;
+  cancel: string;
+  delete: string;
+  deleting: string;
 }
 
-export function ArticleInteractions({ slug }: Props) {
+interface ToastTranslations {
+  copySuccess: string;
+  copyError: string;
+  deleteSuccess: string;
+  deleteError: string;
+}
+
+interface ButtonTranslations {
+  share: string;
+  edit: string;
+  delete: string;
+}
+
+interface Translations {
+  deleteDialog: DeleteDialogTranslations;
+  toast: ToastTranslations;
+  buttons: ButtonTranslations;
+}
+
+interface Props {
+  slug: string;
+  translations: Translations;
+}
+
+export function ArticleInteractions({ slug, translations }: Props) {
   const { toast } = useToast();
   const { member } = useAuth();
   const router = useRouter();
@@ -33,11 +61,11 @@ export function ArticleInteractions({ slug }: Props) {
 
     try {
       await navigator.clipboard.writeText(url);
-      toast({ title: '', description: '클립보드에 글 링크가 저장되었습니다.' });
+      toast({ title: '', description: translations.toast.copySuccess });
     } catch {
       toast({
         title: '',
-        description: '링크 복사에 실패했습니다.',
+        description: translations.toast.copyError,
         variant: 'destructive',
       });
     }
@@ -51,12 +79,12 @@ export function ArticleInteractions({ slug }: Props) {
     try {
       setIsDeleting(true);
       await deleteArticle(slug);
-      toast({ title: '', description: '게시글이 삭제되었습니다.' });
+      toast({ title: '', description: translations.toast.deleteSuccess });
       router.push('/');
     } catch {
       toast({
         title: '',
-        description: '게시글 삭제에 실패했습니다.',
+        description: translations.toast.deleteError,
         variant: 'destructive',
       });
       setIsDeleting(false);
@@ -72,19 +100,19 @@ export function ArticleInteractions({ slug }: Props) {
       <div className="flex items-center gap-2 flex-wrap">
         <Button variant="outline" size="sm" className="text-xs sm:text-sm" onClick={handleCopyLink}>
           <Share2 className="w-4 h-4 sm:mr-1" />
-          <span className="hidden sm:inline">Share</span>
+          <span className="hidden sm:inline">{translations.buttons.share}</span>
         </Button>
         {member?.role === MEMBER_ROLE.ADMIN && (
           <>
             <Button variant="outline" size="sm" asChild className="text-xs sm:text-sm">
               <Link href={`/articles/${slug}/edit`}>
                 <Edit className="w-4 h-4 sm:mr-1" />
-                <span className="hidden sm:inline">Edit</span>
+                <span className="hidden sm:inline">{translations.buttons.edit}</span>
               </Link>
             </Button>
             <Button variant="outline" size="sm" className="text-xs sm:text-sm" onClick={handleDeleteClick}>
               <Trash2 className="w-4 h-4 sm:mr-1" />
-              <span className="hidden sm:inline">Delete</span>
+              <span className="hidden sm:inline">{translations.buttons.delete}</span>
             </Button>
           </>
         )}
@@ -94,6 +122,7 @@ export function ArticleInteractions({ slug }: Props) {
         onClose={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         isDeleting={isDeleting}
+        translations={translations.deleteDialog}
       />
     </>
   );

@@ -3,6 +3,7 @@ import { ArticleForm } from '@/components/article/article-form';
 import { getArticle, getCurrentMember } from '@imkdw-dev/api-client';
 import { forbidden } from 'next/navigation';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
+import { getTranslations } from 'next-intl/server';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -17,9 +18,19 @@ export default async function EditArticlePage({ params }: Props) {
     forbidden();
   }
 
+  const t = await getTranslations();
+
+  const draftDialogTranslations = {
+    title: t('common.dialog.draftTitle'),
+    description: t('common.dialog.draftDescription'),
+    subDescription: t('common.dialog.draftSubDescription'),
+    restore: t('common.dialog.draftRestore'),
+    discard: t('common.dialog.draftDiscard'),
+  };
+
   return (
     <Layout>
-      <ArticleForm mode="edit" initialData={article} />
+      <ArticleForm mode="edit" initialData={article} draftDialogTranslations={draftDialogTranslations} />
     </Layout>
   );
 }
