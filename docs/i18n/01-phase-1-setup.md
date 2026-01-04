@@ -24,8 +24,8 @@ pnpm add next-intl --filter @imkdw-dev/blog
 
 ### 확인 사항
 
-- [ ] `apps/blog/package.json`에 next-intl 추가됨
-- [ ] `pnpm install` 정상 완료
+- [x] `apps/blog/package.json`에 next-intl 추가됨
+- [x] `pnpm install` 정상 완료
 
 ### 커밋
 
@@ -89,10 +89,10 @@ export const { Link, redirect, usePathname, useRouter, getPathname } = createNav
 
 ### 확인 사항
 
-- [ ] `src/i18n/routing.ts` 생성됨
-- [ ] `src/i18n/request.ts` 생성됨
-- [ ] `src/i18n/navigation.ts` 생성됨
-- [ ] TypeScript 에러 없음
+- [x] `src/i18n/routing.ts` 생성됨
+- [x] `src/i18n/request.ts` 생성됨
+- [x] `src/i18n/navigation.ts` 생성됨
+- [x] TypeScript 에러 없음
 
 ### 커밋
 
@@ -178,11 +178,11 @@ export default withNextIntl(nextConfig);
 
 ### 확인 사항
 
-- [ ] `messages/ko.json` 생성됨
-- [ ] `messages/en.json` 생성됨
-- [ ] `proxy.ts` 생성됨
-- [ ] `next.config.ts` 수정됨
-- [ ] `pnpm build` 에러 없음 (아직 라우팅 변경 전이라 warning 있을 수 있음)
+- [x] `messages/ko.json` 생성됨
+- [x] `messages/en.json` 생성됨
+- [x] `proxy.ts` 생성됨
+- [x] `next.config.ts` 수정됨
+- [x] `pnpm build` 에러 없음 (아직 라우팅 변경 전이라 warning 있을 수 있음)
 
 ### 커밋
 
@@ -198,10 +198,147 @@ feat(blog): add i18n messages and middleware configuration
 
 ## Phase 1 완료 체크리스트
 
-- [ ] Task 1.1 완료 및 커밋
-- [ ] Task 1.2 완료 및 커밋
-- [ ] Task 1.3 완료 및 커밋
-- [ ] 전체 빌드 테스트 (`pnpm build`)
+- [x] Task 1.1 완료 및 커밋
+- [x] Task 1.2 완료 및 커밋
+- [x] Task 1.3 완료 및 커밋
+- [x] 전체 빌드 테스트 (`pnpm build`)
+
+## Task 1.4: 공통 i18n 패키지로 리팩토링
+
+### 작업 내용
+
+- `packages/i18n` 패키지 생성
+- 공통 i18n 로직 추출 (타입, 유틸리티)
+- 앱에서 공통 패키지 사용하도록 수정
+
+### 파일 생성/수정
+
+#### `packages/i18n/package.json`
+
+```json
+{
+  "name": "@imkdw-dev/i18n",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "dependencies": {
+    "next-intl": "workspace:^"
+  },
+  "devDependencies": {
+    "@imkdw-dev/typescript-config": "workspace:*",
+    "typescript": "^5.9.2"
+  }
+}
+```
+
+#### `packages/i18n/tsconfig.json`
+
+```json
+{
+  "extends": "@imkdw-dev/typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
+```
+
+#### `packages/i18n/src/types.ts`
+
+```typescript
+export type Locale = 'ko' | 'en';
+export type MessageKey = string;
+```
+
+#### `packages/i18n/src/utils.ts`
+
+```typescript
+import type { Locale } from './types';
+
+export function getLocalizedPath(pathname: string, locale: Locale): string {
+  // Remove existing locale prefix if any
+  const withoutLocale = pathname.replace(/^\/(ko|en)/, '');
+  return `/${locale}${withoutLocale}`;
+}
+
+export function extractLocale(pathname: string): Locale {
+  const match = pathname.match(/^\/(ko|en)/);
+  return match ? (match[1] as Locale) : 'ko';
+}
+```
+
+#### `packages/i18n/src/index.ts`
+
+```typescript
+export * from './types';
+export * from './utils';
+```
+
+#### `apps/blog/src/i18n/routing.ts` (수정)
+
+```typescript
+import { defineRouting } from 'next-intl/routing';
+
+export const routing = defineRouting({
+  locales: ['ko', 'en'],
+  defaultLocale: 'ko',
+  localePrefix: 'always',
+});
+
+export type Locale = (typeof routing.locales)[number];
+```
+
+#### `apps/blog/src/i18n/request.ts` (수정 - 패키지 사용)
+
+```typescript
+import { getRequestConfig } from 'next-intl/server';
+import { hasLocale } from 'next-intl';
+import { routing } from './routing';
+import type { Locale } from '@imkdw-dev/i18n';
+
+export default getRequestConfig(async ({ requestLocale }) => {
+  const requested = await requestLocale;
+  const locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
+
+  return {
+    locale,
+    messages: (await import(`../../messages/${locale}.json`)).default,
+    timeZone: 'Asia/Seoul',
+  };
+});
+
+export type { Locale };
+```
+
+### 확인 사항
+
+- [ ] `packages/i18n` 패키지 생성됨
+- [ ] 공통 타입 및 유틸리티 추출됨
+- [ ] `apps/blog/package.json`에 `@imkdw-dev/i18n` 의존성 추가됨
+- [ ] `apps/blog/src/i18n/request.ts`에서 공통 패키지 사용
+- [ ] `pnpm build` 에러 없음
+
+### 커밋
+
+```
+refactor(blog): extract common i18n logic to shared package
+
+- Create @imkdw-dev/i18n package for common i18n utilities
+- Move Locale type and helper functions to shared package
+- Update blog app to use @imkdw-dev/i18n
+```
+
+---
+
+## Phase 1 완료 체크리스트
+
+- [x] Task 1.1 완료 및 커밋
+- [x] Task 1.2 완료 및 커밋
+- [x] Task 1.3 완료 및 커밋
+- [x] Task 1.4 완료 및 커밋
+- [x] 전체 빌드 테스트 (`pnpm build`)
 
 ## 다음 Phase
 
