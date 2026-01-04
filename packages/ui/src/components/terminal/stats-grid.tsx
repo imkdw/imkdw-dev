@@ -3,27 +3,33 @@ import type { IResponseGetStatsDto } from '@imkdw-dev/types';
 
 interface Props {
   stats: IResponseGetStatsDto;
+  translations: {
+    totalArticles: string;
+    activeSeries: string;
+    totalViews: string;
+    techTags: string;
+  };
 }
 
-export function StatsGrid({ stats }: Props) {
+export function StatsGrid({ stats, translations }: Props) {
   const statsItems = [
     {
-      label: '총 게시글',
+      label: translations.totalArticles,
       value: stats.article.count.toString(),
       color: 'text-primary',
     },
     {
-      label: '진행 시리즈',
+      label: translations.activeSeries,
       value: stats.series.count.toString(),
       color: 'text-accent',
     },
     {
-      label: '총 조회수',
+      label: translations.totalViews,
       value: formatNumber(stats.article.viewCount),
       color: 'text-green-500',
     },
     {
-      label: '기술 태그',
+      label: translations.techTags,
       value: stats.tag.count.toString(),
       color: 'text-accent',
     },

@@ -6,9 +6,14 @@ import { ISeriesListItemDto } from '@imkdw-dev/types';
 
 interface Props {
   seriesList: ISeriesListItemDto[];
+  translations: {
+    title: string;
+    viewAll: string;
+    viewAllShort: string;
+  };
 }
 
-export function RecentSeries({ seriesList }: Props) {
+export function RecentSeries({ seriesList, translations }: Props) {
   return (
     <section className="bg-background border border-border rounded-lg p-4 md:p-6">
       <div className="flex items-center justify-between mb-6">
@@ -17,7 +22,7 @@ export function RecentSeries({ seriesList }: Props) {
             <BookOpen className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <h2 className="text-lg lg:text-xl font-semibold text-foreground">최근 시리즈</h2>
+            <h2 className="text-lg lg:text-xl font-semibold text-foreground">{translations.title}</h2>
             <div className={cn('terminal-prompt text-xs text-muted-foreground', jetBrainsMono.className)}>
               find ./series -type d | head -2
             </div>
@@ -26,8 +31,8 @@ export function RecentSeries({ seriesList }: Props) {
         <Button variant="outline" size="sm" asChild>
           <Link href="/series">
             <Terminal className="mr-2 h-4 w-4" />
-            <span className="hidden sm:inline">모든 시리즈</span>
-            <span className="sm:hidden">전체</span>
+            <span className="hidden sm:inline">{translations.viewAll}</span>
+            <span className="sm:hidden">{translations.viewAllShort}</span>
           </Link>
         </Button>
       </div>

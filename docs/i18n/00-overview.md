@@ -141,11 +141,12 @@ interface Props {
 
 ## 주의사항
 
-1. **각 Phase는 독립적으로 커밋 가능**하도록 설계됨
-2. **Phase 1-2는 순서대로** 진행 필수 (기반 설정)
-3. **Phase 3 이후**는 의존성 낮아 병렬 작업 가능
-4. **터미널 페이지**는 모든 Phase에서 제외
-5. **packages/ui 수정 시** 기존 호환성 유지 (translations prop optional)
+1. **모든 커밋은 개발자가 직접 진행** - AI는 절대 자동으로 커밋하지 않음
+2. **각 Phase는 독립적으로 커밋 가능**하도록 설계됨
+3. **Phase 1-2는 순서대로** 진행 필수 (기반 설정)
+4. **Phase 3 이후**는 의존성 낮아 병렬 작업 가능
+5. **터미널 페이지**는 모든 Phase에서 제외
+6. **packages/ui 수정 시** 기존 호환성 유지 (translations prop optional)
 
 ---
 

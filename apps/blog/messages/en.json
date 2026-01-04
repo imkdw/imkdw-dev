@@ -96,5 +96,27 @@
       "share": "Share",
       "edit": "Edit"
     }
+  },
+  "home": {
+    "terminal": {
+      "title": "Tech Blog",
+      "description": "A tech blog sharing what I've learned and experienced"
+    },
+    "stats": {
+      "totalArticles": "Total Articles",
+      "activeSeries": "Active Series",
+      "totalViews": "Total Views",
+      "techTags": "Tech Tags"
+    },
+    "recentArticles": {
+      "title": "Recent Articles",
+      "viewAll": "View All",
+      "viewAllShort": "All"
+    },
+    "recentSeries": {
+      "title": "Recent Series",
+      "viewAll": "View All Series",
+      "viewAllShort": "All"
+    }
   }
 }

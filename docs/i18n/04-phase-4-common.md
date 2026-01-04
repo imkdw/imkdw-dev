@@ -123,9 +123,9 @@
 
 ### 확인 사항
 
-- [ ] `ko.json`에 errors, common 추가됨
-- [ ] `en.json`에 동일 구조 추가됨
-- [ ] JSON 문법 오류 없음
+- [x] `ko.json`에 errors, common 추가됨
+- [x] `en.json`에 동일 구조 추가됨
+- [x] JSON 문법 오류 없음
 
 ### 커밋
 
@@ -256,11 +256,11 @@ export default async function Unauthorized() {
 
 ### 확인 사항
 
-- [ ] not-found.tsx에 getTranslations 적용됨
-- [ ] forbidden.tsx에 getTranslations 적용됨
-- [ ] unauthorized.tsx에 getTranslations 적용됨
-- [ ] 모든 하드코딩된 텍스트 제거됨
-- [ ] `/ko`, `/en` 에서 각각 올바른 언어로 표시됨
+- [x] not-found.tsx에 getTranslations 적용됨
+- [x] forbidden.tsx에 getTranslations 적용됨
+- [x] unauthorized.tsx에 getTranslations 적용됨
+- [x] 모든 하드코딩된 텍스트 제거됨
+- [x] `/ko`, `/en` 에서 각각 올바른 언어로 표시됨
 
 ### 커밋
 
@@ -388,10 +388,10 @@ const t = await getTranslations('common.dialog');
 
 ### 확인 사항
 
-- [ ] DeleteConfirmDialog에 translations props 추가됨
-- [ ] DraftRestoreDialog에 translations props 추가됨
-- [ ] 하드코딩된 텍스트 제거됨
-- [ ] 컴포넌트 사용처에서 번역 전달 필요 (Phase 6, 7에서 처리)
+- [x] DeleteConfirmDialog에 translations props 추가됨
+- [x] DraftRestoreDialog에 translations props 추가됨
+- [x] 하드코딩된 텍스트 제거됨
+- [x] 컴포넌트 사용처에서 번역 전달 완료 (article, series 페이지)
 
 ### 커밋
 
@@ -407,12 +407,12 @@ feat(blog): apply i18n to common dialog components
 
 ## Phase 4 완료 체크리스트
 
-- [ ] Task 4.1 완료 및 커밋
-- [ ] Task 4.2 완료 및 커밋
-- [ ] Task 4.3 완료 및 커밋
-- [ ] 에러 페이지 양쪽 언어에서 정상 표시
-- [ ] 다이얼로그 컴포넌트 빌드 성공
-- [ ] 전체 빌드 테스트 (`pnpm build`)
+- [x] Task 4.1 완료 및 커밋
+- [x] Task 4.2 완료 및 커밋
+- [x] Task 4.3 완료 및 커밋
+- [x] 에러 페이지 양쪽 언어에서 정상 표시
+- [x] 다이얼로그 컴포넌트 빌드 성공
+- [x] 전체 빌드 테스트 (`pnpm build`)
 
 ## 다음 Phase
 

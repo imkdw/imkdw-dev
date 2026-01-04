@@ -6,30 +6,55 @@ import { RecentArticles } from '@/components/sections/recent-articles-section';
 import { getSeriesList, getArticles, getStats } from '@imkdw-dev/api-client';
 import { RECENT_SERIES_CARD_COUNT } from '@/consts/series.const';
 import { RECENT_ARTICLES_COUNT } from '@/consts/article.const';
-import { createMetadata } from '@/utils/metadata-creator';
+import { getTranslations } from 'next-intl/server';
 
-export const metadata: Metadata = createMetadata({
-  title: '@imkdw-dev/blog',
-  description: '직접 개발하고 운영하는 IT 기술블로그',
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('metadata');
+  return {
+    title: t('siteTitle'),
+    description: t('siteDescription'),
+  };
+}
 
 export default async function Home() {
   const series = await getSeriesList({ limit: RECENT_SERIES_CARD_COUNT, page: 1 });
   const articles = await getArticles({ limit: RECENT_ARTICLES_COUNT, page: 1 });
   const statsData = await getStats();
 
+  const t = await getTranslations('home');
+
+  const statsTranslations = {
+    totalArticles: t('stats.totalArticles'),
+    activeSeries: t('stats.activeSeries'),
+    totalViews: t('stats.totalViews'),
+    techTags: t('stats.techTags'),
+  };
+
+  const recentArticlesTranslations = {
+    title: t('recentArticles.title'),
+    viewAll: t('recentArticles.viewAll'),
+    viewAllShort: t('recentArticles.viewAllShort'),
+  };
+
+  const recentSeriesTranslations = {
+    title: t('recentSeries.title'),
+    viewAll: t('recentSeries.viewAll'),
+    viewAllShort: t('recentSeries.viewAllShort'),
+  };
+
   return (
     <Layout>
       <div>
         <TerminalSection
-          title="Tech Blog"
-          description="학습하고 경험한 내용들을 공유하는 기술블로그 입니다"
+          title={t('terminal.title')}
+          description={t('terminal.description')}
           stats={statsData}
           tags={['Node.js', 'TypeScript', 'Nest.js', 'Prisma', 'Next.js']}
+          statsTranslations={statsTranslations}
         />
         <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10 space-y-8 md:space-y-10">
-          <RecentSeries seriesList={series.items} />
-          <RecentArticles articles={articles.items} />
+          <RecentSeries seriesList={series.items} translations={recentSeriesTranslations} />
+          <RecentArticles articles={articles.items} translations={recentArticlesTranslations} />
         </div>
       </div>
     </Layout>
