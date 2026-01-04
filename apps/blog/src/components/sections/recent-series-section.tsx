@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { BookOpen, Terminal } from 'lucide-react';
 import { Button, cn, SeriesCard } from '@imkdw-dev/ui';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
@@ -39,7 +39,7 @@ export function RecentSeries({ seriesList, translations }: Props) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
         {seriesList.map(item => (
           <div key={item.slug} className="bounce-in h-full">
-            <SeriesCard series={item} />
+            <SeriesCard series={item} LinkComponent={Link} />
           </div>
         ))}
       </div>

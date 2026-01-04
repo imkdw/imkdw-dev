@@ -3,7 +3,7 @@ import { BookOpen, Calendar, Clock, Eye } from 'lucide-react';
 import { ReactNode } from 'react';
 import { IArticleDto } from '@imkdw-dev/types';
 import { formatDate, formatReadTime } from '@imkdw-dev/utils/client';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 
 interface ArticleHeaderProps {
   article: IArticleDto;

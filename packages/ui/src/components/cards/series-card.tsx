@@ -1,18 +1,21 @@
-import Link from 'next/link';
 import { ISeriesListItemDto } from '@imkdw-dev/types';
 import { MetaInfoItem } from './meta-info-item';
 import { BookOpen, Clock } from 'lucide-react';
 import { LastUpdated } from './last-updated';
 import { TagList } from './tag-list';
 import { formatReadTime } from '@imkdw-dev/utils';
+import { LinkComponentType } from '../../types';
 
 interface Props {
   series: ISeriesListItemDto;
+  LinkComponent?: LinkComponentType;
 }
 
-export function SeriesCard({ series }: Props) {
+export function SeriesCard({ series, LinkComponent = 'a' as unknown as LinkComponentType }: Props) {
+  const LinkTag = LinkComponent;
+
   return (
-    <Link href={`/series/${series.slug}`} className="block h-full">
+    <LinkTag href={`/series/${series.slug}`} className="block h-full">
       <div className="rounded-xl p-2 group cursor-pointer h-full flex flex-col bg-gradient-to-br from-card via-card to-muted/30 border-2 border-border/60 hover:border-primary/30 hover:shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.3)] transition-all duration-300">
         <div className="flex-1 p-3 md:p-4 flex flex-col">
           <div className="flex-1">
@@ -39,6 +42,6 @@ export function SeriesCard({ series }: Props) {
           </div>
         </div>
       </div>
-    </Link>
+    </LinkTag>
   );
 }

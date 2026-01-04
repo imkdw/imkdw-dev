@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { Button, Card, CardContent, CardHeader, CardTitle, CardDescription } from '@imkdw-dev/ui';
 import { formatDate, formatReadTime } from '@imkdw-dev/utils/client';
 import { BookOpen, Calendar, Clock, Play } from 'lucide-react';

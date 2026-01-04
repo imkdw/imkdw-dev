@@ -7,7 +7,7 @@ import { SeriesListGrid } from '@/components/series/series-list-grid';
 import { SeriesListEmpty } from '@/components/series/series-list-empty';
 import { Layout } from '@/components/layout';
 import { BookOpen, FileText, Plus } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
 import { getTranslations } from 'next-intl/server';
 

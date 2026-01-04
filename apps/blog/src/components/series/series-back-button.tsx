@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { Button } from '@imkdw-dev/ui';
 import { ArrowLeft } from 'lucide-react';
 

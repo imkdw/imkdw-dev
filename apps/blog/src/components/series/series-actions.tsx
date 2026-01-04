@@ -2,7 +2,7 @@
 
 import { useState, MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { Button } from '@imkdw-dev/ui';
 import { useToast } from '@imkdw-dev/toast';
 import { useAuth } from '@imkdw-dev/auth';

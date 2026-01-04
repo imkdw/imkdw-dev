@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { Button, Card, CardHeader, CardTitle, CardContent } from '@imkdw-dev/ui';
 import { Layout } from '@/components/layout';
 import { getTranslations } from 'next-intl/server';

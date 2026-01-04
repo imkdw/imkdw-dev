@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { Home, FileText, BookOpen } from 'lucide-react';
 import {
   Sidebar,

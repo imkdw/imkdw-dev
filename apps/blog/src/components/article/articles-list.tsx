@@ -1,6 +1,7 @@
 import { FileText } from 'lucide-react';
 import { ArticleCard } from '@imkdw-dev/ui';
 import { IArticleListItemDto } from '@imkdw-dev/types';
+import { Link } from '@/i18n/navigation';
 
 interface Props {
   articles: IArticleListItemDto[];
@@ -22,7 +23,7 @@ export function ArticlesList({ articles, translations }: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 cols-3 gap-4">
       {articles.map(article => (
-        <ArticleCard key={article.slug} article={article} />
+        <ArticleCard key={article.slug} article={article} LinkComponent={Link} />
       ))}
     </div>
   );

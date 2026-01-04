@@ -145,6 +145,10 @@ reviews:
         - @imkdw-dev/ui 컴포넌트 우선 사용
         - @imkdw-dev/types에서 타입 import
 
+        ### i18n 라우팅 (다국어 지원 프로젝트)
+        - `import Link from 'next/link'` 사용 금지
+        - `import { Link } from '@/i18n/navigation'` 사용 필수
+
         ### 성능 검토
         - 불필요한 Client Component 변환 감지
         - 무거운 연산에 useMemo/useCallback 고려
