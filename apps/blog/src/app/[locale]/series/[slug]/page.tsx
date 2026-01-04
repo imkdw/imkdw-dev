@@ -57,6 +57,20 @@ export default async function Page({ params, searchParams }: Props) {
         delete: t('common.buttons.delete'),
       },
     },
+    stats: {
+      totalArticles: t('series.stats.totalArticles'),
+      totalReadTime: t('series.stats.totalReadTime'),
+      lastUpdated: t('series.stats.lastUpdated'),
+      createdAt: t('series.stats.createdAt'),
+      hours: t('series.stats.hours'),
+      minutes: t('series.stats.minutes'),
+    },
+  };
+
+  const seriesArticlesTranslations = {
+    articleList: t('series.detail.articleList'),
+    articleListDescription: t('series.detail.articleListDescription'),
+    read: t('series.detail.read'),
   };
 
   return (
@@ -70,6 +84,7 @@ export default async function Page({ params, searchParams }: Props) {
           currentPage={currentPage}
           slug={slug}
           totalCount={articlesData.totalCount}
+          translations={seriesArticlesTranslations}
         />
       </div>
     </Layout>

@@ -82,6 +82,33 @@
   },
   "series": {
     "label": "Series",
+    "list": {
+      "title": "Series List",
+      "totalSeries": "Total Series",
+      "totalArticles": "Total Articles",
+      "empty": "No series found",
+      "emptyDescription": "Stay tuned for new series",
+      "create": "Create Series"
+    },
+    "detail": {
+      "articleList": "Articles in Series",
+      "articleListDescription": "Read in order for structured learning",
+      "read": "Read"
+    },
+    "form": {
+      "createTitle": "Create Series",
+      "editTitle": "Edit Series",
+      "saveDraft": "Save Draft",
+      "publish": "Publish"
+    },
+    "stats": {
+      "totalArticles": "Total Articles",
+      "totalReadTime": "Total Read Time",
+      "lastUpdated": "Last Updated",
+      "createdAt": "Created At",
+      "hours": "hr",
+      "minutes": "min"
+    },
     "deleteDialog": {
       "title": "Delete Series",
       "description": "Are you sure you want to delete this series?"
@@ -174,6 +201,35 @@
     "deleteDialog": {
       "title": "Delete Article",
       "description": "Are you sure you want to delete this article?"
+    }
+  },
+  "member": {
+    "page": {
+      "title": "My Page"
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "Edit your public profile information",
+      "editProfile": "Edit Profile",
+      "changeImage": "Change Image",
+      "imageUploadHint": "Maximum image size is 2MB",
+      "email": "Email",
+      "provider": "Social Login Provider",
+      "nickname": "Nickname",
+      "nicknamePlaceholder": "Enter your nickname"
+    },
+    "stats": {
+      "title": "Activity Stats",
+      "commentsWritten": "Comments Written"
+    },
+    "account": {
+      "title": "Account Info",
+      "memberSince": "Member Since",
+      "role": "Account Role"
+    },
+    "roles": {
+      "ADMIN": "Admin",
+      "USER": "User"
     }
   }
 }

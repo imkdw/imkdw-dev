@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { Layout as UILayout } from '@imkdw-dev/ui';
 import { getTranslations } from 'next-intl/server';
 import { logout } from '@/actions/logout';
+import { LocaleSwitcher } from './locale-switcher';
 
 interface Props {
   children: ReactNode;
@@ -31,7 +32,13 @@ export async function Layout({ children, className, enableOverflow }: Props) {
   };
 
   return (
-    <UILayout className={className} enableOverflow={enableOverflow} onLogout={logout} translations={headerTranslations}>
+    <UILayout
+      className={className}
+      enableOverflow={enableOverflow}
+      onLogout={logout}
+      translations={headerTranslations}
+      localeSwitcher={<LocaleSwitcher />}
+    >
       {children}
     </UILayout>
   );

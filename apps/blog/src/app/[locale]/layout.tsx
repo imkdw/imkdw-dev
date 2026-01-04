@@ -24,13 +24,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'metadata' });
 
+  const baseUrl = process.env.NEXT_PUBLIC_BLOG_URL ?? 'https://blog.imkdw.dev';
+
+  const languages: Record<string, string> = {};
+  for (const loc of routing.locales) {
+    languages[loc] = `${baseUrl}/${loc}`;
+  }
+
   return {
-    title: t('siteTitle'),
+    title: {
+      default: t('siteTitle'),
+      template: `%s | ${t('siteTitle')}`,
+    },
     description: t('siteDescription'),
     alternates: {
+      canonical: `${baseUrl}/${locale}`,
+      languages,
       types: {
         'application/rss+xml': '/feed.xml',
       },
+    },
+    openGraph: {
+      title: t('siteTitle'),
+      description: t('siteDescription'),
+      locale: locale,
+      alternateLocale: routing.locales.filter(l => l !== locale),
     },
   };
 }

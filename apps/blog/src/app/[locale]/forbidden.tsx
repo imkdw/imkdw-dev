@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Layout, Button, Card, CardHeader, CardTitle, CardContent } from '@imkdw-dev/ui';
+import { Button, Card, CardHeader, CardTitle, CardContent } from '@imkdw-dev/ui';
+import { Layout } from '@/components/layout';
 import { getTranslations } from 'next-intl/server';
 
 export default async function Forbidden() {

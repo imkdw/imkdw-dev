@@ -6,17 +6,30 @@ import { ArticleTagManager } from '../article/article-tag-manager';
 import { useSeriesForm } from '@/hooks';
 import { ISeriesDetailDto } from '@imkdw-dev/types';
 
+interface FormTranslations {
+  createTitle: string;
+  editTitle: string;
+  saveDraft: string;
+  publish: string;
+}
+
 interface Props {
   mode: 'create' | 'edit';
   initialData?: ISeriesDetailDto;
+  translations: FormTranslations;
 }
 
-export function SeriesForm({ mode, initialData }: Props) {
+export function SeriesForm({ mode, initialData, translations }: Props) {
   const { formData, handlers } = useSeriesForm({ mode, initialData });
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col">
-      <SeriesFormHeader mode={mode} onSaveDraft={handlers.handleSaveDraft} onPublish={handlers.handlePublish} />
+      <SeriesFormHeader
+        mode={mode}
+        onSaveDraft={handlers.handleSaveDraft}
+        onPublish={handlers.handlePublish}
+        translations={translations}
+      />
       <div className="flex gap-4 flex-1">
         <div className="flex flex-1">
           <SeriesFormFields

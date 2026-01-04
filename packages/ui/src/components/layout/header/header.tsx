@@ -33,9 +33,10 @@ interface Props {
       autoSignup: string;
     };
   };
+  localeSwitcher: React.ReactNode;
 }
 
-export function Header({ onSearch, onLogout, translations }: Props) {
+export function Header({ onSearch, onLogout, translations, localeSwitcher }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('blog.tsx');
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -64,6 +65,7 @@ export function Header({ onSearch, onLogout, translations }: Props) {
         </div>
 
         <div className="flex items-center space-x-1 gap-2">
+          {localeSwitcher}
           <MemberMenu onLogin={handleLogin} onLogout={onLogout} translations={translations.auth} />
         </div>
       </div>

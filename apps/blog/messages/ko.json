@@ -82,6 +82,33 @@
   },
   "series": {
     "label": "시리즈",
+    "list": {
+      "title": "시리즈 목록",
+      "totalSeries": "전체 시리즈",
+      "totalArticles": "총 글 수",
+      "empty": "시리즈가 없습니다",
+      "emptyDescription": "새로운 시리즈를 기다려주세요",
+      "create": "시리즈 만들기"
+    },
+    "detail": {
+      "articleList": "시리즈 글 목록",
+      "articleListDescription": "순서대로 읽어나가며 체계적으로 학습하세요",
+      "read": "읽기"
+    },
+    "form": {
+      "createTitle": "시리즈 작성",
+      "editTitle": "시리즈 수정",
+      "saveDraft": "임시저장",
+      "publish": "발행"
+    },
+    "stats": {
+      "totalArticles": "총 글 수",
+      "totalReadTime": "총 읽기 시간",
+      "lastUpdated": "최근 업데이트",
+      "createdAt": "시리즈 생성일",
+      "hours": "시간",
+      "minutes": "분"
+    },
     "deleteDialog": {
       "title": "시리즈 삭제",
       "description": "정말로 이 시리즈를 삭제하시겠습니까?"
@@ -174,6 +201,35 @@
     "deleteDialog": {
       "title": "게시글 삭제",
       "description": "정말로 이 게시글을 삭제하시겠습니까?"
+    }
+  },
+  "member": {
+    "page": {
+      "title": "마이페이지"
+    },
+    "profile": {
+      "title": "프로필 정보",
+      "description": "공개 프로필 정보를 수정할 수 있습니다",
+      "editProfile": "프로필 수정",
+      "changeImage": "이미지 변경",
+      "imageUploadHint": "이미지는 최대 2MB 까지 업로드 가능합니다",
+      "email": "이메일",
+      "provider": "소셜로그인 공급자",
+      "nickname": "닉네임",
+      "nicknamePlaceholder": "닉네임을 입력하세요"
+    },
+    "stats": {
+      "title": "활동 통계",
+      "commentsWritten": "작성한 댓글"
+    },
+    "account": {
+      "title": "계정 정보",
+      "memberSince": "가입일",
+      "role": "계정 권한"
+    },
+    "roles": {
+      "ADMIN": "관리자",
+      "USER": "일반 사용자"
     }
   }
 }

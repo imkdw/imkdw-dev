@@ -29,9 +29,19 @@ interface SeriesActionsTranslations {
   buttons: ButtonTranslations;
 }
 
+interface StatsTranslations {
+  totalArticles: string;
+  totalReadTime: string;
+  lastUpdated: string;
+  createdAt: string;
+  hours: string;
+  minutes: string;
+}
+
 interface Translations {
   seriesLabel: string;
   seriesActions: SeriesActionsTranslations;
+  stats: StatsTranslations;
 }
 
 interface Props {
@@ -43,7 +53,7 @@ export function SeriesHeader({ seriesData, translations }: Props) {
   return (
     <div className="space-y-6 mb-8">
       <SeriesMainCard seriesData={seriesData} translations={translations} />
-      <SeriesStatsCards seriesData={seriesData} />
+      <SeriesStatsCards seriesData={seriesData} translations={translations.stats} />
     </div>
   );
 }
