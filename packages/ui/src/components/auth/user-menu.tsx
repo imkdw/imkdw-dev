@@ -19,14 +19,20 @@ import { useAuth } from '@imkdw-dev/auth';
 interface Props {
   onLogin: () => void;
   onLogout?: () => Promise<void>;
+  translations: {
+    login: string;
+    logout: string;
+    mypage: string;
+    writeArticle: string;
+  };
 }
 
-export function MemberMenu({ onLogin, onLogout }: Props) {
+export function MemberMenu({ onLogin, onLogout, translations }: Props) {
   const router = useRouter();
   const { member, logout } = useAuth();
 
   if (!member) {
-    return <Button onClick={onLogin}>로그인</Button>;
+    return <Button onClick={onLogin}>{translations.login}</Button>;
   }
 
   const handleLogout = async () => {
@@ -59,14 +65,14 @@ export function MemberMenu({ onLogin, onLogout }: Props) {
         <DropdownMenuItem>
           <Link href={`/members/${member.id}`} className="flex items-center justify-center">
             <User className="mr-2 h-4 w-4" />
-            <span>마이페이지</span>
+            <span>{translations.mypage}</span>
           </Link>
         </DropdownMenuItem>
         {member.role === MEMBER_ROLE.ADMIN && (
           <DropdownMenuItem>
             <Link href={`/articles/create`} className="flex items-center justify-center">
               <Edit className="mr-2 h-4 w-4" />
-              <span>글 작성</span>
+              <span>{translations.writeArticle}</span>
             </Link>
           </DropdownMenuItem>
         )}
@@ -74,7 +80,7 @@ export function MemberMenu({ onLogin, onLogout }: Props) {
         <DropdownMenuItem>
           <LogOut className="mr-2 h-4 w-4" />
           <span className="cursor-pointer" onClick={handleLogout}>
-            로그아웃
+            {translations.logout}
           </span>
         </DropdownMenuItem>
       </DropdownMenuContent>

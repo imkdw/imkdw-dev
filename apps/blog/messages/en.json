@@ -2,5 +2,21 @@
   "metadata": {
     "siteTitle": "@imkdw-dev/blog",
     "siteDescription": "A tech blog I develop and operate myself"
+  },
+  "navigation": {
+    "home": "Home",
+    "articles": "Articles",
+    "series": "Series",
+    "explore": "Explore",
+    "searchPlaceholder": "Search..."
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "loginWithGoogle": "Login with Google",
+    "loginWithGithub": "Login with Github",
+    "mypage": "My Page",
+    "writeArticle": "Write Article",
+    "autoSignup": "If you don't have an account, you'll be signed up automatically"
   }
 }

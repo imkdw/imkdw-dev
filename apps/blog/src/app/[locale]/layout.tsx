@@ -43,13 +43,21 @@ export default async function LocaleLayout({ children, params }: Props) {
   }
 
   const messages = await getMessages();
+  const t = await getTranslations('navigation');
+
+  const navigationTranslations = {
+    home: t('home'),
+    articles: t('articles'),
+    series: t('series'),
+    explore: t('explore'),
+  };
 
   return (
     <NextIntlClientProvider messages={messages}>
       <Providers>
         <NavigationProgress />
         {children}
-        <MobileSidebar />
+        <MobileSidebar translations={navigationTranslations} />
       </Providers>
       {process.env.APP_ENV === APP_ENV.PRODUCTION && <GoogleAnalytics gaId="G-DXRR1KZDDN" />}
     </NextIntlClientProvider>

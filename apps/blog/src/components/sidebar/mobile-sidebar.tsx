@@ -15,21 +15,31 @@ import {
   useSidebar,
 } from '@imkdw-dev/ui';
 
-const mainItems = [
-  { title: '홈', url: '/', icon: Home },
-  { title: '글 목록', url: '/articles', icon: FileText },
-  { title: '시리즈', url: '/series', icon: BookOpen },
-];
+interface Props {
+  translations: {
+    home: string;
+    articles: string;
+    series: string;
+    explore: string;
+  };
+}
 
-export function MobileSidebar() {
+export function MobileSidebar({ translations }: Props) {
   const currentPath = usePathname();
   const { close } = useSidebar();
 
+  const mainItems = [
+    { title: translations.home, url: '/', icon: Home },
+    { title: translations.articles, url: '/articles', icon: FileText },
+    { title: translations.series, url: '/series', icon: BookOpen },
+  ];
+
   const isActive = (path: string) => {
     if (path === '/') {
-      return currentPath === '/';
+      const pathWithoutLocale = currentPath.replace(/^\/(ko|en)/, '');
+      return pathWithoutLocale === '' || pathWithoutLocale === '/';
     }
-    return currentPath.startsWith(path);
+    return currentPath.includes(path);
   };
 
   const getNavCls = (path: string) => {
@@ -43,9 +53,8 @@ export function MobileSidebar() {
   return (
     <Sidebar className="bg-card">
       <SidebarContent className="pt-6">
-        {/* 메인 네비게이션 */}
         <SidebarGroup>
-          <SidebarGroupLabel>탐색</SidebarGroupLabel>
+          <SidebarGroupLabel>{translations.explore}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {mainItems.map(item => (

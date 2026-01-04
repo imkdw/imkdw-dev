@@ -2,5 +2,21 @@
   "metadata": {
     "siteTitle": "@imkdw-dev/blog",
     "siteDescription": "직접 개발하고 운영하는 IT 기술블로그"
+  },
+  "navigation": {
+    "home": "홈",
+    "articles": "글 목록",
+    "series": "시리즈",
+    "explore": "탐색",
+    "searchPlaceholder": "검색..."
+  },
+  "auth": {
+    "login": "로그인",
+    "logout": "로그아웃",
+    "loginWithGoogle": "Google로 로그인",
+    "loginWithGithub": "Github로 로그인",
+    "mypage": "마이페이지",
+    "writeArticle": "글 작성",
+    "autoSignup": "계정이 없으시면 자동으로 회원가입됩니다"
   }
 }
