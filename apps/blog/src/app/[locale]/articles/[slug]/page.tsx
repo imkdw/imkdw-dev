@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import { Layout } from '@/components/layout';
-import { CommentSection } from '../../../components/comment/comment-section';
-import { ArticleInteractions } from '../../../components/article/article-interactions';
-import { ArticleHeader } from '../../../components/article/article-header';
-import { ArticleContent } from '../../../components/article/article-content';
-import { ArticleNavigation } from '../../../components/article/article-navigation';
-import { TableOfContents } from '../../../components/article/table-of-contents';
-import { ReadingProgressBar } from '../../../components/article/reading-progress-bar';
-import { ViewCountTracker } from '../../../components/article/view-count-tracker';
+import { CommentSection } from '@/components/comment/comment-section';
+import { ArticleInteractions } from '@/components/article/article-interactions';
+import { ArticleHeader } from '@/components/article/article-header';
+import { ArticleContent } from '@/components/article/article-content';
+import { ArticleNavigation } from '@/components/article/article-navigation';
+import { TableOfContents } from '@/components/article/table-of-contents';
+import { ReadingProgressBar } from '@/components/article/reading-progress-bar';
+import { ViewCountTracker } from '@/components/article/view-count-tracker';
 import { getArticle, getArticleComments } from '@imkdw-dev/api-client';
 import { createMetadata } from '@/utils/metadata-creator';
 

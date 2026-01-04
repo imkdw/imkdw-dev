@@ -63,10 +63,10 @@ mv app/members "app/[locale]/"
 
 ### 확인 사항
 
-- [ ] `app/[locale]/` 디렉토리 생성됨
-- [ ] 모든 페이지 파일 이동 완료
-- [ ] `app/terminal/` 은 그대로 유지됨
-- [ ] `app/api/` 는 그대로 유지됨
+- [x] `app/[locale]/` 디렉토리 생성됨
+- [x] 모든 페이지 파일 이동 완료
+- [x] `app/terminal/` 은 그대로 유지됨
+- [x] `app/api/` 는 그대로 유지됨
 
 ### 커밋
 
@@ -170,12 +170,12 @@ export default async function LocaleLayout({ children, params }: Props) {
 
 ### 확인 사항
 
-- [ ] `app/layout.tsx` 최소화됨 (html, body 태그만)
-- [ ] `app/[locale]/layout.tsx` 생성됨
-- [ ] NextIntlClientProvider 적용됨
-- [ ] generateStaticParams 추가됨
-- [ ] generateMetadata에서 번역 사용
-- [ ] 기존 Providers, MobileSidebar 등 유지됨
+- [x] `app/layout.tsx` 최소화됨 (html, body 태그만)
+- [x] `app/[locale]/layout.tsx` 생성됨
+- [x] NextIntlClientProvider 적용됨
+- [x] generateStaticParams 추가됨
+- [x] generateMetadata에서 번역 사용
+- [x] 기존 Providers, MobileSidebar 등 유지됨
 
 ### 커밋
 
@@ -192,11 +192,11 @@ feat(blog): add locale-aware layout with NextIntlClientProvider
 
 ## Phase 2 완료 체크리스트
 
-- [ ] Task 2.1 완료 및 커밋
-- [ ] Task 2.2 완료 및 커밋
-- [ ] `pnpm dev` 실행 후 `/ko`, `/en` 접속 테스트
-- [ ] 터미널 페이지 (`/terminal`) 정상 접속 확인
-- [ ] 전체 빌드 테스트 (`pnpm build`)
+- [x] Task 2.1 완료 및 커밋
+- [x] Task 2.2 완료 및 커밋
+- [x] `pnpm dev` 실행 후 `/ko`, `/en` 접속 테스트
+- [x] 터미널 페이지 (`/terminal`) 정상 접속 확인
+- [x] 전체 빌드 테스트 (`pnpm build`)
 
 ## 예상 이슈 및 해결
 

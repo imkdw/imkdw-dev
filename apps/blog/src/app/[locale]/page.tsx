@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { TerminalSection } from '@imkdw-dev/ui';
 import { Layout } from '@/components/layout';
-import { RecentSeries } from '../components/sections/recent-series-section';
-import { RecentArticles } from '../components/sections/recent-articles-section';
+import { RecentSeries } from '@/components/sections/recent-series-section';
+import { RecentArticles } from '@/components/sections/recent-articles-section';
 import { getSeriesList, getArticles, getStats } from '@imkdw-dev/api-client';
 import { RECENT_SERIES_CARD_COUNT } from '@/consts/series.const';
 import { RECENT_ARTICLES_COUNT } from '@/consts/article.const';

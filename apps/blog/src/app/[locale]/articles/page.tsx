@@ -1,5 +1,5 @@
 import { Layout } from '@/components/layout';
-import { ArticlesContent } from '../../components/article/articles-content';
+import { ArticlesContent } from '@/components/article/articles-content';
 import { getTagList, getArticles } from '@imkdw-dev/api-client';
 import { ARTICLES_PER_PAGE } from '@/consts/article.const';
 import { createMetadata } from '@/utils/metadata-creator';

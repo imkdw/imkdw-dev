@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Layout } from '@/components/layout';
-import { SeriesBackButton } from '../../../components/series/series-back-button';
-import { SeriesHeader } from '../../../components/series/series-header';
-import { SeriesArticles } from '../../../components/series/series-articles';
+import { SeriesBackButton } from '@/components/series/series-back-button';
+import { SeriesHeader } from '@/components/series/series-header';
+import { SeriesArticles } from '@/components/series/series-articles';
 import { getSeriesDetail, getArticles } from '@imkdw-dev/api-client';
 import { SERIES_ARTICLES_PER_PAGE } from '@/consts/article.const';
 import { createMetadata } from '@/utils/metadata-creator';
