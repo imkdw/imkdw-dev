@@ -6,7 +6,6 @@ import { forbidden } from 'next/navigation';
 
 export default async function CreateArticlePage() {
   const currentMember = await getCurrentMember();
-
   if (!currentMember || currentMember.role !== MEMBER_ROLE.ADMIN) {
     forbidden();
   }
