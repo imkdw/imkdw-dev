@@ -9,10 +9,7 @@ import { MacOSControls } from '../../../primitives/macos-controls';
 import { FileTabs } from './file-tabs';
 import { DesktopNavigation } from './desktop-navigation';
 import { MobileNavigation } from './mobile-navigation';
-import { cn } from '../../../lib';
-import { jetBrainsMono } from '@imkdw-dev/fonts';
 import { useOAuth } from '@imkdw-dev/hooks';
-import Link from 'next/link';
 
 interface Props {
   onSearch?: (query: string) => void;
@@ -34,9 +31,10 @@ interface Props {
     };
   };
   localeSwitcher: React.ReactNode;
+  logoLink: React.ReactNode;
 }
 
-export function Header({ onSearch, onLogout, translations, localeSwitcher }: Props) {
+export function Header({ onSearch, onLogout, translations, localeSwitcher, logoLink }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('blog.tsx');
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -58,9 +56,7 @@ export function Header({ onSearch, onLogout, translations, localeSwitcher }: Pro
           <MacOSControls />
           <div className="flex items-center space-x-2">
             <Terminal className="h-4 w-4 text-primary" />
-            <Link className={cn('text-md', jetBrainsMono.className)} href="/">
-              @imkdw-dev/blog
-            </Link>
+            {logoLink}
           </div>
         </div>
 

@@ -44,6 +44,7 @@ interface Props {
   onLogout?: () => Promise<void>;
   translations?: HeaderTranslations;
   localeSwitcher: ReactNode;
+  logoLink: ReactNode;
 }
 
 export function Layout({
@@ -53,12 +54,18 @@ export function Layout({
   onLogout,
   translations,
   localeSwitcher,
+  logoLink,
 }: Props) {
   const headerTranslations = translations ?? DEFAULT_TRANSLATIONS;
 
   return (
     <main className={cn('min-h-screen bg-background text-foreground flex flex-col', className)}>
-      <Header onLogout={onLogout} translations={headerTranslations} localeSwitcher={localeSwitcher} />
+      <Header
+        onLogout={onLogout}
+        translations={headerTranslations}
+        localeSwitcher={localeSwitcher}
+        logoLink={logoLink}
+      />
       <main className={cn('flex-1', enableOverflow && 'overflow-auto')}>{children}</main>
       <Footer />
     </main>

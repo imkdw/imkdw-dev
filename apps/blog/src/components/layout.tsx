@@ -1,8 +1,10 @@
 import { ReactNode } from 'react';
-import { Layout as UILayout } from '@imkdw-dev/ui';
+import { Layout as UILayout, cn } from '@imkdw-dev/ui';
 import { getTranslations } from 'next-intl/server';
 import { logout } from '@/actions/logout';
 import { LocaleSwitcher } from './locale-switcher';
+import { Link } from '@/i18n/navigation';
+import { jetBrainsMono } from '@imkdw-dev/fonts';
 
 interface Props {
   children: ReactNode;
@@ -38,6 +40,11 @@ export async function Layout({ children, className, enableOverflow }: Props) {
       onLogout={logout}
       translations={headerTranslations}
       localeSwitcher={<LocaleSwitcher />}
+      logoLink={
+        <Link className={cn('text-md', jetBrainsMono.className)} href="/">
+          @imkdw-dev/blog
+        </Link>
+      }
     >
       {children}
     </UILayout>

@@ -19,17 +19,11 @@ interface Props {
   locale: Locale;
 }
 
-export function SeriesCard({
-  series,
-  LinkComponent = 'a' as unknown as LinkComponentType,
-  translations = { articleCount: '__count__ articles', lastUpdated: 'Last updated:' },
-  locale,
-}: Props) {
-  const LinkTag = LinkComponent;
+export function SeriesCard({ series, LinkComponent, translations, locale }: Props) {
   const articleCountText = translations.articleCount.replace('__count__', String(series.articleCount));
 
   return (
-    <LinkTag href={`/series/${series.slug}`} className="block h-full">
+    <LinkComponent href={`/series/${series.slug}`} className="block h-full">
       <div className="rounded-xl p-2 group cursor-pointer h-full flex flex-col bg-gradient-to-br from-card via-card to-muted/30 border-2 border-border/60 hover:border-primary/30 hover:shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.3)] transition-all duration-300">
         <div className="flex-1 p-3 md:p-4 flex flex-col">
           <div className="flex-1">
@@ -64,6 +58,6 @@ export function SeriesCard({
           </div>
         </div>
       </div>
-    </LinkTag>
+    </LinkComponent>
   );
 }
