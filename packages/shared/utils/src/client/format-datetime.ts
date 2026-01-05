@@ -35,7 +35,7 @@ function formatRelativeDate(date: Date, locale: Locale = 'ko'): string {
   const diffHour = Math.floor(diffMin / 60);
   const diffDay = Math.floor(diffHour / 24);
 
-  const labels = RELATIVE_DATE_LABELS[locale];
+  const labels = locale === 'ko' ? RELATIVE_DATE_LABELS.ko : RELATIVE_DATE_LABELS.en;
 
   if (diffSec < 60) {
     return labels.justNow;
@@ -75,7 +75,7 @@ export function formatDate(date: Date | string, locale: Locale = 'ko'): string {
 }
 
 export function formatReadTime(minutes: number, locale: Locale): string {
-  const labels = READ_TIME_LABELS[locale];
+  const labels = locale === 'ko' ? READ_TIME_LABELS.ko : READ_TIME_LABELS.en;
 
   if (minutes < 60) {
     return `${minutes}${labels.minutes}`;
