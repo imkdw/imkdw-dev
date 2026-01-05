@@ -217,9 +217,7 @@
     }
   },
   "comments": {
-    "section": {
-      "title": "{count} Comments"
-    },
+    "sectionTitle": "__count__ Comments",
     "form": {
       "placeholder": "Write a comment...",
       "placeholderNotLoggedIn": "Login required",

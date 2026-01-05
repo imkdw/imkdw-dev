@@ -65,7 +65,7 @@ export function CommentSection({ articleSlug, initialComments, locale, translati
     }
   };
 
-  const sectionTitle = translations.sectionTitle.replace('{count}', String(comments.length));
+  const sectionTitle = translations.sectionTitle.replace('__count__', String(comments.length));
 
   return (
     <div className="mt-12 pt-8 border-t border-border">

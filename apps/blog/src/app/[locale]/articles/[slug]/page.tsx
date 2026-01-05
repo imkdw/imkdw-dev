@@ -73,7 +73,7 @@ export default async function Page({ params }: Props) {
   };
 
   const commentTranslations = {
-    sectionTitle: t('comments.section.title'),
+    sectionTitle: t('comments.sectionTitle'),
     form: {
       placeholder: t('comments.form.placeholder'),
       placeholderNotLoggedIn: t('comments.form.placeholderNotLoggedIn'),

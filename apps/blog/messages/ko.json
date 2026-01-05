@@ -217,9 +217,7 @@
     }
   },
   "comments": {
-    "section": {
-      "title": "댓글 {count}개"
-    },
+    "sectionTitle": "댓글 __count__개",
     "form": {
       "placeholder": "댓글을 작성해주세요...",
       "placeholderNotLoggedIn": "로그인이 필요합니다",
