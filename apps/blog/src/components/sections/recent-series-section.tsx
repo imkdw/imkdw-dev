@@ -3,6 +3,7 @@ import { BookOpen, Terminal } from 'lucide-react';
 import { Button, cn, SeriesCard } from '@imkdw-dev/ui';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
 import { ISeriesListItemDto } from '@imkdw-dev/types';
+import { Locale } from '@imkdw-dev/i18n';
 
 interface SeriesCardTranslations {
   articleCount: string;
@@ -16,15 +17,15 @@ interface Props {
     viewAll: string;
     viewAllShort: string;
   };
-  seriesCardTranslations?: SeriesCardTranslations;
-  locale?: string;
+  seriesCardTranslations: SeriesCardTranslations;
+  locale: Locale;
 }
 
 export function RecentSeries({
   seriesList,
   translations,
   seriesCardTranslations = { articleCount: '__count__ articles', lastUpdated: 'Last updated:' },
-  locale = 'ko-KR',
+  locale,
 }: Props) {
   return (
     <section className="bg-background border border-border rounded-lg p-4 md:p-6">

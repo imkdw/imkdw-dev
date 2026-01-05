@@ -550,6 +550,9 @@ importers:
 
   packages/shared/utils:
     dependencies:
+      '@imkdw-dev/i18n':
+        specifier: workspace:*
+        version: link:../../i18n
       '@types/jsdom':
         specifier: ^27.0.0
         version: 27.0.0
@@ -656,6 +659,9 @@ importers:
       '@imkdw-dev/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@imkdw-dev/i18n':
+        specifier: workspace:*
+        version: link:../i18n
       '@imkdw-dev/toast':
         specifier: workspace:*
         version: link:../toast

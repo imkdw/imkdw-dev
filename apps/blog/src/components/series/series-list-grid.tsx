@@ -1,6 +1,7 @@
 import { SeriesCard } from '@imkdw-dev/ui';
 import type { ISeriesListItemDto } from '@imkdw-dev/types';
 import { Link } from '@/i18n/navigation';
+import { Locale } from '@imkdw-dev/i18n';
 
 interface SeriesCardTranslations {
   articleCount: string;
@@ -10,10 +11,10 @@ interface SeriesCardTranslations {
 interface Props {
   items: ISeriesListItemDto[];
   translations: SeriesCardTranslations;
-  locale?: string;
+  locale: Locale;
 }
 
-export function SeriesListGrid({ items, translations, locale = 'ko-KR' }: Props) {
+export function SeriesListGrid({ items, translations, locale }: Props) {
   return (
     <div className="flex flex-wrap gap-3 md:gap-4">
       {items.map(series => (

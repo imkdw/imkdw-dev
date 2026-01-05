@@ -2,6 +2,7 @@
 
 import { Avatar, AvatarImage, AvatarFallback, Button, Textarea } from '@imkdw-dev/ui';
 import type { IArticleCommentDto } from '@imkdw-dev/types';
+import type { Locale } from '@imkdw-dev/i18n';
 import { formatDate } from '@imkdw-dev/utils';
 import { CommentActions } from './comment-actions';
 
@@ -18,6 +19,7 @@ interface Props {
   isOwner: boolean;
   isEditing: boolean;
   editContent: string;
+  locale: Locale;
   onEditContentChange: (value: string) => void;
   onEditSave: () => void;
   onEditCancel: () => void;
@@ -31,6 +33,7 @@ export function CommentContent({
   isOwner,
   isEditing,
   editContent,
+  locale,
   onEditContentChange,
   onEditSave,
   onEditCancel,
@@ -66,7 +69,7 @@ export function CommentContent({
             </div>
 
             <div className="flex items-center space-x-2 mb-2">
-              <span className="text-xs text-muted-foreground">{formatDate(comment.createdAt)}</span>
+              <span className="text-xs text-muted-foreground">{formatDate(comment.createdAt, locale)}</span>
               {isEditing && <span className="text-xs text-primary">{translations.editingStatus}</span>}
             </div>
 
@@ -105,7 +108,7 @@ export function CommentContent({
             <div className="flex items-center space-x-2 mb-1">
               <span className="font-medium text-sm">{comment.author.nickname}</span>
               <span className="text-xs text-muted-foreground">·</span>
-              <span className="text-xs text-muted-foreground">{formatDate(comment.createdAt)}</span>
+              <span className="text-xs text-muted-foreground">{formatDate(comment.createdAt, locale)}</span>
               <CommentActions
                 isOwner={isOwner}
                 isEditing={isEditing}

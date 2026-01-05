@@ -30,6 +30,7 @@
     "@imkdw-dev/toast": "workspace:*",
     "@imkdw-dev/types": "workspace:*",
     "@imkdw-dev/utils": "workspace:*",
+    "@imkdw-dev/i18n": "workspace:*",
     "@milkdown/crepe": "^7.16.0",
     "@milkdown/kit": "^7.16.0",
     "@milkdown/react": "^7.16.0",

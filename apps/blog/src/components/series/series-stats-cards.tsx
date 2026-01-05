@@ -2,6 +2,7 @@ import { Card, CardContent } from '@imkdw-dev/ui';
 import { formatDate } from '@imkdw-dev/utils/client';
 import { BookOpen, Clock, Calendar, LucideIcon } from 'lucide-react';
 import type { ISeriesDetailDto } from '@imkdw-dev/types';
+import type { Locale } from '@imkdw-dev/i18n';
 
 interface StatCardProps {
   icon: LucideIcon;
@@ -13,6 +14,7 @@ interface StatCardProps {
 
 interface Props {
   seriesData: ISeriesDetailDto;
+  locale: Locale;
   translations: {
     totalArticles: string;
     totalReadTime: string;
@@ -39,7 +41,7 @@ function StatCard({ icon: Icon, value, label, colorClass, valueClass = 'text-2xl
   );
 }
 
-export function SeriesStatsCards({ seriesData, translations }: Props) {
+export function SeriesStatsCards({ seriesData, locale, translations }: Props) {
   const formatMinutes = (minutes: number): string => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
@@ -57,7 +59,7 @@ export function SeriesStatsCards({ seriesData, translations }: Props) {
       value: seriesData.articleCount,
       label: translations.totalArticles,
       colorClass: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
-      valueClass: 'text-2xl md:text-3xl',
+      valueClass: 'text-lg md:text-xl',
     },
     {
       icon: Clock,
@@ -68,14 +70,14 @@ export function SeriesStatsCards({ seriesData, translations }: Props) {
     },
     {
       icon: Calendar,
-      value: seriesData.lastArticleCreatedAt ? formatDate(seriesData.lastArticleCreatedAt) : '-',
+      value: seriesData.lastArticleCreatedAt ? formatDate(seriesData.lastArticleCreatedAt, locale) : '-',
       label: translations.lastUpdated,
       colorClass: 'bg-purple-500/10 text-purple-600 dark:text-purple-400',
       valueClass: 'text-sm md:text-base',
     },
     {
       icon: Calendar,
-      value: formatDate(seriesData.createdAt),
+      value: formatDate(seriesData.createdAt, locale),
       label: translations.createdAt,
       colorClass: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400',
       valueClass: 'text-sm md:text-base',

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useCommentForm } from '@/hooks';
 import { IArticleCommentDto } from '@imkdw-dev/types';
+import type { Locale } from '@imkdw-dev/i18n';
 import { getArticleComments } from '@imkdw-dev/api-client';
 import { CommentForm } from './comment-form';
 import { CommentList } from './comment-list';
@@ -31,10 +32,11 @@ interface CommentSectionTranslations {
 interface Props {
   articleSlug: string;
   initialComments: IArticleCommentDto[];
+  locale: Locale;
   translations: CommentSectionTranslations;
 }
 
-export function CommentSection({ articleSlug, initialComments, translations }: Props) {
+export function CommentSection({ articleSlug, initialComments, locale, translations }: Props) {
   const [comments, setComments] = useState<IArticleCommentDto[]>(initialComments);
 
   const refetchComments = async () => {
@@ -81,6 +83,7 @@ export function CommentSection({ articleSlug, initialComments, translations }: P
       <CommentList
         comments={comments}
         articleSlug={articleSlug}
+        locale={locale}
         onDelete={handleDelete}
         translations={translations.list}
         itemTranslations={translations.item}

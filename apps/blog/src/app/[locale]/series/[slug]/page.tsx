@@ -7,9 +7,10 @@ import { getSeriesDetail, getArticles } from '@imkdw-dev/api-client';
 import { SERIES_ARTICLES_PER_PAGE } from '@/consts/article.const';
 import { createMetadata } from '@/utils/metadata-creator';
 import { getTranslations } from 'next-intl/server';
+import type { Locale } from '@imkdw-dev/i18n';
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: Locale }>;
   searchParams: Promise<{ page?: string }>;
 }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params, searchParams }: Props) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const { page } = await searchParams;
   const currentPage = Number(page) || 1;
   const t = await getTranslations();
@@ -77,13 +78,14 @@ export default async function Page({ params, searchParams }: Props) {
     <Layout>
       <div className="max-w-4xl mx-auto py-6 px-4">
         <SeriesBackButton label={t('series.backToList')} />
-        <SeriesHeader seriesData={seriesData} translations={seriesHeaderTranslations} />
+        <SeriesHeader seriesData={seriesData} locale={locale} translations={seriesHeaderTranslations} />
         <SeriesArticles
           articles={articlesData.items}
           totalPages={articlesData.totalPage}
           currentPage={currentPage}
           slug={slug}
           totalCount={articlesData.totalCount}
+          locale={locale}
           translations={seriesArticlesTranslations}
         />
       </div>

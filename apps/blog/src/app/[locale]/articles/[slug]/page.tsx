@@ -11,9 +11,10 @@ import { ViewCountTracker } from '@/components/article/view-count-tracker';
 import { getArticle, getArticleComments } from '@imkdw-dev/api-client';
 import { createMetadata } from '@/utils/metadata-creator';
 import { getTranslations } from 'next-intl/server';
+import type { Locale } from '@imkdw-dev/i18n';
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: Locale }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const t = await getTranslations();
 
   const response = await getArticle(slug);
@@ -109,7 +110,7 @@ export default async function Page({ params }: Props) {
       <ViewCountTracker slug={slug} />
       <div className="max-w-7xl mx-auto p-6 lg:flex lg:gap-8">
         <div className="flex-1 max-w-4xl flex flex-col">
-          <ArticleHeader article={article}>
+          <ArticleHeader article={article} locale={locale}>
             <ArticleInteractions slug={slug} translations={articleInteractionsTranslations} />
           </ArticleHeader>
           <ArticleContent
@@ -125,6 +126,7 @@ export default async function Page({ params }: Props) {
           <CommentSection
             articleSlug={slug}
             initialComments={commentsResponse.comments}
+            locale={locale}
             translations={commentTranslations}
           />
         </div>

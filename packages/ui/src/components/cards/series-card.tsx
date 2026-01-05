@@ -5,6 +5,7 @@ import { LastUpdated } from './last-updated';
 import { TagList } from './tag-list';
 import { formatReadTime } from '@imkdw-dev/utils';
 import { LinkComponentType } from '../../types';
+import { Locale } from '@imkdw-dev/i18n';
 
 interface SeriesCardTranslations {
   articleCount: string;
@@ -13,16 +14,16 @@ interface SeriesCardTranslations {
 
 interface Props {
   series: ISeriesListItemDto;
-  LinkComponent?: LinkComponentType;
-  translations?: SeriesCardTranslations;
-  locale?: string;
+  LinkComponent: LinkComponentType;
+  translations: SeriesCardTranslations;
+  locale: Locale;
 }
 
 export function SeriesCard({
   series,
   LinkComponent = 'a' as unknown as LinkComponentType,
   translations = { articleCount: '__count__ articles', lastUpdated: 'Last updated:' },
-  locale = 'ko-KR',
+  locale,
 }: Props) {
   const LinkTag = LinkComponent;
   const articleCountText = translations.articleCount.replace('__count__', String(series.articleCount));
@@ -41,7 +42,10 @@ export function SeriesCard({
                 </div>
                 <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground mb-2 md:mb-3">
                   <MetaInfoItem icon={<BookOpen className="h-4 w-4" />} text={articleCountText} />
-                  <MetaInfoItem icon={<Clock className="h-4 w-4" />} text={formatReadTime(series.totalReadMinute)} />
+                  <MetaInfoItem
+                    icon={<Clock className="h-4 w-4" />}
+                    text={formatReadTime(series.totalReadMinute, locale)}
+                  />
                 </div>
               </div>
             </div>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { IArticleCommentDto } from '@imkdw-dev/types';
+import type { Locale } from '@imkdw-dev/i18n';
 import { deleteArticleComment, updateArticleComment } from '@imkdw-dev/api-client';
 import { CommentContent } from './comment-content';
 import { useAuth } from '@imkdw-dev/auth';
@@ -17,11 +18,12 @@ interface CommentItemTranslations {
 export interface Props {
   comment: IArticleCommentDto;
   articleSlug: string;
+  locale: Locale;
   onDelete: () => Promise<void>;
   translations: CommentItemTranslations;
 }
 
-export function CommentItem({ comment, articleSlug, onDelete, translations }: Props) {
+export function CommentItem({ comment, articleSlug, locale, onDelete, translations }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
   const { member: user } = useAuth();
@@ -53,6 +55,7 @@ export function CommentItem({ comment, articleSlug, onDelete, translations }: Pr
         isOwner={isOwner}
         isEditing={isEditing}
         editContent={editContent}
+        locale={locale}
         onEditContentChange={setEditContent}
         onEditSave={handleEditSave}
         onEditCancel={handleEditCancel}

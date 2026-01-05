@@ -7,6 +7,7 @@ import { getSeriesList, getArticles, getStats } from '@imkdw-dev/api-client';
 import { RECENT_SERIES_CARD_COUNT } from '@/consts/series.const';
 import { RECENT_ARTICLES_COUNT } from '@/consts/article.const';
 import { getTranslations } from 'next-intl/server';
+import { Locale } from '@imkdw-dev/i18n';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('metadata');
@@ -17,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 interface Props {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }
 
 export default async function Home({ params }: Props) {

@@ -1,6 +1,7 @@
 import { SeriesMainCard } from './series-main-card';
 import { SeriesStatsCards } from './series-stats-cards';
 import type { ISeriesDetailDto } from '@imkdw-dev/types';
+import type { Locale } from '@imkdw-dev/i18n';
 
 interface DeleteDialogTranslations {
   title: string;
@@ -46,14 +47,15 @@ interface Translations {
 
 interface Props {
   seriesData: ISeriesDetailDto;
+  locale: Locale;
   translations: Translations;
 }
 
-export function SeriesHeader({ seriesData, translations }: Props) {
+export function SeriesHeader({ seriesData, locale, translations }: Props) {
   return (
     <div className="space-y-6 mb-8">
       <SeriesMainCard seriesData={seriesData} translations={translations} />
-      <SeriesStatsCards seriesData={seriesData} translations={translations.stats} />
+      <SeriesStatsCards seriesData={seriesData} locale={locale} translations={translations.stats} />
     </div>
   );
 }

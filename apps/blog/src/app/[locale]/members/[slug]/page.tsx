@@ -6,9 +6,10 @@ import { forbidden } from 'next/navigation';
 import { formatDate } from '@imkdw-dev/utils';
 import { getTranslations } from 'next-intl/server';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
+import type { Locale } from '@imkdw-dev/i18n';
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: Locale }>;
 }
 
 export async function generateMetadata() {
@@ -19,7 +20,7 @@ export async function generateMetadata() {
 }
 
 export default async function MemberDetail({ params }: Props) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
 
   const member = await getMember(slug);
 
@@ -82,7 +83,7 @@ export default async function MemberDetail({ params }: Props) {
               <CardContent className="space-y-4 bg-card border-none">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">{t('account.memberSince')}</span>
-                  <span className="text-sm">{formatDate(member.createdAt)}</span>
+                  <span className="text-sm">{formatDate(member.createdAt, locale)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">{t('account.role')}</span>

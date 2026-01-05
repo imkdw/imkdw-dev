@@ -3,6 +3,7 @@ import { Button, Card, CardContent, CardHeader, CardTitle, CardDescription } fro
 import { formatDate, formatReadTime } from '@imkdw-dev/utils/client';
 import { BookOpen, Calendar, Clock, Play } from 'lucide-react';
 import type { IArticleListItemDto } from '@imkdw-dev/types';
+import type { Locale } from '@imkdw-dev/i18n';
 import { CommonPagination } from '@/components/common/common-pagination';
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
   currentPage: number;
   slug: string;
   totalCount: number;
+  locale: Locale;
   translations: {
     articleList: string;
     articleListDescription: string;
@@ -18,7 +20,7 @@ interface Props {
   };
 }
 
-export function SeriesArticles({ articles, totalPages, currentPage, slug, totalCount, translations }: Props) {
+export function SeriesArticles({ articles, totalPages, currentPage, slug, totalCount, locale, translations }: Props) {
   const createPageUrl = (page: number) => `/series/${slug}?page=${page}`;
 
   return (
@@ -45,11 +47,11 @@ export function SeriesArticles({ articles, totalPages, currentPage, slug, totalC
                 <div className="flex flex-wrap items-center text-xs text-muted-foreground gap-2 md:gap-4">
                   <div className="flex items-center space-x-1">
                     <Clock className="h-3 w-3" />
-                    <span>{formatReadTime(article.readMinute)}</span>
+                    <span>{formatReadTime(article.readMinute, locale)}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <Calendar className="h-3 w-3" />
-                    <span>{formatDate(article.createdAt)}</span>
+                    <span>{formatDate(article.createdAt, locale)}</span>
                   </div>
                 </div>
               </div>

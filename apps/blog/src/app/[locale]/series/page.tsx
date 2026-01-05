@@ -10,6 +10,7 @@ import { BookOpen, FileText, Plus } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { MEMBER_ROLE } from '@imkdw-dev/consts';
 import { getTranslations } from 'next-intl/server';
+import { Locale } from '@imkdw-dev/i18n';
 
 export async function generateMetadata() {
   const t = await getTranslations('series.list');
@@ -20,7 +21,7 @@ export async function generateMetadata() {
 }
 
 interface Props {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
   searchParams: Promise<{ page?: string }>;
 }
 

@@ -1,13 +1,14 @@
+import { Locale } from '@imkdw-dev/i18n';
 import { cn } from '../../lib';
 
 interface Props {
   date: string | Date | null;
   className?: string;
   label?: string;
-  locale?: string;
+  locale: Locale;
 }
 
-export function LastUpdated({ date, className, label = 'Last updated:', locale = 'ko-KR' }: Props) {
+export function LastUpdated({ date, className, label, locale }: Props) {
   const dateString = date ? new Date(date).toLocaleDateString(locale) : '-';
 
   return (

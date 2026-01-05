@@ -1,6 +1,7 @@
 'use client';
 
 import { IArticleCommentDto } from '@imkdw-dev/types';
+import type { Locale } from '@imkdw-dev/i18n';
 import { CommentItem } from './comment-item/comment-item';
 
 interface CommentListTranslations {
@@ -19,12 +20,13 @@ interface CommentItemTranslations {
 interface Props {
   comments: IArticleCommentDto[];
   articleSlug: string;
+  locale: Locale;
   onDelete: () => Promise<void>;
   translations: CommentListTranslations;
   itemTranslations: CommentItemTranslations;
 }
 
-export function CommentList({ comments, articleSlug, onDelete, translations, itemTranslations }: Props) {
+export function CommentList({ comments, articleSlug, locale, onDelete, translations, itemTranslations }: Props) {
   if (comments.length === 0) {
     return (
       <div className="text-center py-12">
@@ -41,6 +43,7 @@ export function CommentList({ comments, articleSlug, onDelete, translations, ite
           key={comment.id}
           comment={comment}
           articleSlug={articleSlug}
+          locale={locale}
           onDelete={onDelete}
           translations={itemTranslations}
         />
