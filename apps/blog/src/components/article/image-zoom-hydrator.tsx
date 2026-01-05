@@ -5,11 +5,18 @@ import Lightbox from 'yet-another-react-lightbox';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import 'yet-another-react-lightbox/styles.css';
 
-interface Props {
-  containerSelector: string;
+interface ImageZoomTranslations {
+  close: string;
+  zoomIn: string;
+  zoomOut: string;
 }
 
-export function ImageZoomHydrator({ containerSelector }: Props) {
+interface Props {
+  containerSelector: string;
+  translations: ImageZoomTranslations;
+}
+
+export function ImageZoomHydrator({ containerSelector, translations }: Props) {
   const [open, setOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState<{ src: string; alt: string } | null>(null);
 
@@ -67,9 +74,9 @@ export function ImageZoomHydrator({ containerSelector }: Props) {
         buttonNext: () => null,
       }}
       labels={{
-        Close: '닫기',
-        'Zoom in': '확대',
-        'Zoom out': '축소',
+        Close: translations.close,
+        'Zoom in': translations.zoomIn,
+        'Zoom out': translations.zoomOut,
       }}
     />
   );

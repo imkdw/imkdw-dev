@@ -3,8 +3,11 @@ import path from 'path';
 import dotenv from 'dotenv';
 
 import type { NextConfig } from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
 
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
+const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const nextConfig: NextConfig = {
   turbopack: {
@@ -15,4 +18,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

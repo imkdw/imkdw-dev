@@ -17,7 +17,7 @@ export function ArticleFormHeader({ mode, onPublish }: Props) {
       <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
         <Button className="flex items-center gap-2 flex-1 sm:flex-initial" onClick={onPublish}>
           <Send className="w-4 h-4" />
-          Publish
+          발행
         </Button>
       </div>
     </div>

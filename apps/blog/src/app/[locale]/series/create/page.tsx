@@ -1,0 +1,23 @@
+import { Layout } from '@/components/layout';
+import { SeriesForm } from '@/components/series/series-form';
+import { getCurrentMember } from '@imkdw-dev/api-client';
+import { MEMBER_ROLE } from '@imkdw-dev/consts';
+import { forbidden } from 'next/navigation';
+
+export const metadata = {
+  title: '시리즈 작성',
+};
+
+export default async function CreateSeriesPage() {
+  const currentMember = await getCurrentMember();
+
+  if (!currentMember || currentMember.role !== MEMBER_ROLE.ADMIN) {
+    forbidden();
+  }
+
+  return (
+    <Layout>
+      <SeriesForm mode="create" />
+    </Layout>
+  );
+}

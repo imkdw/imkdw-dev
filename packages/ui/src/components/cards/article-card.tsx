@@ -2,22 +2,25 @@ import { GitBranch, Calendar, Clock, Eye } from 'lucide-react';
 import { TagList } from './tag-list';
 import { MetaInfoItem } from './meta-info-item';
 import { ArticleStateBadge } from './article-state-badge';
-import Link from 'next/link';
 import { IArticleListItemDto } from '@imkdw-dev/types';
 import { formatReadTime } from '@imkdw-dev/utils';
+import { LinkComponentType } from '../../types';
+import { Locale } from '@imkdw-dev/i18n';
 
 interface Props {
   article: IArticleListItemDto;
+  LinkComponent: LinkComponentType;
+  locale: Locale;
 }
 
-export function ArticleCard({ article }: Props) {
+export function ArticleCard({ article, LinkComponent, locale }: Props) {
   const publishedAt = new Date(article.createdAt).toLocaleDateString('ko-KR');
   const tags = article.tags.map(tag => tag.name);
   const { title, plainContent, series, slug } = article;
 
   return (
     <article className="h-full">
-      <Link href={`/articles/${slug}`} className="h-full">
+      <LinkComponent href={`/articles/${slug}`} className="h-full">
         <div className="rounded-xl p-2 group h-full flex flex-col bg-gradient-to-br from-card via-card to-muted/30 border-2 border-border/60 hover:border-primary/30 hover:shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.3)] transition-all duration-300">
           <div className="flex flex-col flex-1 p-3 md:p-4">
             <div className="flex items-center justify-between pb-2 md:pb-4">
@@ -34,12 +37,12 @@ export function ArticleCard({ article }: Props) {
             <TagList tags={tags} maxVisible={3} variant="custom" className="mb-2 md:mb-3" />
             <div className="flex gap-4 text-muted-foreground">
               <MetaInfoItem icon={<Calendar className="h-3 w-3" />} text={publishedAt} />
-              <MetaInfoItem icon={<Clock className="h-3 w-3" />} text={formatReadTime(article.readMinute)} />
+              <MetaInfoItem icon={<Clock className="h-3 w-3" />} text={formatReadTime(article.readMinute, locale)} />
               <MetaInfoItem icon={<Eye className="h-3 w-3" />} text={article.viewCount.toLocaleString()} />
             </div>
           </div>
         </div>
-      </Link>
+      </LinkComponent>
     </article>
   );
 }

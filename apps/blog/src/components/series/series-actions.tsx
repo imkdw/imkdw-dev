@@ -2,7 +2,7 @@
 
 import { useState, MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { Button } from '@imkdw-dev/ui';
 import { useToast } from '@imkdw-dev/toast';
 import { useAuth } from '@imkdw-dev/auth';
@@ -11,11 +11,39 @@ import { MEMBER_ROLE } from '@imkdw-dev/consts';
 import { deleteSeries } from '@imkdw-dev/api-client';
 import { DeleteConfirmDialog } from '../common/delete-confirm-dialog';
 
-interface Props {
-  slug: string;
+interface DeleteDialogTranslations {
+  title: string;
+  description: string;
+  cancel: string;
+  delete: string;
+  deleting: string;
 }
 
-export function SeriesActions({ slug }: Props) {
+interface ToastTranslations {
+  copySuccess: string;
+  copyError: string;
+  deleteSuccess: string;
+  deleteError: string;
+}
+
+interface ButtonTranslations {
+  share: string;
+  edit: string;
+  delete: string;
+}
+
+interface Translations {
+  deleteDialog: DeleteDialogTranslations;
+  toast: ToastTranslations;
+  buttons: ButtonTranslations;
+}
+
+interface Props {
+  slug: string;
+  translations: Translations;
+}
+
+export function SeriesActions({ slug, translations }: Props) {
   const { toast } = useToast();
   const { member } = useAuth();
   const router = useRouter();
@@ -29,11 +57,11 @@ export function SeriesActions({ slug }: Props) {
 
     try {
       await navigator.clipboard.writeText(url);
-      toast({ title: '', description: '클립보드에 시리즈 링크가 저장되었습니다.' });
+      toast({ title: '', description: translations.toast.copySuccess });
     } catch {
       toast({
         title: '',
-        description: '링크 복사에 실패했습니다.',
+        description: translations.toast.copyError,
         variant: 'destructive',
       });
     }
@@ -47,12 +75,12 @@ export function SeriesActions({ slug }: Props) {
     try {
       setIsDeleting(true);
       await deleteSeries(slug);
-      toast({ title: '', description: '시리즈가 삭제되었습니다.' });
+      toast({ title: '', description: translations.toast.deleteSuccess });
       router.push('/series');
     } catch {
       toast({
         title: '',
-        description: '시리즈 삭제에 실패했습니다.',
+        description: translations.toast.deleteError,
         variant: 'destructive',
       });
       setIsDeleting(false);
@@ -68,14 +96,14 @@ export function SeriesActions({ slug }: Props) {
       <div className="flex gap-2">
         <Button variant="ghost" size="sm" onClick={handleCopyLink} className="hover:bg-primary/10 hover:text-primary">
           <Share2 className="h-4 w-4" />
-          <span className="hidden sm:inline ml-2">공유</span>
+          <span className="hidden sm:inline ml-2">{translations.buttons.share}</span>
         </Button>
         {member?.role === MEMBER_ROLE.ADMIN && (
           <>
             <Button variant="ghost" size="sm" asChild className="hover:bg-primary/10 hover:text-primary">
               <Link href={`/series/${slug}/edit`}>
                 <Edit className="h-4 w-4" />
-                <span className="hidden sm:inline ml-2">수정</span>
+                <span className="hidden sm:inline ml-2">{translations.buttons.edit}</span>
               </Link>
             </Button>
             <Button
@@ -85,7 +113,7 @@ export function SeriesActions({ slug }: Props) {
               className="hover:bg-destructive/10 hover:text-destructive"
             >
               <Trash2 className="h-4 w-4" />
-              <span className="hidden sm:inline ml-2">삭제</span>
+              <span className="hidden sm:inline ml-2">{translations.buttons.delete}</span>
             </Button>
           </>
         )}
@@ -95,8 +123,13 @@ export function SeriesActions({ slug }: Props) {
         onClose={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         isDeleting={isDeleting}
-        title="시리즈 삭제"
-        description="정말로 이 시리즈를 삭제하시겠습니까?"
+        title={translations.deleteDialog.title}
+        description={translations.deleteDialog.description}
+        translations={{
+          cancel: translations.deleteDialog.cancel,
+          delete: translations.deleteDialog.delete,
+          deleting: translations.deleteDialog.deleting,
+        }}
       />
     </>
   );

@@ -2,22 +2,36 @@
 
 import { DeleteConfirmDialog } from '../common/delete-confirm-dialog';
 
+interface Translations {
+  title: string;
+  description: string;
+  cancel: string;
+  delete: string;
+  deleting: string;
+}
+
 interface Props {
   open: boolean;
   onClose: () => void;
   onConfirm: () => Promise<void>;
   isDeleting: boolean;
+  translations: Translations;
 }
 
-export function DeleteArticleDialog({ open, onClose, onConfirm, isDeleting }: Props) {
+export function DeleteArticleDialog({ open, onClose, onConfirm, isDeleting, translations }: Props) {
   return (
     <DeleteConfirmDialog
       open={open}
       onClose={onClose}
       onConfirm={onConfirm}
       isDeleting={isDeleting}
-      title="게시글 삭제"
-      description="정말로 이 게시글을 삭제하시겠습니까?"
+      title={translations.title}
+      description={translations.description}
+      translations={{
+        cancel: translations.cancel,
+        delete: translations.delete,
+        deleting: translations.deleting,
+      }}
     />
   );
 }

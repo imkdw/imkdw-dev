@@ -1,0 +1,14 @@
+{
+  "name": "@imkdw-dev/i18n",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "dependencies": {
+    "next-intl": "^4.7.0"
+  },
+  "devDependencies": {
+    "@imkdw-dev/typescript-config": "workspace:*",
+    "typescript": "^5.9.2"
+  }
+}

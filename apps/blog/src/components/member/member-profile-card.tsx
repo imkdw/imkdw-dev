@@ -21,9 +21,26 @@ import { useMemberProfile } from '@imkdw-dev/hooks';
 
 interface Props {
   member: IMemberDto;
+  translations: {
+    profile: {
+      title: string;
+      description: string;
+      editProfile: string;
+      changeImage: string;
+      imageUploadHint: string;
+      email: string;
+      provider: string;
+      nickname: string;
+      nicknamePlaceholder: string;
+    };
+    buttons: {
+      cancel: string;
+      save: string;
+    };
+  };
 }
 
-export function MemberProfileCard({ member }: Props) {
+export function MemberProfileCard({ member, translations }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { formData, isEditing, setIsEditing, handlers } = useMemberProfile(member);
 
@@ -47,11 +64,10 @@ export function MemberProfileCard({ member }: Props) {
   return (
     <Card className="bg-card border-none">
       <CardHeader>
-        <CardTitle>프로필 정보</CardTitle>
-        <CardDescription>공개 프로필 정보를 수정할 수 있습니다</CardDescription>
+        <CardTitle>{translations.profile.title}</CardTitle>
+        <CardDescription>{translations.profile.description}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* 프로필 이미지 */}
         <div className="flex items-center space-x-4">
           <Avatar className="h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24">
             <AvatarImage src={formData.profileImage} alt={member.nickname} />
@@ -63,50 +79,48 @@ export function MemberProfileCard({ member }: Props) {
             <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
             <Button onClick={handleAvatarChange} variant="outline" size="sm">
               <Camera className="mr-2 h-4 w-4" />
-              이미지 변경
+              {translations.profile.changeImage}
             </Button>
-            <p className="text-sm text-muted-foreground">이미지는 최대 2MB 까지 업로드 가능합니다</p>
+            <p className="text-sm text-muted-foreground">{translations.profile.imageUploadHint}</p>
           </div>
         </div>
 
         <Separator />
 
-        {/* 기본 정보 */}
         <div className="space-y-4">
           <div className="grid gap-2">
-            <Label htmlFor="email">이메일</Label>
+            <Label htmlFor="email">{translations.profile.email}</Label>
             <Input id="email" value={member.email} disabled className="bg-muted" />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="email">소셜로그인 공급자</Label>
+            <Label htmlFor="email">{translations.profile.provider}</Label>
             <Input id="provider" value={member.provider} disabled className="bg-muted" />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="name">닉네임</Label>
+            <Label htmlFor="name">{translations.profile.nickname}</Label>
             <Input
               id="name"
               value={formData.name}
               onChange={e => handlers.setNickname(e.target.value)}
               disabled={!isEditing}
-              placeholder="닉네임을 입력하세요"
+              placeholder={translations.profile.nicknamePlaceholder}
             />
           </div>
         </div>
 
-        {/* 액션 버튼 */}
         <div className="flex flex-col sm:flex-row justify-end gap-2">
           {isEditing ? (
             <>
               <Button variant="outline" onClick={handlers.handleCancel} className="w-full sm:w-auto">
-                취소
+                {translations.buttons.cancel}
               </Button>
               <Button onClick={handlers.handleSave} className="w-full sm:w-auto">
-                저장
+                {translations.buttons.save}
               </Button>
             </>
           ) : (
             <Button onClick={() => setIsEditing(true)} className="w-full sm:w-auto">
-              프로필 수정
+              {translations.profile.editProfile}
             </Button>
           )}
         </div>

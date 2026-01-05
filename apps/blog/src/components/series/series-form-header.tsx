@@ -18,12 +18,12 @@ export function SeriesFormHeader({ mode, onSaveDraft, onPublish }: Props) {
       <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
         <Button variant="outline" className="flex items-center gap-2 flex-1 sm:flex-initial" onClick={onSaveDraft}>
           <Save className="w-4 h-4" />
-          <span className="hidden sm:inline">Save Draft</span>
-          <span className="sm:hidden">Draft</span>
+          <span className="hidden sm:inline">임시저장</span>
+          <span className="sm:hidden">임시저장</span>
         </Button>
         <Button className="flex items-center gap-2 flex-1 sm:flex-initial" onClick={onPublish}>
           <Send className="w-4 h-4" />
-          Publish
+          발행
         </Button>
       </div>
     </div>

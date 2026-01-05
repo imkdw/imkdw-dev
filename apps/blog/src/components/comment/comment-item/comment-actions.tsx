@@ -7,14 +7,20 @@ import {
 } from '@imkdw-dev/ui';
 import { MoreHorizontal, Edit3, Trash2 } from 'lucide-react';
 
+interface CommentActionsTranslations {
+  editAction: string;
+  deleteAction: string;
+}
+
 interface Props {
   isOwner: boolean;
   isEditing: boolean;
   onEdit: () => void;
   onDelete: () => void;
+  translations: CommentActionsTranslations;
 }
 
-export function CommentActions({ isOwner, isEditing, onEdit, onDelete }: Props) {
+export function CommentActions({ isOwner, isEditing, onEdit, onDelete, translations }: Props) {
   if (!isOwner) {
     return null;
   }
@@ -27,12 +33,12 @@ export function CommentActions({ isOwner, isEditing, onEdit, onDelete }: Props) 
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem onClick={onEdit} disabled={isEditing}>
           <Edit3 className="w-4 h-4 mr-2" />
-          댓글 수정
+          {translations.editAction}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={onDelete} className="text-destructive">
           <Trash2 className="w-4 h-4 mr-2" />
-          댓글 삭제
+          {translations.deleteAction}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

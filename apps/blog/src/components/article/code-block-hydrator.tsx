@@ -34,12 +34,22 @@ async function copyToClipboard(text: string): Promise<boolean> {
   }
 }
 
+interface CodeBlockTranslations {
+  copySuccess: string;
+  copyFailed: string;
+}
+
 interface CodeBlockHydratorProps {
   containerSelector: string;
   showToastOnError?: boolean;
+  translations: CodeBlockTranslations;
 }
 
-export function CodeBlockHydrator({ containerSelector, showToastOnError = true }: CodeBlockHydratorProps) {
+export function CodeBlockHydrator({
+  containerSelector,
+  showToastOnError = true,
+  translations,
+}: CodeBlockHydratorProps) {
   const timeoutIdsRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
   const cleanupFunctionsRef = useRef<Array<() => void>>([]);
   const announcementElementRef = useRef<HTMLDivElement | null>(null);
@@ -99,7 +109,7 @@ export function CodeBlockHydrator({ containerSelector, showToastOnError = true }
 
       if (success) {
         updateButtonState(button, true);
-        announceToScreenReader('코드가 복사되었습니다.');
+        announceToScreenReader(translations.copySuccess);
 
         const timeoutId = setTimeout(() => {
           updateButtonState(button, false);
@@ -108,13 +118,13 @@ export function CodeBlockHydrator({ containerSelector, showToastOnError = true }
 
         timeoutIdsRef.current.set(codeIndex, timeoutId);
       } else {
-        announceToScreenReader('코드 복사에 실패했습니다');
+        announceToScreenReader(translations.copyFailed);
         if (showToastOnError) {
-          toast({ title: '코드 복사에 실패했습니다.', variant: 'destructive' });
+          toast({ title: translations.copyFailed, variant: 'destructive' });
         }
       }
     },
-    [updateButtonState, showToastOnError, announceToScreenReader]
+    [updateButtonState, showToastOnError, announceToScreenReader, translations]
   );
 
   const handleKeyDown = useCallback(

@@ -2,17 +2,28 @@
 
 import { useState } from 'react';
 import { IArticleCommentDto } from '@imkdw-dev/types';
+import type { Locale } from '@imkdw-dev/i18n';
 import { deleteArticleComment, updateArticleComment } from '@imkdw-dev/api-client';
 import { CommentContent } from './comment-content';
 import { useAuth } from '@imkdw-dev/auth';
 
+interface CommentItemTranslations {
+  editAction: string;
+  deleteAction: string;
+  editingStatus: string;
+  save: string;
+  cancel: string;
+}
+
 export interface Props {
   comment: IArticleCommentDto;
   articleSlug: string;
+  locale: Locale;
   onDelete: () => Promise<void>;
+  translations: CommentItemTranslations;
 }
 
-export function CommentItem({ comment, articleSlug, onDelete }: Props) {
+export function CommentItem({ comment, articleSlug, locale, onDelete, translations }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
   const { member: user } = useAuth();
@@ -44,11 +55,13 @@ export function CommentItem({ comment, articleSlug, onDelete }: Props) {
         isOwner={isOwner}
         isEditing={isEditing}
         editContent={editContent}
+        locale={locale}
         onEditContentChange={setEditContent}
         onEditSave={handleEditSave}
         onEditCancel={handleEditCancel}
         onEdit={() => setIsEditing(true)}
         onDelete={handleDeleteComment}
+        translations={translations}
       />
     </div>
   );

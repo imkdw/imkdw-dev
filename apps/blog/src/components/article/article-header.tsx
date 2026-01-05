@@ -3,14 +3,16 @@ import { BookOpen, Calendar, Clock, Eye } from 'lucide-react';
 import { ReactNode } from 'react';
 import { IArticleDto } from '@imkdw-dev/types';
 import { formatDate, formatReadTime } from '@imkdw-dev/utils/client';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
+import type { Locale } from '@imkdw-dev/i18n';
 
 interface ArticleHeaderProps {
   article: IArticleDto;
+  locale: Locale;
   children?: ReactNode;
 }
 
-export function ArticleHeader({ article, children }: ArticleHeaderProps) {
+export function ArticleHeader({ article, locale, children }: ArticleHeaderProps) {
   const { title, createdAt, readMinute, tags, series } = article;
 
   return (
@@ -28,11 +30,11 @@ export function ArticleHeader({ article, children }: ArticleHeaderProps) {
         <div className="flex items-center gap-2 sm:gap-4 text-sm text-muted-foreground flex-wrap">
           <span className="flex items-center gap-1">
             <Calendar className="w-4 h-4" />
-            {formatDate(createdAt)}
+            {formatDate(createdAt, locale)}
           </span>
           <span className="flex items-center gap-1">
             <Clock className="w-4 h-4" />
-            {formatReadTime(readMinute)}
+            {formatReadTime(readMinute, locale)}
           </span>
           <span className="flex items-center gap-1">
             <Eye className="w-4 h-4" />

@@ -2,6 +2,7 @@ import { Card, CardContent } from '@imkdw-dev/ui';
 import { formatDate } from '@imkdw-dev/utils/client';
 import { BookOpen, Clock, Calendar, LucideIcon } from 'lucide-react';
 import type { ISeriesDetailDto } from '@imkdw-dev/types';
+import type { Locale } from '@imkdw-dev/i18n';
 
 interface StatCardProps {
   icon: LucideIcon;
@@ -13,6 +14,15 @@ interface StatCardProps {
 
 interface Props {
   seriesData: ISeriesDetailDto;
+  locale: Locale;
+  translations: {
+    totalArticles: string;
+    totalReadTime: string;
+    lastUpdated: string;
+    createdAt: string;
+    hours: string;
+    minutes: string;
+  };
 }
 
 function StatCard({ icon: Icon, value, label, colorClass, valueClass = 'text-2xl md:text-3xl' }: StatCardProps) {
@@ -31,42 +41,44 @@ function StatCard({ icon: Icon, value, label, colorClass, valueClass = 'text-2xl
   );
 }
 
-export function SeriesStatsCards({ seriesData }: Props) {
+export function SeriesStatsCards({ seriesData, locale, translations }: Props) {
   const formatMinutes = (minutes: number): string => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
     if (hours > 0) {
-      return mins > 0 ? `${hours}시간 ${mins}분` : `${hours}시간`;
+      return mins > 0
+        ? `${hours}${translations.hours} ${mins}${translations.minutes}`
+        : `${hours}${translations.hours}`;
     }
-    return `${mins}분`;
+    return `${mins}${translations.minutes}`;
   };
 
   const statsData = [
     {
       icon: BookOpen,
       value: seriesData.articleCount,
-      label: '총 글 수',
+      label: translations.totalArticles,
       colorClass: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
-      valueClass: 'text-2xl md:text-3xl',
+      valueClass: 'text-lg md:text-xl',
     },
     {
       icon: Clock,
       value: formatMinutes(seriesData.totalReadMinute),
-      label: '총 읽기 시간',
+      label: translations.totalReadTime,
       colorClass: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
       valueClass: 'text-lg md:text-xl',
     },
     {
       icon: Calendar,
-      value: seriesData.lastArticleCreatedAt ? formatDate(seriesData.lastArticleCreatedAt) : '-',
-      label: '최근 업데이트',
+      value: seriesData.lastArticleCreatedAt ? formatDate(seriesData.lastArticleCreatedAt, locale) : '-',
+      label: translations.lastUpdated,
       colorClass: 'bg-purple-500/10 text-purple-600 dark:text-purple-400',
       valueClass: 'text-sm md:text-base',
     },
     {
       icon: Calendar,
-      value: formatDate(seriesData.createdAt),
-      label: '시리즈 생성일',
+      value: formatDate(seriesData.createdAt, locale),
+      label: translations.createdAt,
       colorClass: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400',
       valueClass: 'text-sm md:text-base',
     },
