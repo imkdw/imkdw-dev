@@ -21,6 +21,7 @@ COPY packages/shared/consts/package.json ./packages/shared/consts/
 COPY packages/shared/exception/package.json ./packages/shared/exception/
 COPY packages/shared/types/package.json ./packages/shared/types/
 COPY packages/shared/utils/package.json ./packages/shared/utils/
+COPY packages/i18n/package.json ./packages/i18n/
 COPY packages/eslint-config ./packages/eslint-config/
 COPY packages/typescript-config ./packages/typescript-config/
 
@@ -33,6 +34,7 @@ COPY packages/shared/consts/tsconfig.json ./packages/shared/consts/
 COPY packages/shared/exception/tsconfig.json ./packages/shared/exception/
 COPY packages/shared/types/tsconfig.json ./packages/shared/types/
 COPY packages/shared/utils/tsconfig.json ./packages/shared/utils/
+COPY packages/i18n/tsconfig.json ./packages/i18n/
 
 COPY apps/api/src ./apps/api/src
 COPY apps/api/prisma ./apps/api/prisma
@@ -40,6 +42,7 @@ COPY packages/shared/consts/src ./packages/shared/consts/src
 COPY packages/shared/exception/src ./packages/shared/exception/src
 COPY packages/shared/types/src ./packages/shared/types/src
 COPY packages/shared/utils/src ./packages/shared/utils/src
+COPY packages/i18n/src ./packages/i18n/src
 
 RUN pnpm consts build && \
     pnpm exception build && \
@@ -70,6 +73,7 @@ COPY --from=build /app/packages/shared/consts/package.json ./packages/shared/con
 COPY --from=build /app/packages/shared/exception/package.json ./packages/shared/exception/
 COPY --from=build /app/packages/shared/types/package.json ./packages/shared/types/
 COPY --from=build /app/packages/shared/utils/package.json ./packages/shared/utils/
+COPY --from=build /app/packages/i18n/package.json ./packages/i18n/
 
 RUN pnpm install --prod --frozen-lockfile --ignore-scripts
 
@@ -80,6 +84,7 @@ COPY --from=build /app/packages/shared/consts/dist ./packages/shared/consts/dist
 COPY --from=build /app/packages/shared/exception/dist ./packages/shared/exception/dist
 COPY --from=build /app/packages/shared/types/dist ./packages/shared/types/dist
 COPY --from=build /app/packages/shared/utils/dist ./packages/shared/utils/dist
+COPY --from=build /app/packages/i18n/src ./packages/i18n/src
 
 EXPOSE 4000
 
