@@ -4,6 +4,7 @@ import { ArticlesContent } from '@/components/article/articles-content';
 import { getTagList, getArticles } from '@imkdw-dev/api-client';
 import { ARTICLES_PER_PAGE } from '@/consts/article.const';
 import { getTranslations } from 'next-intl/server';
+import { Locale } from '@imkdw-dev/i18n';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('articles.list');
@@ -14,10 +15,12 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 interface Props {
+  params: Promise<{ locale: Locale }>;
   searchParams: Promise<{ page?: string }>;
 }
 
-export default async function Articles({ searchParams }: Props) {
+export default async function Articles({ params, searchParams }: Props) {
+  const { locale } = await params;
   const { page } = await searchParams;
   const currentPage = Number(page) || 1;
 
@@ -39,7 +42,13 @@ export default async function Articles({ searchParams }: Props) {
 
   return (
     <Layout>
-      <ArticlesContent articlesData={articlesData} tags={tags} currentPage={currentPage} translations={translations} />
+      <ArticlesContent
+        articlesData={articlesData}
+        tags={tags}
+        currentPage={currentPage}
+        translations={translations}
+        locale={locale}
+      />
     </Layout>
   );
 }

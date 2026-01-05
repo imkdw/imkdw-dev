@@ -4,6 +4,7 @@ import { FileText, Tag } from 'lucide-react';
 import { ArticlesList } from './articles-list';
 import { CommonPagination } from '@/components/common/common-pagination';
 import { ListHeader } from '@/components/common/list-header';
+import { Locale } from '@imkdw-dev/i18n';
 
 interface Props {
   articlesData: IResponseGetArticlesDto;
@@ -17,9 +18,10 @@ interface Props {
     noResults: string;
     filterAll: string;
   };
+  locale: Locale;
 }
 
-export function ArticlesContent({ articlesData, tags, currentPage, translations }: Props) {
+export function ArticlesContent({ articlesData, tags, currentPage, translations, locale }: Props) {
   // const [searchQuery, setSearchQuery] = useState('');
   // const [selectedTag, setSelectedTag] = useState('all');
   // const [sortBy, setSortBy] = useState('latest');
@@ -51,7 +53,7 @@ export function ArticlesContent({ articlesData, tags, currentPage, translations 
         onTagChange={setSelectedTag}
         onSortChange={setSortBy}
       /> */}
-      <ArticlesList articles={articles} translations={{ noResults: translations.noResults }} />
+      <ArticlesList articles={articles} translations={{ noResults: translations.noResults }} locale={locale} />
       <CommonPagination totalPages={totalPage} currentPage={currentPage} createPageUrl={createPageUrl} />
     </div>
   );

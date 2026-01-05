@@ -2,15 +2,17 @@ import { FileText } from 'lucide-react';
 import { ArticleCard } from '@imkdw-dev/ui';
 import { IArticleListItemDto } from '@imkdw-dev/types';
 import { Link } from '@/i18n/navigation';
+import { Locale } from '@imkdw-dev/i18n';
 
 interface Props {
   articles: IArticleListItemDto[];
   translations: {
     noResults: string;
   };
+  locale: Locale;
 }
 
-export function ArticlesList({ articles, translations }: Props) {
+export function ArticlesList({ articles, translations, locale }: Props) {
   if (articles.length === 0) {
     return (
       <div className="text-center py-12">
@@ -23,7 +25,7 @@ export function ArticlesList({ articles, translations }: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 cols-3 gap-4">
       {articles.map(article => (
-        <ArticleCard key={article.slug} article={article} LinkComponent={Link} />
+        <ArticleCard key={article.slug} article={article} LinkComponent={Link} locale={locale} />
       ))}
     </div>
   );

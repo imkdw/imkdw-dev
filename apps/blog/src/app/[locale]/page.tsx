@@ -71,7 +71,7 @@ export default async function Home({ params }: Props) {
             seriesCardTranslations={seriesCardTranslations}
             locale={locale}
           />
-          <RecentArticles articles={articles.items} translations={recentArticlesTranslations} />
+          <RecentArticles articles={articles.items} translations={recentArticlesTranslations} locale={locale} />
         </div>
       </div>
     </Layout>

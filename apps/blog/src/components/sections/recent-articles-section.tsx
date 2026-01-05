@@ -3,6 +3,7 @@ import { Clock, Terminal } from 'lucide-react';
 import { Button, ArticleCard, cn } from '@imkdw-dev/ui';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
 import { IArticleListItemDto } from '@imkdw-dev/types';
+import { Locale } from '@imkdw-dev/i18n';
 
 interface Props {
   articles: IArticleListItemDto[];
@@ -11,9 +12,10 @@ interface Props {
     viewAll: string;
     viewAllShort: string;
   };
+  locale: Locale;
 }
 
-export function RecentArticles({ articles, translations }: Props) {
+export function RecentArticles({ articles, translations, locale }: Props) {
   return (
     <section className="bg-background border border-border rounded-lg p-4 md:p-6">
       <div className="flex items-center justify-between mb-6">
@@ -39,7 +41,7 @@ export function RecentArticles({ articles, translations }: Props) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
         {articles.map((article, index) => (
           <div key={article.slug} className="bounce-in h-full" style={{ animationDelay: `${(index + 2) * 0.1}s` }}>
-            <ArticleCard article={article} LinkComponent={Link} />
+            <ArticleCard article={article} LinkComponent={Link} locale={locale} />
           </div>
         ))}
       </div>

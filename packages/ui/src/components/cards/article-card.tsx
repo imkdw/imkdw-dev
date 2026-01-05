@@ -5,13 +5,15 @@ import { ArticleStateBadge } from './article-state-badge';
 import { IArticleListItemDto } from '@imkdw-dev/types';
 import { formatReadTime } from '@imkdw-dev/utils';
 import { LinkComponentType } from '../../types';
+import { Locale } from '@imkdw-dev/i18n';
 
 interface Props {
   article: IArticleListItemDto;
   LinkComponent: LinkComponentType;
+  locale: Locale;
 }
 
-export function ArticleCard({ article, LinkComponent }: Props) {
+export function ArticleCard({ article, LinkComponent, locale }: Props) {
   const publishedAt = new Date(article.createdAt).toLocaleDateString('ko-KR');
   const tags = article.tags.map(tag => tag.name);
   const { title, plainContent, series, slug } = article;
