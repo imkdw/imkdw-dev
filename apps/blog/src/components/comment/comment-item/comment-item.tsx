@@ -6,13 +6,22 @@ import { deleteArticleComment, updateArticleComment } from '@imkdw-dev/api-clien
 import { CommentContent } from './comment-content';
 import { useAuth } from '@imkdw-dev/auth';
 
+interface CommentItemTranslations {
+  editAction: string;
+  deleteAction: string;
+  editingStatus: string;
+  save: string;
+  cancel: string;
+}
+
 export interface Props {
   comment: IArticleCommentDto;
   articleSlug: string;
   onDelete: () => Promise<void>;
+  translations: CommentItemTranslations;
 }
 
-export function CommentItem({ comment, articleSlug, onDelete }: Props) {
+export function CommentItem({ comment, articleSlug, onDelete, translations }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
   const { member: user } = useAuth();
@@ -49,6 +58,7 @@ export function CommentItem({ comment, articleSlug, onDelete }: Props) {
         onEditCancel={handleEditCancel}
         onEdit={() => setIsEditing(true)}
         onDelete={handleDeleteComment}
+        translations={translations}
       />
     </div>
   );

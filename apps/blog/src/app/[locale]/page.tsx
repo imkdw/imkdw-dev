@@ -16,12 +16,18 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function Home() {
+interface Props {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function Home({ params }: Props) {
+  const { locale } = await params;
   const series = await getSeriesList({ limit: RECENT_SERIES_CARD_COUNT, page: 1 });
   const articles = await getArticles({ limit: RECENT_ARTICLES_COUNT, page: 1 });
   const statsData = await getStats();
 
   const t = await getTranslations('home');
+  const tUi = await getTranslations('ui');
 
   const statsTranslations = {
     totalArticles: t('stats.totalArticles'),
@@ -42,6 +48,11 @@ export default async function Home() {
     viewAllShort: t('recentSeries.viewAllShort'),
   };
 
+  const seriesCardTranslations = {
+    articleCount: tUi('articleCountTemplate'),
+    lastUpdated: tUi('lastUpdated'),
+  };
+
   return (
     <Layout>
       <div>
@@ -53,7 +64,12 @@ export default async function Home() {
           statsTranslations={statsTranslations}
         />
         <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10 space-y-8 md:space-y-10">
-          <RecentSeries seriesList={series.items} translations={recentSeriesTranslations} />
+          <RecentSeries
+            seriesList={series.items}
+            translations={recentSeriesTranslations}
+            seriesCardTranslations={seriesCardTranslations}
+            locale={locale}
+          />
           <RecentArticles articles={articles.items} translations={recentArticlesTranslations} />
         </div>
       </div>

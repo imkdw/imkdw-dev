@@ -4,6 +4,11 @@ import { Button, cn, SeriesCard } from '@imkdw-dev/ui';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
 import { ISeriesListItemDto } from '@imkdw-dev/types';
 
+interface SeriesCardTranslations {
+  articleCount: string;
+  lastUpdated: string;
+}
+
 interface Props {
   seriesList: ISeriesListItemDto[];
   translations: {
@@ -11,9 +16,16 @@ interface Props {
     viewAll: string;
     viewAllShort: string;
   };
+  seriesCardTranslations?: SeriesCardTranslations;
+  locale?: string;
 }
 
-export function RecentSeries({ seriesList, translations }: Props) {
+export function RecentSeries({
+  seriesList,
+  translations,
+  seriesCardTranslations = { articleCount: '__count__ articles', lastUpdated: 'Last updated:' },
+  locale = 'ko-KR',
+}: Props) {
   return (
     <section className="bg-background border border-border rounded-lg p-4 md:p-6">
       <div className="flex items-center justify-between mb-6">
@@ -39,7 +51,7 @@ export function RecentSeries({ seriesList, translations }: Props) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
         {seriesList.map(item => (
           <div key={item.slug} className="bounce-in h-full">
-            <SeriesCard series={item} LinkComponent={Link} />
+            <SeriesCard series={item} LinkComponent={Link} translations={seriesCardTranslations} locale={locale} />
           </div>
         ))}
       </div>

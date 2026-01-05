@@ -6,13 +6,26 @@ import { TagList } from './tag-list';
 import { formatReadTime } from '@imkdw-dev/utils';
 import { LinkComponentType } from '../../types';
 
+interface SeriesCardTranslations {
+  articleCount: string;
+  lastUpdated: string;
+}
+
 interface Props {
   series: ISeriesListItemDto;
   LinkComponent?: LinkComponentType;
+  translations?: SeriesCardTranslations;
+  locale?: string;
 }
 
-export function SeriesCard({ series, LinkComponent = 'a' as unknown as LinkComponentType }: Props) {
+export function SeriesCard({
+  series,
+  LinkComponent = 'a' as unknown as LinkComponentType,
+  translations = { articleCount: '__count__ articles', lastUpdated: 'Last updated:' },
+  locale = 'ko-KR',
+}: Props) {
   const LinkTag = LinkComponent;
+  const articleCountText = translations.articleCount.replace('__count__', String(series.articleCount));
 
   return (
     <LinkTag href={`/series/${series.slug}`} className="block h-full">
@@ -27,7 +40,7 @@ export function SeriesCard({ series, LinkComponent = 'a' as unknown as LinkCompo
                   </h3>
                 </div>
                 <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground mb-2 md:mb-3">
-                  <MetaInfoItem icon={<BookOpen className="h-4 w-4" />} text={`${series.articleCount} 개`} />
+                  <MetaInfoItem icon={<BookOpen className="h-4 w-4" />} text={articleCountText} />
                   <MetaInfoItem icon={<Clock className="h-4 w-4" />} text={formatReadTime(series.totalReadMinute)} />
                 </div>
               </div>
@@ -38,7 +51,12 @@ export function SeriesCard({ series, LinkComponent = 'a' as unknown as LinkCompo
           </div>
           <div className="mt-auto">
             <TagList tags={series.tags.map(tag => tag.name)} maxVisible={2} variant="badge" className="mb-2 md:mb-3" />
-            <LastUpdated date={series.lastArticleCreatedAt} className="mb-2" />
+            <LastUpdated
+              date={series.lastArticleCreatedAt}
+              className="mb-2"
+              label={translations.lastUpdated}
+              locale={locale}
+            />
           </div>
         </div>
       </div>

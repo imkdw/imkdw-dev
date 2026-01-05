@@ -20,10 +20,12 @@ export async function generateMetadata() {
 }
 
 interface Props {
+  params: Promise<{ locale: string }>;
   searchParams: Promise<{ page?: string }>;
 }
 
-export default async function Series({ searchParams }: Props) {
+export default async function Series({ params, searchParams }: Props) {
+  const { locale } = await params;
   const { page } = await searchParams;
   const currentPage = Number(page) || 1;
   const currentMember = await getCurrentMember();
@@ -34,9 +36,16 @@ export default async function Series({ searchParams }: Props) {
     getStats(),
   ]);
 
+  const tUi = await getTranslations('ui');
+
   const translations = {
     empty: t('empty'),
     emptyDescription: t('emptyDescription'),
+  };
+
+  const seriesCardTranslations = {
+    articleCount: tUi('articleCountTemplate'),
+    lastUpdated: tUi('lastUpdated'),
   };
 
   return (
@@ -63,7 +72,7 @@ export default async function Series({ searchParams }: Props) {
         <div className="flex flex-col gap-4">
           {seriesData.items.length > 0 ? (
             <>
-              <SeriesListGrid items={seriesData.items} />
+              <SeriesListGrid items={seriesData.items} translations={seriesCardTranslations} locale={locale} />
               <CommonPagination
                 totalPages={seriesData.totalPage}
                 currentPage={currentPage}

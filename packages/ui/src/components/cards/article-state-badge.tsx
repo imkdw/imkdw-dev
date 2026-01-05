@@ -6,9 +6,10 @@ import { MEMBER_ROLE, ARTICLE_STATE } from '@imkdw-dev/consts';
 
 interface Props {
   state: string;
+  label?: string;
 }
 
-export function ArticleStateBadge({ state }: Props) {
+export function ArticleStateBadge({ state, label = 'Private' }: Props) {
   const { member } = useAuth();
 
   const isAdmin = member?.role === MEMBER_ROLE.ADMIN;
@@ -21,7 +22,7 @@ export function ArticleStateBadge({ state }: Props) {
   return (
     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30 shadow-[0_0_8px_rgba(251,191,36,0.15)]">
       <EyeOff className="h-3.5 w-3.5" />
-      비공개
+      {label}
     </span>
   );
 }

@@ -11,58 +11,17 @@ import { useArticleForm } from '@/hooks';
 import { IArticleDto } from '@imkdw-dev/types';
 import { ArticleFormMode } from '@/types/article';
 
-interface DraftDialogTranslations {
-  title: string;
-  description: string;
-  subDescription: string;
-  restore: string;
-  discard: string;
-}
-
-interface FormHeaderTranslations {
-  createTitle: string;
-  editTitle: string;
-  publish: string;
-}
-
-interface VisibilityTranslations {
-  title: string;
-  public: string;
-  publicDescription: string;
-  private: string;
-  privateDescription: string;
-  label: string;
-}
-
-interface StatsTranslations {
-  characters: string;
-  words: string;
-  readingTime: string;
-  minutes: string;
-}
-
 interface Props {
   mode: ArticleFormMode;
   initialData?: IArticleDto;
-  draftDialogTranslations: DraftDialogTranslations;
-  formHeaderTranslations: FormHeaderTranslations;
-  visibilityTranslations: VisibilityTranslations;
-  statsTranslations: StatsTranslations;
 }
 
-export function ArticleForm({
-  mode,
-  initialData,
-  draftDialogTranslations,
-  formHeaderTranslations,
-  visibilityTranslations,
-  statsTranslations,
-}: Props) {
+export function ArticleForm({ mode, initialData }: Props) {
   const { formData, handlers, state } = useArticleForm({ mode, initialData });
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col">
-      <ArticleFormHeader mode={mode} onPublish={handlers.handlePublish} translations={formHeaderTranslations} />
+      <ArticleFormHeader mode={mode} onPublish={handlers.handlePublish} />
       <div className="flex gap-4 flex-1">
         <div className="flex flex-1">
           <ArticleFormFields
@@ -78,17 +37,13 @@ export function ArticleForm({
         </div>
         <div className="flex flex-col gap-4 p-2">
           <ArticleSeriesSelector value={formData.seriesId} onValueChange={handlers.setSeriesId} />
-          <ArticleVisibilitySelector
-            value={formData.state}
-            onValueChange={handlers.setState}
-            translations={visibilityTranslations}
-          />
+          <ArticleVisibilitySelector value={formData.state} onValueChange={handlers.setState} />
           <ArticleTagManager
             tags={formData.tags}
             onAddTag={handlers.handleAddTag}
             onRemoveTag={handlers.handleRemoveTag}
           />
-          <ArticleWritingStats content={formData.content} translations={statsTranslations} />
+          <ArticleWritingStats content={formData.content} />
         </div>
       </div>
 
@@ -96,7 +51,6 @@ export function ArticleForm({
         open={state.showRestoreDialog}
         onRestore={handlers.handleRestoreDraft}
         onDiscard={handlers.handleDiscardDraft}
-        translations={draftDialogTranslations}
       />
     </div>
   );

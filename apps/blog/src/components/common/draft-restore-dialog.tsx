@@ -2,37 +2,28 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Button } from '@imkdw-dev/ui';
 
-interface Translations {
-  title: string;
-  description: string;
-  subDescription: string;
-  restore: string;
-  discard: string;
-}
-
 interface Props {
   open: boolean;
   onRestore: () => void;
   onDiscard: () => void;
-  translations: Translations;
 }
 
-export function DraftRestoreDialog({ open, onRestore, onDiscard, translations }: Props) {
+export function DraftRestoreDialog({ open, onRestore, onDiscard }: Props) {
   return (
     <Dialog open={open} onClose={onDiscard}>
       <DialogContent>
         <DialogHeader className="flex flex-col gap-2">
-          <DialogTitle>{translations.title}</DialogTitle>
+          <DialogTitle>임시 저장된 글이 있습니다</DialogTitle>
           <div>
-            <DialogDescription>{translations.description}</DialogDescription>
-            <DialogDescription>{translations.subDescription}</DialogDescription>
+            <DialogDescription>이전에 작성하던 글이 발견되었습니다</DialogDescription>
+            <DialogDescription>임시 저장된 내용을 불러올까요?</DialogDescription>
           </div>
         </DialogHeader>
         <div className="flex justify-end gap-3 mt-6">
           <Button variant="outline" onClick={onDiscard}>
-            {translations.discard}
+            삭제
           </Button>
-          <Button onClick={onRestore}>{translations.restore}</Button>
+          <Button onClick={onRestore}>복원</Button>
         </div>
       </DialogContent>
     </Dialog>

@@ -5,9 +5,10 @@ import { TableOfContentsItem } from '../../types/article';
 
 interface Props {
   content: string;
+  title?: string;
 }
 
-export function TableOfContents({ content }: Props) {
+export function TableOfContents({ content, title = 'Table of Contents' }: Props) {
   const [items, setItems] = useState<TableOfContentsItem[]>([]);
 
   useEffect(() => {
@@ -20,7 +21,7 @@ export function TableOfContents({ content }: Props) {
 
     const tocItems: TableOfContentsItem[] = Array.from(headings).map((heading, index) => {
       const level = parseInt(heading.tagName.substring(1));
-      const title = heading.textContent || '';
+      const headingTitle = heading.textContent || '';
       const id = heading.id || `heading-${index}`;
 
       if (!heading.id) {
@@ -29,7 +30,7 @@ export function TableOfContents({ content }: Props) {
 
       return {
         id,
-        title,
+        title: headingTitle,
         level,
         href: `#${id}`,
       };
@@ -44,7 +45,7 @@ export function TableOfContents({ content }: Props) {
 
   return (
     <div className="bg-card p-4 rounded-md shadow-sm w-[350px]">
-      <h3 className="font-semibold mb-4 text-primary">목차</h3>
+      <h3 className="font-semibold mb-4 text-primary">{title}</h3>
       <nav className="space-y-2 text-sm">
         {items.map(item => (
           <a

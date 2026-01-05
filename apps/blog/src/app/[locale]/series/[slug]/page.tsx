@@ -76,7 +76,7 @@ export default async function Page({ params, searchParams }: Props) {
   return (
     <Layout>
       <div className="max-w-4xl mx-auto py-6 px-4">
-        <SeriesBackButton />
+        <SeriesBackButton label={t('series.backToList')} />
         <SeriesHeader seriesData={seriesData} translations={seriesHeaderTranslations} />
         <SeriesArticles
           articles={articlesData.items}

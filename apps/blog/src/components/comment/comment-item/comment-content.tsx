@@ -5,6 +5,14 @@ import type { IArticleCommentDto } from '@imkdw-dev/types';
 import { formatDate } from '@imkdw-dev/utils';
 import { CommentActions } from './comment-actions';
 
+interface CommentContentTranslations {
+  editAction: string;
+  deleteAction: string;
+  editingStatus: string;
+  save: string;
+  cancel: string;
+}
+
 interface Props {
   comment: IArticleCommentDto;
   isOwner: boolean;
@@ -15,6 +23,7 @@ interface Props {
   onEditCancel: () => void;
   onEdit: () => void;
   onDelete: () => void;
+  translations: CommentContentTranslations;
 }
 
 export function CommentContent({
@@ -27,10 +36,16 @@ export function CommentContent({
   onEditCancel,
   onEdit,
   onDelete,
+  translations,
 }: Props) {
+  const actionsTranslations = {
+    editAction: translations.editAction,
+    deleteAction: translations.deleteAction,
+  };
+
   return (
     <>
-      {/* 모바일 */}
+      {/* Mobile */}
       <div className="md:hidden flex items-start space-x-3">
         <Avatar className="w-8 h-8 flex-shrink-0">
           <AvatarImage src={comment.author.profileImage} />
@@ -41,12 +56,18 @@ export function CommentContent({
           <div className="bg-muted/50 rounded-2xl px-4 py-3">
             <div className="flex items-center justify-between mb-2">
               <span className="font-medium text-sm">{comment.author.nickname}</span>
-              <CommentActions isOwner={isOwner} isEditing={isEditing} onEdit={onEdit} onDelete={onDelete} />
+              <CommentActions
+                isOwner={isOwner}
+                isEditing={isEditing}
+                onEdit={onEdit}
+                onDelete={onDelete}
+                translations={actionsTranslations}
+              />
             </div>
 
             <div className="flex items-center space-x-2 mb-2">
               <span className="text-xs text-muted-foreground">{formatDate(comment.createdAt)}</span>
-              {isEditing && <span className="text-xs text-primary">편집 중</span>}
+              {isEditing && <span className="text-xs text-primary">{translations.editingStatus}</span>}
             </div>
 
             {isEditing ? (
@@ -58,10 +79,10 @@ export function CommentContent({
                 />
                 <div className="flex gap-2">
                   <Button onClick={onEditSave} size="sm" className="h-7 text-xs">
-                    저장
+                    {translations.save}
                   </Button>
                   <Button onClick={onEditCancel} variant="outline" size="sm" className="h-7 text-xs">
-                    취소
+                    {translations.cancel}
                   </Button>
                 </div>
               </div>
@@ -72,7 +93,7 @@ export function CommentContent({
         </div>
       </div>
 
-      {/* 데스크탑 */}
+      {/* Desktop */}
       <div className="hidden md:flex items-start space-x-3">
         <Avatar className="w-8 h-8 flex-shrink-0">
           <AvatarImage src={comment.author.profileImage} />
@@ -85,8 +106,14 @@ export function CommentContent({
               <span className="font-medium text-sm">{comment.author.nickname}</span>
               <span className="text-xs text-muted-foreground">·</span>
               <span className="text-xs text-muted-foreground">{formatDate(comment.createdAt)}</span>
-              <CommentActions isOwner={isOwner} isEditing={isEditing} onEdit={onEdit} onDelete={onDelete} />
-              {isEditing && <span className="text-xs text-primary">편집 중</span>}
+              <CommentActions
+                isOwner={isOwner}
+                isEditing={isEditing}
+                onEdit={onEdit}
+                onDelete={onDelete}
+                translations={actionsTranslations}
+              />
+              {isEditing && <span className="text-xs text-primary">{translations.editingStatus}</span>}
             </div>
 
             {isEditing ? (
@@ -98,10 +125,10 @@ export function CommentContent({
                 />
                 <div className="flex gap-2">
                   <Button onClick={onEditSave} size="sm" className="h-7 text-xs">
-                    저장
+                    {translations.save}
                   </Button>
                   <Button onClick={onEditCancel} variant="outline" size="sm" className="h-7 text-xs">
-                    취소
+                    {translations.cancel}
                   </Button>
                 </div>
               </div>

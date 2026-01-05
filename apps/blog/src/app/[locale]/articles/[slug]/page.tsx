@@ -71,6 +71,38 @@ export default async function Page({ params }: Props) {
     },
   };
 
+  const commentTranslations = {
+    sectionTitle: t('comments.section.title'),
+    form: {
+      placeholder: t('comments.form.placeholder'),
+      placeholderNotLoggedIn: t('comments.form.placeholderNotLoggedIn'),
+      submitHint: t('comments.form.submitHint'),
+      loginRequired: t('comments.form.loginRequired'),
+    },
+    list: {
+      empty: t('comments.list.empty'),
+      emptyHint: t('comments.list.emptyHint'),
+    },
+    item: {
+      editAction: t('comments.actions.edit'),
+      deleteAction: t('comments.actions.delete'),
+      editingStatus: t('comments.editing.status'),
+      save: t('common.buttons.save'),
+      cancel: t('common.buttons.cancel'),
+    },
+  };
+
+  const codeBlockTranslations = {
+    copySuccess: t('ui.codeBlock.copySuccess'),
+    copyFailed: t('ui.codeBlock.copyFailed'),
+  };
+
+  const imageZoomTranslations = {
+    close: t('ui.imageZoom.close'),
+    zoomIn: t('ui.imageZoom.zoomIn'),
+    zoomOut: t('ui.imageZoom.zoomOut'),
+  };
+
   return (
     <Layout enableOverflow={false}>
       <ReadingProgressBar />
@@ -80,16 +112,24 @@ export default async function Page({ params }: Props) {
           <ArticleHeader article={article}>
             <ArticleInteractions slug={slug} translations={articleInteractionsTranslations} />
           </ArticleHeader>
-          <ArticleContent article={article} />
+          <ArticleContent
+            article={article}
+            codeBlockTranslations={codeBlockTranslations}
+            imageZoomTranslations={imageZoomTranslations}
+          />
           {/* <RelatedArticles articles={relatedArticles} /> */}
           <ArticleNavigation
             previousArticle={navigationArticles.previousArticle}
             nextArticle={navigationArticles.nextArticle}
           />
-          <CommentSection articleSlug={slug} initialComments={commentsResponse.comments} />
+          <CommentSection
+            articleSlug={slug}
+            initialComments={commentsResponse.comments}
+            translations={commentTranslations}
+          />
         </div>
         <aside className="hidden lg:block sticky top-4 self-start">
-          <TableOfContents content={article.content} />
+          <TableOfContents content={article.content} title={t('articles.detail.tableOfContents')} />
         </aside>
       </div>
     </Layout>
