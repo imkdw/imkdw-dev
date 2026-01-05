@@ -29,9 +29,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug, locale } = await params;
-  const t = await getTranslations();
 
-  const [response, commentsResponse] = await Promise.all([getArticle(slug), getArticleComments(slug)]);
+  const [response, commentsResponse, tArticle, tArticles, tCommon, tComments, tUi] = await Promise.all([
+    getArticle(slug),
+    getArticleComments(slug),
+    getTranslations('article'),
+    getTranslations('articles'),
+    getTranslations('common'),
+    getTranslations('comments'),
+    getTranslations('ui'),
+  ]);
   const { article, prevArticle, nextArticle } = response;
 
   const navigationArticles = {
@@ -51,55 +58,55 @@ export default async function Page({ params }: Props) {
 
   const articleInteractionsTranslations = {
     deleteDialog: {
-      title: t('article.deleteDialog.title'),
-      description: t('article.deleteDialog.description'),
-      cancel: t('common.buttons.cancel'),
-      delete: t('common.buttons.delete'),
-      deleting: t('common.status.deleting'),
+      title: tArticle('deleteDialog.title'),
+      description: tArticle('deleteDialog.description'),
+      cancel: tCommon('buttons.cancel'),
+      delete: tCommon('buttons.delete'),
+      deleting: tCommon('status.deleting'),
     },
     toast: {
-      copySuccess: t('article.toast.copySuccess'),
-      copyError: t('article.toast.copyError'),
-      deleteSuccess: t('article.toast.deleteSuccess'),
-      deleteError: t('article.toast.deleteError'),
+      copySuccess: tArticle('toast.copySuccess'),
+      copyError: tArticle('toast.copyError'),
+      deleteSuccess: tArticle('toast.deleteSuccess'),
+      deleteError: tArticle('toast.deleteError'),
     },
     buttons: {
-      share: t('article.buttons.share'),
-      edit: t('article.buttons.edit'),
-      delete: t('common.buttons.delete'),
+      share: tArticle('buttons.share'),
+      edit: tArticle('buttons.edit'),
+      delete: tCommon('buttons.delete'),
     },
   };
 
   const commentTranslations = {
-    sectionTitle: t('comments.sectionTitle'),
+    sectionTitle: tComments('sectionTitle'),
     form: {
-      placeholder: t('comments.form.placeholder'),
-      placeholderNotLoggedIn: t('comments.form.placeholderNotLoggedIn'),
-      submitHint: t('comments.form.submitHint'),
-      loginRequired: t('comments.form.loginRequired'),
+      placeholder: tComments('form.placeholder'),
+      placeholderNotLoggedIn: tComments('form.placeholderNotLoggedIn'),
+      submitHint: tComments('form.submitHint'),
+      loginRequired: tComments('form.loginRequired'),
     },
     list: {
-      empty: t('comments.list.empty'),
-      emptyHint: t('comments.list.emptyHint'),
+      empty: tComments('list.empty'),
+      emptyHint: tComments('list.emptyHint'),
     },
     item: {
-      editAction: t('comments.actions.edit'),
-      deleteAction: t('comments.actions.delete'),
-      editingStatus: t('comments.editing.status'),
-      save: t('common.buttons.save'),
-      cancel: t('common.buttons.cancel'),
+      editAction: tComments('actions.edit'),
+      deleteAction: tComments('actions.delete'),
+      editingStatus: tComments('editing.status'),
+      save: tCommon('buttons.save'),
+      cancel: tCommon('buttons.cancel'),
     },
   };
 
   const codeBlockTranslations = {
-    copySuccess: t('ui.codeBlock.copySuccess'),
-    copyFailed: t('ui.codeBlock.copyFailed'),
+    copySuccess: tUi('codeBlock.copySuccess'),
+    copyFailed: tUi('codeBlock.copyFailed'),
   };
 
   const imageZoomTranslations = {
-    close: t('ui.imageZoom.close'),
-    zoomIn: t('ui.imageZoom.zoomIn'),
-    zoomOut: t('ui.imageZoom.zoomOut'),
+    close: tUi('imageZoom.close'),
+    zoomIn: tUi('imageZoom.zoomIn'),
+    zoomOut: tUi('imageZoom.zoomOut'),
   };
 
   return (
@@ -121,8 +128,8 @@ export default async function Page({ params }: Props) {
             previousArticle={navigationArticles.previousArticle}
             nextArticle={navigationArticles.nextArticle}
             translations={{
-              previousArticle: t('articles.navigation.previous'),
-              nextArticle: t('articles.navigation.next'),
+              previousArticle: tArticles('navigation.previous'),
+              nextArticle: tArticles('navigation.next'),
             }}
           />
           <CommentSection
@@ -133,7 +140,7 @@ export default async function Page({ params }: Props) {
           />
         </div>
         <aside className="hidden lg:block sticky top-4 self-start">
-          <TableOfContents content={article.content} title={t('articles.detail.tableOfContents')} />
+          <TableOfContents content={article.content} title={tArticles('detail.tableOfContents')} />
         </aside>
       </div>
     </Layout>
