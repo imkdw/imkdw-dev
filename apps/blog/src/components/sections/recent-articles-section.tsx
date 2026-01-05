@@ -31,10 +31,10 @@ export function RecentArticles({ articles, translations, locale }: Props) {
           </div>
         </div>
         <Button variant="outline" size="sm" asChild>
-          <Link href="/articles">
-            <Terminal className="mr-2 h-4 w-4" />
-            <span className="hidden sm:inline">{translations.viewAll}</span>
-            <span className="sm:hidden">{translations.viewAllShort}</span>
+          <Link href="/articles" className="inline-flex items-center">
+            <Terminal className="mr-2 h-4 w-4 shrink-0" />
+            <span className="hidden sm:inline whitespace-nowrap">{translations.viewAll}</span>
+            <span className="sm:hidden whitespace-nowrap">{translations.viewAllShort}</span>
           </Link>
         </Button>
       </div>
