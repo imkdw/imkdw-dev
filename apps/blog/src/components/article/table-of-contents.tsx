@@ -5,10 +5,10 @@ import { TableOfContentsItem } from '../../types/article';
 
 interface Props {
   content: string;
-  title?: string;
+  title: string;
 }
 
-export function TableOfContents({ content, title = 'Table of Contents' }: Props) {
+export function TableOfContents({ content, title }: Props) {
   const [items, setItems] = useState<TableOfContentsItem[]>([]);
 
   useEffect(() => {

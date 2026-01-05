@@ -31,10 +31,8 @@ export default async function Page({ params }: Props) {
   const { slug, locale } = await params;
   const t = await getTranslations();
 
-  const response = await getArticle(slug);
+  const [response, commentsResponse] = await Promise.all([getArticle(slug), getArticleComments(slug)]);
   const { article, prevArticle, nextArticle } = response;
-
-  const commentsResponse = await getArticleComments(slug);
 
   const navigationArticles = {
     previousArticle: prevArticle
@@ -122,6 +120,10 @@ export default async function Page({ params }: Props) {
           <ArticleNavigation
             previousArticle={navigationArticles.previousArticle}
             nextArticle={navigationArticles.nextArticle}
+            translations={{
+              previousArticle: t('articles.navigation.previous'),
+              nextArticle: t('articles.navigation.next'),
+            }}
           />
           <CommentSection
             articleSlug={slug}

@@ -151,6 +151,10 @@
     }
   },
   "articles": {
+    "navigation": {
+      "previous": "Previous Article",
+      "next": "Next Article"
+    },
     "list": {
       "title": "Articles",
       "totalArticles": "Total Articles",

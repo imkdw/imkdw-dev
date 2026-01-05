@@ -9,8 +9,9 @@ import { RECENT_ARTICLES_COUNT } from '@/consts/article.const';
 import { getTranslations } from 'next-intl/server';
 import { Locale } from '@imkdw-dev/i18n';
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations('metadata');
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'metadata' });
   return {
     title: t('siteTitle'),
     description: t('siteDescription'),
@@ -23,9 +24,11 @@ interface Props {
 
 export default async function Home({ params }: Props) {
   const { locale } = await params;
-  const series = await getSeriesList({ limit: RECENT_SERIES_CARD_COUNT, page: 1 });
-  const articles = await getArticles({ limit: RECENT_ARTICLES_COUNT, page: 1 });
-  const statsData = await getStats();
+  const [series, articles, statsData] = await Promise.all([
+    getSeriesList({ limit: RECENT_SERIES_CARD_COUNT, page: 1 }),
+    getArticles({ limit: RECENT_ARTICLES_COUNT, page: 1 }),
+    getStats(),
+  ]);
 
   const t = await getTranslations('home');
   const tUi = await getTranslations('ui');

@@ -151,6 +151,10 @@
     }
   },
   "articles": {
+    "navigation": {
+      "previous": "이전 글",
+      "next": "다음 글"
+    },
     "list": {
       "title": "게시글",
       "totalArticles": "전체 게시글",

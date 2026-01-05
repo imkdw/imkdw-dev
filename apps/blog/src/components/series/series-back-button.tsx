@@ -3,10 +3,10 @@ import { Button } from '@imkdw-dev/ui';
 import { ArrowLeft } from 'lucide-react';
 
 interface Props {
-  label?: string;
+  label: string;
 }
 
-export function SeriesBackButton({ label = 'Back to Series' }: Props) {
+export function SeriesBackButton({ label }: Props) {
   return (
     <div className="pb-6">
       <Link href="/series">
