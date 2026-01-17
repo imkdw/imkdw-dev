@@ -9,5 +9,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: '/((?!api|trpc|_next|_vercel|terminal|feed\\.xml|sitemap\\.xml|robots\\.txt|favicon\\.ico).*)',
+  matcher: '/((?!api|trpc|_next|_vercel|feed\\.xml|sitemap\\.xml|robots\\.txt|favicon\\.ico).*)',
 };

@@ -83,6 +83,10 @@
   "series": {
     "label": "Series",
     "backToList": "Back to Series",
+    "metadata": {
+      "createTitle": "Create Series",
+      "editTitle": "Edit Series"
+    },
     "list": {
       "title": "Series List",
       "totalSeries": "Total Series",
@@ -129,16 +133,6 @@
     }
   },
   "home": {
-    "terminal": {
-      "title": "Tech Blog",
-      "description": "A tech blog sharing what I've learned and experienced"
-    },
-    "stats": {
-      "totalArticles": "Total Articles",
-      "activeSeries": "Active Series",
-      "totalViews": "Total Views",
-      "techTags": "Tech Tags"
-    },
     "recentArticles": {
       "title": "Recent Articles",
       "viewAll": "View All",
