@@ -1,16 +1,20 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
 
+const DEFAULT_TITLE = process.env.NEXT_PUBLIC_BLOG_TITLE ?? '@imkdw-dev/blog';
+const DEFAULT_DESCRIPTION = process.env.NEXT_PUBLIC_BLOG_DESCRIPTION ?? 'A tech blog I develop and operate myself';
+
 function truncateText(text: string, maxChars: number): string {
   if (text.length <= maxChars) return text;
   return text.slice(0, maxChars - 3) + '...';
 }
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
+  try {
+    const { searchParams } = new URL(request.url);
 
-  const rawTitle = searchParams.get('title') ?? '@imkdw-dev/blog';
-  const rawDescription = searchParams.get('description') ?? '직접 제작하고 운영하는 IT 기술블로그';
+    const rawTitle = searchParams.get('title') ?? DEFAULT_TITLE;
+    const rawDescription = searchParams.get('description') ?? DEFAULT_DESCRIPTION;
 
   const titleMaxChars = rawTitle.length > 30 ? 45 : 32;
   const title = truncateText(rawTitle, titleMaxChars);
@@ -158,4 +162,7 @@ export async function GET(request: NextRequest) {
       height: 630,
     }
   );
+  } catch {
+    return new Response('Internal Server Error', { status: 500 });
+  }
 }

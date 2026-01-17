@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { Button } from '@imkdw-dev/ui';
 import { getCurrentMember, getSeriesList, getStats } from '@imkdw-dev/api-client';
 import { SERIES_PER_PAGE } from '@/consts/series.const';
@@ -12,11 +13,11 @@ import { MEMBER_ROLE } from '@imkdw-dev/consts';
 import { getTranslations } from 'next-intl/server';
 import { Locale } from '@imkdw-dev/i18n';
 
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('series.list');
   return {
     title: t('title'),
-    description: t('title'),
+    description: t('description'),
   };
 }
 

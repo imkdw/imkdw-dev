@@ -123,7 +123,6 @@ export default async function Page({ params }: Props) {
             codeBlockTranslations={codeBlockTranslations}
             imageZoomTranslations={imageZoomTranslations}
           />
-          {/* <RelatedArticles articles={relatedArticles} /> */}
           <ArticleNavigation
             previousArticle={navigationArticles.previousArticle}
             nextArticle={navigationArticles.nextArticle}

@@ -89,6 +89,7 @@
     },
     "list": {
       "title": "시리즈 목록",
+      "description": "주제별로 정리된 연재 시리즈 목록입니다",
       "totalSeries": "전체 시리즈",
       "totalArticles": "총 글 수",
       "empty": "시리즈가 없습니다",
@@ -151,6 +152,7 @@
     },
     "list": {
       "title": "게시글",
+      "description": "개발 경험과 기술 지식을 공유하는 게시글 목록입니다",
       "totalArticles": "전체 게시글",
       "tags": "태그",
       "searchPlaceholder": "게시글 제목이나 내용으로 검색...",

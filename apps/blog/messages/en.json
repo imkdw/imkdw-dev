@@ -89,6 +89,7 @@
     },
     "list": {
       "title": "Series List",
+      "description": "A collection of series organized by topic",
       "totalSeries": "Total Series",
       "totalArticles": "Total Articles",
       "empty": "No series found",
@@ -151,6 +152,7 @@
     },
     "list": {
       "title": "Articles",
+      "description": "A collection of articles sharing development experiences and technical knowledge",
       "totalArticles": "Total Articles",
       "tags": "Tags",
       "searchPlaceholder": "Search by title or content...",
