@@ -40,7 +40,11 @@ export function RecentArticles({ articles, translations, locale }: Props) {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
         {articles.map((article, index) => (
-          <div key={article.slug} className="bounce-in h-full" style={{ animationDelay: `${(index + 2) * 0.1}s` }}>
+          <div
+            key={article.slug}
+            className="bounce-in h-full card-wrapper-cv"
+            style={{ animationDelay: `${(index + 2) * 0.1}s` }}
+          >
             <ArticleCard article={article} LinkComponent={Link} locale={locale} />
           </div>
         ))}

@@ -33,3 +33,9 @@ button {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
+
+/* Content visibility optimization for card lists */
+.card-wrapper-cv {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 200px;
+}
