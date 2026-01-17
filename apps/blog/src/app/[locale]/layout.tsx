@@ -9,7 +9,10 @@ import { Providers } from '../../components/providers';
 import { MobileSidebar } from '../../components/sidebar/mobile-sidebar';
 import { NavigationProgress } from '../../components/navigation-progress';
 import { LocaleSetter } from '../../components/locale-setter';
+import { WebVitalsReporter } from '../../components/web-vitals-reporter';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { APP_ENV } from '@imkdw-dev/consts';
 
 interface Props {
@@ -79,8 +82,13 @@ export default async function LocaleLayout({ children, params }: Props) {
         {children}
         <MobileSidebar translations={navigationTranslations} />
       </Providers>
-      {process.env.APP_ENV === APP_ENV.PRODUCTION && process.env.NEXT_PUBLIC_GA_ID && (
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+      <WebVitalsReporter />
+      {process.env.APP_ENV === APP_ENV.PRODUCTION && (
+        <>
+          {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
+          <Analytics />
+          <SpeedInsights />
+        </>
       )}
     </NextIntlClientProvider>
   );
