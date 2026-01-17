@@ -22,9 +22,8 @@ export async function generateMetadata() {
 export default async function MemberDetail({ params }: Props) {
   const { slug, locale } = await params;
 
-  const member = await getMember(slug);
+  const [member, currentMember] = await Promise.all([getMember(slug), getCurrentMember()]);
 
-  const currentMember = await getCurrentMember();
   if (!currentMember || currentMember.id !== member.id) {
     forbidden();
   }

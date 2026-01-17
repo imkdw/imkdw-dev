@@ -47,7 +47,8 @@
       "errorDigest": "Error Digest:",
       "stackTrace": "Stack Trace:",
       "devNote": "This detailed error information is only visible in development mode.",
-      "tryAgain": "Try again"
+      "tryAgain": "Try again",
+      "goHome": "Go Home"
     },
     "article": {
       "title": "Error Occurred",

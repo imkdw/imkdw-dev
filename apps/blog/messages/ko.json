@@ -47,7 +47,8 @@
       "errorDigest": "오류 다이제스트:",
       "stackTrace": "스택 트레이스:",
       "devNote": "이 상세 오류 정보는 개발 모드에서만 표시됩니다.",
-      "tryAgain": "다시 시도"
+      "tryAgain": "다시 시도",
+      "goHome": "홈으로"
     },
     "article": {
       "title": "오류 발생",

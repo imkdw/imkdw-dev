@@ -8,6 +8,7 @@ import { routing } from '@/i18n/routing';
 import { Providers } from '../../components/providers';
 import { MobileSidebar } from '../../components/sidebar/mobile-sidebar';
 import { NavigationProgress } from '../../components/navigation-progress';
+import { LocaleSetter } from '../../components/locale-setter';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { APP_ENV } from '@imkdw-dev/consts';
 
@@ -72,6 +73,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider messages={messages}>
+      <LocaleSetter locale={locale} />
       <Providers>
         <NavigationProgress />
         {children}
