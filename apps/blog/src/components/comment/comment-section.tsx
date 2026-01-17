@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useCommentForm } from '@/hooks';
 import { IArticleCommentDto } from '@imkdw-dev/types';
 import type { Locale } from '@imkdw-dev/i18n';
@@ -39,31 +39,32 @@ interface Props {
 export function CommentSection({ articleSlug, initialComments, locale, translations }: Props) {
   const [comments, setComments] = useState<IArticleCommentDto[]>(initialComments);
 
-  const refetchComments = async () => {
+  const refetchComments = useCallback(async () => {
     const response = await getArticleComments(articleSlug);
     setComments(response.comments);
-  };
+  }, [articleSlug]);
 
   const { content, setContent, isSubmitting, handleSubmit } = useCommentForm({
-    onSuccess: async () => {
-      await refetchComments();
-    },
+    onSuccess: refetchComments,
   });
 
-  const handleDelete = async () => {
+  const handleDelete = useCallback(async () => {
     await refetchComments();
-  };
+  }, [refetchComments]);
 
-  const handleSubmitComment = () => {
+  const handleSubmitComment = useCallback(() => {
     handleSubmit(articleSlug);
-  };
+  }, [handleSubmit, articleSlug]);
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
-      e.preventDefault();
-      handleSubmitComment();
-    }
-  };
+  const handleKeyPress = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        handleSubmitComment();
+      }
+    },
+    [handleSubmitComment]
+  );
 
   const sectionTitle = translations.sectionTitle.replace('__count__', String(comments.length));
 

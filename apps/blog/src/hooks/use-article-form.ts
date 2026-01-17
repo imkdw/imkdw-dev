@@ -116,13 +116,16 @@ export function useArticleForm({ mode, initialData }: UseArticleFormParams) {
     return () => clearTimeout(timer);
   }, [title, slug, content, tags, seriesId, state, uploadedImageUrls, storageKey]);
 
-  const handleAddTag = (tag: string) => {
-    if (!tags.includes(tag)) {
-      setTags([...tags, tag]);
-    }
-  };
+  const handleAddTag = useCallback((tag: string) => {
+    setTags(prev => {
+      if (prev.includes(tag)) return prev;
+      return [...prev, tag];
+    });
+  }, []);
 
-  const handleRemoveTag = (tagToRemove: string) => setTags(tags.filter(tag => tag !== tagToRemove));
+  const handleRemoveTag = useCallback((tagToRemove: string) => {
+    setTags(prev => prev.filter(tag => tag !== tagToRemove));
+  }, []);
 
   const handleImageUpload = (imageUrl: string) => {
     setUploadedImageUrls(prev => [...prev, imageUrl]);

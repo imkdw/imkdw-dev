@@ -1,15 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Lightbox from 'yet-another-react-lightbox';
-import Zoom from 'yet-another-react-lightbox/plugins/zoom';
-import 'yet-another-react-lightbox/styles.css';
+import { useEffect, useState, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 
 interface ImageZoomTranslations {
   close: string;
   zoomIn: string;
   zoomOut: string;
 }
+
+const LightboxWrapper = dynamic(() => import('./lightbox-wrapper').then(mod => mod.LightboxWrapper), { ssr: false });
 
 interface Props {
   containerSelector: string;
@@ -19,6 +19,10 @@ interface Props {
 export function ImageZoomHydrator({ containerSelector, translations }: Props) {
   const [open, setOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState<{ src: string; alt: string } | null>(null);
+
+  const handleClose = useCallback(() => {
+    setOpen(false);
+  }, []);
 
   useEffect(() => {
     const container = document.querySelector(containerSelector);
@@ -57,27 +61,5 @@ export function ImageZoomHydrator({ containerSelector, translations }: Props) {
     return null;
   }
 
-  return (
-    <Lightbox
-      open={open}
-      close={() => setOpen(false)}
-      slides={[{ src: currentImage.src, alt: currentImage.alt }]}
-      plugins={[Zoom]}
-      zoom={{
-        maxZoomPixelRatio: 3,
-        scrollToZoom: true,
-      }}
-      carousel={{ finite: true }}
-      controller={{ closeOnBackdropClick: true }}
-      render={{
-        buttonPrev: () => null,
-        buttonNext: () => null,
-      }}
-      labels={{
-        Close: translations.close,
-        'Zoom in': translations.zoomIn,
-        'Zoom out': translations.zoomOut,
-      }}
-    />
-  );
+  return <LightboxWrapper open={open} onClose={handleClose} image={currentImage} translations={translations} />;
 }

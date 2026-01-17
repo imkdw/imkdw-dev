@@ -31,7 +31,11 @@ function truncate(text: string, maxLength: number): string {
 }
 
 interface Props {
-  params: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: string }>;
+}
+
+function isValidLocale(locale: string): locale is Locale {
+  return routing.locales.includes(locale as Locale);
 }
 
 export async function generateStaticParams() {
@@ -40,7 +44,8 @@ export async function generateStaticParams() {
 
 export async function GET(_request: Request, { params }: Props) {
   try {
-    const { locale } = await params;
+    const { locale: rawLocale } = await params;
+    const locale = isValidLocale(rawLocale) ? rawLocale : 'ko';
     const baseUrl = process.env.NEXT_PUBLIC_BLOG_URL ?? DEFAULT_BASE_URL;
     const config = FEED_CONFIG[locale];
 
