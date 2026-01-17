@@ -1,3 +1,4 @@
+import { NextRequest } from 'next/server';
 import { Feed } from 'feed';
 import { getSeoRss } from '@imkdw-dev/api-client';
 import { routing, Locale } from '@/i18n/routing';
@@ -42,7 +43,7 @@ export async function generateStaticParams() {
   return routing.locales.map(locale => ({ locale }));
 }
 
-export async function GET(_request: Request, { params }: Props) {
+export async function GET(_request: NextRequest, { params }: Props) {
   try {
     const { locale: rawLocale } = await params;
     const locale = isValidLocale(rawLocale) ? rawLocale : 'ko';
