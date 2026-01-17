@@ -1,10 +1,12 @@
-import { ReactNode } from 'react';
+import { cache, ReactNode } from 'react';
 import { Layout as UILayout, cn } from '@imkdw-dev/ui';
 import { getTranslations } from 'next-intl/server';
 import { logout } from '@/actions/logout';
 import { LocaleSwitcher } from './locale-switcher';
 import { Link } from '@/i18n/navigation';
 import { jetBrainsMono } from '@imkdw-dev/fonts';
+
+const getCachedTranslations = cache(getTranslations);
 
 interface Props {
   children: ReactNode;
@@ -13,8 +15,8 @@ interface Props {
 }
 
 export async function Layout({ children, className, enableOverflow }: Props) {
-  const tNav = await getTranslations('navigation');
-  const tAuth = await getTranslations('auth');
+  const tNav = await getCachedTranslations('navigation');
+  const tAuth = await getCachedTranslations('auth');
 
   const headerTranslations = {
     navigation: {
