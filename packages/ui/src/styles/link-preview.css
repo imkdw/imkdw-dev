@@ -1,4 +1,18 @@
 /* Link Preview Styles */
+
+/* Link Preview Placeholder - prevents hydration flicker (CLS) */
+[data-type='link-preview'] {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  max-width: 100%;
+  min-height: 80px;
+  margin: 1rem 0;
+}
+
 .link-preview {
   display: flex;
   gap: 1rem;

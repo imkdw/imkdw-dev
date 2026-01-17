@@ -1196,6 +1196,19 @@ div[data-milkdown-root='true'] {
    Link Preview Component
    ================================================ */
 
+/* Link Preview Placeholder - prevents hydration flicker (CLS) */
+.milkdown [data-type='link-preview'] {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  border-radius: 4px;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  max-width: 100%;
+  min-height: 80px;
+  margin: 0.5rem 0;
+}
+
 /* Reset all milkdown link styles for link-preview wrapper */
 .milkdown a[data-node-view-wrapper] {
   text-decoration: none;
