@@ -84,7 +84,7 @@ function RecentSectionSkeleton({ itemCount = 2 }: { itemCount?: number }) {
 export default function Loading() {
   return (
     <Layout>
-      <div>
+      <div role="status" aria-busy="true" aria-label="Loading content">
         <TerminalSectionSkeleton />
         <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10 space-y-8 md:space-y-10">
           <RecentSectionSkeleton itemCount={2} />

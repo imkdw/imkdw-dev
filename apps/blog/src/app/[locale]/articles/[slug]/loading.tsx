@@ -82,6 +82,8 @@ function ArticleNavigationSkeleton() {
   );
 }
 
+const TOC_SKELETON_WIDTHS = [70, 85, 65, 90, 75, 80, 60, 95];
+
 function TableOfContentsSkeleton() {
   return (
     <div className="bg-card p-4 rounded-md shadow-sm w-[350px]">
@@ -92,7 +94,7 @@ function TableOfContentsSkeleton() {
             key={i}
             className="h-4 bg-muted rounded animate-pulse"
             style={{
-              width: `${60 + Math.random() * 30}%`,
+              width: `${TOC_SKELETON_WIDTHS[i % TOC_SKELETON_WIDTHS.length]}%`,
               marginLeft: i % 3 === 0 ? 0 : i % 3 === 1 ? 16 : 32,
             }}
           />
@@ -131,7 +133,12 @@ export default function Loading() {
       {/* Reading progress bar placeholder */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-muted z-50" />
 
-      <div className="max-w-7xl mx-auto p-6 lg:flex lg:gap-8">
+      <div
+        className="max-w-7xl mx-auto p-6 lg:flex lg:gap-8"
+        role="status"
+        aria-busy="true"
+        aria-label="Loading article"
+      >
         <div className="flex-1 max-w-4xl flex flex-col">
           <ArticleHeaderSkeleton />
           <ArticleContentSkeleton />

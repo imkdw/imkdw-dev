@@ -1,14 +1,25 @@
+import type { Metadata } from 'next';
 import { Layout } from '@/components/layout';
 import { ArticleForm } from '@/components/article/article-form';
-import { getCurrentMember } from '@imkdw-dev/api-client';
-import { MEMBER_ROLE } from '@imkdw-dev/consts';
-import { forbidden } from 'next/navigation';
+import { requireAdmin } from '@/lib/require-admin';
+import { getTranslations } from 'next-intl/server';
+import { Locale } from '@imkdw-dev/i18n';
+
+interface Props {
+  params: Promise<{ locale: Locale }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'articles.form' });
+  return {
+    title: t('createTitle'),
+    robots: { index: false, follow: false },
+  };
+}
 
 export default async function CreateArticlePage() {
-  const currentMember = await getCurrentMember();
-  if (!currentMember || currentMember.role !== MEMBER_ROLE.ADMIN) {
-    forbidden();
-  }
+  await requireAdmin();
 
   return (
     <Layout>

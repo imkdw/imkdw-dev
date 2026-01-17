@@ -53,7 +53,12 @@ function PaginationSkeleton() {
 export default function Loading() {
   return (
     <Layout>
-      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10">
+      <div
+        className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10"
+        role="status"
+        aria-busy="true"
+        aria-label="Loading articles"
+      >
         <ListHeaderSkeleton />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {Array.from({ length: 6 }).map((_, i) => (

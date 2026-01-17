@@ -30,15 +30,14 @@ export default async function Series({ params, searchParams }: Props) {
   const { locale } = await params;
   const { page } = await searchParams;
   const currentPage = Number(page) || 1;
-  const currentMember = await getCurrentMember();
-  const t = await getTranslations('series.list');
 
-  const [seriesData, stats] = await Promise.all([
+  const [currentMember, t, seriesData, stats, tUi] = await Promise.all([
+    getCurrentMember(),
+    getTranslations('series.list'),
     getSeriesList({ limit: SERIES_PER_PAGE, page: currentPage }),
     getStats(),
+    getTranslations('ui'),
   ]);
-
-  const tUi = await getTranslations('ui');
 
   const translations = {
     empty: t('empty'),

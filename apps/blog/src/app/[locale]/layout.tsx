@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical: `${baseUrl}/${locale}`,
       languages,
       types: {
-        'application/rss+xml': '/feed.xml',
+        'application/rss+xml': `/${locale}/feed.xml`,
       },
     },
     openGraph: {
@@ -79,7 +79,9 @@ export default async function LocaleLayout({ children, params }: Props) {
         {children}
         <MobileSidebar translations={navigationTranslations} />
       </Providers>
-      {process.env.APP_ENV === APP_ENV.PRODUCTION && <GoogleAnalytics gaId="G-DXRR1KZDDN" />}
+      {process.env.APP_ENV === APP_ENV.PRODUCTION && process.env.NEXT_PUBLIC_GA_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+      )}
     </NextIntlClientProvider>
   );
 }

@@ -54,7 +54,12 @@ function PaginationSkeleton() {
 export default function Loading() {
   return (
     <Layout>
-      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10">
+      <div
+        className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-10"
+        role="status"
+        aria-busy="true"
+        aria-label="Loading series"
+      >
         <ListHeaderSkeleton />
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap gap-3 md:gap-4">

@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import { Layout } from '@/components/layout';
 import { ArticleForm } from '@/components/article/article-form';
-import { getArticle, getCurrentMember } from '@imkdw-dev/api-client';
-import { forbidden } from 'next/navigation';
-import { MEMBER_ROLE } from '@imkdw-dev/consts';
+import { getArticle } from '@imkdw-dev/api-client';
+import { requireAdmin } from '@/lib/require-admin';
 import { getTranslations } from 'next-intl/server';
 
 interface Props {
@@ -22,12 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function EditArticlePage({ params }: Props) {
   const { slug } = await params;
-  const { article } = await getArticle(slug);
-  const currentMember = await getCurrentMember();
-
-  if (!currentMember || currentMember.role !== MEMBER_ROLE.ADMIN) {
-    forbidden();
-  }
+  const [{ article }] = await Promise.all([getArticle(slug), requireAdmin()]);
 
   return (
     <Layout>
