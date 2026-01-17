@@ -38,6 +38,28 @@
       "description": "이 페이지를 보려면 로그인이 필요합니다.",
       "goHome": "홈으로 돌아가기",
       "login": "로그인"
+    },
+    "global": {
+      "title": "오류가 발생했습니다!",
+      "description": "페이지를 렌더링하는 중에 오류가 발생했습니다.",
+      "errorMessage": "오류 메시지:",
+      "causeDetails": "원인 상세:",
+      "errorDigest": "오류 다이제스트:",
+      "stackTrace": "스택 트레이스:",
+      "devNote": "이 상세 오류 정보는 개발 모드에서만 표시됩니다.",
+      "tryAgain": "다시 시도"
+    },
+    "article": {
+      "title": "오류 발생",
+      "description": "게시글 로딩 중 오류가 발생했습니다",
+      "tryAgain": "다시 시도",
+      "goHome": "홈으로"
+    },
+    "series": {
+      "title": "오류 발생",
+      "description": "시리즈 로딩 중 오류가 발생했습니다",
+      "tryAgain": "다시 시도",
+      "goHome": "홈으로"
     }
   },
   "common": {

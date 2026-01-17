@@ -38,6 +38,28 @@
       "description": "You need to log in to view this page.",
       "goHome": "Go Home",
       "login": "Login"
+    },
+    "global": {
+      "title": "Something went wrong!",
+      "description": "An error occurred while rendering this page.",
+      "errorMessage": "Error Message:",
+      "causeDetails": "Cause Details:",
+      "errorDigest": "Error Digest:",
+      "stackTrace": "Stack Trace:",
+      "devNote": "This detailed error information is only visible in development mode.",
+      "tryAgain": "Try again"
+    },
+    "article": {
+      "title": "Error Occurred",
+      "description": "An error occurred while loading the article",
+      "tryAgain": "Try Again",
+      "goHome": "Go Home"
+    },
+    "series": {
+      "title": "Error Occurred",
+      "description": "An error occurred while loading the series",
+      "tryAgain": "Try Again",
+      "goHome": "Go Home"
     }
   },
   "common": {
