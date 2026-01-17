@@ -1,4 +1,5 @@
 import { pretendard, jetBrainsMono } from '@imkdw-dev/fonts';
+import { Analytics } from '@vercel/analytics/next';
 
 import '@imkdw-dev/ui/globals.css';
 import '@imkdw-dev/ui/milkdown.css';
@@ -11,7 +12,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       style={{ '--font-code': jetBrainsMono.style.fontFamily } as React.CSSProperties}
     >
-      <body className={pretendard.className}>{children}</body>
+      <body className={pretendard.className}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
