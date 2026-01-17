@@ -1,5 +1,7 @@
+'use client';
+
 import { ThemeProvider } from 'next-themes';
-import { SidebarProvider } from '@imkdw-dev/ui';
+import { SidebarProvider } from '@imkdw-dev/ui/contexts';
 import { Toaster } from '@imkdw-dev/toast';
 import { AuthProvider } from '@imkdw-dev/auth';
 

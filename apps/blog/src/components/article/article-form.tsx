@@ -7,7 +7,7 @@ import { ArticleSeriesSelector } from './article-series-selector';
 import { ArticleVisibilitySelector } from './article-visibility-selector';
 import { ArticleWritingStats } from './article-writing-stats';
 import { DraftRestoreDialog } from '../common/draft-restore-dialog';
-import { useArticleForm } from '@/hooks';
+import { useArticleForm } from '@/hooks/use-article-form';
 import { IArticleDto } from '@imkdw-dev/types';
 import { ArticleFormMode } from '@/types/article';
 

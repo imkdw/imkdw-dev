@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import { ProgressBar } from '@imkdw-dev/ui';
+import { ProgressBar } from '@imkdw-dev/ui/primitives';
 import { useNavigationProgress } from '@/hooks/use-navigation-progress';
 
 function isInternalNavigation(anchor: HTMLAnchorElement, currentPathname: string): boolean {
