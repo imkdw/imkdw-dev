@@ -38,6 +38,8 @@ export function LocaleSwitcher() {
         <Globe className="h-4 w-4" />
         <span className="sr-only">Switch language</span>
       </DropdownMenuTrigger>
+
+      {/* 언어 변경기 */}
       <DropdownMenuContent align="end">
         {routing.locales.map(loc => (
           <DropdownMenuItem

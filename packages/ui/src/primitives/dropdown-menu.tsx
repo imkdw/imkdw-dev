@@ -7,7 +7,16 @@ import { cn } from '../lib/utils';
 
 export const DropdownMenu = Menu;
 
-export const DropdownMenuTrigger = MenuButton;
+interface DropdownMenuTriggerProps extends ComponentPropsWithoutRef<typeof MenuButton> {}
+
+export function DropdownMenuTrigger({ className, ...props }: DropdownMenuTriggerProps) {
+  return (
+    <MenuButton
+      className={cn('outline-none focus:outline-none focus:ring-0', className)}
+      {...props}
+    />
+  );
+}
 
 export function DropdownMenuGroup({ children }: PropsWithChildren) {
   return <div role="group">{children}</div>;
@@ -33,7 +42,7 @@ export function DropdownMenuSubTrigger({ className, inset, children, ...props }:
   return (
     <button
       className={cn(
-        'flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent hover:bg-accent',
+        'flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:outline-none focus:ring-0 focus:bg-accent hover:bg-accent',
         inset && 'pl-8',
         className
       )}
@@ -49,7 +58,7 @@ export function DropdownMenuSubContent({ className, children, ...props }: Compon
   return (
     <div
       className={cn(
-        'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg',
+        'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg outline-none',
         className
       )}
       {...props}
@@ -69,7 +78,7 @@ export function DropdownMenuContent({ className, align = 'end', children, ...pro
       transition
       anchor={align === 'center' ? 'bottom' : `bottom ${align}`}
       className={cn(
-        'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md origin-top transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0',
+        'z-50 min-w-[8rem] overflow-hidden rounded-md bg-popover p-1 text-popover-foreground shadow-md outline-0 origin-top transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0',
         className
       )}
       {...props}
@@ -89,7 +98,7 @@ export function DropdownMenuItem({ className, inset, disabled, children, ...prop
     <MenuItem disabled={disabled}>
       <button
         className={cn(
-          'relative flex w-full select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
+          'relative flex w-full select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:outline-none focus:ring-0 transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
           inset && 'pl-8',
           className
         )}
@@ -117,7 +126,7 @@ export function DropdownMenuCheckboxItem({
     <MenuItem disabled={disabled}>
       <button
         className={cn(
-          'relative flex w-full select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
+          'relative flex w-full select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:outline-none focus:ring-0 transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
           className
         )}
         {...props}
@@ -148,7 +157,7 @@ export function DropdownMenuRadioItem({
     <MenuItem disabled={disabled}>
       <button
         className={cn(
-          'relative flex w-full select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
+          'relative flex w-full select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:outline-none focus:ring-0 transition-colors data-focus:bg-accent data-focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50',
           className
         )}
         {...props}
