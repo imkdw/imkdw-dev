@@ -157,6 +157,16 @@
     }
   },
   "home": {
+    "terminal": {
+      "title": "Full-Stack Developer",
+      "description": "A tech blog I develop and operate myself"
+    },
+    "stats": {
+      "totalArticles": "Articles",
+      "activeSeries": "Series",
+      "totalViews": "Views",
+      "techTags": "Tech Tags"
+    },
     "recentArticles": {
       "title": "Recent Articles",
       "viewAll": "View All",

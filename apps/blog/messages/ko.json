@@ -157,6 +157,16 @@
     }
   },
   "home": {
+    "terminal": {
+      "title": "프론트엔드와 백엔드를 넘나드는 개발자",
+      "description": "직접 개발하고 운영하는 기술 블로그입니다"
+    },
+    "stats": {
+      "totalArticles": "게시글",
+      "activeSeries": "시리즈",
+      "totalViews": "조회수",
+      "techTags": "기술 태그"
+    },
     "recentArticles": {
       "title": "최근 게시글",
       "viewAll": "모든 글",
