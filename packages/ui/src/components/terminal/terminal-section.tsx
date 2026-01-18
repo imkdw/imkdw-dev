@@ -94,7 +94,7 @@ export const TerminalSection = ({ title, description, stats, tags, className = '
     >
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 items-stretch">
-          <div className="bg-terminal-bg rounded-lg border border-border overflow-hidden h-full flex flex-col min-h-[300px] md:min-h-[350px]">
+          <div className="bg-terminal-bg rounded-lg border border-terminal-border overflow-hidden h-full flex flex-col min-h-[300px] md:min-h-[350px] shadow-lg">
             <TerminalHeader />
             <TerminalContent
               commands={terminalCommands}
