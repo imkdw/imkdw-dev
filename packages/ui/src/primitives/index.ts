@@ -16,3 +16,4 @@ export * from './sidebar';
 export * from './textarea';
 export * from './theme-toggle';
 export * from './scroll-to-top';
+export * from './scroll-restoration';
