@@ -7,7 +7,7 @@ import { cn } from '../lib/utils';
 
 export const DropdownMenu = Menu;
 
-interface DropdownMenuTriggerProps extends ComponentPropsWithoutRef<typeof MenuButton> {}
+type DropdownMenuTriggerProps = ComponentPropsWithoutRef<typeof MenuButton>;
 
 export function DropdownMenuTrigger({ className, ...props }: DropdownMenuTriggerProps) {
   return (
