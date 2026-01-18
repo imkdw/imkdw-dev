@@ -5,7 +5,7 @@ export function TerminalHeader() {
   const title = '@imkdw-dev/blog - zsh';
 
   return (
-    <div className="terminal-header">
+    <div className="flex bg-muted border-b border-border px-4 py-3">
       <div className="flex items-center space-x-2">
         <MacOSControls />
         <div className="flex items-center space-x-2">

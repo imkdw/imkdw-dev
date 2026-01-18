@@ -26,14 +26,6 @@ button {
   }
 }
 
-/* Line clamp utility */
-.line-clamp-2 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
 /* Content visibility optimization for card lists */
 .card-wrapper-cv {
   content-visibility: auto;

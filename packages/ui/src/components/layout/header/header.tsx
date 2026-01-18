@@ -51,7 +51,7 @@ export function Header({ onSearch, onLogout, translations, localeSwitcher, logoL
 
   return (
     <header className="w-full border-b border-border bg-background">
-      <div className="terminal-header items-center justify-between">
+      <div className="flex bg-muted border-b border-border px-4 py-3 items-center justify-between">
         <div className="flex items-center space-x-4">
           <MacOSControls />
           <div className="flex items-center space-x-2">
