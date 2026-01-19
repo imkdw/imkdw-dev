@@ -78,7 +78,7 @@ export function DropdownMenuContent({ className, align = 'end', children, ...pro
       transition
       anchor={align === 'center' ? 'bottom' : `bottom ${align}`}
       className={cn(
-        'z-50 min-w-[8rem] overflow-hidden rounded-md bg-popover p-1 text-popover-foreground shadow-md outline-0 origin-top transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0',
+        'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md outline-0 origin-top transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0',
         className
       )}
       {...props}

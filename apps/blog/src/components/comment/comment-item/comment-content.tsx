@@ -56,7 +56,7 @@ export function CommentContent({
         </Avatar>
 
         <div className="flex-1 min-w-0">
-          <div className="bg-background-secondary border border-border rounded-2xl px-4 py-3">
+          <div className="bg-secondary border border-border rounded-2xl px-4 py-3">
             <div className="flex items-center justify-between mb-2">
               <span className="font-medium text-sm">{comment.author.nickname}</span>
               <CommentActions
@@ -104,7 +104,7 @@ export function CommentContent({
         </Avatar>
 
         <div className="flex-1 min-w-0">
-          <div className="bg-background-secondary border border-border rounded-2xl px-4 py-3">
+          <div className="bg-secondary border border-border rounded-2xl px-4 py-3">
             <div className="flex items-center space-x-2 mb-1">
               <span className="font-medium text-sm">{comment.author.nickname}</span>
               <span className="text-xs text-muted-foreground">·</span>

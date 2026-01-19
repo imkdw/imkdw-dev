@@ -738,7 +738,7 @@ importers:
         specifier: ^2.6.0
         version: 2.6.0
       tailwindcss:
-        specifier: '3'
+        specifier: ~3.4.17
         version: 3.4.17(ts-node@10.9.2(@swc/core@1.15.8)(@types/node@24.4.0)(typescript@5.9.2))
       turndown:
         specifier: ^7.2.1

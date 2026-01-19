@@ -26,7 +26,7 @@ export function CommentForm({ newComment, onCommentChange, onSubmit, onKeyPress,
   const isLoggedIn = member !== null;
 
   return (
-    <div className="mb-8 bg-background-secondary border border-border rounded-xl p-4">
+    <div className="mb-8 bg-secondary border border-border rounded-xl p-4">
       <div className="flex space-x-3">
         <Avatar className="w-10 h-10 flex-shrink-0">
           <AvatarImage src={member?.profileImage} />

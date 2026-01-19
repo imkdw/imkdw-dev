@@ -296,8 +296,8 @@ div[data-milkdown-root='true'] {
 }
 
 .milkdown .code-block-copy:hover {
-  background: #3c3c3c;
-  color: #ffffff;
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
 }
 
 .milkdown .code-block-copy:focus {
