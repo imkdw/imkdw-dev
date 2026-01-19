@@ -6,7 +6,7 @@ function TerminalSectionSkeleton() {
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 items-stretch">
           {/* Terminal window skeleton */}
-          <div className="terminal-window h-full flex flex-col min-h-[300px] md:min-h-[350px] bg-card rounded-lg border border-border">
+          <div className="bg-terminal-bg h-full flex flex-col min-h-[300px] md:min-h-[350px] rounded-lg border border-border">
             {/* Terminal header */}
             <div className="flex items-center gap-2 p-3 border-b border-border">
               <div className="flex gap-1.5">

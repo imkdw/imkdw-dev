@@ -1,6 +1,7 @@
 # UI 패키지 가이드
 
-`@imkdw-dev/ui`는 imkdw-dev 블로그를 위한 디자인 시스템 패키지입니다. React 18+와 TypeScript를 기반으로 한 재사용 가능한 UI 컴포넌트들을 제공합니다.
+`@imkdw-dev/ui`는 imkdw-dev 블로그를 위한 디자인 시스템 패키지입니다.
+React 19+와 TypeScript를 기반으로 한 재사용 가능한 UI 컴포넌트들을 제공합니다.
 
 ## 패키지 개요
 
@@ -209,8 +210,8 @@ function CustomButton({ className, ...props }) {
 ## 의존성
 
 ### Peer Dependencies (필수)
-- React >= 18.0.0
-- React DOM >= 18.0.0
+- React >= 19.0.0
+- React DOM >= 19.0.0
 
 ### Main Dependencies
 - **@headlessui/react**: 접근성 중심 UI 컴포넌트

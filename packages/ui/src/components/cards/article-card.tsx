@@ -21,10 +21,10 @@ export function ArticleCard({ article, LinkComponent, locale }: Props) {
   return (
     <article className="h-full">
       <LinkComponent href={`/articles/${slug}`} className="h-full">
-        <div className="rounded-xl p-2 group h-full flex flex-col bg-gradient-to-br from-card via-card to-muted/30 border-2 border-border/60 hover:border-primary/30 hover:shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.3)] transition-all duration-300">
+        <div className="rounded-xl p-2 group h-full flex flex-col bg-card border-2 border-border/60 hover:border-primary/30 transition-all duration-300">
           <div className="flex flex-col flex-1 p-3 md:p-4">
             <div className="flex items-center justify-between pb-2 md:pb-4">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-gradient-to-r from-primary/10 via-primary/5 to-accent/5 border border-primary/20 hover:border-primary/40 hover:bg-primary/15 transition-all duration-200">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-primary/10 border border-primary/20 hover:border-primary/40 hover:bg-primary/15 transition-all duration-200">
                 <GitBranch className="h-3 w-3" />
                 <span className="text-sm font-medium text-primary">{series.title}</span>
               </div>

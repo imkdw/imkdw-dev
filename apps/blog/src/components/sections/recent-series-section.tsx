@@ -51,7 +51,7 @@ export function RecentSeries({
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
         {seriesList.map(item => (
-          <div key={item.slug} className="bounce-in h-full card-wrapper-cv">
+          <div key={item.slug} className="animate-scale-in h-full card-wrapper-cv">
             <SeriesCard series={item} LinkComponent={Link} translations={seriesCardTranslations} locale={locale} />
           </div>
         ))}

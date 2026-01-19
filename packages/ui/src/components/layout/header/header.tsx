@@ -6,6 +6,7 @@ import { SidebarTrigger } from '../../../primitives/sidebar';
 import { MemberMenu } from '../../auth/user-menu';
 import { LoginModal } from '../../auth/login-modal';
 import { MacOSControls } from '../../../primitives/macos-controls';
+import { ThemeToggle } from '../../../primitives/theme-toggle';
 import { FileTabs } from './file-tabs';
 import { DesktopNavigation } from './desktop-navigation';
 import { MobileNavigation } from './mobile-navigation';
@@ -51,7 +52,7 @@ export function Header({ onSearch, onLogout, translations, localeSwitcher, logoL
 
   return (
     <header className="w-full border-b border-border bg-background">
-      <div className="terminal-header items-center justify-between">
+      <div className="flex bg-muted border-b border-border px-4 py-3 items-center justify-between">
         <div className="flex items-center space-x-4">
           <MacOSControls />
           <div className="flex items-center space-x-2">
@@ -61,6 +62,7 @@ export function Header({ onSearch, onLogout, translations, localeSwitcher, logoL
         </div>
 
         <div className="flex items-center space-x-1 gap-2">
+          <ThemeToggle />
           {localeSwitcher}
           <MemberMenu onLogin={handleLogin} onLogout={onLogout} translations={translations.auth} />
         </div>

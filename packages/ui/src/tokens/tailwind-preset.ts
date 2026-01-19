@@ -51,24 +51,16 @@ export const tailwindPreset: Partial<Config> = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        sidebar: {
-          DEFAULT: 'hsl(var(--sidebar-background))',
-          foreground: 'hsl(var(--sidebar-foreground))',
-          primary: 'hsl(var(--sidebar-primary))',
-          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-          accent: 'hsl(var(--sidebar-accent))',
-          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-          border: 'hsl(var(--sidebar-border))',
-          ring: 'hsl(var(--sidebar-ring))',
-        },
         terminal: {
           bg: 'hsl(var(--terminal-bg))',
+          header: 'hsl(var(--terminal-header))',
+          border: 'hsl(var(--terminal-border))',
           foreground: 'hsl(var(--terminal-foreground))',
+          text: 'hsl(var(--terminal-text))',
           accent: 'hsl(var(--terminal-accent))',
           warning: 'hsl(var(--terminal-warning))',
           error: 'hsl(var(--terminal-error))',
           success: 'hsl(var(--terminal-success))',
-          info: 'hsl(var(--terminal-info))',
         },
         code: {
           bg: 'hsl(var(--code-bg))',
@@ -87,6 +79,7 @@ export const tailwindPreset: Partial<Config> = {
       },
       fontFamily: {
         mono: typography.fontMono.split(', '),
+        sans: ['Pretendard', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
       keyframes: {
         'fade-in': {
@@ -126,8 +119,6 @@ export const tailwindPreset: Partial<Config> = {
         'terminal-sm': shadows.light.sm,
         'terminal-md': shadows.light.md,
         'terminal-lg': shadows.light.lg,
-        'terminal-glow': shadows.light.glow,
-        'terminal-inset': shadows.light.terminal,
       },
     },
   },
@@ -160,12 +151,14 @@ export const tailwindPreset: Partial<Config> = {
           '--muted-hover': colors.light.muted.hover,
           '--radius': spacing.radius,
           '--terminal-bg': colors.light.terminal.background,
+          '--terminal-header': colors.light.terminal.header,
+          '--terminal-border': colors.light.terminal.border,
           '--terminal-foreground': colors.light.terminal.foreground,
+          '--terminal-text': colors.light.terminal.text,
           '--terminal-accent': colors.light.terminal.accent,
           '--terminal-warning': colors.light.terminal.warning,
           '--terminal-error': colors.light.terminal.error,
           '--terminal-success': colors.light.terminal.success,
-          '--terminal-info': colors.light.terminal.info,
           '--code-bg': colors.light.terminal.code.background,
           '--code-foreground': colors.light.terminal.code.foreground,
           '--code-keyword': colors.light.terminal.code.keyword,
@@ -173,14 +166,6 @@ export const tailwindPreset: Partial<Config> = {
           '--code-comment': colors.light.terminal.code.comment,
           '--code-number': colors.light.terminal.code.number,
           '--code-operator': colors.light.terminal.code.operator,
-          '--sidebar-background': colors.light.sidebar.background,
-          '--sidebar-foreground': colors.light.sidebar.foreground,
-          '--sidebar-primary': colors.light.sidebar.primary,
-          '--sidebar-primary-foreground': colors.light.sidebar['primary-foreground'],
-          '--sidebar-accent': colors.light.sidebar.accent,
-          '--sidebar-accent-foreground': colors.light.sidebar['accent-foreground'],
-          '--sidebar-border': colors.light.sidebar.border,
-          '--sidebar-ring': colors.light.sidebar.ring,
         },
         '.dark': {
           '--background': colors.dark.background.primary,
@@ -205,12 +190,14 @@ export const tailwindPreset: Partial<Config> = {
           '--ring': colors.dark.primary.default,
           '--muted-hover': colors.dark.muted.hover,
           '--terminal-bg': colors.dark.terminal.background,
+          '--terminal-header': colors.dark.terminal.header,
+          '--terminal-border': colors.dark.terminal.border,
           '--terminal-foreground': colors.dark.terminal.foreground,
+          '--terminal-text': colors.dark.terminal.text,
           '--terminal-accent': colors.dark.terminal.accent,
           '--terminal-warning': colors.dark.terminal.warning,
           '--terminal-error': colors.dark.terminal.error,
           '--terminal-success': colors.dark.terminal.success,
-          '--terminal-info': colors.dark.terminal.info,
           '--code-bg': colors.dark.terminal.code.background,
           '--code-foreground': colors.dark.terminal.code.foreground,
           '--code-keyword': colors.dark.terminal.code.keyword,
@@ -218,33 +205,11 @@ export const tailwindPreset: Partial<Config> = {
           '--code-comment': colors.dark.terminal.code.comment,
           '--code-number': colors.dark.terminal.code.number,
           '--code-operator': colors.dark.terminal.code.operator,
-          '--sidebar-background': colors.dark.sidebar.background,
-          '--sidebar-foreground': colors.dark.sidebar.foreground,
-          '--sidebar-primary': colors.dark.sidebar.primary,
-          '--sidebar-primary-foreground': colors.dark.sidebar['primary-foreground'],
-          '--sidebar-accent': colors.dark.sidebar.accent,
-          '--sidebar-accent-foreground': colors.dark.sidebar['accent-foreground'],
-          '--sidebar-border': colors.dark.sidebar.border,
-          '--sidebar-ring': colors.dark.sidebar.ring,
         },
       });
 
       addUtilities({
-        // Terminal window styles
-        '.terminal-window': {
-          background: 'linear-gradient(135deg, hsl(var(--terminal-bg)) 0%, hsl(215 25% 27%) 100%)',
-          'border-radius': '0.5rem',
-          border: '1px solid hsl(var(--border))',
-          'box-shadow': '0 8px 32px -8px hsl(var(--primary) / 0.3), inset 0 1px 0 hsl(220 43% 11% / 0.1)',
-          overflow: 'hidden',
-          position: 'relative',
-        },
-        '.terminal-header': {
-          display: 'flex',
-          background: 'linear-gradient(135deg, hsl(215 25% 35%) 0%, hsl(215 25% 30%) 100%)',
-          'border-bottom': '1px solid hsl(var(--border))',
-          padding: '0.75rem 1rem',
-        },
+        // Terminal styles
         '.terminal-content': {
           background: 'hsl(var(--terminal-bg))',
           color: 'hsl(var(--terminal-foreground))',
@@ -269,13 +234,13 @@ export const tailwindPreset: Partial<Config> = {
           border: '1px solid rgba(0, 0, 0, 0.2)',
         },
         '.control-dot.close': {
-          background: '#ff5f57',
+          background: 'hsl(var(--destructive))',
         },
         '.control-dot.minimize': {
-          background: '#ffbd2e',
+          background: 'hsl(var(--terminal-warning))',
         },
         '.control-dot.maximize': {
-          background: '#28ca42',
+          background: 'hsl(var(--terminal-success))',
         },
         '.syntax-keyword': {
           color: 'hsl(var(--code-keyword))',
@@ -294,21 +259,6 @@ export const tailwindPreset: Partial<Config> = {
         },
         '.smooth-transition': {
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-        },
-        '.bounce-in': {
-          animation: 'scale-in 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-        },
-        '.line-clamp-2': {
-          overflow: 'hidden',
-          display: '-webkit-box',
-          '-webkit-box-orient': 'vertical',
-          '-webkit-line-clamp': '2',
-        },
-        '.line-clamp-3': {
-          overflow: 'hidden',
-          display: '-webkit-box',
-          '-webkit-box-orient': 'vertical',
-          '-webkit-line-clamp': '3',
         },
       });
     },

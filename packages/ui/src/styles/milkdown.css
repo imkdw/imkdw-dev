@@ -12,7 +12,7 @@ div[data-milkdown-root='true'] {
   display: flex;
   flex-direction: column;
   flex: 1;
-  color: hsl(220 14% 70%);
+  color: hsl(var(--foreground));
 }
 
 /* Heading Styles */
@@ -231,6 +231,7 @@ div[data-milkdown-root='true'] {
   overflow: hidden;
   border: 1px solid #3c3c3c;
   background: #242424;
+  color: #cccccc;
 }
 
 /* Header bar */
@@ -273,7 +274,7 @@ div[data-milkdown-root='true'] {
 .milkdown .code-block-language {
   font-family: monospace;
   font-size: 0.75rem;
-  color: hsl(var(--muted-foreground));
+  color: #888888;
   text-transform: lowercase;
 }
 
@@ -284,7 +285,7 @@ div[data-milkdown-root='true'] {
   background: transparent;
   border: none;
   border-radius: 0.25rem;
-  color: hsl(var(--muted-foreground));
+  color: #888888;
   cursor: pointer;
   display: flex;
   align-items: center;

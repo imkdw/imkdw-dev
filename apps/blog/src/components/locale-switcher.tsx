@@ -29,10 +29,17 @@ export function LocaleSwitcher() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'h-8 w-8 px-0')}>
+      <DropdownMenuTrigger
+        className={cn(
+          buttonVariants({ variant: 'ghost', size: 'sm' }),
+          'h-8 w-8 px-0 !outline-none !ring-0 focus:!outline-none focus:!ring-0 focus-visible:!outline-none focus-visible:!ring-0 data-[focus]:!outline-none data-[focus]:!ring-0'
+        )}
+      >
         <Globe className="h-4 w-4" />
         <span className="sr-only">Switch language</span>
       </DropdownMenuTrigger>
+
+      {/* 언어 변경기 */}
       <DropdownMenuContent align="end">
         {routing.locales.map(loc => (
           <DropdownMenuItem

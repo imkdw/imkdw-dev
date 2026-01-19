@@ -14,6 +14,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { APP_ENV } from '@imkdw-dev/consts';
+import { ScrollToTop, ScrollRestoration } from '@imkdw-dev/ui';
 
 interface Props {
   children: React.ReactNode;
@@ -78,9 +79,11 @@ export default async function LocaleLayout({ children, params }: Props) {
     <NextIntlClientProvider messages={messages}>
       <LocaleSetter locale={locale} />
       <Providers>
+        <ScrollRestoration />
         <NavigationProgress />
         {children}
         <MobileSidebar translations={navigationTranslations} />
+        <ScrollToTop />
       </Providers>
       <WebVitalsReporter />
       {process.env.APP_ENV === APP_ENV.PRODUCTION && (

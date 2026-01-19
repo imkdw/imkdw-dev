@@ -42,7 +42,7 @@ export function RecentArticles({ articles, translations, locale }: Props) {
         {articles.map((article, index) => (
           <div
             key={article.slug}
-            className="bounce-in h-full card-wrapper-cv"
+            className="animate-scale-in h-full card-wrapper-cv"
             style={{ animationDelay: `${(index + 2) * 0.1}s` }}
           >
             <ArticleCard article={article} LinkComponent={Link} locale={locale} />
