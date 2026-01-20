@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
@@ -17,7 +18,7 @@ import { APP_ENV } from '@imkdw-dev/consts';
 import { ScrollToTop, ScrollRestoration } from '@imkdw-dev/ui';
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
   params: Promise<{ locale: string }>;
 }
 

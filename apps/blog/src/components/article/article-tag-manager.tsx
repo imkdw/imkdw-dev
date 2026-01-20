@@ -1,5 +1,6 @@
 'use client';
 
+import type { KeyboardEvent } from 'react';
 import { useState } from 'react';
 import { Card, Button, Input, Badge } from '@imkdw-dev/ui';
 import { Plus, X } from 'lucide-react';
@@ -20,7 +21,7 @@ export function ArticleTagManager({ tags, onAddTag, onRemoveTag }: Props) {
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
       e.preventDefault();
       handleAddTag();

@@ -1,3 +1,4 @@
+import type { ChangeEvent } from 'react';
 import { Search } from 'lucide-react';
 import { Input } from '../../../primitives/input';
 
@@ -9,7 +10,7 @@ interface Props {
 }
 
 export function SearchInput({ placeholder = 'Search...', className = '', variant = 'desktop', onSearch }: Props) {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onSearch?.(e.target.value);
   };
 

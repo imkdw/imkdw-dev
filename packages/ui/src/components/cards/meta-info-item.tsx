@@ -1,7 +1,8 @@
+import type { ReactNode } from 'react';
 import { cn } from '../../lib';
 
 interface Props {
-  icon: React.ReactNode;
+  icon: ReactNode;
   text: string;
   className?: string;
 }

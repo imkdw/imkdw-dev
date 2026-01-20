@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useInstance } from '@milkdown/react';
 import { usePluginViewContext } from '@prosemirror-adapter/react';
 import { SlashProvider } from '@milkdown/kit/plugin/slash';
@@ -14,7 +14,7 @@ import type { EditorState } from '@milkdown/kit/prose/state';
 interface SlashMenuItem {
   key: string;
   label: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
   onSelect: (editor: Editor) => void;
 }
 

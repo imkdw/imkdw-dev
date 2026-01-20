@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, type KeyboardEvent } from 'react';
 import { useCommentForm } from '@/hooks';
 import { IArticleCommentDto } from '@imkdw-dev/types';
 import type { Locale } from '@imkdw-dev/i18n';
@@ -57,7 +57,7 @@ export function CommentSection({ articleSlug, initialComments, locale, translati
   }, [handleSubmit, articleSlug]);
 
   const handleKeyPress = useCallback(
-    (e: React.KeyboardEvent) => {
+    (e: KeyboardEvent) => {
       if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         handleSubmitComment();

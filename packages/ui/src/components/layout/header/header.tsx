@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Terminal } from 'lucide-react';
 import { SidebarTrigger } from '../../../primitives/sidebar';
 import { MemberMenu } from '../../auth/user-menu';
@@ -31,8 +31,8 @@ interface Props {
       autoSignup: string;
     };
   };
-  localeSwitcher: React.ReactNode;
-  logoLink: React.ReactNode;
+  localeSwitcher: ReactNode;
+  logoLink: ReactNode;
 }
 
 export function Header({ onSearch, onLogout, translations, localeSwitcher, logoLink }: Props) {
