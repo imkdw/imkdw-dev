@@ -1,6 +1,6 @@
 import { notFound, forbidden, unauthorized } from 'next/navigation';
 import { ApiError } from '../types';
-import { EXCEPTION_MESSAGES } from '@imkdw-dev/exception';
+import { EXCEPTION_MESSAGES, CLIENT_EXCEPTION_CODES } from '@imkdw-dev/exception';
 
 function handleServerError(error: ApiError) {
   // eslint-disable-next-line no-console
@@ -30,7 +30,7 @@ async function handleClientError(error: ApiError): Promise<never> {
   const errorMessage =
     error.errorCode && error.errorCode in EXCEPTION_MESSAGES
       ? EXCEPTION_MESSAGES[error.errorCode as keyof typeof EXCEPTION_MESSAGES]
-      : '서버와의 통신에 실패했습니다.';
+      : EXCEPTION_MESSAGES[CLIENT_EXCEPTION_CODES.NETWORK_ERROR];
 
   const { toast } = await import('@imkdw-dev/toast');
   toast({
@@ -53,9 +53,9 @@ export const withErrorHandling = <T extends unknown[], R>(
         const isServer = typeof window === 'undefined';
 
         if (isServer) {
-          handleServerError(error);
+          return handleServerError(error);
         } else {
-          handleClientError(error);
+          await handleClientError(error);
         }
       }
 

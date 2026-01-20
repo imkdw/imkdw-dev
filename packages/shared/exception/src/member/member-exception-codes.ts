@@ -7,7 +7,12 @@ export const MEMBER_EXCEPTION_CODES = {
 
 type MemberExceptionCode = (typeof MEMBER_EXCEPTION_CODES)[keyof typeof MEMBER_EXCEPTION_CODES];
 
-export const MEMBER_EXCEPTION_MESSAGES: Record<MemberExceptionCode, string> = {
+export const MEMBER_EXCEPTION_MESSAGES_KO: Record<MemberExceptionCode, string> = {
   [MEMBER_EXCEPTION_CODES.MEMBER_NOT_FOUND]: '사용자를 찾을 수 없습니다.',
   [MEMBER_EXCEPTION_CODES.EXIST_MEMBER_NICKNAME]: '이미 사용 중인 닉네임입니다.',
+} as const;
+
+export const MEMBER_EXCEPTION_MESSAGES_EN: Record<MemberExceptionCode, string> = {
+  [MEMBER_EXCEPTION_CODES.MEMBER_NOT_FOUND]: 'User not found.',
+  [MEMBER_EXCEPTION_CODES.EXIST_MEMBER_NICKNAME]: 'Nickname is already in use.',
 } as const;

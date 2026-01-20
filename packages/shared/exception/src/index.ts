@@ -1,5 +1,5 @@
 export * from './exception-codes';
-export * from './exception-messages';
+export * from './messages';
 export * from './article';
 export * from './article-comment';
 export * from './member';

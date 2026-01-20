@@ -11,6 +11,9 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint src/ --fix"
   },
+  "dependencies": {
+    "@imkdw-dev/i18n": "workspace:*"
+  },
   "devDependencies": {
     "@imkdw-dev/eslint-config": "workspace:*",
     "eslint": "^9.18.0",

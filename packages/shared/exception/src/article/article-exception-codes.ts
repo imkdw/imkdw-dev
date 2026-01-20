@@ -17,10 +17,18 @@ export const ARTICLE_EXCEPTION_CODES = {
 
 type ArticleExceptionCode = (typeof ARTICLE_EXCEPTION_CODES)[keyof typeof ARTICLE_EXCEPTION_CODES];
 
-export const ARTICLE_EXCEPTION_MESSAGES: Record<ArticleExceptionCode, string> = {
+export const ARTICLE_EXCEPTION_MESSAGES_KO: Record<ArticleExceptionCode, string> = {
   [ARTICLE_EXCEPTION_CODES.EXIST_ARTICLE_TITLE]: '이미 존재하는 게시글 제목입니다.',
   [ARTICLE_EXCEPTION_CODES.INVALID_ARTICLE_TITLE]: '올바르지 않은 게시글 제목입니다.',
   [ARTICLE_EXCEPTION_CODES.INVALID_ARTICLE_CONTENT]: '올바르지 않은 게시글 내용입니다.',
   [ARTICLE_EXCEPTION_CODES.ARTICLE_NOT_FOUND]: '게시글을 찾을 수 없습니다.',
   [ARTICLE_EXCEPTION_CODES.EXIST_ARTICLE_SLUG]: '이미 존재하는 게시글 슬러그입니다.',
+} as const;
+
+export const ARTICLE_EXCEPTION_MESSAGES_EN: Record<ArticleExceptionCode, string> = {
+  [ARTICLE_EXCEPTION_CODES.EXIST_ARTICLE_TITLE]: 'Article title already exists.',
+  [ARTICLE_EXCEPTION_CODES.INVALID_ARTICLE_TITLE]: 'Invalid article title.',
+  [ARTICLE_EXCEPTION_CODES.INVALID_ARTICLE_CONTENT]: 'Invalid article content.',
+  [ARTICLE_EXCEPTION_CODES.ARTICLE_NOT_FOUND]: 'Article not found.',
+  [ARTICLE_EXCEPTION_CODES.EXIST_ARTICLE_SLUG]: 'Article slug already exists.',
 } as const;

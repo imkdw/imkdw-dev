@@ -527,6 +527,10 @@ importers:
         version: 5.9.2
 
   packages/shared/exception:
+    dependencies:
+      '@imkdw-dev/i18n':
+        specifier: workspace:*
+        version: link:../../i18n
     devDependencies:
       '@imkdw-dev/eslint-config':
         specifier: workspace:*
