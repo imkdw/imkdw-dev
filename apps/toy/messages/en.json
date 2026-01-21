@@ -1,0 +1,11 @@
+{
+  "metadata": {
+    "title": "Toy App",
+    "description": "Next.js i18n Test App"
+  },
+  "home": {
+    "title": "Hello!",
+    "description": "This is a Next.js + next-intl toy project.",
+    "switchLanguage": "Switch to Korean"
+  }
+}

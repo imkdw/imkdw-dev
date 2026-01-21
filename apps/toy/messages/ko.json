@@ -1,0 +1,11 @@
+{
+  "metadata": {
+    "title": "Toy App",
+    "description": "Next.js i18n 테스트 앱"
+  },
+  "home": {
+    "title": "안녕하세요!",
+    "description": "Next.js + next-intl 토이 프로젝트입니다.",
+    "switchLanguage": "English로 전환"
+  }
+}
