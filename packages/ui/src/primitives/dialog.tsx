@@ -63,7 +63,7 @@ export function Dialog({ open, onClose, children, className, ...props }: DialogP
 
   return (
     <HeadlessDialog open={open} onClose={onClose} className={cn('relative z-50', className)} transition {...props}>
-      <DialogBackdrop transition className="fixed inset-0 bg-black/70 duration-300 ease-out data-closed:opacity-0" />
+      <DialogBackdrop transition className="fixed inset-0 bg-black/70 duration-300 ease-out data-[closed]:opacity-0" />
 
       <div className="fixed inset-0 overflow-y-auto" style={{ marginRight: `calc(-1 * var(--scrollbar-width, 0px))` }}>
         <div className="flex min-h-full items-center justify-center p-4 text-center">
@@ -83,7 +83,7 @@ export function DialogContent({ className, children, onClose, ...props }: Dialog
     <DialogPanel
       transition
       className={cn(
-        'relative w-full max-w-md transform overflow-hidden rounded-2xl bg-background p-6 text-left align-middle shadow-xl duration-300 ease-out data-closed:opacity-0 data-closed:scale-95 border border-border',
+        'relative w-full max-w-md transform overflow-hidden rounded-2xl bg-background p-6 text-left align-middle shadow-xl duration-300 ease-out data-[closed]:opacity-0 data-[closed]:scale-95 border border-border',
         className
       )}
       {...props}

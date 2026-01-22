@@ -1,6 +1,7 @@
 'use client';
 
-import { Chrome, Github } from 'lucide-react';
+import { useState } from 'react';
+import { Chrome, Github, Loader2 } from 'lucide-react';
 import { Button } from '../../primitives/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../primitives/dialog';
 import { OAuthProvider } from '@imkdw-dev/consts';
@@ -18,6 +19,16 @@ interface Props {
 }
 
 export function LoginModal({ isOpen, onClose, onSocialLogin, translations }: Props) {
+  const [loadingProvider, setLoadingProvider] = useState<OAuthProvider | null>(null);
+
+  function handleSocialLogin(provider: OAuthProvider) {
+    setLoadingProvider(provider);
+    onSocialLogin(provider);
+  }
+
+  const isGoogleLoading = loadingProvider === 'google';
+  const isGithubLoading = loadingProvider === 'github';
+
   return (
     <Dialog open={isOpen} onClose={onClose}>
       <DialogContent className="w-[90vw] max-w-md mx-auto" onClose={onClose}>
@@ -27,20 +38,22 @@ export function LoginModal({ isOpen, onClose, onSocialLogin, translations }: Pro
 
         <div className="space-y-4 py-4">
           <Button
-            className="w-full h-12 flex items-center justify-center space-x-2 bg-background border border-border hover:bg-muted text-foreground"
+            className="w-full h-12 flex items-center justify-center space-x-2 bg-background border border-border hover:bg-muted text-foreground disabled:opacity-60 disabled:cursor-not-allowed"
             variant="outline"
-            onClick={() => onSocialLogin('google')}
+            onClick={() => handleSocialLogin('google')}
+            disabled={loadingProvider !== null}
           >
-            <Chrome className="h-5 w-5" />
-            <span>{translations.loginWithGoogle}</span>
+            {isGoogleLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Chrome className="h-5 w-5" />}
+            <span>{isGoogleLoading ? '...' : translations.loginWithGoogle}</span>
           </Button>
           <Button
-            className="w-full h-12 flex items-center justify-center space-x-2 bg-background border border-border hover:bg-muted text-foreground"
+            className="w-full h-12 flex items-center justify-center space-x-2 bg-background border border-border hover:bg-muted text-foreground disabled:opacity-60 disabled:cursor-not-allowed"
             variant="outline"
-            onClick={() => onSocialLogin('github')}
+            onClick={() => handleSocialLogin('github')}
+            disabled={loadingProvider !== null}
           >
-            <Github className="h-5 w-5" />
-            <span>{translations.loginWithGithub}</span>
+            {isGithubLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Github className="h-5 w-5" />}
+            <span>{isGithubLoading ? '...' : translations.loginWithGithub}</span>
           </Button>
         </div>
 
