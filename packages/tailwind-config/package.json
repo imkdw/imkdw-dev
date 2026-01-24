@@ -1,0 +1,17 @@
+{
+  "name": "@imkdw-dev/tailwind-config",
+  "version": "0.1.0",
+  "description": "Shared Tailwind CSS v4 configuration for imkdw-dev",
+  "type": "module",
+  "exports": {
+    "./theme.css": "./src/theme.css"
+  },
+  "files": ["src"],
+  "dependencies": {
+    "tailwindcss": "^4",
+    "@tailwindcss/typography": "^0.5.16"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^4"
+  }
+}

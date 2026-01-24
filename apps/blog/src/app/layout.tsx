@@ -1,9 +1,7 @@
 import type { ReactNode, CSSProperties } from 'react';
 import { pretendard, jetBrainsMono } from '@imkdw-dev/fonts';
 
-import '@imkdw-dev/ui/globals.css';
-import '@imkdw-dev/ui/milkdown.css';
-import '@imkdw-dev/ui/image-zoom.css';
+import './globals.css';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

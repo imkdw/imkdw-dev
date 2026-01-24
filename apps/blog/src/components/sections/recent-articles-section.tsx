@@ -25,7 +25,7 @@ export function RecentArticles({ articles, translations, locale }: Props) {
           </div>
           <div>
             <h2 className="text-lg lg:text-xl font-semibold text-foreground">{translations.title}</h2>
-            <div className={cn('terminal-prompt text-xs text-muted-foreground', jetBrainsMono.className)}>
+            <div className={cn('terminal-prompt text-muted-foreground', jetBrainsMono.className)}>
               ls -la *.md | head -4
             </div>
           </div>

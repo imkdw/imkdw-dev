@@ -27,13 +27,13 @@ Turborepo monorepo with pnpm package manager.
 | App         | Stack                             | Port | Purpose         |
 | ----------- | --------------------------------- | ---- | --------------- |
 | `apps/api`  | NestJS 11, PostgreSQL, Prisma     | 8000 | REST API server |
-| `apps/blog` | Next.js 16, React 19, Tailwind v3 | 3000 | Blog frontend   |
+| `apps/blog` | Next.js 16, React 19, Tailwind v4 | 3000 | Blog frontend   |
 
 ### Shared Packages (@imkdw-dev/*)
 
 | Package      | Purpose                                          |
 | ------------ | ------------------------------------------------ |
-| `ui`         | Design system (Tailwind v3, Radix UI primitives) |
+| `ui`         | Design system (Tailwind v4, Radix UI primitives) |
 | `api-client` | Typed API client library                         |
 | `types`      | Shared TypeScript interfaces and DTOs            |
 | `consts`     | Application constants                            |
@@ -119,7 +119,7 @@ IMPORTANT: These rules are enforced by ESLint and CI:
 
 IMPORTANT: Read before making changes:
 
-1. **Tailwind CSS v3 Fixed** - Do NOT upgrade to v4 (stability issues with current setup)
+1. **Tailwind CSS v4** - CSS-first configuration using `@imkdw-dev/tailwind-config` shared package
 2. **Turbopack Limitations** - Some font configurations disabled for compatibility
 3. **Split Prisma Schema** - Schema files in `prisma/schema/` are imported by main schema file
 4. **Build Order Matters** - If shared types change, run `pnpm build` before testing
