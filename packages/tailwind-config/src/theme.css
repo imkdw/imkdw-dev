@@ -174,7 +174,7 @@
   width: 0.75rem;
   height: 0.75rem;
   border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--terminal-border);
 }
 
 @utility control-dot-close {

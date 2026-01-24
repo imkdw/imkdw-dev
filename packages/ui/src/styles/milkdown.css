@@ -650,7 +650,7 @@ div[data-milkdown-root='true'] {
 
 /* Dark Mode */
 .dark .milkdown {
-  color: hsl(220 14% 75%);
+  color: hsl(var(--foreground));
 }
 
 /* Inline code dark mode background */

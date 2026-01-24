@@ -4,7 +4,7 @@
 
 ## 패키지 구조
 
-```
+```text
 src/
 └── theme.css     # 단일 진입점 (CSS 변수, @theme 블록, custom utilities 모두 포함)
 ```
