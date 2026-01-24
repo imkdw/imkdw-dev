@@ -11,8 +11,7 @@
     "./lib": "./src/lib/index.ts",
     "./globals.css": "./src/styles/globals.css",
     "./milkdown.css": "./src/styles/milkdown.css",
-    "./image-zoom.css": "./src/styles/image-zoom.css",
-    "./tailwind-preset": "./src/tokens/tailwind-preset.ts"
+    "./image-zoom.css": "./src/styles/image-zoom.css"
   },
   "scripts": {
     "dev": "echo 'UI package is ready for development'",
@@ -34,14 +33,13 @@
     "@imkdw-dev/types": "workspace:*",
     "@imkdw-dev/utils": "workspace:*",
     "@imkdw-dev/i18n": "workspace:*",
+    "@imkdw-dev/tailwind-config": "workspace:*",
     "@milkdown/crepe": "^7.16.0",
     "@milkdown/kit": "^7.16.0",
     "@milkdown/react": "^7.16.0",
     "@milkdown/theme-nord": "^7.16.0",
     "@prosemirror-adapter/react": "^0.5.1",
     "@radix-ui/colors": "^3.0.0",
-    "@tailwindcss/typography": "^0.5.16",
-    "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "codemirror": "^6.0.2",
@@ -53,7 +51,7 @@
     "react-dom": "19.1.2",
     "remark-directive": "^4.0.0",
     "tailwind-merge": "^2.6.0",
-    "tailwindcss": "~3.4.17",
+    "tailwindcss": "^4",
     "turndown": "^7.2.1",
     "turndown-plugin-gfm": "^1.0.2"
   },

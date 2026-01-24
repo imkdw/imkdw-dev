@@ -1,3 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import '@imkdw-dev/tailwind-config/theme.css';
+
+/* App-specific source paths */
+@source '../';

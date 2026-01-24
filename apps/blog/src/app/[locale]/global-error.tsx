@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 
-import '@imkdw-dev/ui/globals.css';
+import '../globals.css';
 
 import { routing, type Locale } from '@/i18n/routing';
 

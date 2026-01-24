@@ -1,11 +1,12 @@
 @import '@imkdw-dev/tailwind-config/theme.css';
+@import '@imkdw-dev/ui/milkdown.css';
+@import '@imkdw-dev/ui/image-zoom.css';
+
+/* App-specific source paths */
+@source '../';
 
 html {
   scroll-behavior: smooth;
-}
-
-button {
-  cursor: pointer;
 }
 
 /* Animation utilities */

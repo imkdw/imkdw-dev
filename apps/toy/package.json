@@ -9,6 +9,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@imkdw-dev/tailwind-config": "workspace:*",
     "next": "16.0.7",
     "next-intl": "^4.7.0",
     "react": "19.1.2",
@@ -16,14 +17,14 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "latest",
     "@types/node": "^22.13.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "autoprefixer": "^10.4.21",
     "eslint": "^9.18.0",
     "eslint-config-next": "16.0.7",
     "postcss": "^8.5.6",
-    "tailwindcss": "^3",
+    "tailwindcss": "latest",
     "typescript": "5.9.2"
   }
 }

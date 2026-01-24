@@ -10,11 +10,11 @@ React 19+와 TypeScript를 기반으로 한 재사용 가능한 UI 컴포넌트�
 - **버전**: 0.1.0
 - **설명**: Design system for imkdw-dev blog
 - **메인 진입점**: `./src/index.ts`
-- **Tailwind Preset**: `./src/tokens/tailwind-preset.ts`
+- **Tailwind 설정**: `@imkdw-dev/tailwind-config` 패키지 사용 (CSS-first)
 
 ### 주요 특징
 - **Headless UI & Radix UI 기반**: 접근성과 사용성을 고려한 컴포넌트
-- **Tailwind CSS v3 고정 버전**: 안정성을 위한 버전 고정
+- **Tailwind CSS v4**: CSS-first 설정으로 업그레이드 완료
 - **Terminal/Code 테마**: 개발 블로그 특성에 맞는 터미널과 코드 하이라이팅 테마
 - **다크/라이트 모드**: CSS 변수 기반 완전한 테마 시스템
 - **TypeScript 완전 지원**: 모든 컴포넌트에 타입 정의 포함
@@ -39,11 +39,9 @@ src/
 ├── lib/                # 유틸리티 함수
 │   └── utils.ts        # cn 함수 (clsx + tailwind-merge)
 ├── styles/             # CSS 파일
-│   ├── globals.css     # 전역 스타일
-│   └── terminal.css    # 터미널 전용 스타일
-├── tokens/             # 디자인 토큰
-│   ├── colors.ts       # 색상 시스템 정의
-│   └── tailwind-preset.ts  # Tailwind 커스텀 프리셋
+│   ├── globals.css     # 전역 스타일 (Tailwind v4 imports 포함)
+│   ├── milkdown.css    # Milkdown 에디터 스타일
+│   └── image-zoom.css  # 이미지 줌 스타일
 └── index.ts            # 패키지 메인 진입점
 ```
 
@@ -103,17 +101,27 @@ color: hsl(var(--foreground));
 
 ## 주요 기능
 
-### Tailwind Preset 사용법
+### Tailwind CSS v4 사용법
 
-```typescript
-// tailwind.config.ts
-import tailwindPreset from '@imkdw-dev/ui/tailwind-preset';
+Tailwind CSS v4는 CSS-first 설정을 사용합니다. `@imkdw-dev/tailwind-config` 패키지에서 제공하는 CSS 파일을 import합니다:
+
+```css
+/* app.css 또는 globals.css */
+@import '@imkdw-dev/tailwind-config/theme.css';
+@import '@imkdw-dev/tailwind-config/utilities.css';
+```
+
+PostCSS 설정:
+
+```javascript
+import path from 'path';
 
 export default {
-  presets: [tailwindPreset],
-  content: [
-    // 콘텐츠 경로들
-  ],
+  plugins: {
+    '@tailwindcss/postcss': {
+      base: path.resolve(import.meta.dirname, '../../'),
+    },
+  },
 };
 ```
 
@@ -215,11 +223,13 @@ function CustomButton({ className, ...props }) {
 
 ### Main Dependencies
 - **@headlessui/react**: 접근성 중심 UI 컴포넌트
-- **tailwindcss**: v3 고정 (안정성)
+- **@imkdw-dev/tailwind-config**: Tailwind v4 CSS-first 설정
+- **tailwindcss**: v4.0+ (CSS-first 아키텍처)
 - **class-variance-authority**: 컴포넌트 variant 관리
 - **clsx**: 조건부 클래스 결합
 - **tailwind-merge**: Tailwind 클래스 충돌 해결
 - **lucide-react**: 아이콘 라이브러리
+- **@milkdown/react**: Markdown 에디터
 
 ## 개발 명령어
 
@@ -236,7 +246,7 @@ pnpm ui dev
 
 ## 주의사항
 
-1. **Tailwind CSS v3 고정**: 호환성을 위해 v3으로 고정되어 있습니다
+1. **Tailwind CSS v4**: CSS-first 설정 사용, `@imkdw-dev/tailwind-config` 패키지 필수
 2. **Props 인터페이스**: 모든 컴포넌트의 Props는 `interface Props`로 명명
 3. **Export 패턴**: `export * from "./file"` 패턴을 일관되게 사용
 4. **CSS 변수 의존성**: 테마 시스템이 CSS 변수에 의존하므로 글로벌 스타일 필수
@@ -253,6 +263,10 @@ pnpm ui dev
 
 ### 테마 확장
 
-1. `src/tokens/colors.ts`에서 새 색상 정의
-2. `src/tokens/tailwind-preset.ts`에서 CSS 변수 추가
-3. 필요시 커스텀 유틸리티 클래스 추가
+Tailwind v4로 마이그레이션되어 CSS 변수 기반 테마 시스템을 사용합니다.
+
+1. `@imkdw-dev/tailwind-config/theme.css`에서 CSS 변수 정의 수정
+2. 필요시 `@imkdw-dev/tailwind-config/utilities.css`에서 커스텀 유틸리티 클래스 추가
+3. `packages/ui/src/styles/globals.css`에서 컴포넌트별 스타일 정의
+
+더 이상 JavaScript 기반 Tailwind 설정 파일을 사용하지 않습니다.
