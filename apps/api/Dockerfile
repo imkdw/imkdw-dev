@@ -31,9 +31,13 @@ COPY apps/api/nest-cli.json ./apps/api/
 COPY apps/api/tsconfig.json ./apps/api/
 COPY apps/api/tsconfig.build.json ./apps/api/
 COPY packages/shared/consts/tsconfig.json ./packages/shared/consts/
+COPY packages/shared/consts/tsup.config.ts ./packages/shared/consts/
 COPY packages/shared/exception/tsconfig.json ./packages/shared/exception/
+COPY packages/shared/exception/tsup.config.ts ./packages/shared/exception/
 COPY packages/shared/types/tsconfig.json ./packages/shared/types/
+COPY packages/shared/types/tsup.config.ts ./packages/shared/types/
 COPY packages/shared/utils/tsconfig.json ./packages/shared/utils/
+COPY packages/shared/utils/tsup.config.ts ./packages/shared/utils/
 COPY packages/i18n/tsconfig.json ./packages/i18n/
 
 COPY apps/api/src ./apps/api/src
