@@ -31,22 +31,23 @@ Turborepo monorepo with pnpm package manager.
 
 ### Shared Packages (@imkdw-dev/*)
 
-| Package      | Purpose                                          |
-| ------------ | ------------------------------------------------ |
-| `ui`         | Design system (Tailwind v4, Radix UI primitives) |
-| `api-client` | Typed API client library                         |
-| `types`      | Shared TypeScript interfaces and DTOs            |
-| `consts`     | Application constants                            |
-| `exception`  | Error codes and exception handlers               |
-| `auth`       | Authentication utilities                         |
-| `hooks`      | Custom React hooks                               |
-| `toast`      | Toast notification system                        |
-| `fonts`      | Font configurations                              |
-| `utils`      | Utility functions                                |
+| Package      | Purpose                                          | Build |
+| ------------ | ------------------------------------------------ | ----- |
+| `types`      | Shared TypeScript interfaces and DTOs            | tsup  |
+| `consts`     | Application constants                            | tsup  |
+| `exception`  | Error codes and exception handlers               | tsup  |
+| `utils`      | Utility functions                                | tsup  |
+| `ui`         | Design system (Tailwind v4, Radix UI primitives) | -     |
+| `api-client` | Typed API client library                         | -     |
+| `auth`       | Authentication utilities                         | -     |
+| `hooks`      | Custom React hooks                               | -     |
+| `toast`      | Toast notification system                        | -     |
+| `fonts`      | Font configurations                              | -     |
+| `i18n`       | Internationalization                             | -     |
 
 ### Build Dependencies
 
-Shared packages must build before apps. Run `pnpm build` to build everything in correct order.
+Packages with tsup build must build before apps. Run `pnpm build` to build everything in correct order.
 
 ## Development Setup
 
@@ -114,6 +115,41 @@ IMPORTANT: These rules are enforced by ESLint and CI:
 
 1. Modify schema files in `apps/api/prisma/schema/`
 2. Run `pnpm api prisma generate`
+
+## Package Build Strategy
+
+### Which packages need tsup build?
+
+| Package Type | tsup Build | Reason |
+|--------------|------------|--------|
+| **shared/** (consts, types, exception, utils) | ✅ `dualConfig` | Used by both API (NestJS) and Blog (Next.js) |
+| **Web-only** (ui, fonts, hooks, toast, auth, api-client, i18n) | ❌ None | Next.js transpiles source directly |
+
+**Why this separation?**
+- Web-only packages are private, ESM-only, and consumed only by Next.js apps
+- Next.js handles TypeScript transpilation automatically
+- Adding `"use client"` banners via tsup can pollute server-compatible code (e.g., `cn()` utility)
+
+### tsup Configuration for shared packages
+
+Shared configs location: `@imkdw-dev/typescript-config/tsup/`
+- `esm` - ESM only output
+- `dual` - ESM + CJS output (use this for shared packages)
+
+**IMPORTANT**: If you add a new external dependency, you MUST add it to the `external` array in `tsup.config.ts`:
+
+```typescript
+// tsup.config.ts
+export default defineConfig({
+  ...dualConfig,
+  external: ['react', 'react-dom', 'new-dependency'], // Add here
+});
+```
+
+**When to add to external:**
+- Peer dependencies (react, react-dom)
+- Framework dependencies (next, next-themes)
+- Workspace packages (@imkdw-dev/*)
 
 ## Project Quirks
 

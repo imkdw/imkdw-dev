@@ -2,36 +2,77 @@
   "name": "@imkdw-dev/utils",
   "version": "0.1.0",
   "description": "Shared utility functions for imkdw-dev project",
-  "main": "./dist/index.js",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "client": ["./dist/client/index.d.ts"],
+      "server": ["./dist/server/index.d.ts"]
+    }
+  },
   "exports": {
-    ".": "./dist/index.js",
-    "./client": "./dist/client/index.js",
-    "./server": "./dist/server/index.js"
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./client": {
+      "import": {
+        "types": "./dist/client/index.d.ts",
+        "default": "./dist/client/index.js"
+      },
+      "require": {
+        "types": "./dist/client/index.d.cts",
+        "default": "./dist/client/index.cjs"
+      }
+    },
+    "./server": {
+      "edge-light": {
+        "types": "./dist/server/index.d.cts",
+        "default": "./dist/server/index.cjs"
+      },
+      "worker": {
+        "types": "./dist/server/index.d.cts",
+        "default": "./dist/server/index.cjs"
+      },
+      "require": {
+        "types": "./dist/server/index.d.cts",
+        "default": "./dist/server/index.cjs"
+      },
+      "default": "./dist/server/index.cjs"
+    }
   },
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "clean": "rm -rf dist",
     "lint": "eslint src/ --fix"
-  },
-  "devDependencies": {
-    "@imkdw-dev/eslint-config": "workspace:*",
-    "@imkdw-dev/typescript-config": "workspace:*",
-    "@imkdw-dev/i18n": "workspace:*",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9.18.0",
-    "typescript": "5.9.2"
   },
   "dependencies": {
     "@imkdw-dev/i18n": "workspace:*",
     "@types/jsdom": "^27.0.0",
     "highlight.js": "^11.11.1",
     "jsdom": "^27.0.0",
-    "uuid": "^11.1.0",
     "lucide-react": "^0.462.0",
     "react": "19.1.2",
-    "react-dom": "19.1.2"
+    "react-dom": "19.1.2",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@imkdw-dev/eslint-config": "workspace:*",
+    "@imkdw-dev/typescript-config": "workspace:*",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9.18.0",
+    "tsup": "^8.5.1",
+    "typescript": "5.9.2"
   }
 }

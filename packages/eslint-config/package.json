@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "type": "module",
   "private": true,
-  "scripts": {
-    "build": "echo 'No build needed for eslint-config'"
-  },
   "exports": {
     "./base": "./base.js",
     "./nestjs": "./nestjs.js",

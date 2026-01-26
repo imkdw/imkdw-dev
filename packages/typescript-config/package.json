@@ -2,9 +2,24 @@
   "name": "@imkdw-dev/typescript-config",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "license": "MIT",
-  "scripts": {
-    "build": "echo 'No build needed for typescript-config'"
+  "exports": {
+    "./base.json": "./base.json",
+    "./react-library.json": "./react-library.json",
+    "./nestjs.json": "./nestjs.json",
+    "./nextjs.json": "./nextjs.json",
+    "./tsup": {
+      "types": "./tsup/index.d.ts",
+      "default": "./tsup/index.js"
+    },
+    "./tsup/dual": {
+      "types": "./tsup/dual.d.ts",
+      "default": "./tsup/dual.js"
+    }
+  },
+  "dependencies": {
+    "tsup": "^8.5.1"
   },
   "publishConfig": {
     "access": "public"
