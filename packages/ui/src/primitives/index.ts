@@ -17,3 +17,4 @@ export * from './textarea';
 export * from './theme-toggle';
 export * from './scroll-to-top';
 export * from './scroll-restoration';
+export * from './resizable';

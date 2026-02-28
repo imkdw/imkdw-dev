@@ -21,6 +21,9 @@ coverage
 # Vercel
 .vercel
 
+# Next.js
+next-env.d.ts
+
 # Build Outputs
 .next/
 out/
