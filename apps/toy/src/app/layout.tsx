@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         )}
       </head>
       <body className={`${pretendard.className} bg-background text-foreground`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <ToyLayout>{children}</ToyLayout>
         </ThemeProvider>
       </body>
