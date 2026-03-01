@@ -46,3 +46,4 @@ yarn-error.log*
 .omc
 *.bundled_*.mjs
 .omx
+.sisyphus

@@ -16,6 +16,7 @@ import {
 } from '@imkdw-dev/ui';
 import { Upload, Download, Loader2, X } from 'lucide-react';
 import { zipSync } from 'fflate';
+import { convertToWebp } from '../_lib/convert-to-webp';
 
 const MAX_FILE_SIZE = 25 * 1024 * 1024;
 const UPLOAD_SIZE_LIMIT = 4 * 1024 * 1024;
@@ -25,6 +26,14 @@ const MIN_CANVAS_SIZE = 1;
 const MAX_CANVAS_SIZE = 4096;
 const MIN_PADDING_Y = 0;
 const MAX_PADDING_Y = 200;
+
+const DEFAULT_BRIGHTNESS = 1;
+const MIN_BRIGHTNESS = 0.5;
+const MAX_BRIGHTNESS = 1.5;
+
+const DEFAULT_GAMMA = 1;
+const MIN_GAMMA = 0.5;
+const MAX_GAMMA = 2.5;
 
 const PRESET_DEFAULTS: Record<string, { width: number; height: number; paddingY: number }> = {
   Z: { width: 724, height: 460, paddingY: 20 },
@@ -36,47 +45,35 @@ interface BatchResult {
   url: string;
 }
 
-async function convertToWebp(file: File): Promise<File> {
-  if (file.type === 'image/webp' && file.size <= UPLOAD_SIZE_LIMIT) {
-    return file;
-  }
-
-  const bitmap = await createImageBitmap(file);
-  const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
-  const ctx = canvas.getContext('2d');
-  if (!ctx) {
-    bitmap.close();
-    throw new Error('Canvas를 생성할 수 없습니다');
-  }
-
-  ctx.drawImage(bitmap, 0, 0);
-  bitmap.close();
-
-  const blob = await canvas.convertToBlob({ type: 'image/webp', quality: 0.92 });
-  if (blob.size > UPLOAD_SIZE_LIMIT) {
-    const sizeMB = (blob.size / (1024 * 1024)).toFixed(1);
-    const limitMB = (UPLOAD_SIZE_LIMIT / (1024 * 1024)).toFixed(0);
-    throw new Error(`WebP 변환 후에도 파일 크기(${sizeMB}MB)가 업로드 제한(${limitMB}MB)을 초과합니다`);
-  }
-
-  const name = file.name.replace(/\.[^.]+$/, '.webp');
-  return new File([blob], name, { type: 'image/webp' });
-}
-
 async function composeImage(
   file: File,
   width: number,
   height: number,
   paddingY: number,
-  background: string
+  background: string,
+  brightness: number,
+  gamma: number
 ): Promise<Blob> {
-  const compressed = await convertToWebp(file);
+  const compressed =
+    file.type === 'image/webp' && file.size <= UPLOAD_SIZE_LIMIT
+      ? file
+      : await convertToWebp(file, {
+          quality: 0.92,
+          maxOutputBytes: UPLOAD_SIZE_LIMIT,
+          maxOutputBytesErrorMessage: (actualBytes, maxOutputBytes) => {
+            const sizeMB = (actualBytes / (1024 * 1024)).toFixed(1);
+            const limitMB = (maxOutputBytes / (1024 * 1024)).toFixed(0);
+            return `WebP 변환 후에도 파일 크기(${sizeMB}MB)가 업로드 제한(${limitMB}MB)을 초과합니다`;
+          },
+        });
   const formData = new FormData();
   formData.append('file', compressed);
   formData.append('width', String(width));
   formData.append('height', String(height));
   formData.append('paddingY', String(paddingY));
   formData.append('background', background);
+  formData.append('brightness', String(brightness));
+  formData.append('gamma', String(gamma));
 
   const response = await fetch('/api/image/compose', {
     method: 'POST',
@@ -97,6 +94,8 @@ export function ComposeForm() {
   const [canvasHeight, setCanvasHeight] = useState(460);
   const [paddingY, setPaddingY] = useState(20);
   const [background, setBackground] = useState(DEFAULT_BACKGROUND);
+  const [brightness, setBrightness] = useState(DEFAULT_BRIGHTNESS);
+  const [gamma, setGamma] = useState(DEFAULT_GAMMA);
 
   const [previewFile, setPreviewFile] = useState<File | null>(null);
   const [previewSrc, setPreviewSrc] = useState<string | null>(null);
@@ -183,7 +182,7 @@ export function ComposeForm() {
     }
 
     try {
-      const blob = await composeImage(previewFile, canvasWidth, canvasHeight, paddingY, background);
+      const blob = await composeImage(previewFile, canvasWidth, canvasHeight, paddingY, background, brightness, gamma);
       setPreviewResult(URL.createObjectURL(blob));
       setPreviewOpen(true);
     } catch (err) {
@@ -262,7 +261,7 @@ export function ComposeForm() {
         if (!file) {
           continue;
         }
-        const blob = await composeImage(file, canvasWidth, canvasHeight, paddingY, background);
+        const blob = await composeImage(file, canvasWidth, canvasHeight, paddingY, background, brightness, gamma);
         const originalName = file.name.replace(/\.[^.]+$/, '');
         results.push({
           name: `${originalName}_${preset}.webp`,
@@ -405,6 +404,66 @@ export function ComposeForm() {
                 className="w-28 font-mono ring-1 ring-input"
               />
             </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label className="text-base font-bold" htmlFor="brightness">
+              밝기
+            </Label>
+            <Input
+              id="brightness"
+              type="number"
+              inputMode="decimal"
+              min={MIN_BRIGHTNESS}
+              max={MAX_BRIGHTNESS}
+              step={0.01}
+              value={brightness}
+              onChange={e => {
+                const raw = e.target.value;
+                if (raw === '') {
+                  setBrightness(DEFAULT_BRIGHTNESS);
+                  return;
+                }
+                const next = Number(raw);
+                if (Number.isFinite(next)) {
+                  setBrightness(next);
+                }
+              }}
+              className="w-28 ring-1 ring-input"
+            />
+            <p className="text-xs text-muted-foreground">
+              1 = 기본 · 범위 {MIN_BRIGHTNESS} ~ {MAX_BRIGHTNESS}
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label className="text-base font-bold" htmlFor="gamma">
+              감마
+            </Label>
+            <Input
+              id="gamma"
+              type="number"
+              inputMode="decimal"
+              min={MIN_GAMMA}
+              max={MAX_GAMMA}
+              step={0.01}
+              value={gamma}
+              onChange={e => {
+                const raw = e.target.value;
+                if (raw === '') {
+                  setGamma(DEFAULT_GAMMA);
+                  return;
+                }
+                const next = Number(raw);
+                if (Number.isFinite(next)) {
+                  setGamma(next);
+                }
+              }}
+              className="w-28 ring-1 ring-input"
+            />
+            <p className="text-xs text-muted-foreground">
+              1 = 기본 · 범위 {MIN_GAMMA} ~ {MAX_GAMMA}
+            </p>
           </div>
         </div>
       </Card>

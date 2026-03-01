@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Image, ImagePlus, ChevronRight } from 'lucide-react';
+import { Home, Image, ImagePlus, Sparkles, ChevronRight } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { cn, SidebarContent, SidebarGroup, SidebarGroupContent } from '@imkdw-dev/ui';
 
@@ -27,7 +27,10 @@ const categories: Category[] = [
     name: '이미지',
     href: '/image',
     icon: Image,
-    tools: [{ name: '배경 합성', href: '/image/compose', icon: ImagePlus }],
+    tools: [
+      { name: '배경 합성', href: '/image/compose', icon: ImagePlus },
+      { name: 'WebP 최적화', href: '/image/optimize', icon: Sparkles },
+    ],
   },
 ];
 

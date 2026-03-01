@@ -9,6 +9,14 @@ const MAX_PADDING_Y = 200;
 const ALLOWED_MIME_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
 const PROCESSING_TIMEOUT_MS = 30_000;
 
+const DEFAULT_BRIGHTNESS = 1;
+const MIN_BRIGHTNESS = 0.5;
+const MAX_BRIGHTNESS = 1.5;
+
+const DEFAULT_GAMMA = 1;
+const MIN_GAMMA = 0.5;
+const MAX_GAMMA = 2.5;
+
 const MAGIC_BYTES: Record<string, { offset: number; bytes: number[] }> = {
   'image/png': { offset: 0, bytes: [0x89, 0x50, 0x4e, 0x47] },
   'image/jpeg': { offset: 0, bytes: [0xff, 0xd8, 0xff] },
@@ -23,6 +31,10 @@ function hexToRgba(hex: string): { r: number; g: number; b: number; alpha: numbe
     b: parseInt(cleaned.slice(4, 6), 16),
     alpha: 1,
   };
+}
+
+function clampNumber(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
 }
 
 export async function POST(request: Request): Promise<Response> {
@@ -70,6 +82,18 @@ export async function POST(request: Request): Promise<Response> {
 
     const fileBuffer = Buffer.from(await file.arrayBuffer());
 
+    const brightnessRaw = formData.get('brightness');
+    const parsedBrightness = brightnessRaw !== null ? Number.parseFloat(String(brightnessRaw)) : NaN;
+    const brightness = clampNumber(
+      Number.isFinite(parsedBrightness) ? parsedBrightness : DEFAULT_BRIGHTNESS,
+      MIN_BRIGHTNESS,
+      MAX_BRIGHTNESS
+    );
+
+    const gammaRaw = formData.get('gamma');
+    const parsedGamma = gammaRaw !== null ? Number.parseFloat(String(gammaRaw)) : NaN;
+    const gamma = clampNumber(Number.isFinite(parsedGamma) ? parsedGamma : DEFAULT_GAMMA, MIN_GAMMA, MAX_GAMMA);
+
     const magicDef = MAGIC_BYTES[file.type];
     if (magicDef) {
       const headerBytes = fileBuffer.subarray(magicDef.offset, magicDef.offset + magicDef.bytes.length);
@@ -87,9 +111,22 @@ export async function POST(request: Request): Promise<Response> {
     const processImage = async () => {
       const trimmed = await sharp(fileBuffer).trim().toBuffer({ resolveWithObject: true });
 
-      const resized = await sharp(trimmed.data)
-        .resize({ width: canvas.width, height: maxHeight, fit: 'inside', withoutEnlargement: true })
-        .toBuffer({ resolveWithObject: true });
+      let pipeline = sharp(trimmed.data).resize({
+        width: canvas.width,
+        height: maxHeight,
+        fit: 'inside',
+        withoutEnlargement: true,
+      });
+
+      if (gamma !== DEFAULT_GAMMA) {
+        pipeline = pipeline.gamma(gamma);
+      }
+
+      if (brightness !== DEFAULT_BRIGHTNESS) {
+        pipeline = pipeline.modulate({ brightness });
+      }
+
+      const resized = await pipeline.toBuffer({ resolveWithObject: true });
 
       const left = Math.round((canvas.width - resized.info.width) / 2);
       const top = Math.round((canvas.height - resized.info.height) / 2);
