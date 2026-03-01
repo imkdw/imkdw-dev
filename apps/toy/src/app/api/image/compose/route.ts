@@ -2,7 +2,7 @@ import sharp from 'sharp';
 
 export const runtime = 'nodejs';
 
-const MAX_FILE_SIZE = 25 * 1024 * 1024;
+const MAX_FILE_SIZE = 4 * 1024 * 1024;
 const MAX_CANVAS_WIDTH = 4096;
 const MAX_CANVAS_HEIGHT = 4096;
 const MAX_PADDING_Y = 200;
@@ -35,7 +35,7 @@ export async function POST(request: Request): Promise<Response> {
     }
 
     if (file.size > MAX_FILE_SIZE) {
-      return Response.json({ error: '파일 크기가 25MB를 초과합니다' }, { status: 413 });
+      return Response.json({ error: '파일 크기가 4MB를 초과합니다' }, { status: 413 });
     }
 
     if (!ALLOWED_MIME_TYPES.includes(file.type)) {

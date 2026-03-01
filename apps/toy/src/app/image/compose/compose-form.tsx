@@ -18,6 +18,7 @@ import { Upload, Download, Loader2, X } from 'lucide-react';
 import { zipSync } from 'fflate';
 
 const MAX_FILE_SIZE = 25 * 1024 * 1024;
+const UPLOAD_SIZE_LIMIT = 4 * 1024 * 1024;
 const DEFAULT_BACKGROUND = '#FFFFFF';
 const MAX_BATCH_FILES = 50;
 const MIN_CANVAS_SIZE = 1;
@@ -35,6 +36,33 @@ interface BatchResult {
   url: string;
 }
 
+async function convertToWebp(file: File): Promise<File> {
+  if (file.type === 'image/webp' && file.size <= UPLOAD_SIZE_LIMIT) {
+    return file;
+  }
+
+  const bitmap = await createImageBitmap(file);
+  const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
+  const ctx = canvas.getContext('2d');
+  if (!ctx) {
+    bitmap.close();
+    throw new Error('Canvas를 생성할 수 없습니다');
+  }
+
+  ctx.drawImage(bitmap, 0, 0);
+  bitmap.close();
+
+  const blob = await canvas.convertToBlob({ type: 'image/webp', quality: 0.92 });
+  if (blob.size > UPLOAD_SIZE_LIMIT) {
+    const sizeMB = (blob.size / (1024 * 1024)).toFixed(1);
+    const limitMB = (UPLOAD_SIZE_LIMIT / (1024 * 1024)).toFixed(0);
+    throw new Error(`WebP 변환 후에도 파일 크기(${sizeMB}MB)가 업로드 제한(${limitMB}MB)을 초과합니다`);
+  }
+
+  const name = file.name.replace(/\.[^.]+$/, '.webp');
+  return new File([blob], name, { type: 'image/webp' });
+}
+
 async function composeImage(
   file: File,
   width: number,
@@ -42,8 +70,9 @@ async function composeImage(
   paddingY: number,
   background: string
 ): Promise<Blob> {
+  const compressed = await convertToWebp(file);
   const formData = new FormData();
-  formData.append('file', file);
+  formData.append('file', compressed);
   formData.append('width', String(width));
   formData.append('height', String(height));
   formData.append('paddingY', String(paddingY));

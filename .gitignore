@@ -45,3 +45,4 @@ yarn-error.log*
 .playwright-mcp
 .omc
 *.bundled_*.mjs
+.omx
