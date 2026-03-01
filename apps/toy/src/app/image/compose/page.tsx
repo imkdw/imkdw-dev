@@ -1,5 +1,12 @@
+import { Metadata } from 'next';
+import { createMetadata } from '@/utils/metadata-creator';
 import { ComposeForm } from './compose-form';
 import { ManualImage } from './manual-image';
+
+export const metadata: Metadata = createMetadata({
+  title: '배경 합성',
+  description: '누끼 이미지를 선택한 크기의 배경에 합성합니다',
+});
 
 export default function ComposePage() {
   return (

@@ -17,7 +17,7 @@ export function ToyHeader() {
           <div className="flex items-center space-x-2">
             <Terminal className="h-4 w-4 text-primary" />
             <Link href="/" className={cn('text-md text-primary', jetBrainsMono.className)}>
-              @imkdw-dev/toys
+              @imkdw-dev/toy
             </Link>
           </div>
         </div>

@@ -7,22 +7,22 @@ import './globals.css';
 import Script from 'next/script';
 import { APP_ENV } from '@imkdw-dev/consts';
 
-const baseUrl = process.env.NEXT_PUBLIC_TOY_URL ?? 'https://toys.imkdw.dev';
+const baseUrl = process.env.NEXT_PUBLIC_TOY_URL ?? 'https://toy.imkdw.dev';
 
 export const metadata: Metadata = {
   title: {
-    default: '@imkdw-dev/toys',
-    template: '%s | @imkdw-dev/toys',
+    default: '@imkdw-dev/toy',
+    template: '%s | @imkdw-dev/toy',
   },
   description: '개발에 필요한 유틸리티 도구 모음',
   alternates: {
     canonical: baseUrl,
   },
   openGraph: {
-    title: '@imkdw-dev/toys',
+    title: '@imkdw-dev/toy',
     description: '개발에 필요한 유틸리티 도구 모음',
     url: baseUrl,
-    siteName: '@imkdw-dev/toys',
+    siteName: '@imkdw-dev/toy',
     locale: 'ko_KR',
     type: 'website',
   },
