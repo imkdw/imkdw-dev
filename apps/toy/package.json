@@ -13,12 +13,14 @@
     "@imkdw-dev/fonts": "workspace:*",
     "@imkdw-dev/tailwind-config": "workspace:*",
     "@imkdw-dev/ui": "workspace:*",
+    "fflate": "^0.8.2",
     "lucide-react": "^0.462.0",
     "next": "16.0.7",
     "next-themes": "^0.4.6",
     "react": "19.1.2",
     "react-dom": "19.1.2",
-    "react-grab": "^0.1.20"
+    "react-grab": "^0.1.20",
+    "sharp": "^0.34.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
