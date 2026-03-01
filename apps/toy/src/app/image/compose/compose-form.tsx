@@ -17,8 +17,13 @@ import {
 import { Upload, Download, Loader2, X } from 'lucide-react';
 import { zipSync } from 'fflate';
 
-const MAX_FILE_SIZE = 4 * 1024 * 1024;
+const MAX_FILE_SIZE = 25 * 1024 * 1024;
 const DEFAULT_BACKGROUND = '#FFFFFF';
+const MAX_BATCH_FILES = 50;
+const MIN_CANVAS_SIZE = 1;
+const MAX_CANVAS_SIZE = 4096;
+const MIN_PADDING_Y = 0;
+const MAX_PADDING_Y = 200;
 
 const PRESET_DEFAULTS: Record<string, { width: number; height: number; paddingY: number }> = {
   Z: { width: 724, height: 460, paddingY: 20 },
@@ -102,7 +107,7 @@ export function ComposeForm() {
     }
 
     if (newFile.size > MAX_FILE_SIZE) {
-      setPreviewError('파일 크기가 4MB를 초과합니다');
+      setPreviewError('파일 크기가 25MB를 초과합니다');
       return;
     }
 
@@ -166,13 +171,23 @@ export function ComposeForm() {
     const valid = images.filter(f => f.size <= MAX_FILE_SIZE);
 
     if (oversized.length > 0) {
-      setBatchError(`4MB 초과 파일 ${oversized.length}개가 제외되었습니다`);
+      setBatchError(`25MB 초과 파일 ${oversized.length}개가 제외되었습니다`);
     } else {
       setBatchError(null);
     }
 
-    if (valid.length > 0) {
-      setBatchFiles(prev => [...prev, ...valid]);
+    const remaining = MAX_BATCH_FILES - batchFiles.length;
+    const capped = valid.slice(0, Math.max(remaining, 0));
+
+    if (valid.length > remaining) {
+      const oversizedMsg = oversized.length > 0 ? `25MB 초과 파일 ${oversized.length}개가 제외되었습니다. ` : '';
+      setBatchError(
+        `${oversizedMsg}최대 ${MAX_BATCH_FILES}개까지만 추가할 수 있습니다 (${valid.length - capped.length}개 제외)`
+      );
+    }
+
+    if (capped.length > 0) {
+      setBatchFiles(prev => [...prev, ...capped]);
       setBatchResults([]);
     }
   }
@@ -290,7 +305,8 @@ export function ComposeForm() {
               <Input
                 id="canvasWidth"
                 type="number"
-                min={1}
+                min={MIN_CANVAS_SIZE}
+                max={MAX_CANVAS_SIZE}
                 value={canvasWidth}
                 onChange={e => setCanvasWidth(Number(e.target.value))}
                 className="w-24 ring-1 ring-input"
@@ -302,7 +318,8 @@ export function ComposeForm() {
               <Input
                 id="canvasHeight"
                 type="number"
-                min={1}
+                min={MIN_CANVAS_SIZE}
+                max={MAX_CANVAS_SIZE}
                 value={canvasHeight}
                 onChange={e => setCanvasHeight(Number(e.target.value))}
                 className="w-24 ring-1 ring-input"
@@ -319,8 +336,8 @@ export function ComposeForm() {
             <Input
               id="paddingY"
               type="number"
-              min={0}
-              max={100}
+              min={MIN_PADDING_Y}
+              max={MAX_PADDING_Y}
               value={paddingY}
               onChange={e => setPaddingY(Number(e.target.value))}
               className="w-28 ring-1 ring-input"

@@ -2,7 +2,18 @@ import sharp from 'sharp';
 
 export const runtime = 'nodejs';
 
-const MAX_FILE_SIZE = 4 * 1024 * 1024;
+const MAX_FILE_SIZE = 25 * 1024 * 1024;
+const MAX_CANVAS_WIDTH = 4096;
+const MAX_CANVAS_HEIGHT = 4096;
+const MAX_PADDING_Y = 200;
+const ALLOWED_MIME_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
+const PROCESSING_TIMEOUT_MS = 30_000;
+
+const MAGIC_BYTES: Record<string, { offset: number; bytes: number[] }> = {
+  'image/png': { offset: 0, bytes: [0x89, 0x50, 0x4e, 0x47] },
+  'image/jpeg': { offset: 0, bytes: [0xff, 0xd8, 0xff] },
+  'image/webp': { offset: 8, bytes: [0x57, 0x45, 0x42, 0x50] },
+};
 
 function hexToRgba(hex: string): { r: number; g: number; b: number; alpha: number } {
   const cleaned = hex.replace('#', '');
@@ -24,7 +35,11 @@ export async function POST(request: Request): Promise<Response> {
     }
 
     if (file.size > MAX_FILE_SIZE) {
-      return Response.json({ error: '파일 크기가 4MB를 초과합니다' }, { status: 413 });
+      return Response.json({ error: '파일 크기가 25MB를 초과합니다' }, { status: 413 });
+    }
+
+    if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+      return Response.json({ error: '지원하지 않는 이미지 형식입니다' }, { status: 400 });
     }
 
     const widthRaw = formData.get('width');
@@ -36,38 +51,78 @@ export async function POST(request: Request): Promise<Response> {
       return Response.json({ error: '가로·세로 크기는 1 이상의 정수여야 합니다' }, { status: 400 });
     }
 
+    if (width > MAX_CANVAS_WIDTH || height > MAX_CANVAS_HEIGHT) {
+      return Response.json({ error: '캔버스 크기는 4096px 이하여야 합니다' }, { status: 400 });
+    }
+
     const canvas = { width, height };
 
     const paddingYRaw = formData.get('paddingY');
-    const paddingY = paddingYRaw !== null ? (parseInt(String(paddingYRaw), 10) || 10) : 10;
+    const parsedPaddingY = paddingYRaw !== null ? parseInt(String(paddingYRaw), 10) || 10 : 10;
+    const paddingY = Math.min(Math.max(parsedPaddingY, 0), MAX_PADDING_Y, Math.floor((canvas.height - 1) / 2));
 
     const backgroundRaw = formData.get('background');
-    const backgroundHex = typeof backgroundRaw === 'string' && backgroundRaw.trim() !== '' ? backgroundRaw : '#FFFFFF';
+    const backgroundHex =
+      typeof backgroundRaw === 'string' && /^#[0-9A-Fa-f]{6}$/.test(backgroundRaw.trim())
+        ? backgroundRaw.trim()
+        : '#FFFFFF';
     const background = hexToRgba(backgroundHex);
 
     const fileBuffer = Buffer.from(await file.arrayBuffer());
 
-    const trimmed = await sharp(fileBuffer).trim().toBuffer({ resolveWithObject: true });
+    const magicDef = MAGIC_BYTES[file.type];
+    if (magicDef) {
+      const headerBytes = fileBuffer.subarray(magicDef.offset, magicDef.offset + magicDef.bytes.length);
+      const isValid = magicDef.bytes.every((b, i) => headerBytes[i] === b);
+      if (!isValid) {
+        return Response.json({ error: '파일 내용이 확장자와 일치하지 않습니다' }, { status: 400 });
+      }
+    }
 
-
-    const maxWidth = canvas.width;
     const maxHeight = canvas.height - paddingY * 2;
-    const resized = await sharp(trimmed.data)
-      .resize({ width: maxWidth, height: maxHeight, fit: 'inside', withoutEnlargement: true })
-      .toBuffer({ resolveWithObject: true });
+    if (maxHeight < 1) {
+      return Response.json({ error: '여백이 너무 커서 이미지를 배치할 수 없습니다' }, { status: 400 });
+    }
 
-    const left = Math.round((canvas.width - resized.info.width) / 2);
-    const top = Math.round((canvas.height - resized.info.height) / 2);
-    const buffer = await sharp({
-      create: { width: canvas.width, height: canvas.height, channels: 4, background },
-    })
-      .composite([{ input: resized.data, left, top }])
-      .webp()
-      .toBuffer();
+    const processImage = async () => {
+      const trimmed = await sharp(fileBuffer).trim().toBuffer({ resolveWithObject: true });
 
-    return new Response(new Uint8Array(buffer), { headers: { 'Content-Type': 'image/webp' } });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : '서버 내부 오류가 발생했습니다';
-    return Response.json({ error: message }, { status: 500 });
+      const resized = await sharp(trimmed.data)
+        .resize({ width: canvas.width, height: maxHeight, fit: 'inside', withoutEnlargement: true })
+        .toBuffer({ resolveWithObject: true });
+
+      const left = Math.round((canvas.width - resized.info.width) / 2);
+      const top = Math.round((canvas.height - resized.info.height) / 2);
+      return sharp({
+        create: { width: canvas.width, height: canvas.height, channels: 4, background },
+      })
+        .composite([{ input: resized.data, left, top }])
+        .webp()
+        .toBuffer();
+    };
+
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(() => reject(new Error('TIMEOUT')), PROCESSING_TIMEOUT_MS);
+    });
+
+    let buffer: Buffer;
+    try {
+      buffer = await Promise.race([processImage(), timeoutPromise]);
+    } catch (err) {
+      if (err instanceof Error && err.message === 'TIMEOUT') {
+        return Response.json({ error: '이미지 처리 시간이 초과되었습니다' }, { status: 503 });
+      }
+      throw err;
+    }
+
+    return new Response(new Uint8Array(buffer), {
+      headers: {
+        'Content-Type': 'image/webp',
+        'X-Content-Type-Options': 'nosniff',
+        'Content-Disposition': 'inline; filename="composed.webp"',
+      },
+    });
+  } catch {
+    return Response.json({ error: '이미지 처리 중 오류가 발생했습니다' }, { status: 500 });
   }
 }
